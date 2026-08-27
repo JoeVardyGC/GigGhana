@@ -476,10 +476,15 @@ body.lm .hero-slide::after, :root .hero-slide::after {
   display: none !important;
 }
 
-/* Custom 8K Generated Ghanaian Hero Slides */
+/* Custom 8K Generated Ghanaian Hero Slides: Dark Mode */
 .hs1 { background-image: url('/images/hero/slide1.jpg'); }
 .hs2 { background-image: url('/images/hero/slide2.jpg'); }
 .hs3 { background-image: url('/images/hero/slide3.jpg'); }
+
+/* Custom 8K Generated Ghanaian Hero Slides: Bright Sunlit Light Mode */
+body.lm .hs1, :root .hs1 { background-image: url('/images/hero/slide1_light.jpg'); }
+body.lm .hs2, :root .hs2 { background-image: url('/images/hero/slide2_light.jpg'); }
+body.lm .hs3, :root .hs3 { background-image: url('/images/hero/slide3_light.jpg'); }
 
 .hero-content {
   position: relative;
@@ -490,33 +495,27 @@ body.lm .hero-slide::after, :root .hero-slide::after {
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 380px;
-  gap: 36px;
+  gap: 40px;
   align-items: center;
 }
 
-/* 12% Opacity Glass Container on Hero */
+/* Free-flowing Hero Content without box enclosure */
 .hero-inner {
   max-width: 680px;
-  background: rgba(13, 17, 26, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 28px;
-  padding: 36px 36px;
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), 0 0 35px rgba(0, 212, 200, 0.05);
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
 }
 
 body.lm .hero-inner, :root .hero-inner {
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.30);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.10);
-}
-
-@media (max-width: 768px) {
-  .hero-inner {
-    padding: 24px 20px;
-    border-radius: 20px;
-  }
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
 }
 
 .hero-badge {
