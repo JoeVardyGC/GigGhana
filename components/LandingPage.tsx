@@ -19,8 +19,8 @@ import { Line } from 'react-chartjs-2';
 import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
-import { FloatingDock } from './ui/floating-dock';
 import { CommandSearchDialog } from './ui/command-dialog';
+import { LuxuryEstimator } from './ui/luxury-estimator';
 import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
 
 ChartJS.register(
@@ -1248,6 +1248,13 @@ export default function LandingPage({ initialData }: Props) {
           </div>
         </div>
       </div>
+
+      {/* ══════ PROFESSIONAL INCOME ESTIMATOR ══════ */}
+      <section className="section" id="calculator" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
+        <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
+          <LuxuryEstimator />
+        </div>
+      </section>
 
       {/* ══════ EARNINGS CHART ══════ */}
       <section className="section" style={{ paddingTop: '32px' }}>
