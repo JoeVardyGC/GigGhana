@@ -442,12 +442,12 @@ body.lm .hero, :root .hero {
 
 .hero-container {
   width: 100%;
-  max-width: 1260px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 0 5%;
+  padding: 0 4%;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 48px;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 44px;
   align-items: center;
   position: relative;
   z-index: 2;
@@ -463,10 +463,10 @@ body.lm .hero, :root .hero {
 .hero-left {
   display: flex;
   flex-direction: column;
-  max-width: 660px;
+  max-width: 640px;
 }
 
-/* 8K GHANAIAN OCCUPATIONS VISUAL SHOWCASE FRAME */
+/* 8K GHANAIAN OCCUPATIONS EXPANDED VISUAL SHOWCASE FRAME */
 .hero-right-showcase {
   position: relative;
   width: 100%;
@@ -474,19 +474,28 @@ body.lm .hero, :root .hero {
   justify-content: center;
 }
 
+.showcase-outer-wrap {
+  width: 100%;
+  max-width: 620px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
 .showcase-card {
   position: relative;
   width: 100%;
-  max-width: 520px;
-  aspect-ratio: 4 / 3.4;
-  border-radius: 28px;
+  max-width: 620px;
+  aspect-ratio: 16 / 11;
+  min-height: 420px;
+  border-radius: 30px;
   overflow: hidden;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 1.5px rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5), 0 0 0 1.5px rgba(255, 255, 255, 0.14);
   background: #111622;
 }
 
 body.lm .showcase-card, :root .showcase-card {
-  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.14), 0 0 0 1.5px rgba(15, 23, 42, 0.08);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.15), 0 0 0 1.5px rgba(15, 23, 42, 0.08);
   background: #E2E8F0;
 }
 
@@ -510,13 +519,17 @@ body.lm .showcase-card, :root .showcase-card {
   transform: scale(1);
 }
 
-/* Background image mappings for the 4 Ghanaian occupations */
+/* Background image mappings for the 10 Ghanaian occupations */
 .hs1 { background-image: url('/images/occupations/painter.jpg'); }
 .hs2 { background-image: url('/images/occupations/building_contractor.jpg'); }
 .hs3 { background-image: url('/images/occupations/interior_designer.jpg'); }
-.hs4 { background-image: url('/images/hero/slide1.jpg'); }
-
-body.lm .hs4, :root .hs4 { background-image: url('/images/hero/slide1_light.jpg'); }
+.hs4 { background-image: url('/images/occupations/carpenter.jpg'); }
+.hs5 { background-image: url('/images/occupations/electrician.jpg'); }
+.hs6 { background-image: url('/images/occupations/plumber.jpg'); }
+.hs7 { background-image: url('/images/occupations/architect.jpg'); }
+.hs8 { background-image: url('/images/occupations/executive.jpg'); }
+.hs9 { background-image: url('/images/occupations/software_dev.jpg'); }
+.hs10 { background-image: url('/images/occupations/tech_hub.jpg'); }
 
 /* Top Floating Pill on Showcase */
 .showcase-top-badge {

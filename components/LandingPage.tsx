@@ -248,12 +248,25 @@ export default function LandingPage({ initialData }: Props) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hero carousel interval (4 custom Ghanaian occupation 8K slides)
+const occupationSlides = [
+  { id: 'hs1', label: '🎨 Painter', title: '🎨 Master Decorative Painter', location: 'Accra', rate: '₵65/hr', exp: '8 yrs exp' },
+  { id: 'hs2', label: '🏗️ Contractor', title: '🏗️ Certified Building Contractor', location: 'Airport City', rate: '₵120/hr', exp: '12 yrs exp' },
+  { id: 'hs3', label: '🛋️ Designer', title: '🛋️ Luxury Interior Designer', location: 'East Legon', rate: '₵95/hr', exp: '6 yrs exp' },
+  { id: 'hs4', label: '🪚 Carpenter', title: '🪚 Master Carpenter & Joiner', location: 'Kumasi', rate: '₵70/hr', exp: '10 yrs exp' },
+  { id: 'hs5', label: '🔌 Electrician', title: '🔌 Certified Solar & Electrical Pro', location: 'Takoradi', rate: '₵80/hr', exp: '7 yrs exp' },
+  { id: 'hs6', label: '🔧 Plumber', title: '🔧 Licensed Master Plumber', location: 'Tema & Accra', rate: '₵60/hr', exp: '9 yrs exp' },
+  { id: 'hs7', label: '🏛️ Architect', title: '🏛️ Architectural Wood Sculptor', location: 'Cape Coast', rate: '₵85/hr', exp: '14 yrs exp' },
+  { id: 'hs8', label: '💼 Executive', title: '💼 Creative Agency Director', location: 'Cantonments', rate: '₵150/hr', exp: '11 yrs exp' },
+  { id: 'hs9', label: '💻 Developer', title: '💻 Senior Full-Stack Developer', location: 'Accra Tech Hub', rate: '₵110/hr', exp: '5 yrs exp' },
+  { id: 'hs10', label: '🚀 FinTech', title: '🚀 FinTech & Cloud Architect', location: 'Airport Residential', rate: '₵180/hr', exp: '8 yrs exp' },
+];
+
+  // Hero carousel interval (10 custom Ghanaian occupation 8K slides)
   useEffect(() => {
     if (isHeroPaused) return;
     const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % 4);
-    }, 5500);
+      setHeroSlide((prev) => (prev + 1) % 10);
+    }, 5000);
     return () => clearInterval(timer);
   }, [isHeroPaused]);
 
@@ -583,32 +596,6 @@ export default function LandingPage({ initialData }: Props) {
               )}
             </div>
 
-            {/* 1-Click Quick Discovery Tags */}
-            <div className="hero-quick-tags">
-              <span className="quick-tag-label">Popular:</span>
-              {[
-                { name: 'Painter', icon: '🎨' },
-                { name: 'Contractor', icon: '🏗️' },
-                { name: 'Designer', icon: '🛋️' },
-                { name: 'Carpenter', icon: '🪚' },
-                { name: 'Home Nurse', icon: '🏥' },
-                { name: 'React Dev', icon: '💻' },
-              ].map((t, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  className="quick-tag-pill"
-                  onClick={() => {
-                    setSearchQuery(t.name);
-                    window.location.href = `/search/providers.php?q=${encodeURIComponent(t.name)}`;
-                  }}
-                >
-                  <span>{t.icon}</span>
-                  <span>{t.name}</span>
-                </button>
-              ))}
-            </div>
-
             {/* Action Buttons */}
             <div className="hero-acts">
               <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
@@ -660,74 +647,50 @@ export default function LandingPage({ initialData }: Props) {
           {/* Right Column: 8K Ghanaian Occupation Visual Showcase */}
           <div className="hero-right-showcase">
             <div className="showcase-outer-wrap">
-              
-              {/* Quick Trade Selector Tabs */}
-              <div className="showcase-trade-tabs">
-                {[
-                  { label: '🎨 Painter', idx: 0 },
-                  { label: '🏗️ Contractor', idx: 1 },
-                  { label: '🛋️ Designer', idx: 2 },
-                  { label: '💻 Tech Hub', idx: 3 },
-                ].map((item) => (
-                  <button
-                    key={item.idx}
-                    type="button"
-                    className={`sc-tab-btn ${heroSlide === item.idx ? 'active' : ''}`}
-                    onClick={() => setHeroSlide(item.idx)}
-                  >
-                    {item.label}
-                  </button>
-                ))}
-              </div>
-
               <div
                 className="showcase-card"
                 onMouseEnter={() => setIsHeroPaused(true)}
                 onMouseLeave={() => setIsHeroPaused(false)}
               >
-                {/* The 4 8K Occupation Slides */}
+                {/* The 10 8K Occupation Slides */}
                 <div className="showcase-slides">
-                  <div className={`showcase-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
-                  <div className={`showcase-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
-                  <div className={`showcase-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
-                  <div className={`showcase-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
+                  {occupationSlides.map((s, idx) => (
+                    <div
+                      key={s.id}
+                      className={`showcase-slide ${s.id} ${heroSlide === idx ? 'active' : ''}`}
+                    />
+                  ))}
                 </div>
 
-                {/* Top Floating Badge */}
+                {/* Top Floating Badge with Dynamic Location */}
                 <div className="showcase-top-badge">
                   <span className="live-pulse-dot" />
                   <span>
-                    {heroSlide === 0
-                      ? '🎨 Master Decorative Painter · Accra'
-                      : heroSlide === 1
-                      ? '🏗️ Certified Building Contractor · Airport City'
-                      : heroSlide === 2
-                      ? '🛋️ Luxury Interior Designer · East Legon'
-                      : '💻 Senior Tech Innovators · Accra Tech Hub'}
+                    {occupationSlides[heroSlide]?.title} · {occupationSlides[heroSlide]?.location}
                   </span>
                 </div>
 
-                {/* Bottom Floating Stats Strip */}
+                {/* Bottom Floating Stats Strip with Rate and Experience */}
                 <div className="showcase-bottom-card">
                   <div className="showcase-meta-row">
                     <div className="showcase-stat-item">
                       <div className="showcase-val">🇬🇭 NIA Verified</div>
-                      <div className="showcase-lbl">Biometric ID KYC</div>
+                      <div className="showcase-lbl">Biometric KYC</div>
                     </div>
                     <div className="showcase-stat-item">
-                      <div className="showcase-val">★ 5.0 Rating</div>
-                      <div className="showcase-lbl">Verified Reviews</div>
+                      <div className="showcase-val">★ 5.0 ({occupationSlides[heroSlide]?.exp})</div>
+                      <div className="showcase-lbl">Verified Rating</div>
                     </div>
                     <div className="showcase-stat-item">
-                      <div className="showcase-val">⚡ Sub-60s MoMo</div>
-                      <div className="showcase-lbl">Instant Settlement</div>
+                      <div className="showcase-val">{occupationSlides[heroSlide]?.rate}</div>
+                      <div className="showcase-lbl">⚡ Sub-60s MoMo</div>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating Rotator Pagination */}
                 <div className="showcase-dots">
-                  {[0, 1, 2, 3].map((idx) => (
+                  {occupationSlides.map((_, idx) => (
                     <div
                       key={idx}
                       className={`sc-dot ${heroSlide === idx ? 'active' : ''}`}
