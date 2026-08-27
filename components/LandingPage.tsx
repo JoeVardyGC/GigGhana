@@ -474,45 +474,12 @@ export default function LandingPage({ initialData }: Props) {
         <a href="/auth/register.php">Get Started Free</a>
       </div>
 
-      {/* ══════ HERO ══════ */}
+      {/* ══════ HERO SECTION (STRATEGY 1: ASYMMETRICAL 2-COLUMN SPLIT) ══════ */}
       <section className="hero">
-        <div className="hero-slides">
-          <div className={`hero-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
-          <div className={`hero-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
-          <div className={`hero-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
-          <div className={`hero-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
-        </div>
-
-        {/* Hero Right Panel */}
-        <div className="hero-panel" id="heroPanel">
-          <div className={`panel-slide ${panelSlide === 0 ? 'active' : ''}`}>
-            <div className="p-icon">🚀</div>
-            <h3>Hire Elite African Talent</h3>
-            <p>Vetted developers, designers, carpenters, nurses and more — ready to deliver world-class results.</p>
-            <div className="panel-sub-badge">
-              <div className="panel-sub-title">🆓 3 Jobs Free for Every Provider</div>
-              <div className="panel-sub-text">Upgrade to Verified or Premium to unlock unlimited jobs &amp; top placement.</div>
-            </div>
-          </div>
-          <div className={`panel-slide ${panelSlide === 1 ? 'active' : ''}`}>
-            <div className="p-icon">🔒</div>
-            <h3>Work &amp; Get Paid Securely</h3>
-            <p>Escrow holds funds until you approve. Instant MoMo &amp; bank payouts for freelancers.</p>
-          </div>
-          <div className={`panel-slide ${panelSlide === 2 ? 'active' : ''}`}>
-            <div className="p-icon">🌍</div>
-            <h3>Every Ghanaian Skill Counts</h3>
-            <p>From software engineers to skilled tradespeople — GigGhana connects every talent to paying opportunities.</p>
-          </div>
-          <div className="panel-dots" id="pDots">
-            <div className={`p-dot ${panelSlide === 0 ? 'active' : ''}`} onClick={() => setPanelSlide(0)} />
-            <div className={`p-dot ${panelSlide === 1 ? 'active' : ''}`} onClick={() => setPanelSlide(1)} />
-            <div className={`p-dot ${panelSlide === 2 ? 'active' : ''}`} onClick={() => setPanelSlide(2)} />
-          </div>
-        </div>
-
-        <div className="hero-content">
-          <div className="hero-inner">
+        <div className="hero-container">
+          
+          {/* Left Column: Razor-Sharp Editorial & Search */}
+          <div className="hero-left">
             <div className="hero-badge">
               <span>Ghana&apos;s #1 Marketplace for </span>
               <span className="ticker-wrap">
@@ -527,17 +494,20 @@ export default function LandingPage({ initialData }: Props) {
                 </span>
               </span>
             </div>
+
             <h1 className="hero-title">
               Your Skill. Your Success.
               <br />
               <span className="gold">Your Ghana.</span>
             </h1>
+
             <p className="hero-sub">
               {lang === 'en'
-                ? 'Connecting every Ghanaian talent to opportunities that pay — across IT, trades, health, education, hospitality & more.'
-                : 'GigGhana de Ghanafoɔ nyinaa ho adwuma na wɔtua ka pɛ — IT, adwuma, yadeɛ, adesua, ahosiesie ne ebi.'}
+                ? 'Connecting every Ghanaian talent to opportunities that pay — across painting, building construction, interior design, health, IT & more.'
+                : 'GigGhana de Ghanafoɔ nyinaa ho adwuma na wɔtua ka pɛ — adwuma, ahosiesie, yadeɛ, IT ne ebi.'}
             </p>
 
+            {/* Super Search Capsule */}
             <div className="search-outer">
               <form
                 className="search-wrap"
@@ -547,21 +517,7 @@ export default function LandingPage({ initialData }: Props) {
                   window.location.href = target;
                 }}
               >
-                <svg
-                  width="15"
-                  height="15"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  style={{ color: 'rgba(255,255,255,0.45)', flexShrink: 0 }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+                <Search className="w-4 h-4 text-[var(--cyan)]" style={{ flexShrink: 0 }} />
                 <input
                   type="text"
                   value={searchQuery}
@@ -570,7 +526,7 @@ export default function LandingPage({ initialData }: Props) {
                     setAutocompleteOpen(true);
                   }}
                   onFocus={() => setAutocompleteOpen(true)}
-                  placeholder="e.g. Carpenter, Nurse, React Developer, Chef…"
+                  placeholder="e.g. Painter, Contractor, Interior Designer, React Dev…"
                   autoComplete="off"
                 />
                 <div className="search-div" />
@@ -625,15 +581,17 @@ export default function LandingPage({ initialData }: Props) {
               )}
             </div>
 
+            {/* Action Buttons */}
             <div className="hero-acts">
               <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
-                🏢 I Need Talent
+                I Need Talent
               </a>
               <a href="/auth/register.php?role=provider" className="btn btn-blue btn-lg">
-                💼 I Have Skills
+                I Have Skills
               </a>
             </div>
 
+            {/* Trust Indicators */}
             <div className="hero-trust">
               <div className="trust-i">
                 <div className="dot dot-g" />
@@ -648,20 +606,69 @@ export default function LandingPage({ initialData }: Props) {
                 MoMo &amp; Card
               </div>
               <div className="trust-i">
-                <div className="dot dot-i" />3 Jobs Free
+                <div className="dot dot-i" />
+                3 Jobs Free
               </div>
             </div>
           </div>
-        </div>
 
-        <div className="hero-dots">
-          {[0, 1, 2, 3].map((idx) => (
-            <div
-              key={idx}
-              className={`hero-dot ${heroSlide === idx ? 'active' : ''}`}
-              onClick={() => setHeroSlide(idx)}
-            />
-          ))}
+          {/* Right Column: 8K Ghanaian Occupation Visual Showcase */}
+          <div className="hero-right-showcase">
+            <div className="showcase-card">
+              
+              {/* The 4 8K Occupation Slides */}
+              <div className="showcase-slides">
+                <div className={`showcase-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
+                <div className={`showcase-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
+                <div className={`showcase-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
+                <div className={`showcase-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
+              </div>
+
+              {/* Top Floating Badge */}
+              <div className="showcase-top-badge">
+                <span className="live-pulse-dot" />
+                <span>
+                  {heroSlide === 0
+                    ? '🎨 Master Decorative Painter · Accra'
+                    : heroSlide === 1
+                    ? '🏗️ Certified Building Contractor · Airport City'
+                    : heroSlide === 2
+                    ? '🛋️ Luxury Interior Designer · East Legon'
+                    : '💻 Senior Tech Innovators · Accra Tech Hub'}
+                </span>
+              </div>
+
+              {/* Bottom Floating Stats Strip */}
+              <div className="showcase-bottom-card">
+                <div className="showcase-meta-row">
+                  <div className="showcase-stat-item">
+                    <div className="showcase-val">🇬🇭 NIA Verified</div>
+                    <div className="showcase-lbl">Biometric ID KYC</div>
+                  </div>
+                  <div className="showcase-stat-item">
+                    <div className="showcase-val">★ 5.0 Rating</div>
+                    <div className="showcase-lbl">Verified Reviews</div>
+                  </div>
+                  <div className="showcase-stat-item">
+                    <div className="showcase-val">⚡ Sub-60s MoMo</div>
+                    <div className="showcase-lbl">Instant Settlement</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating Rotator Pagination */}
+              <div className="showcase-dots">
+                {[0, 1, 2, 3].map((idx) => (
+                  <div
+                    key={idx}
+                    className={`sc-dot ${heroSlide === idx ? 'active' : ''}`}
+                    onClick={() => setHeroSlide(idx)}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 

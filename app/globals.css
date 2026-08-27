@@ -424,13 +424,12 @@ body.lm .navbar, :root .navbar {
 }
 
 /* ══════════════════════════════════════════════════
-   HERO SECTION WITH DIRECTIONAL CONTRAST & MAXIMUM READABILITY
+   HERO SECTION (STRATEGY 1: ASYMMETRICAL 2-COLUMN SHOWCASE)
    ══════════════════════════════════════════════════ */
 .hero {
   position: relative;
-  min-height: 100vh;
-  padding-top: 115px;
-  padding-bottom: 70px;
+  min-height: calc(100vh - 70px);
+  padding: 125px 0 60px;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -441,78 +440,196 @@ body.lm .hero, :root .hero {
   background: #F8FAFC;
 }
 
-.hero-slides {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
+.hero-container {
+  width: 100%;
+  max-width: 1260px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
-/* Custom 8K Generated Ghanaian Hero Slides: Dark Mode */
-.hero-slide {
+@media (max-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  max-width: 660px;
+}
+
+/* 8K GHANAIAN OCCUPATIONS VISUAL SHOWCASE FRAME */
+.hero-right-showcase {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.showcase-card {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  aspect-ratio: 4 / 3.4;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45), 0 0 0 1.5px rgba(255, 255, 255, 0.12);
+  background: #111622;
+}
+
+body.lm .showcase-card, :root .showcase-card {
+  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.14), 0 0 0 1.5px rgba(15, 23, 42, 0.08);
+  background: #E2E8F0;
+}
+
+.showcase-slides {
+  position: absolute;
+  inset: 0;
+}
+
+.showcase-slide {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center right;
+  background-position: center;
   opacity: 0;
-  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-  filter: brightness(0.9) contrast(1.04);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1), transform 6s ease-out;
+  transform: scale(1.04);
 }
 
-.hero-slide.active {
+.showcase-slide.active {
   opacity: 1;
+  transform: scale(1);
 }
 
-/* Directional contrast scrim on the left ensures 100% text readability while keeping photo clear on right */
-.hero-slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(8, 12, 22, 0.94) 0%,
-    rgba(8, 12, 22, 0.86) 38%,
-    rgba(8, 12, 22, 0.45) 70%,
-    rgba(8, 12, 22, 0.15) 100%
-  );
-  pointer-events: none;
-}
-
-body.lm .hero-slide::after, :root .hero-slide::after {
-  background: linear-gradient(
-    90deg,
-    rgba(248, 250, 252, 0.96) 0%,
-    rgba(248, 250, 252, 0.90) 38%,
-    rgba(248, 250, 252, 0.50) 70%,
-    rgba(248, 250, 252, 0.18) 100%
-  );
-}
-
-/* Authentic Ghanaian Occupations Hero Slides: Painter, Contractor, Interior Designer, Tech Hub */
+/* Background image mappings for the 4 Ghanaian occupations */
 .hs1 { background-image: url('/images/occupations/painter.jpg'); }
 .hs2 { background-image: url('/images/occupations/building_contractor.jpg'); }
 .hs3 { background-image: url('/images/occupations/interior_designer.jpg'); }
 .hs4 { background-image: url('/images/hero/slide1.jpg'); }
 
-body.lm .hs1, :root .hs1 { background-image: url('/images/occupations/painter.jpg'); }
-body.lm .hs2, :root .hs2 { background-image: url('/images/occupations/building_contractor.jpg'); }
-body.lm .hs3, :root .hs3 { background-image: url('/images/occupations/interior_designer.jpg'); }
 body.lm .hs4, :root .hs4 { background-image: url('/images/hero/slide1_light.jpg'); }
 
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: 0 5%;
-  display: grid;
-  grid-template-columns: 1fr 380px;
-  gap: 48px;
+/* Top Floating Pill on Showcase */
+.showcase-top-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: rgba(15, 23, 42, 0.90);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50px;
+  padding: 7px 16px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
   align-items: center;
+  gap: 8px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  z-index: 5;
 }
 
-.hero-inner {
-  max-width: 700px;
+body.lm .showcase-top-badge, :root .showcase-top-badge {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  color: #0F172A;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
+}
+
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10B981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25);
+  animation: pulseDot 2s infinite ease-in-out;
+}
+
+/* Bottom Stats Card on Showcase */
+.showcase-bottom-card {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  padding: 12px 18px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  z-index: 5;
+}
+
+body.lm .showcase-bottom-card, :root .showcase-bottom-card {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.10);
+}
+
+.showcase-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.showcase-stat-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.showcase-val {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  font-family: var(--fm);
+}
+
+body.lm .showcase-val, :root .showcase-val {
+  color: #0F172A;
+}
+
+.showcase-lbl {
+  font-size: 11px;
+  color: rgba(226, 232, 240, 0.7);
+  font-weight: 500;
+}
+
+body.lm .showcase-lbl, :root .showcase-lbl {
+  color: #64748B;
+}
+
+.showcase-dots {
+  position: absolute;
+  bottom: 74px;
+  right: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 6;
+}
+
+.sc-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.sc-dot.active {
+  width: 22px;
+  border-radius: 4px;
+  background: var(--cyan);
 }
 
 .hero-badge {
