@@ -424,7 +424,7 @@ body.lm .navbar, :root .navbar {
 }
 
 /* ══════════════════════════════════════════════════
-   HERO SECTION WITH ATMOSPHERIC 8K SLIDESHOW
+   HERO SECTION WITH BRIGHT & CLEAR 8K SLIDESHOW
    ══════════════════════════════════════════════════ */
 .hero {
   position: relative;
@@ -449,60 +449,57 @@ body.lm .navbar, :root .navbar {
   background-size: cover;
   background-position: center;
   opacity: 0;
-  transition: opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1), transform 7s ease-out;
-  transform: scale(1.06);
+  transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: brightness(1.04) contrast(1.03);
 }
 
 .hero-slide.active {
   opacity: 1;
-  transform: scale(1);
 }
 
+/* No dark shadow or opaque overlay */
 .hero-slide::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(6, 10, 18, 0.86) 0%,
-    rgba(8, 14, 26, 0.65) 50%,
-    rgba(5, 8, 15, 0.45) 100%
-  );
-  backdrop-filter: blur(1px);
+  display: none !important;
 }
 
 body.lm .hero-slide::after, :root .hero-slide::after {
-  background: linear-gradient(
-    135deg,
-    rgba(6, 10, 18, 0.86) 0%,
-    rgba(8, 14, 26, 0.65) 50%,
-    rgba(5, 8, 15, 0.45) 100%
-  );
+  display: none !important;
 }
 
-/* Custom 8K Generated & Curated Ghanaian Hero Slides */
+/* Custom 8K Generated Ghanaian Hero Slides */
 .hs1 { background-image: url('/images/hero/slide1.jpg'); }
 .hs2 { background-image: url('/images/hero/slide2.jpg'); }
 .hs3 { background-image: url('/images/hero/slide3.jpg'); }
-.hs4 { background-image: url('https://images.unsplash.com/photo-1573164713988-8665fc963095?w=1600&q=80&auto=format'); }
-.hs5 { background-image: url('https://images.unsplash.com/photo-1551434678-e076c223a692?w=1600&q=80&auto=format'); }
-.hs6 { background-image: url('https://images.unsplash.com/photo-1582515073490-39981397c445?w=1600&q=80&auto=format'); }
 
 .hero-content {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 5%;
   display: grid;
   grid-template-columns: 1fr 380px;
-  gap: 48px;
+  gap: 36px;
   align-items: center;
 }
 
 .hero-inner {
   max-width: 680px;
+  background: rgba(10, 14, 23, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 28px;
+  padding: 36px 36px;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), 0 0 35px rgba(0, 212, 200, 0.08);
+}
+
+@media (max-width: 768px) {
+  .hero-inner {
+    padding: 24px 20px;
+    border-radius: 20px;
+  }
 }
 
 .hero-badge {

@@ -256,10 +256,10 @@ export default function LandingPage({ initialData }: Props) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hero carousel interval
+  // Hero carousel interval (3 custom 8K slides)
   useEffect(() => {
     const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % 6);
+      setHeroSlide((prev) => (prev + 1) % 3);
     }, 5500);
     return () => clearInterval(timer);
   }, []);
@@ -489,9 +489,6 @@ export default function LandingPage({ initialData }: Props) {
           <div className={`hero-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
           <div className={`hero-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
           <div className={`hero-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
-          <div className={`hero-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
-          <div className={`hero-slide hs5 ${heroSlide === 4 ? 'active' : ''}`} />
-          <div className={`hero-slide hs6 ${heroSlide === 5 ? 'active' : ''}`} />
         </div>
 
         {/* Hero Right Panel */}
@@ -666,7 +663,7 @@ export default function LandingPage({ initialData }: Props) {
         </div>
 
         <div className="hero-dots">
-          {[0, 1, 2, 3, 4, 5].map((idx) => (
+          {[0, 1, 2].map((idx) => (
             <div
               key={idx}
               className={`hero-dot ${heroSlide === idx ? 'active' : ''}`}
