@@ -487,13 +487,16 @@ body.lm .hero-slide::after, :root .hero-slide::after {
   );
 }
 
-.hs1 { background-image: url('/images/hero/slide1.jpg'); }
-.hs2 { background-image: url('/images/hero/slide2.jpg'); }
-.hs3 { background-image: url('/images/hero/slide3.jpg'); }
+/* Authentic Ghanaian Occupations Hero Slides: Painter, Contractor, Interior Designer, Tech Hub */
+.hs1 { background-image: url('/images/occupations/painter.jpg'); }
+.hs2 { background-image: url('/images/occupations/building_contractor.jpg'); }
+.hs3 { background-image: url('/images/occupations/interior_designer.jpg'); }
+.hs4 { background-image: url('/images/hero/slide1.jpg'); }
 
-body.lm .hs1, :root .hs1 { background-image: url('/images/hero/slide1_light.jpg'); }
-body.lm .hs2, :root .hs2 { background-image: url('/images/hero/slide2_light.jpg'); }
-body.lm .hs3, :root .hs3 { background-image: url('/images/hero/slide3_light.jpg'); }
+body.lm .hs1, :root .hs1 { background-image: url('/images/occupations/painter.jpg'); }
+body.lm .hs2, :root .hs2 { background-image: url('/images/occupations/building_contractor.jpg'); }
+body.lm .hs3, :root .hs3 { background-image: url('/images/occupations/interior_designer.jpg'); }
+body.lm .hs4, :root .hs4 { background-image: url('/images/hero/slide1_light.jpg'); }
 
 .hero-content {
   position: relative;

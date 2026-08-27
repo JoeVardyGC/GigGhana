@@ -39,46 +39,37 @@ interface Props {
 }
 
 const acSuggestions = [
+  { icon: '🎨', text: 'Painter / Decorator', cat: 'Skilled Trades' },
+  { icon: '🏗️', text: 'Building Contractor', cat: 'Construction' },
+  { icon: '🛋️', text: 'Interior Designer', cat: 'Creative Arts' },
+  { icon: '🪚', text: 'Carpenter / Joiner', cat: 'Skilled Trades' },
   { icon: '💻', text: 'Web Developer', cat: 'IT & Tech' },
-  { icon: '📱', text: 'App Developer', cat: 'IT & Tech' },
-  { icon: '📈', text: 'Digital Marketer', cat: 'IT & Tech' },
-  { icon: '🎨', text: 'Graphic Designer', cat: 'Creative Arts' },
-  { icon: '📷', text: 'Photographer', cat: 'Creative Arts' },
-  { icon: '🎬', text: 'Video Editor', cat: 'Creative Arts' },
-  { icon: '✍️', text: 'Content Writer', cat: 'Creative Arts' },
-  { icon: '🔧', text: 'Plumber', cat: 'Skilled Trades' },
-  { icon: '🪚', text: 'Carpenter', cat: 'Skilled Trades' },
-  { icon: '🔌', text: 'Electrician', cat: 'Skilled Trades' },
-  { icon: '🚗', text: 'Mechanic', cat: 'Skilled Trades' },
   { icon: '🏥', text: 'Home Nurse', cat: 'Health & Wellness' },
-  { icon: '💪', text: 'Fitness Coach', cat: 'Health & Wellness' },
-  { icon: '🏗️', text: 'Builder / Contractor', cat: 'Construction' },
+  { icon: '🔌', text: 'Electrician', cat: 'Skilled Trades' },
   { icon: '🍽️', text: 'Private Chef', cat: 'Hospitality' },
-  { icon: '🎉', text: 'Event Planner', cat: 'Hospitality' },
-  { icon: '🚕', text: 'Driver', cat: 'Hospitality' },
-  { icon: '📚', text: 'Math Tutor', cat: 'Education' },
-  { icon: '🎵', text: 'Music Instructor', cat: 'Education' },
-  { icon: '💼', text: 'Business Consultant', cat: 'Business Services' },
+  { icon: '🔧', text: 'Plumber', cat: 'Skilled Trades' },
+  { icon: '🚗', text: 'Mechanic', cat: 'Skilled Trades' },
+  { icon: '📈', text: 'Digital Marketer', cat: 'IT & Tech' },
   { icon: '📊', text: 'Accountant', cat: 'Business Services' },
   { icon: '🌾', text: 'Farmer / Agri-tech', cat: 'Agriculture' },
+  { icon: '📚', text: 'Math Tutor', cat: 'Education' },
+  { icon: '📷', text: 'Photographer', cat: 'Creative Arts' },
   { icon: '📦', text: 'Delivery Rider', cat: 'Others' },
-  { icon: '🌿', text: 'Landscaper / Gardener', cat: 'Others' },
-  { icon: '🔐', text: 'Security Guard', cat: 'Others' },
 ];
 
 const profs = [
-  'Developers',
+  'Painters',
+  'Building Contractors',
+  'Interior Designers',
   'Carpenters',
+  'Developers',
   'Nurses',
-  'Graphic Designers',
-  'Chefs',
   'Electricians',
-  'Teachers',
-  'Photographers',
-  'Mechanics',
-  'Accountants',
+  'Chefs',
   'Plumbers',
-  'Event Planners',
+  'Mechanics',
+  'Graphic Designers',
+  'Accountants',
 ];
 
 const trends = [
@@ -256,10 +247,10 @@ export default function LandingPage({ initialData }: Props) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Hero carousel interval (3 custom 8K slides)
+  // Hero carousel interval (4 custom Ghanaian occupation 8K slides)
   useEffect(() => {
     const timer = setInterval(() => {
-      setHeroSlide((prev) => (prev + 1) % 3);
+      setHeroSlide((prev) => (prev + 1) % 4);
     }, 5500);
     return () => clearInterval(timer);
   }, []);
@@ -489,6 +480,7 @@ export default function LandingPage({ initialData }: Props) {
           <div className={`hero-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
           <div className={`hero-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
           <div className={`hero-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
+          <div className={`hero-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
         </div>
 
         {/* Hero Right Panel */}
@@ -663,7 +655,7 @@ export default function LandingPage({ initialData }: Props) {
         </div>
 
         <div className="hero-dots">
-          {[0, 1, 2].map((idx) => (
+          {[0, 1, 2, 3].map((idx) => (
             <div
               key={idx}
               className={`hero-dot ${heroSlide === idx ? 'active' : ''}`}
