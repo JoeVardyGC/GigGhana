@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* ══ GIGGHANA LIGHT THEME (PRIMARY DEFAULT FROM PHP) ══ */
+  --bg: #F3F5FA;
+  --bg-subtle: #EAEEF7;
+  --surface: #FFFFFF;
+  --surface-2: #E0E6F2;
+  --card: #FFFFFF;
+  --card-hover: #F8FAFC;
+  --tx: #0D1220;
+  --tx-2: #344060;
+  --tx-3: #6B7A99;
+  --border: rgba(30, 40, 80, 0.09);
+  --border-hi: rgba(37, 99, 235, 0.3);
+  --blue-primary: #2563EB;
+  --blue-electric: #1D4ED8;
+  --blue-light: #3B82F6;
+  --blue-dim: rgba(37, 99, 235, 0.08);
+  --cyan: #009E95;
+  --cyan-light: #00CFC3;
+  --cyan-dim: rgba(0, 158, 149, 0.08);
+  --coral: #E8512B;
+  --coral-dim: rgba(232, 81, 43, 0.08);
+  --emerald: #0DAF80;
+  --emerald-dim: rgba(13, 175, 128, 0.08);
+  --gold: #D4980A;
+  --gold-dim: rgba(212, 152, 10, 0.08);
+  --glass: rgba(234, 238, 247, 0.92);
+  --glass-border: rgba(37, 99, 235, 0.15);
+  --shadow-blue: 0 20px 45px -10px rgba(37, 99, 235, 0.12);
+  --fm: var(--font-heading), 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --fb: var(--font-body), 'DM Sans', -apple-system, sans-serif;
+}
+
+/* ══ GIGGHANA DARK THEME (.dark FROM PHP) ══ */
+html.dark, body.dark, .dark, [data-theme="dark"] {
+  --bg: #0C0E14;
+  --bg-subtle: #13161E;
+  --surface: #13161E;
+  --surface-2: #191D27;
+  --card: #13161E;
+  --card-hover: #1F2433;
+  --tx: #F2F4F8;
+  --tx-2: #9BA8BF;
+  --tx-3: #4E5A6E;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-hi: rgba(59, 130, 246, 0.35);
+  --blue-primary: #2563EB;
+  --blue-electric: #3B82F6;
+  --blue-light: #60A5FA;
+  --blue-dim: rgba(37, 99, 235, 0.15);
+  --cyan: #00D4C8;
+  --cyan-light: #4DFFE8;
+  --cyan-dim: rgba(0, 212, 200, 0.12);
+  --coral: #FF6B4A;
+  --coral-dim: rgba(255, 107, 74, 0.12);
+  --emerald: #1FD9A0;
+  --emerald-dim: rgba(31, 217, 160, 0.12);
+  --gold: #F7B731;
+  --gold-dim: rgba(247, 183, 49, 0.12);
+  --glass: rgba(19, 22, 30, 0.88);
+  --glass-border: rgba(59, 130, 246, 0.25);
+  --shadow-blue: 0 20px 50px -10px rgba(37, 99, 235, 0.25);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--fb);
+  background-color: var(--bg);
+  color: var(--tx);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: var(--fm);
+}
+
+.font-body {
+  font-family: var(--fb);
+}
+
+/* Modern Electric Blue Gradients */
+.text-blue-gradient {
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #2563EB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+body.lm .text-blue-gradient {
+  background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 60%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-cyan-gradient {
+  background: linear-gradient(135deg, #38BDF8 0%, #06B6D4 60%, #10B981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glow effects */
+.blue-glow {
+  box-shadow: 0 0 40px -5px rgba(37, 99, 235, 0.3);
+}
+
+body.lm .blue-glow {
+  box-shadow: 0 10px 30px -5px rgba(37, 99, 235, 0.15);
+}
+
+/* Modern Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--blue-primary);
+}
+
+/* Toast Container */
+#toast-c {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border-hi);
+  border-radius: 16px;
+  box-shadow: var(--shadow-blue);
+  color: var(--tx);
+  font-size: 13px;
+  min-width: 280px;
+  max-width: 380px;
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}

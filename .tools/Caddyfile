@@ -1,0 +1,12 @@
+{
+	auto_https off
+	frankenphp
+	order php_server before file_server
+}
+
+:8000 {
+	root * /home/thejoevardy/Downloads/GigGhana
+	encode zstd gzip
+	php_server
+	file_server
+}
