@@ -503,42 +503,42 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
         )}
       </header>
 
-      {/* ══════ WORLD-CLASS DUAL-PERSONA INTERACTIVE STUDIO HERO ══════ */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden border-b border-[var(--border)]">
-        {/* Dynamic Blue & Cyan Ambient Glow */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[900px] h-[550px] rounded-full bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#06B6D4] opacity-[0.10] blur-[150px] pointer-events-none" />
-        <div className="absolute -top-20 -left-20 w-[500px] h-[400px] rounded-full bg-[#1D4ED8] opacity-[0.07] blur-[120px] pointer-events-none" />
+      {/* ══════ WORLD-CLASS RESTRUCTURED HERO SECTION ══════ */}
+      <section className="relative pt-32 pb-20 md:pt-36 md:pb-24 overflow-hidden border-b border-[var(--border)]">
+        {/* Ambient Gradient Mesh */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] rounded-full bg-gradient-to-b from-[#2563EB]/10 via-[#3B82F6]/5 to-transparent blur-[140px] pointer-events-none" />
+        <div className="absolute -top-24 -left-24 w-[400px] h-[400px] rounded-full bg-[#009E95]/5 blur-[120px] pointer-events-none" />
 
-        {/* Subtle geometric matrix grid */}
+        {/* Subtle geometric dot matrix */}
         <div
-          className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          className="absolute inset-0 opacity-[0.025] pointer-events-none"
           style={{
-            backgroundImage: `linear-gradient(to right, var(--tx) 1px, transparent 1px), linear-gradient(to bottom, var(--tx) 1px, transparent 1px)`,
-            backgroundSize: '40px 40px',
+            backgroundImage: `radial-gradient(var(--tx) 1px, transparent 1px)`,
+            backgroundSize: '28px 28px',
           }}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Left Column: Copy, Switcher & Super-Search */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Column: Value Prop, Perspective Switcher & Search */}
             <div className="lg:col-span-7 text-left space-y-6">
-              {/* Dynamic Rotating Profession Ticker Badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--blue-dim)] border border-[var(--border-hi)] text-xs font-semibold text-[#2563EB] shadow-sm">
+              {/* Badge + Dynamic Ticker */}
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[var(--blue-dim)] border border-[var(--border-hi)] text-xs font-semibold text-[#2563EB] shadow-xs">
                 <span className="flex h-2 w-2 rounded-full bg-[#2563EB] animate-pulse" />
                 <span>Ghana&apos;s #1 Marketplace for</span>
-                <span className="font-heading font-extrabold text-[#2563EB] transition-all duration-300">
+                <span className="font-heading font-extrabold text-[#2563EB]">
                   {tickerItems[tickerIndex]}
                 </span>
               </div>
 
-              {/* Perspective Selector Tabs */}
+              {/* Persona Switcher Tabs */}
               <div>
-                <div className="inline-flex items-center p-1 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] shadow-inner">
+                <div className="inline-flex items-center p-1 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] shadow-xs">
                   <button
                     onClick={() => setRole('hire')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                       role === 'hire'
-                        ? 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white shadow-md shadow-blue-500/20 scale-[1.02]'
+                        ? 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white shadow-md shadow-blue-500/20'
                         : 'text-[var(--tx-2)] hover:text-[var(--tx)]'
                     }`}
                   >
@@ -548,7 +548,7 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
                     onClick={() => setRole('work')}
                     className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                       role === 'work'
-                        ? 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white shadow-md shadow-blue-500/20 scale-[1.02]'
+                        ? 'bg-gradient-to-r from-[#2563EB] to-[#3B82F6] text-white shadow-md shadow-blue-500/20'
                         : 'text-[var(--tx-2)] hover:text-[var(--tx)]'
                     }`}
                   >
@@ -557,8 +557,8 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
                 </div>
               </div>
 
-              {/* Bold Punchy Headline */}
-              <h1 className="text-4xl sm:text-6xl font-extrabold font-heading tracking-tight text-[var(--tx)] leading-[1.1]">
+              {/* Headline */}
+              <h1 className="text-4xl sm:text-5xl lg:text-[56px] font-extrabold font-heading tracking-tight text-[var(--tx)] leading-[1.12]">
                 {role === 'hire' ? (
                   <>
                     Hire Vetted Ghanaian Talent.
@@ -587,7 +587,7 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
                   : 'GigGhana de Ghanafoɔ nyinaa ho adwuma na wɔtua ka pɛ — IT, adwuma, yadeɛ, adesua, ahosiesie ne ebi.'}
               </p>
 
-              {/* Super-Search Capsule */}
+              {/* Streamlined Super-Search Capsule */}
               <div className="relative max-w-2xl">
                 <form
                   onSubmit={(e) => {
@@ -645,7 +645,7 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
 
                   <button
                     type="submit"
-                    className="px-6 py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:brightness-110 transition-all shrink-0 font-heading shadow-md shadow-blue-500/25"
+                    className="px-6 py-2.5 rounded-xl font-bold text-xs text-white bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:brightness-110 transition-all shrink-0 font-heading shadow-md shadow-blue-500/25 cursor-pointer"
                   >
                     {role === 'hire' ? 'Find Talent' : 'Search Jobs'}
                   </button>
@@ -677,7 +677,7 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
 
               {/* Trending Quick Search Badges */}
               <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--tx-3)] pt-1">
-                <span>Trending:</span>
+                <span className="font-semibold">Trending:</span>
                 {trendingSkills.map((ts, idx) => (
                   <a
                     key={idx}
@@ -690,160 +690,132 @@ export default function ModernBlueLandingPage({ initialData }: Props) {
               </div>
             </div>
 
-            {/* Right Column: Multi-Layered 3D Morphing Stage */}
+            {/* Right Column: Interactive Stage Showcase */}
             <div className="lg:col-span-5 relative">
               {role === 'hire' ? (
                 /* ── HIRE MODE STAGE ── */
-                <div>
-                  {/* Main Card: Verified Freelancer Match Showcase */}
-                  <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-6 sm:p-7 shadow-2xl backdrop-blur-2xl transition-all">
-                    {/* Card Top */}
-                    <div className="flex items-start justify-between gap-4 pb-5 border-b border-[var(--border)] mb-5">
-                      <div className="flex items-center gap-3.5">
-                        <div className="relative">
-                          <div className="h-14 w-14 rounded-2xl overflow-hidden border border-[var(--border-hi)] shadow-md bg-gradient-to-tr from-[#2563EB] to-[#0284C7] flex items-center justify-center">
-                            <img
-                              src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=400&q=80&auto=format"
-                              alt="Kwame Asante"
-                              className="h-full w-full object-cover"
-                            />
-                          </div>
-                          <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#0DAF80] text-[9px] text-white font-bold ring-2 ring-[var(--card)]">
-                            ✓
+                <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-6 sm:p-7 shadow-2xl backdrop-blur-2xl transition-all">
+                  {/* Card Top */}
+                  <div className="flex items-start justify-between gap-4 pb-5 border-b border-[var(--border)] mb-5">
+                    <div className="flex items-center gap-3.5">
+                      <div className="relative">
+                        <div className="h-14 w-14 rounded-2xl overflow-hidden border border-[var(--border-hi)] shadow-md bg-gradient-to-tr from-[#2563EB] to-[#0284C7] flex items-center justify-center">
+                          <img
+                            src="https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=400&q=80&auto=format"
+                            alt="Kwame Asante"
+                            className="h-full w-full object-cover"
+                          />
+                        </div>
+                        <span className="absolute -bottom-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#0DAF80] text-[9px] text-white font-bold ring-2 ring-[var(--card)]">
+                          ✓
+                        </span>
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-1.5 text-base font-bold text-[var(--tx)] font-heading">
+                          <span>Kwame Asante</span>
+                          <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#2563EB]/15 text-[#2563EB] font-bold">
+                            🇬🇭 NIA Verified
                           </span>
                         </div>
-                        <div>
-                          <div className="flex items-center gap-1.5 text-base font-bold text-[var(--tx)] font-heading">
-                            <span>Kwame Asante</span>
-                            <span className="text-[10px] px-2 py-0.5 rounded-md bg-[#2563EB]/15 text-[#2563EB] font-bold">
-                              🇬🇭 NIA Verified
-                            </span>
-                          </div>
-                          <div className="text-xs text-[var(--tx-3)] flex items-center gap-1 mt-0.5">
-                            <MapPin className="w-3 h-3 text-[#2563EB]" />
-                            <span>Accra Prime, Ghana</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs text-[var(--tx-3)]">Hourly Rate</div>
-                        <div className="text-base font-bold text-[var(--tx)] font-heading">
-                          ₵85.00<span className="text-xs text-[var(--tx-3)] font-normal">/hr</span>
+                        <div className="text-xs text-[var(--tx-3)] flex items-center gap-1 mt-0.5">
+                          <MapPin className="w-3 h-3 text-[#2563EB]" />
+                          <span>Accra Prime, Ghana</span>
                         </div>
                       </div>
                     </div>
-
-                    {/* Card Body: Live Contract Progress */}
-                    <div className="p-4 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] space-y-3 mb-5">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-[var(--tx-2)]">Active Milestone: Custom Web Platform</span>
-                        <span className="font-bold text-[#0DAF80] font-mono">₵2,500.00 GHS</span>
+                    <div className="text-right">
+                      <div className="text-xs text-[var(--tx-3)]">Hourly Rate</div>
+                      <div className="text-base font-bold text-[var(--tx)] font-heading">
+                        ₵85.00<span className="text-xs text-[var(--tx-3)] font-normal">/hr</span>
                       </div>
-                      <div className="w-full bg-[var(--border)] h-2 rounded-full overflow-hidden">
-                        <div className="bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#0DAF80] h-full w-[85%]" />
-                      </div>
-                      <div className="flex items-center justify-between text-[11px] text-[var(--tx-3)]">
-                        <span>⚡ 85% Completed</span>
-                        <span className="text-[#2563EB] font-semibold">Funds Locked in Vault</span>
-                      </div>
-                    </div>
-
-                    {/* Rating & Action Buttons */}
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1.5 text-xs font-bold text-amber-500">
-                        <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
-                        <span>4.98</span>
-                        <span className="text-[var(--tx-3)] font-normal">(58 verified jobs)</span>
-                      </div>
-
-                      <a
-                        href="/search/providers.php"
-                        className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:brightness-110 shadow-md shadow-blue-500/20 transition-all font-heading"
-                      >
-                        Direct Hire
-                      </a>
                     </div>
                   </div>
 
-                  {/* Layer 2: Floating MoMo Payout Alert */}
-                  <div className="absolute -bottom-5 -left-3 z-20 hidden sm:flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-hi)] shadow-xl text-xs font-bold text-[var(--tx)] backdrop-blur-xl">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#0DAF80]/15 text-[#0DAF80]">
-                      <Smartphone className="w-3.5 h-3.5" />
+                  {/* Card Body: Live Contract Progress */}
+                  <div className="p-4 rounded-2xl bg-[var(--surface-2)] border border-[var(--border)] space-y-3 mb-5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-[var(--tx-2)]">Active Milestone: Custom Web Platform</span>
+                      <span className="font-bold text-[#0DAF80] font-mono">₵2,500.00 GHS</span>
                     </div>
-                    <div>
-                      <div className="text-[11px] font-bold text-[#0DAF80]">Instant MoMo Payout</div>
-                      <div className="text-[10px] text-[var(--tx-3)]">₵2,500.00 credited in 38s</div>
+                    <div className="w-full bg-[var(--border)] h-2 rounded-full overflow-hidden">
+                      <div className="bg-gradient-to-r from-[#2563EB] via-[#3B82F6] to-[#0DAF80] h-full w-[85%]" />
                     </div>
+                    <div className="flex items-center justify-between text-[11px] text-[var(--tx-3)]">
+                      <span>⚡ 85% Completed</span>
+                      <span className="text-[#2563EB] font-semibold">Funds Locked in Vault</span>
+                    </div>
+                  </div>
+
+                  {/* Rating & Action Buttons */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-1.5 text-xs font-bold text-amber-500">
+                      <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                      <span>4.98</span>
+                      <span className="text-[var(--tx-3)] font-normal">(58 verified jobs)</span>
+                    </div>
+
+                    <a
+                      href="/search/providers.php"
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:brightness-110 shadow-md shadow-blue-500/20 transition-all font-heading"
+                    >
+                      Direct Hire
+                    </a>
                   </div>
                 </div>
               ) : (
                 /* ── WORK MODE STAGE ── */
-                <div>
-                  {/* Main Card: High-Paying Commission Showcase */}
-                  <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-6 sm:p-7 shadow-2xl backdrop-blur-2xl transition-all">
-                    {/* Card Top */}
-                    <div className="flex items-start justify-between gap-4 pb-5 border-b border-[var(--border)] mb-5">
-                      <div>
-                        <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-[#0DAF80]/15 text-[#0DAF80] mb-1.5">
-                          ⚡ 100% Escrow Funded
-                        </span>
-                        <h3 className="font-heading font-extrabold text-base text-[var(--tx)]">
-                          Fintech Mobile App Redesign
-                        </h3>
-                        <div className="text-xs text-[var(--tx-3)] flex items-center gap-1.5 mt-0.5">
-                          <span>GoldCoast Tech Ltd</span>
-                          <span>•</span>
-                          <span className="text-[#2563EB]">Accra Prime (Remote)</span>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs text-[var(--tx-3)]">Fixed Budget</div>
-                        <div className="text-base font-bold text-[#0DAF80] font-mono">
-                          ₵4,800.00
-                        </div>
+                <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-6 sm:p-7 shadow-2xl backdrop-blur-2xl transition-all">
+                  {/* Card Top */}
+                  <div className="flex items-start justify-between gap-4 pb-5 border-b border-[var(--border)] mb-5">
+                    <div>
+                      <span className="inline-block text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-[#0DAF80]/15 text-[#0DAF80] mb-1.5">
+                        ⚡ 100% Escrow Funded
+                      </span>
+                      <h3 className="font-heading font-extrabold text-base text-[var(--tx)]">
+                        Fintech Mobile App Redesign
+                      </h3>
+                      <div className="text-xs text-[var(--tx-3)] flex items-center gap-1.5 mt-0.5">
+                        <span>GoldCoast Tech Ltd</span>
+                        <span>•</span>
+                        <span className="text-[#2563EB]">Accra Prime (Remote)</span>
                       </div>
                     </div>
-
-                    {/* Skill Tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-5">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
-                        React Native
-                      </span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
-                        Flutter
-                      </span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
-                        REST API
-                      </span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
-                        UI/UX
-                      </span>
-                    </div>
-
-                    {/* Footer Action */}
-                    <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]">
-                      <div className="text-xs text-[var(--tx-3)]">
-                        <span>Posted 12m ago</span> · <span className="text-emerald-500 font-semibold">2 Proposals</span>
+                    <div className="text-right">
+                      <div className="text-xs text-[var(--tx-3)]">Fixed Budget</div>
+                      <div className="text-base font-bold text-[#0DAF80] font-mono">
+                        ₵4,800.00
                       </div>
-
-                      <a
-                        href="/jobs.php"
-                        className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#009E95] to-[#0DAF80] hover:brightness-110 shadow-md shadow-emerald-500/20 transition-all font-heading"
-                      >
-                        Apply with 1 Click
-                      </a>
                     </div>
                   </div>
 
-                  {/* Layer 2: Sub-60s MoMo Guarantee */}
-                  <div className="absolute -bottom-5 -left-3 z-20 hidden sm:flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-[var(--surface)] border border-[var(--border-hi)] shadow-xl text-xs font-bold text-[var(--tx)] backdrop-blur-xl">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-xl bg-[#2563EB]/15 text-[#2563EB]">
-                      <Zap className="w-3.5 h-3.5" />
+                  {/* Skill Tags */}
+                  <div className="flex flex-wrap gap-1.5 mb-5">
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
+                      React Native
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
+                      Flutter
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
+                      REST API
+                    </span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-2)] border border-[var(--border)]">
+                      UI/UX
+                    </span>
+                  </div>
+
+                  {/* Footer Action */}
+                  <div className="flex items-center justify-between pt-3 border-t border-[var(--border)]">
+                    <div className="text-xs text-[var(--tx-3)]">
+                      <span>Posted 12m ago</span> · <span className="text-emerald-500 font-semibold">2 Proposals</span>
                     </div>
-                    <div>
-                      <div className="text-[11px] font-bold text-[#2563EB]">Guaranteed Settlement</div>
-                      <div className="text-[10px] text-[var(--tx-3)]">MTN MoMo, Telecel &amp; AT Money</div>
-                    </div>
+
+                    <a
+                      href="/jobs.php"
+                      className="px-4 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-[#009E95] to-[#0DAF80] hover:brightness-110 shadow-md shadow-emerald-500/20 transition-all font-heading"
+                    >
+                      Apply with 1 Click
+                    </a>
                   </div>
                 </div>
               )}
