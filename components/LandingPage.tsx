@@ -140,6 +140,7 @@ export default function LandingPage({ initialData }: Props) {
 
   // Hero carousel
   const [heroSlide, setHeroSlide] = useState(0);
+  const [isHeroPaused, setIsHeroPaused] = useState(false);
 
   // Hero panel
   const [panelSlide, setPanelSlide] = useState(0);
@@ -249,11 +250,12 @@ export default function LandingPage({ initialData }: Props) {
 
   // Hero carousel interval (4 custom Ghanaian occupation 8K slides)
   useEffect(() => {
+    if (isHeroPaused) return;
     const timer = setInterval(() => {
       setHeroSlide((prev) => (prev + 1) % 4);
     }, 5500);
     return () => clearInterval(timer);
-  }, []);
+  }, [isHeroPaused]);
 
   // Hero panel interval
   useEffect(() => {
@@ -581,6 +583,32 @@ export default function LandingPage({ initialData }: Props) {
               )}
             </div>
 
+            {/* 1-Click Quick Discovery Tags */}
+            <div className="hero-quick-tags">
+              <span className="quick-tag-label">Popular:</span>
+              {[
+                { name: 'Painter', icon: '🎨' },
+                { name: 'Contractor', icon: '🏗️' },
+                { name: 'Designer', icon: '🛋️' },
+                { name: 'Carpenter', icon: '🪚' },
+                { name: 'Home Nurse', icon: '🏥' },
+                { name: 'React Dev', icon: '💻' },
+              ].map((t, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  className="quick-tag-pill"
+                  onClick={() => {
+                    setSearchQuery(t.name);
+                    window.location.href = `/search/providers.php?q=${encodeURIComponent(t.name)}`;
+                  }}
+                >
+                  <span>{t.icon}</span>
+                  <span>{t.name}</span>
+                </button>
+              ))}
+            </div>
+
             {/* Action Buttons */}
             <div className="hero-acts">
               <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
@@ -589,6 +617,23 @@ export default function LandingPage({ initialData }: Props) {
               <a href="/auth/register.php?role=provider" className="btn btn-blue btn-lg">
                 I Have Skills
               </a>
+            </div>
+
+            {/* Social Proof Talent Cluster */}
+            <div className="hero-social-proof">
+              <div className="avatar-cluster">
+                <div className="cluster-avatar av-1">👨🏾‍🎨</div>
+                <div className="cluster-avatar av-2">👩🏾‍💼</div>
+                <div className="cluster-avatar av-3">👨🏾‍🔧</div>
+                <div className="cluster-avatar av-4">👩🏾‍⚕️</div>
+                <div className="cluster-avatar av-count">+14k</div>
+              </div>
+              <div className="social-proof-text">
+                <div className="sp-stars">★★★★★</div>
+                <div className="sp-desc">
+                  <strong>14,250+ Verified Ghanaian Pros</strong> across all 16 regions
+                </div>
+              </div>
             </div>
 
             {/* Trust Indicators */}
@@ -614,57 +659,82 @@ export default function LandingPage({ initialData }: Props) {
 
           {/* Right Column: 8K Ghanaian Occupation Visual Showcase */}
           <div className="hero-right-showcase">
-            <div className="showcase-card">
+            <div className="showcase-outer-wrap">
               
-              {/* The 4 8K Occupation Slides */}
-              <div className="showcase-slides">
-                <div className={`showcase-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
-                <div className={`showcase-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
-                <div className={`showcase-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
-                <div className={`showcase-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
+              {/* Quick Trade Selector Tabs */}
+              <div className="showcase-trade-tabs">
+                {[
+                  { label: '🎨 Painter', idx: 0 },
+                  { label: '🏗️ Contractor', idx: 1 },
+                  { label: '🛋️ Designer', idx: 2 },
+                  { label: '💻 Tech Hub', idx: 3 },
+                ].map((item) => (
+                  <button
+                    key={item.idx}
+                    type="button"
+                    className={`sc-tab-btn ${heroSlide === item.idx ? 'active' : ''}`}
+                    onClick={() => setHeroSlide(item.idx)}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </div>
 
-              {/* Top Floating Badge */}
-              <div className="showcase-top-badge">
-                <span className="live-pulse-dot" />
-                <span>
-                  {heroSlide === 0
-                    ? '🎨 Master Decorative Painter · Accra'
-                    : heroSlide === 1
-                    ? '🏗️ Certified Building Contractor · Airport City'
-                    : heroSlide === 2
-                    ? '🛋️ Luxury Interior Designer · East Legon'
-                    : '💻 Senior Tech Innovators · Accra Tech Hub'}
-                </span>
-              </div>
+              <div
+                className="showcase-card"
+                onMouseEnter={() => setIsHeroPaused(true)}
+                onMouseLeave={() => setIsHeroPaused(false)}
+              >
+                {/* The 4 8K Occupation Slides */}
+                <div className="showcase-slides">
+                  <div className={`showcase-slide hs1 ${heroSlide === 0 ? 'active' : ''}`} />
+                  <div className={`showcase-slide hs2 ${heroSlide === 1 ? 'active' : ''}`} />
+                  <div className={`showcase-slide hs3 ${heroSlide === 2 ? 'active' : ''}`} />
+                  <div className={`showcase-slide hs4 ${heroSlide === 3 ? 'active' : ''}`} />
+                </div>
 
-              {/* Bottom Floating Stats Strip */}
-              <div className="showcase-bottom-card">
-                <div className="showcase-meta-row">
-                  <div className="showcase-stat-item">
-                    <div className="showcase-val">🇬🇭 NIA Verified</div>
-                    <div className="showcase-lbl">Biometric ID KYC</div>
-                  </div>
-                  <div className="showcase-stat-item">
-                    <div className="showcase-val">★ 5.0 Rating</div>
-                    <div className="showcase-lbl">Verified Reviews</div>
-                  </div>
-                  <div className="showcase-stat-item">
-                    <div className="showcase-val">⚡ Sub-60s MoMo</div>
-                    <div className="showcase-lbl">Instant Settlement</div>
+                {/* Top Floating Badge */}
+                <div className="showcase-top-badge">
+                  <span className="live-pulse-dot" />
+                  <span>
+                    {heroSlide === 0
+                      ? '🎨 Master Decorative Painter · Accra'
+                      : heroSlide === 1
+                      ? '🏗️ Certified Building Contractor · Airport City'
+                      : heroSlide === 2
+                      ? '🛋️ Luxury Interior Designer · East Legon'
+                      : '💻 Senior Tech Innovators · Accra Tech Hub'}
+                  </span>
+                </div>
+
+                {/* Bottom Floating Stats Strip */}
+                <div className="showcase-bottom-card">
+                  <div className="showcase-meta-row">
+                    <div className="showcase-stat-item">
+                      <div className="showcase-val">🇬🇭 NIA Verified</div>
+                      <div className="showcase-lbl">Biometric ID KYC</div>
+                    </div>
+                    <div className="showcase-stat-item">
+                      <div className="showcase-val">★ 5.0 Rating</div>
+                      <div className="showcase-lbl">Verified Reviews</div>
+                    </div>
+                    <div className="showcase-stat-item">
+                      <div className="showcase-val">⚡ Sub-60s MoMo</div>
+                      <div className="showcase-lbl">Instant Settlement</div>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Floating Rotator Pagination */}
-              <div className="showcase-dots">
-                {[0, 1, 2, 3].map((idx) => (
-                  <div
-                    key={idx}
-                    className={`sc-dot ${heroSlide === idx ? 'active' : ''}`}
-                    onClick={() => setHeroSlide(idx)}
-                  />
-                ))}
+                {/* Floating Rotator Pagination */}
+                <div className="showcase-dots">
+                  {[0, 1, 2, 3].map((idx) => (
+                    <div
+                      key={idx}
+                      className={`sc-dot ${heroSlide === idx ? 'active' : ''}`}
+                      onClick={() => setHeroSlide(idx)}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
           </div>

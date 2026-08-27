@@ -873,13 +873,61 @@ body.lm .auto-text, :root .auto-text {
   color: #0F172A;
 }
 
-.auto-cat {
-  font-size: 11.5px;
-  color: rgba(226, 232, 240, 0.65);
+/* QUICK DISCOVERY TAGS */
+.hero-quick-tags {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: -16px;
+  margin-bottom: 28px;
 }
 
-body.lm .auto-cat, :root .auto-cat {
+.quick-tag-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(226, 232, 240, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+body.lm .quick-tag-label, :root .quick-tag-label {
   color: #64748B;
+}
+
+.quick-tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #E2E8F0;
+  cursor: pointer;
+  transition: var(--e);
+}
+
+body.lm .quick-tag-pill, :root .quick-tag-pill {
+  background: #FFFFFF;
+  border-color: rgba(15, 23, 42, 0.08);
+  color: #1E293B;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+}
+
+.quick-tag-pill:hover {
+  background: rgba(0, 212, 200, 0.15);
+  border-color: var(--cyan);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+body.lm .quick-tag-pill:hover, :root .quick-tag-pill:hover {
+  background: rgba(0, 168, 157, 0.10);
+  border-color: #00A89D;
+  color: #00A89D;
 }
 
 .hero-acts {
@@ -887,8 +935,147 @@ body.lm .auto-cat, :root .auto-cat {
   align-items: center;
   gap: 14px;
   flex-wrap: wrap;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
   animation: fadU 0.7s 0.3s ease both;
+}
+
+/* SOCIAL PROOF TALENT CLUSTER */
+.hero-social-proof {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 26px;
+  animation: fadU 0.7s 0.35s ease both;
+}
+
+.avatar-cluster {
+  display: flex;
+  align-items: center;
+}
+
+.cluster-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid #080C14;
+  margin-left: -8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: #1E293B;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+body.lm .cluster-avatar, :root .cluster-avatar {
+  border-color: #F8FAFC;
+  background: #E2E8F0;
+}
+
+.cluster-avatar:first-child {
+  margin-left: 0;
+}
+
+.cluster-avatar.av-1 { background: #3B82F6; }
+.cluster-avatar.av-2 { background: #EC4899; }
+.cluster-avatar.av-3 { background: #F59E0B; }
+.cluster-avatar.av-4 { background: #10B981; }
+
+.cluster-avatar.av-count {
+  background: var(--cyan);
+  color: #080C14;
+  font-size: 10px;
+  font-weight: 800;
+  font-family: var(--fm);
+}
+
+.social-proof-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-stars {
+  font-size: 11px;
+  color: #F59E0B;
+  letter-spacing: 1px;
+}
+
+.sp-desc {
+  font-size: 12.5px;
+  color: rgba(226, 232, 240, 0.85);
+}
+
+body.lm .sp-desc, :root .sp-desc {
+  color: #334155;
+}
+
+.sp-desc strong {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+body.lm .sp-desc strong, :root .sp-desc strong {
+  color: #0F172A;
+}
+
+/* SHOWCASE WRAPPER & TRADE TABS */
+.showcase-outer-wrap {
+  width: 100%;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.showcase-trade-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sc-tab-btn {
+  padding: 6px 14px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(226, 232, 240, 0.7);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+body.lm .sc-tab-btn, :root .sc-tab-btn {
+  background: #FFFFFF;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #64748B;
+}
+
+.sc-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+body.lm .sc-tab-btn:hover, :root .sc-tab-btn:hover {
+  background: #F1F5F9;
+  color: #0F172A;
+}
+
+.sc-tab-btn.active {
+  background: var(--cyan);
+  border-color: var(--cyan);
+  color: #080C14;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(0, 212, 200, 0.25);
+}
+
+body.lm .sc-tab-btn.active, :root .sc-tab-btn.active {
+  background: #00A89D;
+  border-color: #00A89D;
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(0, 168, 157, 0.25);
 }
 
 .hero-trust {
