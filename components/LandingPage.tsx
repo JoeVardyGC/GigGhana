@@ -153,14 +153,15 @@ export default function LandingPage({ initialData }: Props) {
   // Hero panel
   const [panelSlide, setPanelSlide] = useState(0);
 
+  // Search input & autocomplete & region
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
+
   // Profession ticker
   const [tickerIndex, setTickerIndex] = useState(0);
   const [tickerFade, setTickerFade] = useState(false);
-
-  // Search input & autocomplete
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
 
   // Reviews carousel
   const [rvPos, setRvPos] = useState(0);
@@ -183,7 +184,7 @@ export default function LandingPage({ initialData }: Props) {
   const [animatedStats, setAnimatedStats] = useState(false);
 
   const showToast = (title: string, msg: string, type: 'success' | 'error' | 'warning' | 'info' = 'info') => {
-    const id = Date.now() + Math.random();
+    const id = Date.now();
     setToasts((prev) => [...prev, { id, title, msg, type }]);
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
@@ -203,24 +204,40 @@ export default function LandingPage({ initialData }: Props) {
     }
   };
 
-  // Initialize theme from localStorage
+  // Initialize theme from localStorage & cookie
   useEffect(() => {
     const savedTheme = localStorage.getItem('gg_theme');
-    if (savedTheme === 'light') {
+    if (savedTheme === 'light' || (!savedTheme && document.documentElement.classList.contains('lm'))) {
       setIsLight(true);
+      document.documentElement.classList.add('lm');
       document.body.classList.add('lm');
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
+    } else if (savedTheme === 'dark') {
+      setIsLight(false);
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+      document.documentElement.classList.remove('lm');
+      document.body.classList.remove('lm');
     }
   }, []);
 
   const toggleTheme = () => {
     const nextTheme = !isLight;
     setIsLight(nextTheme);
+    const themeStr = nextTheme ? 'light' : 'dark';
+    localStorage.setItem('gg_theme', themeStr);
+    document.cookie = `gg_theme=${themeStr};path=/;max-age=31536000;SameSite=Lax`;
     if (nextTheme) {
+      document.documentElement.classList.add('lm');
       document.body.classList.add('lm');
-      localStorage.setItem('gg_theme', 'light');
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
     } else {
+      document.documentElement.classList.remove('lm');
       document.body.classList.remove('lm');
-      localStorage.setItem('gg_theme', 'dark');
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
     }
   };
 
@@ -403,9 +420,6 @@ export default function LandingPage({ initialData }: Props) {
         categories={categories}
       />
 
-      {/* ══════ FLOATING QUICK DOCK ISLAND ══════ */}
-      <FloatingDock onOpenSearch={() => setIsCommandOpen(true)} />
-
       {/* ══════ NAVBAR ══════ */}
       <nav className={`navbar ${scrolledNav ? 'on' : ''}`} id="nav">
         <a href="/" className="logo">
@@ -422,18 +436,6 @@ export default function LandingPage({ initialData }: Props) {
           <a href="#trending">Trending</a>
         </div>
         <div className="nav-acts">
-          <button
-            onClick={() => setIsCommandOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border border-[var(--border)] bg-[var(--surface)] text-[var(--tx-2)] hover:text-[var(--cyan)] hover:border-[rgba(0,212,200,0.3)] transition-all cursor-pointer"
-            title="Search (Cmd + K)"
-          >
-            <Search className="w-3.5 h-3.5 text-[var(--cyan)]" />
-            <span className="hidden md:inline">Quick Search</span>
-            <kbd className="hidden md:inline-block text-[9px] font-mono px-1.5 py-0.5 rounded bg-[var(--surface-2)] text-[var(--tx-3)]">
-              ⌘K
-            </kbd>
-          </button>
-
           <div className="lang-pill" onClick={toggleLang} title="Switch language">
             🌍 <span>{lang === 'en' ? 'EN' : 'TW'}</span>
             <div className="lang-inner">{lang === 'en' ? 'TW' : 'EN'}</div>
@@ -493,7 +495,7 @@ export default function LandingPage({ initialData }: Props) {
         </div>
 
         {/* Hero Right Panel */}
-        <div className="hero-panel">
+        <div className="hero-panel" id="heroPanel">
           <div className={`panel-slide ${panelSlide === 0 ? 'active' : ''}`}>
             <div className="p-icon">🚀</div>
             <h3>Hire Elite African Talent</h3>
@@ -513,7 +515,7 @@ export default function LandingPage({ initialData }: Props) {
             <h3>Every Ghanaian Skill Counts</h3>
             <p>From software engineers to skilled tradespeople — GigGhana connects every talent to paying opportunities.</p>
           </div>
-          <div className="panel-dots">
+          <div className="panel-dots" id="pDots">
             <div className={`p-dot ${panelSlide === 0 ? 'active' : ''}`} onClick={() => setPanelSlide(0)} />
             <div className={`p-dot ${panelSlide === 1 ? 'active' : ''}`} onClick={() => setPanelSlide(1)} />
             <div className={`p-dot ${panelSlide === 2 ? 'active' : ''}`} onClick={() => setPanelSlide(2)} />
@@ -552,7 +554,7 @@ export default function LandingPage({ initialData }: Props) {
                 className="search-wrap"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const target = `/search/providers.php?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`;
+                  const target = `/search/providers.php?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}&region=${encodeURIComponent(selectedRegion)}`;
                   window.location.href = target;
                 }}
               >
@@ -579,9 +581,21 @@ export default function LandingPage({ initialData }: Props) {
                     setAutocompleteOpen(true);
                   }}
                   onFocus={() => setAutocompleteOpen(true)}
-                  placeholder="e.g. Carpenter, Nurse, React Developer, Chef… (or ⌘K)"
+                  placeholder="e.g. Carpenter, Nurse, React Developer, Chef…"
                   autoComplete="off"
                 />
+                <div className="search-div" />
+                <select
+                  value={selectedRegion}
+                  onChange={(e) => setSelectedRegion(e.target.value)}
+                >
+                  <option value="">🇬🇭 All Ghana</option>
+                  <option value="accra">Accra &amp; Tema</option>
+                  <option value="kumasi">Kumasi &amp; Ashanti</option>
+                  <option value="takoradi">Takoradi &amp; Western</option>
+                  <option value="tamale">Tamale &amp; Northern</option>
+                  <option value="remote">Remote / Online</option>
+                </select>
                 <div className="search-div" />
                 <select
                   value={selectedCategory}
