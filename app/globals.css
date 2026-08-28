@@ -2221,36 +2221,63 @@ html.dark .artisan-strip-divider, [data-theme="dark"] .artisan-strip-divider {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* Skills Chips (Refined Modern Pills) */
+/* Skills Chips (Modern Micro-Pills with Indicator Dot) */
 .artisan-skills-cloud {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
-  margin-top: 1px;
+  gap: 6px;
+  margin-top: 2px;
 }
 
 .artisan-skill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 11px;
   font-weight: 600;
   color: var(--tx-2);
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid var(--bd);
-  padding: 3px 8px;
-  border-radius: 7px;
-  transition: all 0.2s ease;
+  background: rgba(0, 0, 0, 0.025);
+  border: 1px solid var(--bd2);
+  padding: 3.5px 9px;
+  border-radius: 50px;
+  font-family: var(--fm);
+  letter-spacing: -0.01em;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   line-height: 1.2;
+}
+
+.skill-tag-dot {
+  width: 4.5px;
+  height: 4.5px;
+  border-radius: 50%;
+  background: #00D4C8;
+  opacity: 0.8;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
 }
 
 html.dark .artisan-skill-tag, [data-theme="dark"] .artisan-skill-tag {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   color: #CBD5E1;
 }
 
+html.lm .artisan-skill-tag, [data-theme="light"] .artisan-skill-tag {
+  background: rgba(15, 23, 42, 0.035);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #334155;
+}
+
 .artisan-skill-tag:hover {
-  border-color: var(--cyan);
+  border-color: rgba(0, 212, 200, 0.4);
   color: var(--cyan);
-  background: rgba(0, 212, 200, 0.05);
+  background: rgba(0, 212, 200, 0.06);
+  transform: translateY(-1px);
+}
+
+.artisan-skill-tag:hover .skill-tag-dot {
+  opacity: 1;
+  box-shadow: 0 0 6px #00D4C8;
 }
 
 /* Footer & CTA */

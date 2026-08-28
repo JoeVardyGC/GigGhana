@@ -819,11 +819,12 @@ const occupationSlides = [
                           </div>
                         </div>
 
-                        {/* Capability Skills Tags */}
+                        {/* Capability Skills Tags (Modern Micro-Pills) */}
                         <div className="artisan-skills-cloud">
                           {skills.slice(0, 3).map((skill: string, sIdx: number) => (
                             <span key={sIdx} className="artisan-skill-tag">
-                              {skill}
+                              <span className="skill-tag-dot" />
+                              <span>{skill}</span>
                             </span>
                           ))}
                         </div>
