@@ -53,6 +53,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
     first_name: 'Emmanuel',
     last_name: 'Agyeman',
+    is_verified: 1,
   },
   {
     id: 102,
@@ -70,6 +71,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 65 * 60 * 1000).toISOString(),
     first_name: 'Selorm',
     last_name: 'Klutse',
+    is_verified: 1,
   },
   {
     id: 103,
@@ -87,6 +89,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 130 * 60 * 1000).toISOString(),
     first_name: 'Kwabena',
     last_name: 'Osei',
+    is_verified: 0,
   },
   {
     id: 104,
@@ -104,6 +107,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 210 * 60 * 1000).toISOString(),
     first_name: 'Nana',
     last_name: 'Yeboah',
+    is_verified: 1,
   },
   {
     id: 105,
@@ -121,6 +125,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 320 * 60 * 1000).toISOString(),
     first_name: 'Ekow',
     last_name: 'Baidoo',
+    is_verified: 0,
   },
   {
     id: 106,
@@ -138,6 +143,7 @@ export const fallbackRecentJobs = [
     created_at: new Date(Date.now() - 480 * 60 * 1000).toISOString(),
     first_name: 'Akosua',
     last_name: 'Darko',
+    is_verified: 1,
   },
 ];
 
@@ -233,8 +239,9 @@ export const fallbackFeaturedProviders = [
     cat_icon: 'pen-tool',
     location: 'Cape Coast, Central',
     avatar: '/images/occupations/executive.jpg',
-    is_verified: 1,
-    badge: '⭐ Premium Designer',
+    is_verified: 0,
+    membership_tier: 'beginner',
+    badge: 'Registered Provider',
     rating_avg: 5.0,
     rating_count: 29,
     completed_jobs: 23,

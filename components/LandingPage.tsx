@@ -754,10 +754,11 @@ const occupationSlides = [
                   const skills = p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : [];
                   const rating = Number(p.rating_avg || 5.0);
                   const jobsCount = Number(p.completed_jobs || (idx === 0 ? 42 : 25));
+                  const isVerified = Boolean(p.is_verified === 1 || p.is_verified === true || p.is_kyc_verified || p.ghana_card_verified);
                   const tier = p.membership_tier || p.tier || (
-                    p.badge?.toLowerCase().includes('premium') || p.badge?.toLowerCase().includes('elite') || (jobsCount >= 30)
+                    (p.badge?.toLowerCase().includes('premium') || p.badge?.toLowerCase().includes('elite') || jobsCount >= 30) && isVerified
                       ? 'premium'
-                      : p.badge?.toLowerCase().includes('verified') || (p.is_verified && jobsCount >= 5)
+                      : (p.badge?.toLowerCase().includes('verified') || jobsCount >= 5) && isVerified
                         ? 'verified'
                         : 'beginner'
                   );
@@ -788,7 +789,9 @@ const occupationSlides = [
                         <div className="artisan-name-row">
                           <div className="artisan-name-title">
                             <span>{p.first_name} {p.last_name}</span>
-                            <BadgeCheck className="w-[22px] h-[22px] text-[#00D4C8] fill-[#00D4C8]/15 shrink-0" strokeWidth={2.2} aria-label="Verified Provider" />
+                            {isVerified && (
+                              <BadgeCheck className="w-[22px] h-[22px] text-[#00D4C8] fill-[#00D4C8]/15 shrink-0" strokeWidth={2.2} aria-label="Verified Ghana Card Provider" />
+                            )}
                           </div>
                           <div className="artisan-rate-capsule">
                             <span className="artisan-rate-val">{formatCurrency(p.hourly_rate || 85)}</span>
@@ -809,7 +812,7 @@ const occupationSlides = [
                         </h3>
 
                         <p className="artisan-studio-bio">
-                          {p.bio || 'Verified master artisan & specialist providing reliable, escrow-protected services across Ghana.'}
+                          {p.bio || 'Specialist providing reliable, escrow-protected services across Ghana.'}
                         </p>
 
                         {/* Performance Stats Strip (Modern 2-Pillar Metric Capsule) */}
@@ -843,11 +846,11 @@ const occupationSlides = [
 
                         {/* Card Action Footer */}
                         <div className="artisan-studio-footer">
-                          {tier === 'premium' ? (
+                          {tier === 'premium' && isVerified ? (
                             <div className="artisan-footer-tier artisan-tier-premium">
                               ⭐ Premium
                             </div>
-                          ) : tier === 'verified' ? (
+                          ) : tier === 'verified' && isVerified ? (
                             <div className="artisan-footer-tier artisan-tier-verified">
                               ✓ Verified
                             </div>
@@ -944,6 +947,7 @@ const occupationSlides = [
               <div className="ljf-grid">
                 {latestJobs.map((j: any, idx: number) => {
                   const isFeaturedHeroCard = idx === 0;
+                  const isClientVerified = Boolean(j.is_verified === 1 || j.is_verified === true || j.is_client_verified === 1 || j.client_verified || j.is_kyc_verified || j.ghana_card_verified);
                   return (
                     <div
                       key={j.id || idx}
@@ -970,10 +974,12 @@ const occupationSlides = [
                           <div>
                             <div className="rjh-jc-client-name">
                               <span>{j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}</span>
-                              <span className="rjh-jc-kyc-tag">
-                                <BadgeCheck className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
-                                <span>Verified Employer</span>
-                              </span>
+                              {isClientVerified && (
+                                <span className="rjh-jc-kyc-tag">
+                                  <BadgeCheck className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                                  <span>Verified Employer</span>
+                                </span>
+                              )}
                             </div>
                             <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
                           </div>
