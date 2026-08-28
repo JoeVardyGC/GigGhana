@@ -774,39 +774,40 @@ html.dark .ticker-text, [data-theme="dark"] .ticker-text {
 }
 
 .hero-title {
-  font-size: clamp(36px, 4.8vw, 60px);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  margin-bottom: 20px;
+  font-size: clamp(40px, 5.8vw, 76px);
+  font-weight: 900;
+  line-height: 1.04;
+  letter-spacing: -0.038em;
+  margin-bottom: 22px;
   animation: fadU 0.7s 0.1s ease both;
   color: #FFFFFF;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
 }
 
 html.lm .hero-title, [data-theme="light"] .hero-title {
-  color: #0F172A !important;
+  color: #0B1120 !important;
   text-shadow: none;
 }
 
 html.dark .hero-title, [data-theme="dark"] .hero-title {
   color: #FFFFFF !important;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.55);
 }
 
 .hero-title .gold {
-  background: linear-gradient(135deg, #F59E0B, #E67E22);
+  background: linear-gradient(135deg, #FBBF24, #F59E0B 40%, #E67E22);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 14px rgba(245, 158, 11, 0.3));
 }
 
 .hero-sub {
-  font-size: clamp(15.5px, 1.6vw, 18.5px);
+  font-size: clamp(16px, 1.8vw, 20.5px);
   color: #CBD5E1;
-  max-width: 600px;
+  max-width: 620px;
   margin-bottom: 34px;
   animation: fadU 0.7s 0.2s ease both;
-  line-height: 1.65;
+  line-height: 1.62;
   font-weight: 400;
 }
 
@@ -823,8 +824,8 @@ html.dark .hero-sub, [data-theme="dark"] .hero-sub {
 /* ULTRA-CRISP SUPER SEARCH CAPSULE */
 .search-outer {
   position: relative;
-  max-width: 660px;
-  margin-bottom: 28px;
+  max-width: 700px;
+  margin-bottom: 30px;
   animation: fadU 0.7s 0.25s ease both;
 }
 
@@ -833,7 +834,7 @@ html.dark .hero-sub, [data-theme="dark"] .hero-sub {
   align-items: center;
   background: rgba(15, 23, 42, 0.94);
   border: 1.5px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
+  border-radius: 20px;
   padding: 7px 8px 7px 18px;
   gap: 10px;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
@@ -869,35 +870,43 @@ html.dark .search-wrap:focus-within, [data-theme="dark"] .search-wrap:focus-with
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.4), 0 0 0 3px rgba(0, 212, 200, 0.2);
 }
 
-.search-wrap input {
+.search-input-row {
+  flex: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.search-input-row input {
   flex: 1;
   background: transparent;
   border: none;
   outline: none;
   color: #FFFFFF;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 500;
   font-family: var(--fb);
   min-width: 0;
 }
 
-html.lm .search-wrap input, [data-theme="light"] .search-wrap input {
+html.lm .search-input-row input, [data-theme="light"] .search-input-row input {
   color: #0F172A;
 }
 
-html.dark .search-wrap input, [data-theme="dark"] .search-wrap input {
+html.dark .search-input-row input, [data-theme="dark"] .search-input-row input {
   color: #FFFFFF;
 }
 
-.search-wrap input::placeholder {
+.search-input-row input::placeholder {
   color: rgba(255, 255, 255, 0.45);
 }
 
-html.lm .search-wrap input::placeholder, [data-theme="light"] .search-wrap input::placeholder {
+html.lm .search-input-row input::placeholder, [data-theme="light"] .search-input-row input::placeholder {
   color: #64748B;
 }
 
-html.dark .search-wrap input::placeholder, [data-theme="dark"] .search-wrap input::placeholder {
+html.dark .search-input-row input::placeholder, [data-theme="dark"] .search-input-row input::placeholder {
   color: rgba(255, 255, 255, 0.45);
 }
 
@@ -912,6 +921,26 @@ html.lm .search-div, [data-theme="light"] .search-div {
 }
 
 html.dark .search-div, [data-theme="dark"] .search-div {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.search-selects-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.search-div-inner {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+html.lm .search-div-inner, [data-theme="light"] .search-div-inner {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+html.dark .search-div-inner, [data-theme="dark"] .search-div-inner {
   background: rgba(255, 255, 255, 0.15);
 }
 
@@ -943,6 +972,14 @@ html.dark .search-wrap select, [data-theme="dark"] .search-wrap select {
 
 .search-wrap select:hover {
   border-color: var(--cyan);
+}
+
+.hero-search-btn {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 12px;
+  flex-shrink: 0;
 }
 
 .search-wrap select option {
@@ -2505,7 +2542,13 @@ html, body {
 @media (max-width: 1024px) {
   .hero-container {
     grid-template-columns: 1fr;
-    gap: 36px;
+    gap: 40px;
+  }
+  .hero-left {
+    max-width: 100%;
+  }
+  .hero-title {
+    font-size: clamp(38px, 6.8vw, 56px);
   }
   .hero-right-showcase {
     margin-top: 0;
@@ -2516,14 +2559,8 @@ html, body {
   }
   .showcase-card {
     max-width: 100%;
-    min-height: 340px;
-  }
-  .trust-island-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-  .trust-divider {
-    display: none;
+    min-height: 360px;
+    aspect-ratio: 16 / 10;
   }
   .cat-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2533,7 +2570,7 @@ html, body {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
-  .rjh-jobs-grid {
+  .ljf-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
   }
@@ -2610,62 +2647,94 @@ html, body {
     margin-bottom: 16px;
   }
   .hero-title {
-    font-size: clamp(28px, 7.5vw, 42px);
-    line-height: 1.1;
-    letter-spacing: -0.025em;
-    margin-bottom: 14px;
+    font-size: clamp(34px, 8.5vw, 48px);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    margin-bottom: 16px;
   }
   .hero-sub {
-    font-size: 14.5px;
+    font-size: clamp(15px, 3.8vw, 17px);
     line-height: 1.55;
     margin-bottom: 22px;
   }
 
   /* Search Capsule on Mobile */
   .search-outer {
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     width: 100%;
     max-width: 100%;
   }
   .search-wrap {
     flex-direction: column;
     align-items: stretch;
-    padding: 12px;
-    gap: 8px;
-    border-radius: 16px;
+    padding: 14px;
+    gap: 10px;
+    border-radius: 18px;
   }
-  .search-wrap input {
+  .search-input-row {
+    width: 100%;
+    padding: 4px 2px;
+  }
+  .search-input-row input {
     width: 100%;
     font-size: 14.5px;
-    padding: 6px 4px;
   }
   .search-div {
+    display: none;
+  }
+  .search-selects-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    width: 100%;
+  }
+  .search-div-inner {
     display: none;
   }
   .search-wrap select {
     width: 100%;
     padding: 10px 12px;
     font-size: 13.5px;
-    border-radius: 10px;
+    border-radius: 12px;
   }
-  .search-wrap .btn-gold {
+  .hero-search-btn {
     width: 100%;
     justify-content: center;
-    padding: 12px;
-    font-size: 14.5px;
-    font-weight: 700;
-    border-radius: 10px;
+    padding: 13px;
+    font-size: 15px;
+    font-weight: 800;
+    border-radius: 12px;
+  }
+
+  /* Hero Action Buttons on Mobile */
+  .hero-acts {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+    margin-bottom: 22px;
+  }
+  .hero-acts .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  /* Hero Social Proof on Mobile */
+  .hero-social-proof {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
   }
 
   /* Hero Showcase on Mobile */
   .showcase-card {
-    min-height: 260px;
-    max-height: 340px;
+    min-height: 270px;
+    max-height: 360px;
     aspect-ratio: 16 / 10;
-    border-radius: 20px;
+    border-radius: 22px;
   }
   .showcase-top-badge {
-    font-size: 11px;
+    font-size: 11.5px;
     padding: 5px 12px;
     top: 12px;
     left: 12px;
@@ -2675,51 +2744,6 @@ html, body {
     bottom: 12px;
     right: 12px;
     padding: 4px 8px;
-  }
-
-  /* Stats Bar & Trust Island */
-  .stats-bar {
-    padding: 0 16px 20px;
-  }
-  .trust-island {
-    padding: 20px 16px;
-    border-radius: 20px;
-  }
-  .trust-island-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding-bottom: 12px;
-    margin-bottom: 14px;
-  }
-  .trust-pulse-badge {
-    font-size: 11.5px;
-    padding: 3px 10px;
-  }
-  .trust-sub-note {
-    font-size: 11px;
-  }
-  .trust-island-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-  }
-  .trust-item {
-    padding: 6px 8px;
-    gap: 10px;
-  }
-  .trust-icon-box {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-  }
-  .trust-val {
-    font-size: 18px;
-  }
-  .trust-lbl {
-    font-size: 12px;
-  }
-  .trust-sub {
-    font-size: 10.5px;
   }
 
   /* Bento Grid on Mobile */

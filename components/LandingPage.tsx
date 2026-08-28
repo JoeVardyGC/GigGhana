@@ -540,43 +540,47 @@ const occupationSlides = [
                   window.location.href = target;
                 }}
               >
-                <Search className="w-4 h-4 text-[var(--cyan)]" style={{ flexShrink: 0 }} />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => {
-                    setSearchQuery(e.target.value);
-                    setAutocompleteOpen(true);
-                  }}
-                  onFocus={() => setAutocompleteOpen(true)}
-                  placeholder="e.g. Painter, Contractor, Interior Designer, React Dev…"
-                  autoComplete="off"
-                />
+                <div className="search-input-row">
+                  <Search className="w-4 h-4 text-[var(--cyan)]" style={{ flexShrink: 0 }} />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => {
+                      setSearchQuery(e.target.value);
+                      setAutocompleteOpen(true);
+                    }}
+                    onFocus={() => setAutocompleteOpen(true)}
+                    placeholder="e.g. Painter, Contractor, Interior Designer, React Dev…"
+                    autoComplete="off"
+                  />
+                </div>
                 <div className="search-div" />
-                <select
-                  value={selectedRegion}
-                  onChange={(e) => setSelectedRegion(e.target.value)}
-                >
-                  <option value="">🇬🇭 All Ghana</option>
-                  <option value="accra">Accra &amp; Tema</option>
-                  <option value="kumasi">Kumasi &amp; Ashanti</option>
-                  <option value="takoradi">Takoradi &amp; Western</option>
-                  <option value="tamale">Tamale &amp; Northern</option>
-                  <option value="remote">Remote / Online</option>
-                </select>
-                <div className="search-div" />
-                <select
-                  value={selectedCategory}
-                  onChange={(e) => setSelectedCategory(e.target.value)}
-                >
-                  <option value="">All Categories</option>
-                  {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-                <button type="submit" className="btn btn-gold">
+                <div className="search-selects-group">
+                  <select
+                    value={selectedRegion}
+                    onChange={(e) => setSelectedRegion(e.target.value)}
+                  >
+                    <option value="">🇬🇭 All Ghana</option>
+                    <option value="accra">Accra &amp; Tema</option>
+                    <option value="kumasi">Kumasi &amp; Ashanti</option>
+                    <option value="takoradi">Takoradi &amp; Western</option>
+                    <option value="tamale">Tamale &amp; Northern</option>
+                    <option value="remote">Remote / Online</option>
+                  </select>
+                  <div className="search-div-inner" />
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">All Categories</option>
+                    {categories.map((cat) => (
+                      <option key={cat.id} value={cat.id}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button type="submit" className="btn btn-gold hero-search-btn">
                   Search
                 </button>
               </form>
