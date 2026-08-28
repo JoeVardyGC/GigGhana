@@ -699,6 +699,109 @@ const occupationSlides = [
         </div>
       </section>
 
+      {/* ══════ FEATURED & VERIFIED FREELANCERS (RIGHT UNDER HERO) ══════ */}
+      <section className="section" id="talent" style={{ paddingTop: '56px', paddingBottom: '32px' }}>
+        <div className="s-head">
+          <div className="s-badge">Top Verified Talent</div>
+          <h2 className="s-title">Featured Freelancers &amp; Master Artisans</h2>
+          <p className="s-sub">Handpicked Ghanaian professionals verified with Ghana Card KYC and 100% Escrow security.</p>
+        </div>
+        {featured.length > 0 ? (
+          <div className="prov-grid">
+            {featured.slice(0, 6).map((pv, idx) => {
+              const skills = pv.skill_names ? pv.skill_names.split('|').filter(Boolean) : [];
+              const rk = rankLabel(Number(pv.completed_jobs || 0));
+              const init = initials(pv.first_name, pv.last_name);
+              const jobs = Number(pv.completed_jobs || 0);
+              const bt = jobs >= 20 ? 'premium' : jobs >= 5 ? 'verified' : 'free';
+              const rating = Number(pv.rating_avg || 5);
+
+              return (
+                <SpotlightCard
+                  key={idx}
+                  spotlightColor="rgba(0, 212, 200, 0.18)"
+                  className="prov-card p-0"
+                >
+                  <div className="prov-img-wrap">
+                    {pv.avatar ? (
+                      <img src={pv.avatar} alt={pv.first_name} loading="lazy" />
+                    ) : (
+                      <div className="prov-initials">{init}</div>
+                    )}
+                    {pv.is_verified ? <div className="prov-verified-badge">✓ Verified</div> : null}
+                  </div>
+                  <div className="prov-body">
+                    <div className="prov-name">{`${pv.first_name} ${pv.last_name}`}</div>
+                    {pv.location && <div className="prov-loc">📍 {pv.location}</div>}
+                    <div className="prov-tag">
+                      {pv.tagline || `${pv.experience_level ? pv.experience_level.charAt(0).toUpperCase() + pv.experience_level.slice(1) : ''} Freelancer`}
+                    </div>
+                    <div className="badge-row">
+                      {bt === 'premium' ? (
+                        <span className="badge-premium">⭐ Premium</span>
+                      ) : bt === 'verified' ? (
+                        <span className="badge-verified">✓ Verified</span>
+                      ) : (
+                        <span className="badge-free">🌱 Beginner</span>
+                      )}
+                    </div>
+                    <div className="prov-stars">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <span key={s}>{rating >= s ? '★' : rating >= s - 0.5 ? '✦' : '☆'}</span>
+                      ))}
+                    </div>
+                    <div className="prov-rc">
+                      {rating.toFixed(1)} ({Number(pv.rating_count || 0)} reviews) · {jobs} jobs done
+                    </div>
+                    <div className="prov-pills">
+                      {skills.slice(0, 2).map((skill: string, sIdx: number) => (
+                        <span key={sIdx} className="skill-pill">
+                          {skill}
+                        </span>
+                      ))}
+                      {pv.availability && (
+                        <span className="skill-pill">{avMap[pv.availability] || 'Available'}</span>
+                      )}
+                      <span className={rk.c}>{`${rk.i} ${rk.l}`}</span>
+                    </div>
+                    <div className="prov-foot">
+                      <div className="prov-rate">
+                        {pv.hourly_rate > 0 ? (
+                          <>
+                            {formatCurrency(pv.hourly_rate)}
+                            <small>/hr</small>
+                          </>
+                        ) : (
+                          'Negotiable'
+                        )}
+                      </div>
+                      <a
+                        href={`/profile.php?id=${pv.user_id}`}
+                        className="btn btn-indigo"
+                        style={{ padding: '6px 14px', fontSize: '11.5px' }}
+                      >
+                        View Profile
+                      </a>
+                    </div>
+                  </div>
+                </SpotlightCard>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="empty">
+            <div className="empty-icon">👥</div>
+            <div className="empty-title">No Featured Providers Yet</div>
+            <div className="empty-desc">Check back soon as top Ghanaian talent is onboarded.</div>
+          </div>
+        )}
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
+          <a href="/search/providers.php" className="btn btn-ghost btn-lg">
+            Browse All 14,250+ Verified Talent in Ghana →
+          </a>
+        </div>
+      </section>
+
       {/* ══════ LIVE JOB FEED (LATEST 7 JOBS + VIEW MORE JOBS) ══════ */}
       {(() => {
         const allJobsList = recentJobs && recentJobs.length > 0 ? recentJobs : fallbackRecentJobs;
@@ -1024,112 +1127,7 @@ const occupationSlides = [
         </section>
       )}
 
-      {/* ══════ FEATURED PROVIDERS ══════ */}
-      <section
-        className="section"
-        style={{ background: 'linear-gradient(180deg,transparent,rgba(19,22,30,0.3),transparent)' }}
-      >
-        <div className="s-head">
-          <div className="s-badge">Top Talent</div>
-          <h2 className="s-title">Featured Freelancers</h2>
-          <p className="s-sub">Handpicked performers ready to bring your vision to life.</p>
-        </div>
-        {featured.length > 0 ? (
-          <div className="prov-grid">
-            {featured.map((pv, idx) => {
-              const skills = pv.skill_names ? pv.skill_names.split('|').filter(Boolean) : [];
-              const rk = rankLabel(Number(pv.completed_jobs || 0));
-              const init = initials(pv.first_name, pv.last_name);
-              const jobs = Number(pv.completed_jobs || 0);
-              const bt = jobs >= 20 ? 'premium' : jobs >= 5 ? 'verified' : 'free';
-              const rating = Number(pv.rating_avg || 5);
 
-              return (
-                <SpotlightCard
-                  key={idx}
-                  spotlightColor="rgba(255, 107, 74, 0.16)"
-                  className="prov-card p-0"
-                >
-                  <div className="prov-img-wrap">
-                    {pv.avatar ? (
-                      <img src={pv.avatar} alt={pv.first_name} loading="lazy" />
-                    ) : (
-                      <div className="prov-initials">{init}</div>
-                    )}
-                    {pv.is_verified ? <div className="prov-verified-badge">✓ Verified</div> : null}
-                  </div>
-                  <div className="prov-body">
-                    <div className="prov-name">{`${pv.first_name} ${pv.last_name}`}</div>
-                    {pv.location && <div className="prov-loc">📍 {pv.location}</div>}
-                    <div className="prov-tag">
-                      {pv.tagline || `${pv.experience_level ? pv.experience_level.charAt(0).toUpperCase() + pv.experience_level.slice(1) : ''} Freelancer`}
-                    </div>
-                    <div className="badge-row">
-                      {bt === 'premium' ? (
-                        <span className="badge-premium">⭐ Premium</span>
-                      ) : bt === 'verified' ? (
-                        <span className="badge-verified">✓ Verified</span>
-                      ) : (
-                        <span className="badge-free">🌱 Beginner</span>
-                      )}
-                    </div>
-                    <div className="prov-stars">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <span key={s}>{rating >= s ? '★' : rating >= s - 0.5 ? '✦' : '☆'}</span>
-                      ))}
-                    </div>
-                    <div className="prov-rc">
-                      {rating.toFixed(1)} ({Number(pv.rating_count || 0)} reviews) · {jobs} jobs done
-                    </div>
-                    <div className="prov-pills">
-                      {skills.slice(0, 2).map((skill: string, sIdx: number) => (
-                        <span key={sIdx} className="skill-pill">
-                          {skill}
-                        </span>
-                      ))}
-                      {pv.availability && (
-                        <span className="skill-pill">{avMap[pv.availability] || 'Available'}</span>
-                      )}
-                      <span className={rk.c}>{`${rk.i} ${rk.l}`}</span>
-                    </div>
-                    <div className="prov-foot">
-                      <div className="prov-rate">
-                        {pv.hourly_rate > 0 ? (
-                          <>
-                            {formatCurrency(pv.hourly_rate)}
-                            <small>/hr</small>
-                          </>
-                        ) : (
-                          'Negotiable'
-                        )}
-                      </div>
-                      <a
-                        href={`/profile.php?id=${pv.user_id}`}
-                        className="btn btn-indigo"
-                        style={{ padding: '6px 14px', fontSize: '11.5px' }}
-                      >
-                        View Profile
-                      </a>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="empty">
-            <span>👤</span>No freelancers yet.{' '}
-            <a href="/auth/register.php?role=provider" style={{ color: 'var(--cyan)' }}>
-              Be the first!
-            </a>
-          </div>
-        )}
-        <div style={{ textAlign: 'center', marginTop: '32px' }}>
-          <a href="/search/providers.php" className="btn btn-ghost btn-lg">
-            View All Freelancers →
-          </a>
-        </div>
-      </section>
 
       {/* ══════ MODERN BENTO GRID: WHY GIGHANA & PROCESS ══════ */}
       <section className="section" id="how">
