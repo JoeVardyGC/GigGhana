@@ -691,28 +691,84 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ STATS ══════ */}
+      {/* ══════ CRAFT UNIFIED TRUST & METRICS ISLAND ══════ */}
       <section className="stats-bar" ref={statsRef}>
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon">👷</div>
-            <div className="stat-number">{countProviders.toLocaleString()}</div>
-            <div className="stat-label">Verified Freelancers</div>
+        <div className="trust-island">
+          <div className="trust-island-header">
+            <div className="trust-pulse-badge">
+              <span className="live-pulse-dot" />
+              <span>Verified Ghana National Marketplace</span>
+            </div>
+            <div className="trust-sub-note">🇬🇭 Powered by NIA Biometrics & BoG Escrow Vault</div>
           </div>
-          <div className="stat-card">
-            <div className="stat-icon">💼</div>
-            <div className="stat-number">{countJobs.toLocaleString()}</div>
-            <div className="stat-label">Open Jobs</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">✅</div>
-            <div className="stat-number">{countCompleted.toLocaleString()}</div>
-            <div className="stat-label">Jobs Completed</div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">💰</div>
-            <div className="stat-number">{countEarnings.toLocaleString()}K+</div>
-            <div className="stat-label">GHS Paid to Talent</div>
+
+          <div className="trust-island-grid">
+            {/* Metric 1 */}
+            <div className="trust-item">
+              <div className="trust-icon-box ti-blue">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+              </div>
+              <div className="trust-info">
+                <div className="trust-val">{countProviders.toLocaleString()}</div>
+                <div className="trust-lbl">Verified Freelancers</div>
+                <div className="trust-sub">Ghana Card KYC</div>
+              </div>
+            </div>
+
+            <div className="trust-divider" />
+
+            {/* Metric 2 */}
+            <div className="trust-item">
+              <div className="trust-icon-box ti-amber">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                </svg>
+              </div>
+              <div className="trust-info">
+                <div className="trust-val">{countJobs.toLocaleString()}</div>
+                <div className="trust-lbl">Active Gigs & Jobs</div>
+                <div className="trust-sub">Across 16 Regions</div>
+              </div>
+            </div>
+
+            <div className="trust-divider" />
+
+            {/* Metric 3 */}
+            <div className="trust-item">
+              <div className="trust-icon-box ti-emerald">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+              </div>
+              <div className="trust-info">
+                <div className="trust-val">{countCompleted.toLocaleString()}</div>
+                <div className="trust-lbl">Jobs Completed</div>
+                <div className="trust-sub">99.8% Client Rating</div>
+              </div>
+            </div>
+
+            <div className="trust-divider" />
+
+            {/* Metric 4 */}
+            <div className="trust-item">
+              <div className="trust-icon-box ti-gold">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
+              <div className="trust-info">
+                <div className="trust-val">₵{countEarnings.toLocaleString()}K+</div>
+                <div className="trust-lbl">Paid to Artisans</div>
+                <div className="trust-sub">⚡ Sub-60s MoMo</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
