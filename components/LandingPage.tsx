@@ -763,214 +763,120 @@ const occupationSlides = [
                 ))}
               </div>
 
-              {/* Artisan Showcase Grid */}
+              {/* 7-Card Studio Showcase Grid */}
               <div className="artisan-grid">
-                {/* 1. Lead Master Spotlight Card */}
-                {leadArtisan && (() => {
-                  const leadSkills = leadArtisan.skill_names ? (Array.isArray(leadArtisan.skill_names) ? leadArtisan.skill_names : leadArtisan.skill_names.split('|').filter(Boolean)) : [];
-                  const leadInit = initials(leadArtisan.first_name, leadArtisan.last_name);
-                  const leadRating = Number(leadArtisan.rating_avg || 5.0);
-                  const leadJobs = Number(leadArtisan.completed_jobs || 42);
-
-                  return (
-                    <SpotlightCard
-                      spotlightColor="rgba(245, 158, 11, 0.22)"
-                      className="artisan-lead-card p-0"
-                    >
-                      <div className="artisan-lead-inner">
-                        {/* Left: Big Portrait & Identification */}
-                        <div className="artisan-lead-left">
-                          <div className="artisan-lead-portrait">
-                            {leadArtisan.avatar ? (
-                              <img src={leadArtisan.avatar} alt={leadArtisan.first_name} />
-                            ) : (
-                              <div className="artisan-lead-portrait-initials">{leadInit}</div>
-                            )}
-                          </div>
-                          <div>
-                            <div className="artisan-name" style={{ fontSize: '18px', justifyContent: 'center' }}>
-                              {leadArtisan.first_name} {leadArtisan.last_name}
-                              <span className="artisan-nia-badge">🇬🇭 NIA Verified</span>
-                            </div>
-                            <div className="artisan-location" style={{ justifyContent: 'center', marginTop: '4px' }}>
-                              📍 {leadArtisan.location || 'Airport Hills, Accra'}
-                            </div>
-                            {leadArtisan.badge && (
-                              <div style={{ marginTop: '8px' }}>
-                                <span className="rjh-jc-urgent" style={{ background: 'rgba(245, 158, 11, 0.16)', color: '#F59E0B', borderColor: 'rgba(245, 158, 11, 0.4)' }}>
-                                  {leadArtisan.badge}
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Right: Detailed Capabilities & Direct Hire CTA */}
-                        <div className="artisan-lead-right">
-                          <div className="artisan-top-row">
-                            <div className="artisan-cat-pill">
-                              <span>{iconMap[leadArtisan.cat_icon] || '👑'}</span>
-                              <span>{leadArtisan.cat_name || 'Master Artisan'}</span>
-                            </div>
-                            <div className="artisan-status-pill">
-                              <span className="live-pulse-dot" />
-                              <span>● Active &amp; Available</span>
-                            </div>
-                          </div>
-
-                          <h3 className="artisan-headline" style={{ fontSize: '20px' }}>
-                            <a href={`/profile.php?id=${leadArtisan.user_id || leadArtisan.id}`}>
-                              {leadArtisan.tagline || `${leadArtisan.first_name} ${leadArtisan.last_name} - Verified Master Artisan`}
-                            </a>
-                          </h3>
-
-                          <p className="artisan-bio" style={{ fontSize: '14px', lineHeight: '1.6' }}>
-                            {leadArtisan.bio || 'Master craftsman & certified Ghanaian practitioner offering bespoke architectural and technical solutions with full escrow protection.'}
-                          </p>
-
-                          {/* Micro-Stats Trio */}
-                          <div className="artisan-stats-trio" style={{ maxWidth: '440px' }}>
-                            <div className="artisan-stat-item">
-                              <span className="artisan-stat-val">⭐ {leadRating.toFixed(1)}</span>
-                              <span className="artisan-stat-lbl">{Number(leadArtisan.rating_count || 48)} reviews</span>
-                            </div>
-                            <div className="artisan-stat-item">
-                              <span className="artisan-stat-val">🏆 {leadJobs}</span>
-                              <span className="artisan-stat-lbl">Jobs Completed</span>
-                            </div>
-                            <div className="artisan-stat-item">
-                              <span className="artisan-stat-val">⚡ 100%</span>
-                              <span className="artisan-stat-lbl">On-Time Escrow</span>
-                            </div>
-                          </div>
-
-                          {/* Skill Chips */}
-                          <div className="artisan-skills-wrap">
-                            {leadSkills.map((s: string, sIdx: number) => (
-                              <span key={sIdx} className="artisan-skill-chip">
-                                {s}
-                              </span>
-                            ))}
-                          </div>
-
-                          {/* Footer Row */}
-                          <div className="artisan-card-foot" style={{ marginTop: '6px' }}>
-                            <div className="artisan-rate-block">
-                              <div className="artisan-rate-num">
-                                {formatCurrency(leadArtisan.hourly_rate || 95)}
-                                <small>/hr</small>
-                              </div>
-                              <div className="artisan-rate-tag">🔒 Escrow Vault Protected</div>
-                            </div>
-                            <div style={{ display: 'flex', gap: '10px' }}>
-                              <a href={`/profile.php?id=${leadArtisan.user_id || leadArtisan.id}`} className="btn btn-gold artisan-hire-btn">
-                                Hire {leadArtisan.first_name} →
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </SpotlightCard>
-                  );
-                })()}
-
-                {/* 2. Grid Cards for Next 6 Artisans */}
-                {gridArtisans.map((p: any, idx: number) => {
+                {latestTalent.map((p: any, idx: number) => {
+                  const isLeadSpotlight = idx === 0;
                   const skills = p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : [];
                   const rating = Number(p.rating_avg || 5.0);
-                  const jobsCount = Number(p.completed_jobs || 20);
+                  const jobsCount = Number(p.completed_jobs || (idx === 0 ? 42 : 25));
                   const init = initials(p.first_name, p.last_name);
+                  const coverImg = p.avatar || '/images/occupations/interior_designer.jpg';
 
                   return (
                     <SpotlightCard
                       key={p.id || idx}
-                      spotlightColor="rgba(0, 212, 200, 0.16)"
-                      className="artisan-card p-0"
+                      spotlightColor={isLeadSpotlight ? 'rgba(245, 158, 11, 0.22)' : 'rgba(0, 212, 200, 0.16)'}
+                      className={`artisan-studio-card p-0 ${isLeadSpotlight ? 'artisan-card-highlight' : ''}`}
                     >
-                      <div className="artisan-card-inner">
-                        {/* Top Category & Status */}
-                        <div className="artisan-top-row">
-                          <div className="artisan-cat-pill">
-                            <span>{iconMap[p.cat_icon] || '💼'}</span>
-                            <span>{p.cat_name || 'Verified Pro'}</span>
+                      {/* Visual Studio Cover Banner */}
+                      <div className="artisan-cover-wrap">
+                        <img
+                          src={coverImg}
+                          alt={p.tagline || p.first_name}
+                          className="artisan-cover-img"
+                          loading="lazy"
+                        />
+                        <div className="artisan-cover-scrim" />
+
+                        {/* Top Overlays */}
+                        <div className="artisan-cover-top">
+                          <div className="artisan-cover-cat">
+                            <span>{iconMap[p.cat_icon] || '👑'}</span>
+                            <span>{p.cat_name || 'Artisan Pro'}</span>
                           </div>
-                          <div className="artisan-status-pill">
+                          <div className="artisan-cover-status">
                             <span className="live-pulse-dot" />
                             <span>● Available</span>
                           </div>
                         </div>
 
-                        {/* Profile Info */}
-                        <div className="artisan-identity-row">
-                          <div className="artisan-avatar-box">
-                            {p.avatar ? (
-                              <img src={p.avatar} alt={p.first_name} className="artisan-avatar-img" />
-                            ) : (
-                              <div className="artisan-avatar-fallback">{init}</div>
-                            )}
+                        {/* Benchmark Rate Tag */}
+                        <div className="artisan-cover-rate-tag">
+                          {formatCurrency(p.hourly_rate || 85)}
+                          <small style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)', marginLeft: '2px' }}>/hr</small>
+                        </div>
+                      </div>
+
+                      {/* Profile Anchor & Overlapping Avatar */}
+                      <div className="artisan-profile-anchor">
+                        <div className="artisan-avatar-ring">
+                          {p.avatar ? (
+                            <img src={p.avatar} alt={p.first_name} className="artisan-avatar-pic" />
+                          ) : (
+                            <div className="artisan-avatar-init">{init}</div>
+                          )}
+                        </div>
+                        <div className="artisan-anchor-meta">
+                          <div className="artisan-anchor-name">
+                            {p.first_name} {p.last_name}
+                            <span className="artisan-nia-badge">✓ NIA</span>
                           </div>
-                          <div className="artisan-info">
-                            <div className="artisan-name">
-                              {p.first_name} {p.last_name}
-                              <span className="artisan-nia-badge">✓ NIA</span>
-                            </div>
-                            <div className="artisan-location">📍 {p.location || 'Accra, Ghana'}</div>
-                            {p.badge && (
-                              <span className="rjh-jc-urgent" style={{ alignSelf: 'flex-start', marginTop: '2px', background: 'rgba(245, 158, 11, 0.12)', color: '#F59E0B', borderColor: 'rgba(245, 158, 11, 0.3)' }}>
-                                {p.badge}
-                              </span>
-                            )}
+                          <div className="artisan-anchor-loc">
+                            📍 {p.location || 'Accra, Ghana'}
                           </div>
                         </div>
+                      </div>
 
-                        {/* Headline */}
-                        <h4 className="artisan-headline">
+                      {/* Studio Body Content */}
+                      <div className="artisan-studio-body">
+                        <h3 className="artisan-studio-headline">
                           <a href={`/profile.php?id=${p.user_id || p.id}`}>
-                            {p.tagline || `${p.first_name} ${p.last_name} - Verified Specialist`}
+                            {p.tagline || `${p.first_name} ${p.last_name} - Certified Ghanaian Specialist`}
                           </a>
-                        </h4>
+                        </h3>
 
-                        {/* Bio */}
-                        <p className="artisan-bio">
-                          {p.bio ? p.bio.slice(0, 115) + (p.bio.length > 115 ? '...' : '') : 'Master artisan & verified Ghanaian practitioner with 100% escrow protection.'}
+                        <p className="artisan-studio-bio">
+                          {p.bio || 'Verified master artisan & specialist providing reliable, escrow-protected services across Ghana.'}
                         </p>
 
-                        {/* Micro-Stats Trio */}
-                        <div className="artisan-stats-trio">
-                          <div className="artisan-stat-item">
-                            <span className="artisan-stat-val">⭐ {rating.toFixed(1)}</span>
-                            <span className="artisan-stat-lbl">{Number(p.rating_count || 28)} reviews</span>
+                        {/* Performance Stats Strip */}
+                        <div className="artisan-stats-strip">
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">⭐ {rating.toFixed(1)}</span>
+                            <span className="artisan-strip-lbl">{Number(p.rating_count || 32)} reviews</span>
                           </div>
-                          <div className="artisan-stat-item">
-                            <span className="artisan-stat-val">🏆 {jobsCount}</span>
-                            <span className="artisan-stat-lbl">Jobs Done</span>
+                          <div className="artisan-strip-divider" />
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">🏆 {jobsCount}</span>
+                            <span className="artisan-strip-lbl">Jobs Done</span>
                           </div>
-                          <div className="artisan-stat-item">
-                            <span className="artisan-stat-val">⚡ &lt;15m</span>
-                            <span className="artisan-stat-lbl">Response</span>
+                          <div className="artisan-strip-divider" />
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">⚡ &lt;15m</span>
+                            <span className="artisan-strip-lbl">Response</span>
                           </div>
                         </div>
 
-                        {/* Skill Chips */}
-                        <div className="artisan-skills-wrap">
-                          {skills.slice(0, 3).map((s: string, sIdx: number) => (
-                            <span key={sIdx} className="artisan-skill-chip">
-                              {s}
+                        {/* Capability Skills Tags */}
+                        <div className="artisan-skills-cloud">
+                          {skills.slice(0, 3).map((skill: string, sIdx: number) => (
+                            <span key={sIdx} className="artisan-skill-tag">
+                              {skill}
                             </span>
                           ))}
                         </div>
 
-                        {/* Footer */}
-                        <div className="artisan-card-foot">
-                          <div className="artisan-rate-block">
-                            <div className="artisan-rate-num">
-                              {formatCurrency(p.hourly_rate || 75)}
-                              <small>/hr</small>
-                            </div>
-                            <div className="artisan-rate-tag">🔒 Escrow Vault</div>
+                        {/* Card Action Footer */}
+                        <div className="artisan-studio-footer">
+                          <div className="artisan-footer-tier">
+                            {p.badge || '⭐ Verified Pro'}
                           </div>
-                          <a href={`/profile.php?id=${p.user_id || p.id}`} className="btn btn-blue artisan-hire-btn">
-                            View Profile →
+                          <a
+                            href={`/profile.php?id=${p.user_id || p.id}`}
+                            className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}
+                          >
+                            View Profile &amp; Hire →
                           </a>
                         </div>
                       </div>
