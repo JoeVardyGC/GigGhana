@@ -2018,6 +2018,10 @@ html.dark .rjh-tr-icon-box, [data-theme="dark"] .rjh-tr-icon-box {
   .ljf-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  /* In 2-column layout with 1 full-span lead card, display 5 cards (odd number) for balanced 2x2 rows */
+  .ljf-grid .ljf-card:nth-child(n+6) {
+    display: none !important;
+  }
   .rjh-trust-ribbon {
     grid-template-columns: 1fr;
     gap: 14px;
@@ -2027,17 +2031,14 @@ html.dark .rjh-tr-icon-box, [data-theme="dark"] .rjh-tr-icon-box {
   }
 }
 
-@media (max-width: 768px) {
-  /* Show latest 4 jobs on mobile devices */
-  .ljf-grid .ljf-card:nth-child(n+5) {
-    display: none !important;
-  }
-}
-
 @media (max-width: 640px) {
   .ljf-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+  /* In 1-column mobile layout, cap to latest 4 cards */
+  .ljf-grid .ljf-card:nth-child(n+5) {
+    display: none !important;
   }
   .ljf-card-inner {
     padding: 18px 16px;

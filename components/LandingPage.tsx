@@ -893,7 +893,7 @@ const occupationSlides = [
               if (jobCatFilter === 'build') return j.cat_name?.toLowerCase().includes('construct') || j.cat_name?.toLowerCase().includes('build');
               return true;
             });
-        const latestJobs = filteredJobs.slice(0, 6);
+        const latestJobs = filteredJobs.slice(0, 7);
 
         return (
           <section className="section live-job-feed-section" id="live-jobs" ref={statsRef}>
