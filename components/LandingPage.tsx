@@ -1164,7 +1164,7 @@ const occupationSlides = [
       </section>
 
       {/* ══════ TRENDING SKILLS SEARCH PILLS ══════ */}
-      <section className="section" id="trending" style={{ paddingTop: '10px', paddingBottom: '56px' }}>
+      <section className="section" id="trending" style={{ paddingTop: '4px', paddingBottom: '28px' }}>
         <div className="s-head">
           <div className="s-badge">Trending Searches</div>
           <h2 className="s-title">Most In-Demand Skills This Week</h2>
@@ -1354,14 +1354,14 @@ const occupationSlides = [
       </section>
 
       {/* ══════ PROFESSIONAL INCOME ESTIMATOR ══════ */}
-      <section className="section" id="calculator" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
+      <section className="section" id="calculator" style={{ paddingTop: '12px', paddingBottom: '24px' }}>
         <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
           <LuxuryEstimator />
         </div>
       </section>
 
       {/* ══════ REVIEWS & TESTIMONIALS ══════ */}
-      <section className="section" id="reviews" style={{ paddingTop: '32px' }}>
+      <section className="section" id="reviews" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
         <div className="s-head">
           <div className="s-badge">Member Stories</div>
           <h2 className="s-title">Ghanaians Winning on GigGhana</h2>
