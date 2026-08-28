@@ -971,18 +971,20 @@ const occupationSlides = [
                               </span>
                             </div>
                           </div>
-                          {j.is_urgent === 1 && (
-                            <span className="rjh-jc-urgent">
-                              <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
-                              <span>Urgent</span>
-                            </span>
-                          )}
-                          {isFeaturedHeroCard && (
-                            <span className="ljf-spotlight-pill">
-                              <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />
-                              <span>Featured Lead</span>
-                            </span>
-                          )}
+                          <div className="rjh-jc-badges-right">
+                            {j.is_urgent === 1 && (
+                              <span className="rjh-jc-urgent">
+                                <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
+                                <span>Urgent</span>
+                              </span>
+                            )}
+                            {isFeaturedHeroCard && (
+                              <span className="ljf-spotlight-pill">
+                                <Star className="w-3.5 h-3.5 fill-[#F59E0B] text-[#F59E0B] shrink-0" />
+                                <span>Featured Lead</span>
+                              </span>
+                            )}
+                          </div>
                         </div>
 
                         {/* Card Title */}
