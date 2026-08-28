@@ -23,33 +23,107 @@ import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
 import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
 
-const getCategoryIconElement = (cat: any) => {
+const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
+  
   if (name.includes('tech') || name.includes('it') || name.includes('code')) {
-    return <Code className="w-5 h-5 text-[#00D4C8]" />;
-  }
-  if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
-    return <Palette className="w-5 h-5 text-[#A78BFA]" />;
+    return {
+      icon: <Code className="w-5 h-5 text-[#00D4C8]" />,
+      themeColor: '#00D4C8',
+      themeDim: 'rgba(0, 212, 200, 0.12)',
+      themeBorder: 'rgba(0, 212, 200, 0.35)',
+      tags: ['Web & Apps', 'Solar & IT', 'UI/UX Design'],
+      count: '180+ Pros',
+    };
   }
   if (name.includes('trade') || name.includes('tool') || name.includes('carpenter') || name.includes('plumb') || name.includes('electric')) {
-    return <Wrench className="w-5 h-5 text-[#F59E0B]" />;
+    return {
+      icon: <Wrench className="w-5 h-5 text-[#F59E0B]" />,
+      themeColor: '#F59E0B',
+      themeDim: 'rgba(245, 158, 11, 0.12)',
+      themeBorder: 'rgba(245, 158, 11, 0.35)',
+      tags: ['POP Ceilings', 'Solar Wiring', 'Plumbing & Pipe'],
+      count: '420+ Artisans',
+    };
   }
   if (name.includes('construct') || name.includes('build')) {
-    return <Building2 className="w-5 h-5 text-[#3B82F6]" />;
+    return {
+      icon: <Building2 className="w-5 h-5 text-[#3B82F6]" />,
+      themeColor: '#3B82F6',
+      themeDim: 'rgba(59, 130, 246, 0.12)',
+      themeBorder: 'rgba(59, 130, 246, 0.35)',
+      tags: ['Masonry Blocks', 'Building Plans', 'Tile Laying'],
+      count: '260+ Pros',
+    };
+  }
+  if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
+    return {
+      icon: <Palette className="w-5 h-5 text-[#A78BFA]" />,
+      themeColor: '#A78BFA',
+      themeDim: 'rgba(167, 139, 250, 0.12)',
+      themeBorder: 'rgba(167, 139, 250, 0.35)',
+      tags: ['Haute Couture', 'Photo & Film', 'Branding & Logo'],
+      count: '310+ Creatives',
+    };
   }
   if (name.includes('health') || name.includes('wellness') || name.includes('nurse')) {
-    return <ShieldCheck className="w-5 h-5 text-[#10B981]" />;
+    return {
+      icon: <ShieldCheck className="w-5 h-5 text-[#10B981]" />,
+      themeColor: '#10B981',
+      themeDim: 'rgba(16, 185, 129, 0.12)',
+      themeBorder: 'rgba(16, 185, 129, 0.35)',
+      tags: ['Home Nursing', 'Physiotherapy', 'Wellness Care'],
+      count: '150+ Specialists',
+    };
   }
   if (name.includes('biz') || name.includes('business') || name.includes('consult')) {
-    return <Briefcase className="w-5 h-5 text-[#EC4899]" />;
+    return {
+      icon: <Briefcase className="w-5 h-5 text-[#EC4899]" />,
+      themeColor: '#EC4899',
+      themeDim: 'rgba(236, 72, 153, 0.12)',
+      themeBorder: 'rgba(236, 72, 153, 0.35)',
+      tags: ['GRA Tax Filing', 'Legal Advisory', 'Admin Support'],
+      count: '190+ Experts',
+    };
   }
   if (name.includes('hosp') || name.includes('food') || name.includes('chef')) {
-    return <Sparkles className="w-5 h-5 text-[#F59E0B]" />;
+    return {
+      icon: <Sparkles className="w-5 h-5 text-[#FB923C]" />,
+      themeColor: '#FB923C',
+      themeDim: 'rgba(251, 146, 60, 0.12)',
+      themeBorder: 'rgba(251, 146, 60, 0.35)',
+      tags: ['Private Chefs', 'Event Decor', 'Catering'],
+      count: '210+ Pros',
+    };
   }
   if (name.includes('edu') || name.includes('teach')) {
-    return <Layers className="w-5 h-5 text-[#38BDF8]" />;
+    return {
+      icon: <Layers className="w-5 h-5 text-[#38BDF8]" />,
+      themeColor: '#38BDF8',
+      themeDim: 'rgba(56, 189, 248, 0.12)',
+      themeBorder: 'rgba(56, 189, 248, 0.35)',
+      tags: ['STEM Tutors', 'Languages', 'Music Lessons'],
+      count: '140+ Tutors',
+    };
   }
-  return <Sparkles className="w-5 h-5 text-[#00D4C8]" />;
+  if (name.includes('farm') || name.includes('agri')) {
+    return {
+      icon: <Sparkles className="w-5 h-5 text-[#84CC16]" />,
+      themeColor: '#84CC16',
+      themeDim: 'rgba(132, 204, 22, 0.12)',
+      themeBorder: 'rgba(132, 204, 22, 0.35)',
+      tags: ['Agri-Tech', 'Poultry Farming', 'Crop Science'],
+      count: '95+ Specialists',
+    };
+  }
+  return {
+    icon: <Sparkles className="w-5 h-5 text-[#00D4C8]" />,
+    themeColor: '#00D4C8',
+    themeDim: 'rgba(0, 212, 200, 0.12)',
+    themeBorder: 'rgba(0, 212, 200, 0.35)',
+    tags: ['Delivery', 'Security', 'Handyman'],
+    count: '100+ Pros',
+  };
 };
 
 ChartJS.register(
@@ -1082,19 +1156,20 @@ const occupationSlides = [
       {/* ══════ CATEGORIES WITH SPOTLIGHT CARDS ══════ */}
       <section className="section" id="categories">
         <div className="s-head">
-          <div className="s-badge">Explore Industries</div>
-          <h2 className="s-title">Every Skill. Every Profession in Ghana.</h2>
+          <div className="s-badge">Explore Categories</div>
+          <h2 className="s-title">Every Skill. Every Master Craft in Ghana.</h2>
           <p className="s-sub">
-            From modern technology and creative design to master trades and construction — find verified Ghanaian specialists in every field.
+            Direct access to verified Ghanaian artisans, tech engineers, creative directors, and building contractors.
           </p>
         </div>
         <div className="cat-grid">
           {categories.map((cat) => {
             const isHot = hotSlugs.includes(cat.slug || String(cat.id));
+            const meta = getCategoryTheme(cat);
             return (
               <SpotlightCard
                 key={cat.id}
-                spotlightColor="rgba(0, 212, 200, 0.16)"
+                spotlightColor={meta.themeDim}
                 className="cat-card p-0"
               >
                 <a
@@ -1102,8 +1177,14 @@ const occupationSlides = [
                   className="cat-card-inner group"
                 >
                   <div className="cat-card-top">
-                    <div className="cat-icon-box">
-                      {getCategoryIconElement(cat)}
+                    <div
+                      className="cat-icon-box"
+                      style={{
+                        background: meta.themeDim,
+                        borderColor: meta.themeBorder,
+                      }}
+                    >
+                      {meta.icon}
                     </div>
                     {isHot ? (
                       <span className="cat-hot-pill">
@@ -1111,16 +1192,37 @@ const occupationSlides = [
                         <span>High Demand</span>
                       </span>
                     ) : (
-                      <span className="cat-active-pill">
-                        <span className="live-pulse-dot" />
-                        <span>Verified Pros</span>
+                      <span
+                        className="cat-active-pill"
+                        style={{
+                          background: meta.themeDim,
+                          borderColor: meta.themeBorder,
+                          color: meta.themeColor,
+                        }}
+                      >
+                        <span className="live-pulse-dot" style={{ background: meta.themeColor }} />
+                        <span>{meta.count}</span>
                       </span>
                     )}
                   </div>
-                  <div className="cat-name">{cat.name}</div>
-                  {cat.description && <div className="cat-desc">{cat.description}</div>}
+                  
+                  <div className="cat-content-block">
+                    <div className="cat-name">{cat.name}</div>
+                    <p className="cat-desc">
+                      {cat.description || meta.tags.join(' · ')}
+                    </p>
+                  </div>
+
+                  <div className="cat-chips-row">
+                    {meta.tags.slice(0, 2).map((t: string, tIdx: number) => (
+                      <span key={tIdx} className="cat-micro-chip">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+
                   <div className="cat-arrow-row">
-                    <span>Browse Specialists</span>
+                    <span>Explore Specialists</span>
                     <ArrowRight className="w-3.5 h-3.5 text-[#00D4C8] transition-transform duration-200 group-hover:translate-x-1" />
                   </div>
                 </a>
