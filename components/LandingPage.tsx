@@ -869,7 +869,7 @@ const occupationSlides = [
               <div className="ljf-footer-actions">
                 <a href="/search/providers.php" className="btn btn-ghost btn-xl ljf-view-more-btn group">
                   <Search className="w-4 h-4 text-[#00D4C8] shrink-0" />
-                  <span>Browse All Verified Service Providers in Ghana</span>
+                  <span>Browse All Providers</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
                 </a>
                 <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
