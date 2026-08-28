@@ -534,7 +534,7 @@ html.lm .showcase-card, [data-theme="light"] .showcase-card {
 }
 
 html.dark .showcase-card, [data-theme="dark"] .showcase-card {
-  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.55), 0 0 0 1.5px rgba(255, 255, 255, 0.14);
+  box-shadow: 0 20px 60px rgba(255, 255, 255, 0.12), 0 0 0 1.5px rgba(255, 255, 255, 0.22);
   background: #111622;
 }
 
@@ -1505,10 +1505,18 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
 }
 
+html.dark .stat-card, [data-theme="dark"] .stat-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
 .stat-card:hover {
   transform: translateY(-3px);
   border-color: var(--cyan-border);
   box-shadow: 0 12px 30px var(--cyan-dim), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .stat-card:hover, [data-theme="dark"] .stat-card:hover {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.14), 0 0 0 1.5px rgba(255, 255, 255, 0.22);
 }
 
 .stat-icon {
@@ -1597,10 +1605,18 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
 }
 
+html.dark .cat-card, [data-theme="dark"] .cat-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
 .cat-card:hover {
   transform: translateY(-4px);
   border-color: var(--cyan-border);
   box-shadow: 0 16px 36px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+html.dark .cat-card:hover, [data-theme="dark"] .cat-card:hover {
+  box-shadow: 0 12px 34px rgba(255, 255, 255, 0.15), 0 0 0 1.5px rgba(255, 255, 255, 0.25);
 }
 
 .cat-card:active {
@@ -1646,19 +1662,28 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
 
 .prov-card {
   background: var(--surface);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd2);
   border-radius: var(--r);
   padding: 22px 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  transition: var(--e);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .prov-card, [data-theme="dark"] .prov-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .prov-card:hover {
   transform: translateY(-4px);
   border-color: var(--cyan-border);
-  box-shadow: 0 12px 35px var(--cyan-dim);
+  box-shadow: 0 14px 35px var(--cyan-dim);
+}
+
+html.dark .prov-card:hover, [data-theme="dark"] .prov-card:hover {
+  box-shadow: 0 12px 34px rgba(255, 255, 255, 0.15), 0 0 0 1.5px rgba(255, 255, 255, 0.25);
 }
 
 .prov-top {
@@ -1745,14 +1770,24 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
   text-align: center;
   padding: 36px 24px;
   background: var(--surface);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd2);
   border-radius: var(--r);
-  transition: var(--e);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .how-card, [data-theme="dark"] .how-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
 }
 
 .how-card:hover {
   transform: translateY(-4px);
   border-color: var(--cyan-border);
+  box-shadow: 0 16px 36px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+html.dark .how-card:hover, [data-theme="dark"] .how-card:hover {
+  box-shadow: 0 12px 34px rgba(255, 255, 255, 0.15), 0 0 0 1.5px rgba(255, 255, 255, 0.25);
 }
 
 .how-step {
@@ -1782,11 +1817,26 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
 
 .badge-tier-card {
   background: var(--surface);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd2);
   border-radius: var(--r);
   padding: 24px;
   text-align: center;
-  transition: var(--e);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.badge-tier-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cyan-border);
+  box-shadow: 0 12px 30px var(--cyan-dim), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .badge-tier-card:hover, [data-theme="dark"] .badge-tier-card:hover {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.14), 0 0 0 1.5px rgba(255, 255, 255, 0.22);
 }
 
 .badge-tier-card.featured {
@@ -1814,12 +1864,27 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
 
 .rv-card {
   background: var(--surface);
-  border: 1px solid var(--bd);
+  border: 1px solid var(--bd2);
   border-radius: var(--r);
   padding: 26px;
   min-width: calc(50% - 10px);
   flex-shrink: 0;
-  transition: var(--e);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .rv-card, [data-theme="dark"] .rv-card {
+  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.06), 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.rv-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--cyan-border);
+  box-shadow: 0 12px 30px var(--cyan-dim), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
+  box-shadow: 0 10px 30px rgba(255, 255, 255, 0.14), 0 0 0 1.5px rgba(255, 255, 255, 0.22);
 }
 
 .rv-stars { color: var(--gold); font-size: 13px; margin-bottom: 10px; }
