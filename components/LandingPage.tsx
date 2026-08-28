@@ -757,132 +757,87 @@ const occupationSlides = [
                 ))}
               </div>
 
-              {/* Hero Split Studio Board */}
-              <div className="rjh-split-grid">
-                {/* Left Column: Featured Spotlight Job Frame (Matching Hero Card Style) */}
-                <div className="rjh-spotlight-frame">
-                  {displayJob && (
-                    <SpotlightCard
-                      spotlightColor="rgba(0, 212, 200, 0.20)"
-                      className="rjh-spotlight-card p-0"
-                    >
-                      <div className="rjh-sp-inner">
-                        {/* Spotlight Card Top Pill */}
-                        <div className="rjh-sp-top">
-                          <div className="rjh-sp-badge">
-                            <span className="live-pulse-dot" />
-                            <span>{displayJob.cat_name || 'Verified Gig'} · {displayJob.location || 'Accra, Ghana'}</span>
-                          </div>
-                          <div className="rjh-sp-escrow-pill">
-                            <span>🛡️ BoG Escrow Protected</span>
-                          </div>
+              {/* Full Width Clean Grid of Jobs */}
+              <div className="rjh-jobs-grid">
+                {filteredJobs.slice(0, 6).map((j: any, idx: number) => (
+                  <SpotlightCard
+                    key={j.id || idx}
+                    spotlightColor="rgba(0, 212, 200, 0.16)"
+                    className="rjh-job-card p-0"
+                  >
+                    <div className="rjh-jc-inner">
+                      {/* Card Top: Category & Real-time posted tag */}
+                      <div className="rjh-jc-top">
+                        <div className="rjh-jc-cat">
+                          <span>{iconMap[j.cat_icon] || '💼'}</span>
+                          <span>{j.cat_name || 'General Gig'}</span>
                         </div>
-
-                        {/* Client Info & Time */}
-                        <div className="rjh-sp-client-row">
-                          <div className="rjh-sp-avatar">
-                            {initials(displayJob.first_name, displayJob.last_name)}
-                          </div>
-                          <div>
-                            <div className="rjh-sp-client-name">
-                              {displayJob.first_name} {displayJob.last_name ? displayJob.last_name[0] + '.' : ''}
-                              <span className="rjh-sp-verified-tag">🇬🇭 NIA Verified</span>
-                            </div>
-                            <div className="rjh-sp-client-meta">
-                              Posted {timeAgo(displayJob.created_at)} · {displayJob.proposal_count || 0} proposals submitted
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Job Title */}
-                        <h3 className="rjh-sp-title">
-                          <a href={`/jobs.php?id=${displayJob.id}`}>{displayJob.title}</a>
-                        </h3>
-
-                        {/* Full Description */}
-                        <p className="rjh-sp-desc">{displayJob.description}</p>
-
-                        {/* Highlight Specs Pill Row */}
-                        <div className="rjh-sp-specs">
-                          <div className="rjh-spec-chip">
-                            <span>📍</span> {displayJob.location || 'Greater Accra'}
-                          </div>
-                          <div className="rjh-spec-chip">
-                            <span>⚡</span> Sub-60s MoMo Settlement
-                          </div>
-                          <div className="rjh-spec-chip">
-                            <span>🔒</span> 100% Funded Escrow
-                          </div>
-                          {displayJob.is_urgent === 1 && (
-                            <div className="rjh-spec-chip urgent">
-                              <span>🔥</span> Urgent Requirement
-                            </div>
-                          )}
-                        </div>
-
-                        {/* Price & Action Box */}
-                        <div className="rjh-sp-bottom">
-                          <div className="rjh-sp-budget">
-                            <div className="rjh-sp-budget-label">Project Budget (Escrow Vault)</div>
-                            <div className="rjh-sp-budget-value">
-                              {formatCurrency(displayJob.budget_min || 1500)}
-                              {displayJob.budget_max && displayJob.budget_max > displayJob.budget_min ? ` - ${formatCurrency(displayJob.budget_max)}` : ''}
-                            </div>
-                          </div>
-                          <a href={`/jobs.php?id=${displayJob.id}`} className="btn btn-blue btn-lg rjh-sp-cta">
-                            Submit Proposal Now →
-                          </a>
+                        <div className="rjh-jc-time">
+                          <span className="live-pulse-dot" />
+                          <span>{timeAgo(j.created_at)}</span>
                         </div>
                       </div>
-                    </SpotlightCard>
-                  )}
-                </div>
 
-                {/* Right Column: Fast Live Feed List */}
-                <div className="rjh-feed-column">
-                  <div className="rjh-feed-header">
-                    <div className="rjh-feed-title">
-                      <span>⚡ Live Stream Feed</span>
-                      <span className="rjh-feed-count">{filteredJobs.length} Available</span>
-                    </div>
-                    <span className="rjh-feed-hint">Click to inspect</span>
-                  </div>
-
-                  <div className="rjh-feed-list">
-                    {filteredJobs.slice(0, 4).map((j: any) => {
-                      const isSelected = displayJob?.id === j.id;
-                      return (
-                        <div
-                          key={j.id}
-                          className={`rjh-feed-card ${isSelected ? 'active' : ''}`}
-                          onClick={() => setActivePreviewJobId(j.id)}
-                        >
-                          <div className="rjh-fc-top">
-                            <div className="rjh-fc-cat">
-                              <span>{iconMap[j.cat_icon] || '💼'}</span>
-                              <span>{j.cat_name || 'General'}</span>
-                            </div>
-                            <div className="rjh-fc-time">{timeAgo(j.created_at)}</div>
+                      {/* Client row */}
+                      <div className="rjh-jc-client">
+                        <div className="rjh-jc-avatar">
+                          {initials(j.first_name, j.last_name)}
+                        </div>
+                        <div>
+                          <div className="rjh-jc-client-name">
+                            {j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}
+                            <span className="rjh-jc-kyc-tag">🇬🇭 NIA Verified</span>
                           </div>
+                          <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
+                        </div>
+                        {j.is_urgent === 1 && <span className="rjh-jc-urgent">⚡ Urgent</span>}
+                      </div>
 
-                          <div className="rjh-fc-title">{j.title}</div>
+                      {/* Card Title */}
+                      <h3 className="rjh-jc-title">
+                        <a href={`/jobs.php?id=${j.id}`}>{j.title}</a>
+                      </h3>
 
-                          <div className="rjh-fc-bottom">
-                            <div className="rjh-fc-budget">{formatCurrency(j.budget_min)}</div>
-                            <div className="rjh-fc-loc">📍 {j.location || 'Accra'}</div>
-                            <div className="rjh-fc-arrow">Inspect →</div>
+                      {/* Description Excerpt */}
+                      <p className="rjh-jc-desc">
+                        {j.description ? j.description.slice(0, 115) + (j.description.length > 115 ? '...' : '') : 'Looking for a verified skilled professional in Ghana.'}
+                      </p>
+
+                      {/* Chips */}
+                      <div className="rjh-jc-chips">
+                        <span className="rjh-chip">🔒 100% Escrow Funded</span>
+                        <span className="rjh-chip">⚡ Sub-60s MoMo</span>
+                        <span className="rjh-chip">💬 {j.proposal_count || 0} proposals</span>
+                      </div>
+
+                      {/* Card Footer: Budget & Apply CTA */}
+                      <div className="rjh-jc-footer">
+                        <div className="rjh-jc-budget">
+                          <div className="rjh-jc-budget-val">
+                            {formatCurrency(j.budget_min || 1000)}
+                            {j.budget_max && j.budget_max > j.budget_min ? ` - ${formatCurrency(j.budget_max)}` : ''}
+                          </div>
+                          <div className="rjh-jc-budget-lbl">
+                            {j.budget_type === 'hourly' ? 'Hourly Rate' : 'Fixed Escrow'}
                           </div>
                         </div>
-                      );
-                    })}
-                  </div>
+                        <a href={`/jobs.php?id=${j.id}`} className="btn btn-blue rjh-jc-btn">
+                          Apply Now →
+                        </a>
+                      </div>
+                    </div>
+                  </SpotlightCard>
+                ))}
+              </div>
 
-                  <div className="rjh-feed-footer">
-                    <a href="/jobs.php" className="rjh-view-all-link">
-                      Browse all {allJobsList.length}+ Ghanaian jobs in directory →
-                    </a>
-                  </div>
-                </div>
+              {/* Bottom Actions */}
+              <div className="recent-jobs-footer-cta">
+                <a href="/jobs.php" className="btn btn-ghost btn-lg">
+                  Browse All {allJobsList.length}+ Open Jobs →
+                </a>
+                <a href="/post-job.php" className="btn btn-gold btn-lg">
+                  + Post a Gig (Free)
+                </a>
               </div>
 
               {/* Bottom Trust Ribbon */}
