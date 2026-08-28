@@ -2949,59 +2949,60 @@ html, body {
     border-bottom: none;
   }
 
-  /* Hero on Mobile */
+  /* Hero on Mobile - Ultra-Responsive Layout */
   .hero {
-    padding: 85px 0 36px;
+    padding: 70px 0 28px;
     min-height: auto;
   }
   .hero-container {
     padding: 0 16px;
-    gap: 28px;
+    gap: 20px;
   }
   .hero-badge {
-    font-size: 12px;
-    padding: 6px 14px;
-    margin-bottom: 16px;
+    font-size: 11.5px;
+    padding: 5px 12px;
+    margin-bottom: 12px;
+    align-self: flex-start;
   }
   .hero-title {
-    font-size: clamp(38px, 9.8vw, 54px);
-    font-weight: 950;
-    line-height: 1.02;
-    letter-spacing: -0.04em;
-    margin-bottom: 18px;
-    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
+    font-size: clamp(28px, 7.8vw, 38px);
+    font-weight: 850;
+    line-height: 1.12;
+    letter-spacing: -0.03em;
+    margin-bottom: 12px;
+    text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
   }
   .hero-title .gold {
     display: inline-block;
-    font-weight: 950;
-    letter-spacing: -0.035em;
+    font-weight: 850;
+    letter-spacing: -0.025em;
   }
   .hero-sub {
-    font-size: clamp(15.5px, 4.2vw, 18px);
-    line-height: 1.55;
-    margin-bottom: 24px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    margin-bottom: 18px;
   }
 
   /* Search Capsule on Mobile */
   .search-outer {
-    margin-bottom: 22px;
+    margin-bottom: 16px;
     width: 100%;
     max-width: 100%;
   }
   .search-wrap {
     flex-direction: column;
     align-items: stretch;
-    padding: 14px;
-    gap: 10px;
-    border-radius: 18px;
+    padding: 10px;
+    gap: 8px;
+    border-radius: 16px;
   }
   .search-input-row {
     width: 100%;
-    padding: 4px 2px;
+    padding: 4px 6px;
   }
   .search-input-row input {
     width: 100%;
-    font-size: 14.5px;
+    font-size: 14px;
   }
   .search-div {
     display: none;
@@ -3009,7 +3010,7 @@ html, body {
   .search-selects-group {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
   }
   .search-div-inner {
@@ -3017,57 +3018,98 @@ html, body {
   }
   .search-wrap select {
     width: 100%;
-    padding: 10px 12px;
-    font-size: 13.5px;
-    border-radius: 12px;
+    padding: 8px 10px;
+    font-size: 12.5px;
+    border-radius: 10px;
   }
   .hero-search-btn {
     width: 100%;
     justify-content: center;
-    padding: 13px;
-    font-size: 15px;
-    font-weight: 800;
-    border-radius: 12px;
+    padding: 11px;
+    font-size: 14px;
+    font-weight: 750;
+    border-radius: 10px;
   }
 
-  /* Hero Action Buttons on Mobile */
+  /* Hero Action Buttons on Mobile: Sleek 2-Column Side-by-Side */
   .hero-acts {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     width: 100%;
     gap: 10px;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
   }
   .hero-acts .btn {
     width: 100%;
     justify-content: center;
     text-align: center;
+    padding: 11px 8px;
+    font-size: 13.5px;
+    font-weight: 750;
+    border-radius: 12px;
   }
 
-  /* Hero Social Proof on Mobile */
+  /* Hero Social Proof on Mobile: Clean Single Row */
   .hero-social-proof {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     gap: 10px;
+    margin-bottom: 16px;
+  }
+  .cluster-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+  .social-proof-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .sp-stars {
+    font-size: 10px;
+    line-height: 1;
+  }
+  .sp-desc {
+    font-size: 11.5px;
+    line-height: 1.3;
   }
 
-  /* Hero Showcase on Mobile */
-  .showcase-card {
-    min-height: 270px;
-    max-height: 360px;
-    aspect-ratio: 16 / 10;
-    border-radius: 22px;
+  /* Trust Indicators on Mobile: Balanced 2x2 Grid */
+  .hero-trust {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 12px;
+    width: 100%;
   }
-  .showcase-top-badge {
-    font-size: 11.5px;
-    padding: 5px 12px;
-    top: 12px;
-    left: 12px;
+  .trust-i {
+    font-size: 12px;
     gap: 6px;
   }
+
+  /* Hero Showcase on Mobile: Balanced Height */
+  .hero-right-showcase {
+    margin-top: 4px;
+    width: 100%;
+  }
+  .showcase-card {
+    min-height: 190px;
+    max-height: 230px;
+    aspect-ratio: 16 / 10;
+    border-radius: 18px;
+  }
+  .showcase-top-badge {
+    font-size: 11px;
+    padding: 4px 10px;
+    top: 10px;
+    left: 10px;
+    gap: 5px;
+  }
   .showcase-dots {
-    bottom: 12px;
-    right: 12px;
-    padding: 4px 8px;
+    bottom: 10px;
+    right: 10px;
+    padding: 3px 6px;
   }
 
   /* Bento Grid on Mobile */
@@ -3249,23 +3291,23 @@ html, body {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: clamp(34px, 9.6vw, 44px);
-    line-height: 1.03;
-    letter-spacing: -0.035em;
-    margin-bottom: 16px;
+    font-size: clamp(26px, 7.5vw, 34px);
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
   }
   .hero-sub {
-    font-size: 15px;
-    line-height: 1.52;
-    margin-bottom: 20px;
+    font-size: 14px;
+    line-height: 1.48;
+    margin-bottom: 16px;
   }
   .cat-grid {
     grid-template-columns: 1fr;
     gap: 12px;
   }
   .hero-badge {
-    font-size: 11.5px;
-    padding: 5px 12px;
+    font-size: 11px;
+    padding: 4px 10px;
   }
   .rjh-jc-footer {
     flex-direction: column;
@@ -3281,7 +3323,10 @@ html, body {
 
 @media (max-width: 360px) {
   .hero-title {
-    font-size: clamp(30px, 9.2vw, 36px);
-    line-height: 1.05;
+    font-size: 24px;
+    line-height: 1.15;
+  }
+  .hero-acts {
+    grid-template-columns: 1fr;
   }
 }
