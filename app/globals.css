@@ -1868,26 +1868,43 @@ html.dark .ljf-card-lead, [data-theme="dark"] .ljf-card-lead {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 15px;
-  font-weight: 700;
+  font-size: 14.5px;
+  font-weight: 750;
   font-family: var(--fm);
-  padding: 14px 28px;
-  border-radius: 14px;
-  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 13px 26px;
+  border-radius: 50px;
+  background: var(--surface);
+  border: 1px solid var(--bd2);
+  color: var(--tx);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: -0.01em;
 }
 
-.ljf-btn-arrow {
-  transition: transform 0.2s ease;
+html.dark .ljf-view-more-btn, [data-theme="dark"] .ljf-view-more-btn {
+  background: rgba(17, 24, 39, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
-.ljf-view-more-btn:hover .ljf-btn-arrow {
-  transform: translateX(4px);
+.ljf-view-more-btn:hover {
+  border-color: rgba(0, 212, 200, 0.6);
+  color: var(--cyan);
+  background: rgba(0, 212, 200, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08), 0 0 22px rgba(0, 212, 200, 0.14);
+}
+
+html.dark .ljf-view-more-btn:hover {
+  background: rgba(0, 212, 200, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5), 0 0 25px rgba(0, 212, 200, 0.22);
 }
 
 .btn-xl {
-  padding: 14px 28px;
-  font-size: 15px;
-  border-radius: 14px;
+  padding: 13px 26px;
+  font-size: 14.5px;
+  border-radius: 50px;
 }
 
 /* Bottom Trust Ribbon */
