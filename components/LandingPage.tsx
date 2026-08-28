@@ -786,16 +786,22 @@ const occupationSlides = [
 
                       {/* Studio Body Content (Direct clean layout under expanded visual box) */}
                       <div className="artisan-studio-body">
-                        {/* Name + Location Row */}
+                        {/* Name + Rate Row */}
                         <div className="artisan-name-row">
                           <div className="artisan-name-title">
                             <span>{p.first_name} {p.last_name}</span>
                             <BadgeCheck className="w-[22px] h-[22px] text-[#00D4C8] fill-[#00D4C8]/15 shrink-0" strokeWidth={2.2} aria-label="Verified Provider" />
                           </div>
-                          <div className="artisan-location-txt">
-                            <span>📍</span>
-                            <span>{p.location || 'Accra, Ghana'}</span>
+                          <div className="artisan-rate-capsule">
+                            <span className="artisan-rate-val">{formatCurrency(p.hourly_rate || 85)}</span>
+                            <span className="artisan-rate-unit">/hr</span>
                           </div>
+                        </div>
+
+                        {/* Location Subline */}
+                        <div className="artisan-location-txt">
+                          <span>📍</span>
+                          <span>{p.location || 'Accra, Ghana'}</span>
                         </div>
 
                         <h3 className="artisan-studio-headline">
@@ -839,21 +845,15 @@ const occupationSlides = [
 
                         {/* Card Action Footer */}
                         <div className="artisan-studio-footer">
-                          <div className="artisan-footer-meta">
-                            <div className="artisan-footer-rate">
-                              <span className="artisan-rate-val">{formatCurrency(p.hourly_rate || 85)}</span>
-                              <span className="artisan-rate-unit">/hr</span>
+                          {tier === 'premium' ? (
+                            <div className="artisan-footer-tier artisan-tier-premium">
+                              ⭐ Premium
                             </div>
-                            {tier === 'premium' ? (
-                              <div className="artisan-footer-tier artisan-tier-premium">
-                                ⭐ Premium
-                              </div>
-                            ) : tier === 'verified' ? (
-                              <div className="artisan-footer-tier artisan-tier-verified">
-                                ✓ Verified
-                              </div>
-                            ) : null}
-                          </div>
+                          ) : tier === 'verified' ? (
+                            <div className="artisan-footer-tier artisan-tier-verified">
+                              ✓ Verified
+                            </div>
+                          ) : <div />}
                           <a
                             href={`/profile.php?id=${p.user_id || p.id}`}
                             className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}
