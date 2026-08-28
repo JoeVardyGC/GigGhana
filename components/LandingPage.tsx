@@ -21,7 +21,36 @@ import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
+
+const getCategoryIconElement = (cat: any) => {
+  const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
+  if (name.includes('tech') || name.includes('it') || name.includes('code')) {
+    return <Code className="w-5 h-5 text-[#00D4C8]" />;
+  }
+  if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
+    return <Palette className="w-5 h-5 text-[#A78BFA]" />;
+  }
+  if (name.includes('trade') || name.includes('tool') || name.includes('carpenter') || name.includes('plumb') || name.includes('electric')) {
+    return <Wrench className="w-5 h-5 text-[#F59E0B]" />;
+  }
+  if (name.includes('construct') || name.includes('build')) {
+    return <Building2 className="w-5 h-5 text-[#3B82F6]" />;
+  }
+  if (name.includes('health') || name.includes('wellness') || name.includes('nurse')) {
+    return <ShieldCheck className="w-5 h-5 text-[#10B981]" />;
+  }
+  if (name.includes('biz') || name.includes('business') || name.includes('consult')) {
+    return <Briefcase className="w-5 h-5 text-[#EC4899]" />;
+  }
+  if (name.includes('hosp') || name.includes('food') || name.includes('chef')) {
+    return <Sparkles className="w-5 h-5 text-[#F59E0B]" />;
+  }
+  if (name.includes('edu') || name.includes('teach')) {
+    return <Layers className="w-5 h-5 text-[#38BDF8]" />;
+  }
+  return <Sparkles className="w-5 h-5 text-[#00D4C8]" />;
+};
 
 ChartJS.register(
   CategoryScale,
@@ -1086,10 +1115,10 @@ const occupationSlides = [
       {/* ══════ CATEGORIES WITH SPOTLIGHT CARDS ══════ */}
       <section className="section" id="categories">
         <div className="s-head">
-          <div className="s-badge">Categories</div>
-          <h2 className="s-title">Every Skill. Every Profession.</h2>
+          <div className="s-badge">Explore Industries</div>
+          <h2 className="s-title">Every Skill. Every Profession in Ghana.</h2>
           <p className="s-sub">
-            From cutting-edge tech to skilled trades — GigGhana covers every Ghanaian profession.
+            From modern technology and creative design to master trades and construction — find verified Ghanaian specialists in every field.
           </p>
         </div>
         <div className="cat-grid">
@@ -1103,13 +1132,30 @@ const occupationSlides = [
               >
                 <a
                   href={`/search/providers.php?category=${cat.id}`}
-                  style={{ textDecoration: 'none', color: 'inherit', display: 'block', width: '100%', height: '100%' }}
+                  className="cat-card-inner group"
                 >
-                  {isHot && <div className="cat-hot">🔥 HOT</div>}
-                  <div className="cat-icon">{iconMap[cat.icon] || '🔧'}</div>
+                  <div className="cat-card-top">
+                    <div className="cat-icon-box">
+                      {getCategoryIconElement(cat)}
+                    </div>
+                    {isHot ? (
+                      <span className="cat-hot-pill">
+                        <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
+                        <span>High Demand</span>
+                      </span>
+                    ) : (
+                      <span className="cat-active-pill">
+                        <span className="live-pulse-dot" />
+                        <span>Verified Pros</span>
+                      </span>
+                    )}
+                  </div>
                   <div className="cat-name">{cat.name}</div>
                   {cat.description && <div className="cat-desc">{cat.description}</div>}
-                  <div className="cat-arrow">Explore →</div>
+                  <div className="cat-arrow-row">
+                    <span>Browse Specialists</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#00D4C8] transition-transform duration-200 group-hover:translate-x-1" />
+                  </div>
                 </a>
               </SpotlightCard>
             );
@@ -1117,22 +1163,22 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ TRENDING ══════ */}
+      {/* ══════ TRENDING SKILLS SEARCH PILLS ══════ */}
       <section className="section" id="trending" style={{ paddingTop: '10px', paddingBottom: '56px' }}>
         <div className="s-head">
-          <div className="s-badge">Trending Now</div>
-          <h2 className="s-title">Most In-Demand Skills</h2>
-          <p className="s-sub">What Ghanaian businesses are searching for this week.</p>
+          <div className="s-badge">Trending Searches</div>
+          <h2 className="s-title">Most In-Demand Skills This Week</h2>
+          <p className="s-sub">Real-time keyword searches by homeowners, developers, and businesses across Accra, Kumasi, and Takoradi.</p>
         </div>
         <div className="trending-wrap">
           {trends.map(([ic, lb, nm], idx) => (
             <a
               key={idx}
               href={`/search/providers.php?q=${encodeURIComponent(lb)}`}
-              className="trend-pill"
+              className="trend-pill group"
             >
-              <span>{ic}</span>
-              <span>{lb}</span>
+              <Search className="w-3.5 h-3.5 text-[#00D4C8] opacity-75 group-hover:opacity-100 transition-opacity" />
+              <span className="trend-label">{lb}</span>
               <span className="trend-num">{nm}</span>
             </a>
           ))}
@@ -1195,24 +1241,114 @@ const occupationSlides = [
           />
         </BentoGrid>
 
-        <div className="badge-tiers mt-10">
+        {/* ══════ MEMBERSHIP TIERS ══════ */}
+        <div className="badge-tiers mt-12">
+          {/* Beginner Tier */}
           <div className="badge-tier-card">
-            <div className="bt-icon">🌱</div>
+            <div className="bt-top-row">
+              <div className="bt-icon-box">
+                <Sparkles className="w-5 h-5 text-[var(--tx-2)]" />
+              </div>
+              <span className="bt-tier-pill">Starter</span>
+            </div>
             <div className="bt-name">Beginner</div>
-            <div className="bt-price">Free · 3 jobs included</div>
-            <div className="bt-perks">Get started at no cost. Basic profile listing and access to open jobs.</div>
+            <div className="bt-price">
+              <span className="bt-price-val">Free</span>
+              <span className="bt-price-sub">/ forever</span>
+            </div>
+            <p className="bt-desc">Get started at no cost. Create your public profile and start bidding on local gigs.</p>
+            <div className="bt-perks-list">
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
+                <span>3 Job proposals per month</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
+                <span>Standard directory listing</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
+                <span>Mobile Money escrow payouts</span>
+              </div>
+            </div>
+            <a href="/auth/register.php?role=provider" className="btn btn-ghost bt-action-btn">
+              Get Started Free
+            </a>
           </div>
+
+          {/* Verified Tier (Highlighted) */}
           <div className="badge-tier-card featured">
-            <div className="bt-icon">✓</div>
-            <div className="bt-name">Verified</div>
-            <div className="bt-price">₵49/mo · Unlimited jobs</div>
-            <div className="bt-perks">Verified badge, unlimited applications, higher search ranking &amp; client trust.</div>
+            <div className="bt-pop-badge">👑 Most Popular · High Trust</div>
+            <div className="bt-top-row">
+              <div className="bt-icon-box featured-icon">
+                <BadgeCheck className="w-5 h-5 text-[#00D4C8]" />
+              </div>
+              <span className="bt-tier-pill featured-pill">Verified</span>
+            </div>
+            <div className="bt-name">Verified Pro</div>
+            <div className="bt-price">
+              <span className="bt-price-val">₵49</span>
+              <span className="bt-price-sub">/ month</span>
+            </div>
+            <p className="bt-desc">For active pros and master artisans looking to build high client trust and win jobs faster.</p>
+            <div className="bt-perks-list">
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
+                <span><strong>✓ Verified Ghana Card badge</strong></span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
+                <span><strong>Unlimited</strong> job proposals &amp; contracts</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
+                <span><strong>3x Higher</strong> search visibility in Ghana</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
+                <span>Sub-60s instant MoMo withdrawals</span>
+              </div>
+            </div>
+            <a href="/auth/register.php?role=provider&tier=verified" className="btn btn-gold bt-action-btn">
+              Get Verified Status
+            </a>
           </div>
+
+          {/* Premium Tier */}
           <div className="badge-tier-card">
-            <div className="bt-icon">⭐</div>
-            <div className="bt-name">Premium</div>
-            <div className="bt-price">₵99/mo · Top placement</div>
-            <div className="bt-perks">Featured listing, top search placement, priority support &amp; exclusive jobs.</div>
+            <div className="bt-top-row">
+              <div className="bt-icon-box premium-icon">
+                <Star className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
+              </div>
+              <span className="bt-tier-pill premium-pill">Top Tier</span>
+            </div>
+            <div className="bt-name">Premium Master</div>
+            <div className="bt-price">
+              <span className="bt-price-val">₵99</span>
+              <span className="bt-price-sub">/ month</span>
+            </div>
+            <p className="bt-desc">For leading contractors, agencies, and elite specialists seeking top placement &amp; direct invites.</p>
+            <div className="bt-perks-list">
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                <span><strong>⭐ Featured Top Listing</strong> on homepage</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                <span>Direct client contract invitations</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                <span>Priority 24/7 dedicated account support</span>
+              </div>
+              <div className="bt-perk-item">
+                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
+                <span>Zero commission fee on first ₵5,000</span>
+              </div>
+            </div>
+            <a href="/auth/register.php?role=provider&tier=premium" className="btn btn-ghost bt-action-btn">
+              Upgrade to Premium
+            </a>
           </div>
         </div>
       </section>
@@ -1224,12 +1360,12 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ TESTIMONIALS ══════ */}
-      <section className="section" style={{ paddingTop: '32px' }}>
+      {/* ══════ REVIEWS & TESTIMONIALS ══════ */}
+      <section className="section" id="reviews" style={{ paddingTop: '32px' }}>
         <div className="s-head">
-          <div className="s-badge">Reviews</div>
+          <div className="s-badge">Member Stories</div>
           <h2 className="s-title">Ghanaians Winning on GigGhana</h2>
-          <p className="s-sub">Real feedback from painters, nurses, carpenters, chefs and more across Ghana.</p>
+          <p className="s-sub">Real feedback from master painters, nurses, carpenters, chefs, and verified homeowners across Ghana.</p>
         </div>
         <div className="rv-carousel-outer">
           <div
@@ -1241,14 +1377,20 @@ const occupationSlides = [
             {reviews.map((rv, idx) => {
               const init = initials(rv.first_name, rv.last_name);
               const rating = Number(rv.rating_overall || 5);
-              const profIcons: Record<string, string> = { provider: '💼', client: '🏢' };
+              const isProvider = rv.role === 'provider';
 
               return (
                 <div key={idx} className="rv-card">
-                  <div className="rv-stars">
-                    {[1, 2, 3, 4, 5].map((s) => (
-                      <span key={s}>{rating >= s ? '★' : '☆'}</span>
-                    ))}
+                  <div className="rv-card-top-row">
+                    <div className="rv-stars">
+                      {[1, 2, 3, 4, 5].map((s) => (
+                        <Star
+                          key={s}
+                          className={`w-4 h-4 ${rating >= s ? 'text-[#F59E0B] fill-[#F59E0B]' : 'text-gray-300'}`}
+                        />
+                      ))}
+                    </div>
+                    <MessageSquare className="w-4 h-4 text-[#00D4C8] opacity-60" />
                   </div>
                   <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
                   <div className="rv-author">
@@ -1257,11 +1399,13 @@ const occupationSlides = [
                     </div>
                     <div>
                       <div className="rv-name">
-                        {`${profIcons[rv.role] || '👤'} ${rv.first_name} ${rv.last_name}`}
+                        {`${rv.first_name} ${rv.last_name}`}
                       </div>
-                      <div className="rv-role">
-                        {rv.role ? rv.role.charAt(0).toUpperCase() + rv.role.slice(1) : ''}
-                        {rv.location ? ` · ${rv.location}` : ''}
+                      <div className="rv-role-line">
+                        <span className="rv-role-tag">
+                          {isProvider ? '🇬🇭 Verified Specialist' : '🏢 Verified Client'}
+                        </span>
+                        {rv.location ? <span className="rv-loc-text"> · {rv.location}</span> : null}
                       </div>
                     </div>
                   </div>
@@ -1274,14 +1418,16 @@ const occupationSlides = [
           <button
             className="rv-nav-btn"
             onClick={() => setRvPos((prev) => Math.max(0, prev - 1))}
+            aria-label="Previous Testimonial"
           >
-            ←
+            <ArrowLeft className="w-4 h-4" />
           </button>
           <button
             className="rv-nav-btn"
             onClick={() => setRvPos((prev) => Math.min(reviews.length - 1, prev + 1))}
+            aria-label="Next Testimonial"
           >
-            →
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </section>
@@ -1392,7 +1538,7 @@ const occupationSlides = [
         </div>
       </div>
 
-      {/* ══════ FOOTER ══════ */}
+      {/* ══════ EXECUTIVE FOOTER ══════ */}
       <footer className="footer-wrap">
         <div className="footer-top">
           <div>
@@ -1423,9 +1569,9 @@ const occupationSlides = [
               </form>
             </div>
             <div className="footer-badges">
-              <div className="f-badge">🔒 SSL Secured</div>
-              <div className="f-badge">🇬🇭 Ghana Registered</div>
-              <div className="f-badge">✓ Escrow Protected</div>
+              <div className="f-badge">🔒 Bank of Ghana Escrow Protected</div>
+              <div className="f-badge">🇬🇭 Ghana Registered (GRA)</div>
+              <div className="f-badge">✓ 100% Ghana Card Verified</div>
               <div className="f-badge">🌍 Africa-wide</div>
             </div>
           </div>
@@ -1436,8 +1582,8 @@ const occupationSlides = [
               <li><a href="/jobs.php">Browse Jobs</a></li>
               <li><a href="/auth/register.php">Post a Job</a></li>
               <li><a href="#">Enterprise</a></li>
-              <li><a href="#">Pricing</a></li>
-              <li><a href="#">Upgrade Badge</a></li>
+              <li><a href="#how">Pricing &amp; Tiers</a></li>
+              <li><a href="/auth/register.php?role=provider">Upgrade Badge</a></li>
             </ul>
           </div>
           <div>
@@ -1451,19 +1597,23 @@ const occupationSlides = [
             </ul>
           </div>
           <div>
-            <div className="footer-ttl">Support</div>
+            <div className="footer-ttl">Support &amp; Trust</div>
             <ul className="footer-links">
               <li><a href="#">Help Centre</a></li>
               <li><a href="/privacy.php">Privacy Policy</a></li>
               <li><a href="/terms.php">Terms of Service</a></li>
-              <li><a href="#">Contact Us</a></li>
               <li><a href="#">Dispute Resolution</a></li>
+              <li>
+                <a href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" style={{ color: '#10B981', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                  💬 WhatsApp Support
+                </a>
+              </li>
             </ul>
           </div>
         </div>
         <div className="footer-bar">
           <span className="footer-copy">
-            © {new Date().getFullYear()} GigGhana Ltd. Made with ❤️ in Ghana 🇬🇭
+            © {new Date().getFullYear()} GigGhana Ltd. Made with ❤️ in Accra, Ghana 🇬🇭
           </span>
           <div className="footer-socials">
             <a className="soc-btn" href="#" title="Twitter / X">𝕏</a>
