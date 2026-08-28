@@ -674,24 +674,6 @@ const occupationSlides = [
                   </span>
                 </div>
 
-                {/* Bottom Floating Stats Strip with Rate and Experience */}
-                <div className="showcase-bottom-card">
-                  <div className="showcase-meta-row">
-                    <div className="showcase-stat-item">
-                      <div className="showcase-val">🇬🇭 NIA Verified</div>
-                      <div className="showcase-lbl">Biometric KYC</div>
-                    </div>
-                    <div className="showcase-stat-item">
-                      <div className="showcase-val">★ 5.0 ({occupationSlides[heroSlide]?.exp})</div>
-                      <div className="showcase-lbl">Verified Rating</div>
-                    </div>
-                    <div className="showcase-stat-item">
-                      <div className="showcase-val">{occupationSlides[heroSlide]?.rate}</div>
-                      <div className="showcase-lbl">⚡ Sub-60s MoMo</div>
-                    </div>
-                  </div>
-                </div>
-
                 {/* Floating Rotator Pagination */}
                 <div className="showcase-dots">
                   {occupationSlides.map((_, idx) => (
