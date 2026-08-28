@@ -774,11 +774,11 @@ html.dark .ticker-text, [data-theme="dark"] .ticker-text {
 }
 
 .hero-title {
-  font-size: clamp(36px, 4.8vw, 60px);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  margin-bottom: 20px;
+  font-size: clamp(44px, 5.6vw, 68px);
+  font-weight: 850;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin-bottom: 22px;
   animation: fadU 0.7s 0.1s ease both;
   color: #FFFFFF;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
@@ -2966,12 +2966,12 @@ html, body {
     align-self: flex-start;
   }
   .hero-title {
-    font-size: clamp(34px, 9.4vw, 46px);
+    font-size: clamp(42px, 11.2vw, 56px);
     font-weight: 950;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-    margin-bottom: 16px;
-    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.55);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin-bottom: 18px;
+    text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
   }
   .hero-title .gold {
     display: inline-block;
@@ -3292,11 +3292,11 @@ html, body {
 
 @media (max-width: 480px) {
   .hero-title {
-    font-size: clamp(32px, 9.2vw, 42px);
+    font-size: clamp(38px, 10.8vw, 48px);
     font-weight: 950;
-    line-height: 1.05;
-    letter-spacing: -0.035em;
-    margin-bottom: 14px;
+    line-height: 1.03;
+    letter-spacing: -0.04em;
+    margin-bottom: 16px;
   }
   .hero-sub {
     font-size: 14.5px;
@@ -3327,8 +3327,8 @@ html, body {
 
 @media (max-width: 360px) {
   .hero-title {
-    font-size: 24px;
-    line-height: 1.15;
+    font-size: 32px;
+    line-height: 1.05;
   }
   .hero-acts {
     grid-template-columns: 1fr;
