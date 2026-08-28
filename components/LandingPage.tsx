@@ -944,24 +944,12 @@ const occupationSlides = [
                       className={`ljf-card p-0 ${isFeaturedHeroCard ? 'ljf-card-lead' : ''}`}
                     >
                       <div className="ljf-card-inner">
-                        {/* Card Top: Category & Real-time posted tag */}
-                        <div className="rjh-jc-top">
-                          <div className="rjh-jc-cat">
-                            {renderCatIcon(j.cat_name, j.cat_icon)}
-                            <span>{j.cat_name || 'General Gig'}</span>
-                          </div>
-                          <div className="rjh-jc-time">
-                            <span className="live-pulse-dot" />
-                            <span>{timeAgo(j.created_at)}</span>
-                          </div>
-                        </div>
-
-                        {/* Client details */}
+                        {/* Client details with integrated live posted tag */}
                         <div className="rjh-jc-client">
                           <div className="rjh-jc-avatar">
                             {initials(j.first_name, j.last_name)}
                           </div>
-                          <div>
+                          <div className="rjh-jc-client-meta">
                             <div className="rjh-jc-client-name">
                               <span>{j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}</span>
                               {isClientVerified && (
@@ -971,7 +959,14 @@ const occupationSlides = [
                                 </span>
                               )}
                             </div>
-                            <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
+                            <div className="rjh-jc-client-loc">
+                              <span>📍 {j.location || 'Accra, Ghana'}</span>
+                              <span className="rjh-jc-dot-sep">·</span>
+                              <span className="rjh-jc-time-inline">
+                                <span className="live-pulse-dot" />
+                                <span>{timeAgo(j.created_at)}</span>
+                              </span>
+                            </div>
                           </div>
                           {j.is_urgent === 1 && (
                             <span className="rjh-jc-urgent">
