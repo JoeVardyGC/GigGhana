@@ -707,6 +707,9 @@ html.lm .sc-dot, [data-theme="light"] .sc-dot {
 .hero-badge {
   display: inline-flex;
   align-items: center;
+  align-self: flex-start;
+  width: fit-content;
+  max-width: 100%;
   gap: 8px;
   background: rgba(0, 212, 200, 0.12);
   border: 1.5px solid rgba(0, 212, 200, 0.4);
