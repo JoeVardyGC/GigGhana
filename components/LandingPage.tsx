@@ -727,7 +727,7 @@ const occupationSlides = [
               return true;
             });
 
-        // 6 cards (3x2) or 8 cards (4x2) on PC, and CSS hides index >= 4 on mobile for exactly 4 cards
+        // 6 cards (3x2) on PC, and CSS hides index >= 4 on mobile for exactly 4 cards
         const displayTalent = filteredTalent.slice(0, 6);
 
         return (
@@ -735,9 +735,13 @@ const occupationSlides = [
             <div className="figma-talent-container">
               {/* Header */}
               <div className="figma-talent-header">
+                <div className="hero-badge" style={{ marginBottom: '6px' }}>
+                  <span className="live-pulse-dot" />
+                  <span>🇬🇭 Ghana&apos;s Verified Talent Network</span>
+                </div>
                 <h2 className="figma-talent-title">Find Trusted Professionals Across Ghana</h2>
                 <p className="figma-talent-sub">
-                  Whether you need a website developer, painter, photographer, electrician, designer, tutor, or business consultant, GigGhana connects you with verified professionals ready to work.
+                  Whether you need a website developer, master painter, photographer, electrician, designer, tutor, or business consultant, GigGhana connects you with verified professionals ready to work.
                 </p>
               </div>
 
@@ -766,16 +770,27 @@ const occupationSlides = [
                   const isHiddenOnMobile = idx >= 4;
 
                   return (
-                    <div
+                    <SpotlightCard
                       key={p.id || idx}
-                      className={`figma-card ${isHiddenOnMobile ? 'figma-mobile-hide' : ''}`}
+                      spotlightColor="rgba(0, 212, 200, 0.15)"
+                      className={`figma-card p-0 ${isHiddenOnMobile ? 'figma-mobile-hide' : ''}`}
                     >
                       {/* Top Row: Avatar + Name + Role on Left, Rating Pill on Right */}
                       <div className="figma-card-top">
                         <div className="figma-avatar-meta">
-                          <div className="figma-avatar">{init}</div>
+                          <div className="figma-avatar">
+                            {p.avatar ? (
+                              <img src={p.avatar} alt={p.first_name} loading="lazy" />
+                            ) : (
+                              init
+                            )}
+                          </div>
                           <div className="figma-meta">
-                            <div className="figma-name">{p.first_name} {p.last_name}</div>
+                            <div className="figma-name">
+                              <a href={`/profile.php?id=${p.user_id || p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                {p.first_name} {p.last_name}
+                              </a>
+                            </div>
                             <div className="figma-role">{role}</div>
                           </div>
                         </div>
@@ -804,14 +819,15 @@ const occupationSlides = [
                       {/* Card Footer: Verified + Availability */}
                       <div className="figma-card-footer">
                         <div className="figma-verified-tag">
-                          <span>✔</span>
+                          <span>🇬🇭</span>
                           <span>Ghana Card Verified</span>
                         </div>
                         <div className="figma-avail-text">
-                          Available This Week
+                          <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
+                          <span>Available This Week</span>
                         </div>
                       </div>
-                    </div>
+                    </SpotlightCard>
                   );
                 })}
               </div>
@@ -819,14 +835,15 @@ const occupationSlides = [
               {/* Bottom Caption & Action Buttons */}
               <div className="figma-bottom-wrap">
                 <p className="figma-bottom-caption">
-                  Every professional on GigGhana builds a verified profile, receives customer reviews, and grows their reputation.
+                  Every professional on GigGhana builds a verified profile, receives client reviews, and is protected with 100% Escrow security.
                 </p>
                 <div className="figma-bottom-actions">
-                  <a href="/search/providers.php" className="figma-btn-primary">
-                    Find A Professional
+                  <a href="/search/providers.php" className="btn btn-gold btn-xl">
+                    <span>Find A Professional</span>
+                    <span>→</span>
                   </a>
-                  <a href="/auth/register.php?role=provider" className="figma-btn-secondary">
-                    Become A Provider
+                  <a href="/auth/register.php?role=provider" className="btn btn-ghost btn-xl">
+                    + Become A Provider
                   </a>
                 </div>
               </div>
