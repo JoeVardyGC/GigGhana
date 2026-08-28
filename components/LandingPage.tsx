@@ -21,7 +21,7 @@ import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -782,7 +782,7 @@ const occupationSlides = [
                         <div className="artisan-name-row">
                           <div className="artisan-name-title">
                             <span>{p.first_name} {p.last_name}</span>
-                            <span className="artisan-nia-badge">✓ NIA</span>
+                            <BadgeCheck className="w-[18px] h-[18px] text-[#00D4C8] shrink-0" aria-label="Verified Provider" />
                           </div>
                           <div className="artisan-location-txt">
                             <span>📍</span>
