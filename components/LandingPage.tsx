@@ -1137,96 +1137,6 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ AI MATCHED PROVIDERS WITH SPOTLIGHT ══════ */}
-      {matchedProviders.length > 0 && (
-        <section
-          className="section"
-          style={{ background: 'linear-gradient(180deg,transparent,rgba(0,212,200,0.02),transparent)' }}
-        >
-          <div className="s-head">
-            <div className="s-badge">AI Matching</div>
-            <h2 className="s-title">Recommended Service Providers</h2>
-            <p className="s-sub">Smart suggestions based on platform ratings and activity.</p>
-          </div>
-          <div className="prov-grid">
-            {matchedProviders.map((p, idx) => {
-              const skills = p.skill_names ? p.skill_names.split('|').filter(Boolean) : [];
-              const rk = rankLabel(Number(p.completed_jobs || 0));
-              const init = initials(p.first_name, p.last_name);
-              const jobs = Number(p.completed_jobs || 0);
-              const bt = jobs >= 20 ? 'premium' : jobs >= 5 ? 'verified' : 'free';
-              const rating = Number(p.rating_avg || 5);
-
-              return (
-                <div
-                  key={idx}
-                  className="prov-card p-0"
-                >
-                  <div className="prov-img-wrap">
-                    {p.avatar ? (
-                      <img src={p.avatar} alt={p.first_name} loading="lazy" />
-                    ) : (
-                      <div className="prov-initials">{init}</div>
-                    )}
-                    {p.is_verified ? <div className="prov-verified-badge">✓ Verified</div> : null}
-                  </div>
-                  <div className="prov-body">
-                    <div className="prov-name">{`${p.first_name} ${p.last_name}`}</div>
-                    <div className="prov-tag">
-                      {p.tagline || `${p.experience_level ? p.experience_level.charAt(0).toUpperCase() + p.experience_level.slice(1) : ''} Provider`}
-                    </div>
-                    <div className="badge-row">
-                      {bt === 'premium' ? (
-                         <span className="badge-premium">⭐ Premium</span>
-                      ) : bt === 'verified' ? (
-                        <span className="badge-verified">✓ Verified</span>
-                      ) : null}
-                    </div>
-                    <div className="prov-stars">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <span key={s}>{rating >= s ? '★' : rating >= s - 0.5 ? '✦' : '☆'}</span>
-                      ))}
-                    </div>
-                    <div className="prov-rc">
-                      {rating.toFixed(1)} · {Number(p.rating_count || 0)} reviews
-                    </div>
-                    <div className="prov-pills">
-                      {skills.slice(0, 2).map((skill: string, sIdx: number) => (
-                        <span key={sIdx} className="skill-pill">
-                          {skill}
-                        </span>
-                      ))}
-                      <span className={rk.c}>{`${rk.i} ${rk.l}`}</span>
-                    </div>
-                    <div className="prov-foot">
-                      <div className="prov-rate">
-                        {p.hourly_rate > 0 ? (
-                          <>
-                            {formatCurrency(p.hourly_rate)}
-                            <small>/hr</small>
-                          </>
-                        ) : (
-                          'Negotiable'
-                        )}
-                      </div>
-                      <a
-                        href={`/profile.php?id=${p.user_id}`}
-                        className="btn btn-indigo"
-                        style={{ padding: '6px 14px', fontSize: '11.5px' }}
-                      >
-                        Invite
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </section>
-      )}
-
-
-
       {/* ══════ MODERN BENTO GRID: WHY GIGHANA & PROCESS ══════ */}
       <section className="section" id="how">
         <div className="s-head">
@@ -1246,7 +1156,7 @@ const occupationSlides = [
             header={
               <div className="flex items-center gap-2 p-3 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] text-xs text-[var(--tx-2)]">
                 <CheckCircle2 className="w-4 h-4 text-[var(--green)]" />
-                <span>Instant Ghana Card verification and skill endorsement verification</span>
+                <span>Instant Ghana Card biometric verification and skill certification</span>
               </div>
             }
           />
@@ -1261,7 +1171,7 @@ const occupationSlides = [
 
           <BentoCard
             title="3. Instant MoMo &amp; Bank Payouts"
-            description="Direct integration with MTN Mobile Money, Vodafone Cash, AirtelTigo, and local banks for fast, reliable withdrawals."
+            description="Direct integration with MTN Mobile Money, Telecel Cash, AT Money, and Ghanaian commercial banks for sub-60s payouts."
             icon={<Smartphone className="w-6 h-6 text-[var(--green)]" />}
             badge="Zero Delay"
             spotlightColor="rgba(31, 217, 160, 0.18)"
@@ -1305,7 +1215,12 @@ const occupationSlides = [
         </div>
       </section>
 
-
+      {/* ══════ PROFESSIONAL INCOME ESTIMATOR ══════ */}
+      <section className="section" id="calculator" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
+        <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
+          <LuxuryEstimator />
+        </div>
+      </section>
 
       {/* ══════ TESTIMONIALS ══════ */}
       <section className="section" style={{ paddingTop: '32px' }}>
@@ -1369,7 +1284,7 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ CTA ══════ */}
+      {/* ══════ FINAL HIGH-IMPACT CTA ══════ */}
       <div className="cta-wrap">
         <div className="cta-glo" />
         <div className="cta-glo2" />
@@ -1391,44 +1306,11 @@ const occupationSlides = [
               className="btn btn-blue btn-lg"
               onClick={triggerConfetti}
             >
-              Hire Talent
+              Hire a Provider
             </a>
           </div>
         </div>
       </div>
-
-      {/* ══════ PROFESSIONAL INCOME ESTIMATOR ══════ */}
-      <section className="section" id="calculator" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
-        <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-          <LuxuryEstimator />
-        </div>
-      </section>
-
-      {/* ══════ EARNINGS CHART ══════ */}
-      <section className="section" style={{ paddingTop: '32px' }}>
-        <div className="s-head">
-          <div className="s-badge">Analytics</div>
-          <h2 className="s-title">Track Your Earnings</h2>
-          <p className="s-sub">Real earnings data from the platform — your personal dashboard updates after login.</p>
-        </div>
-        <div className="chart-box">
-          <div className="chart-hd">
-            <div>
-              <div className="chart-ttl">Monthly Earnings Overview ({new Date().getFullYear()})</div>
-              <div style={{ fontSize: '11.5px', color: 'var(--tx-3)', marginTop: '3px' }}>
-                {earningsTotal > 0
-                  ? 'Live from escrow release transactions'
-                  : 'No completed transactions yet this year'}
-              </div>
-            </div>
-            <div>
-              <div className="chart-kpi-val">₵{earningsTotal.toLocaleString('en-GH', { minimumFractionDigits: 2 })}</div>
-              <div className="chart-kpi-lbl">Total paid out ({new Date().getFullYear()})</div>
-            </div>
-          </div>
-          <Line data={chartData} options={chartOptions} height={105} />
-        </div>
-      </section>
 
       {/* ══════ INFINITE PARTNER MARQUEE ══════ */}
       <div className="pay-section">
@@ -1443,16 +1325,16 @@ const occupationSlides = [
               />
               <span className="pay-txt">MTN MoMo</span>
             </div>
-            <div className="pay-logo" title="Vodafone Cash">
+            <div className="pay-logo" title="Telecel Cash">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Vodafone_icon.svg/512px-Vodafone_icon.svg.png"
-                alt="Vodafone"
+                alt="Telecel Cash"
               />
-              <span className="pay-txt">Vodafone Cash</span>
+              <span className="pay-txt">Telecel Cash</span>
             </div>
             <div
               className="pay-logo"
-              title="AirtelTigo"
+              title="AT Money"
               style={{ background: 'linear-gradient(135deg,var(--coral-dim),rgba(239,68,68,0.04))' }}
             >
               <span
@@ -1464,7 +1346,7 @@ const occupationSlides = [
                   whiteSpace: 'nowrap',
                 }}
               >
-                AirtelTigo
+                AT Money
               </span>
             </div>
             <div className="pay-logo" title="Paystack">
@@ -1489,22 +1371,7 @@ const occupationSlides = [
               />
               <span className="pay-txt">Mastercard</span>
             </div>
-            <div className="pay-logo" title="Telesoft" style={{ background: 'var(--violet-dim)' }}>
-              <span
-                style={{
-                  fontFamily: 'var(--fm)',
-                  fontWeight: 800,
-                  fontSize: '12px',
-                  color: 'var(--violet)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '5px',
-                }}
-              >
-                🧠 Telesoft
-              </span>
-            </div>
-            <div className="pay-logo" title="Secure Escrow" style={{ background: 'var(--green-dim)' }}>
+            <div className="pay-logo" title="Bank of Ghana Escrow Vault" style={{ background: 'var(--green-dim)' }}>
               <span
                 style={{
                   fontFamily: 'var(--fm)',
@@ -1516,7 +1383,7 @@ const occupationSlides = [
                   gap: '5px',
                 }}
               >
-                🔒 Secure Escrow
+                🔒 Bank of Ghana Escrow Vault
               </span>
             </div>
           </Marquee>
