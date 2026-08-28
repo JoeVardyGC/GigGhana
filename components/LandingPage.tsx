@@ -804,28 +804,20 @@ const occupationSlides = [
                         </div>
                       </div>
 
-                      {/* Profile Anchor & Overlapping Avatar */}
-                      <div className="artisan-profile-anchor">
-                        <div className="artisan-avatar-ring">
-                          {p.avatar ? (
-                            <img src={p.avatar} alt={p.first_name} className="artisan-avatar-pic" />
-                          ) : (
-                            <div className="artisan-avatar-init">{init}</div>
-                          )}
-                        </div>
-                        <div className="artisan-anchor-meta">
-                          <div className="artisan-anchor-name">
-                            {p.first_name} {p.last_name}
+                      {/* Studio Body Content (Direct clean layout under expanded visual box) */}
+                      <div className="artisan-studio-body">
+                        {/* Name + Location Row */}
+                        <div className="artisan-name-row">
+                          <div className="artisan-name-title">
+                            <span>{p.first_name} {p.last_name}</span>
                             <span className="artisan-nia-badge">✓ NIA</span>
                           </div>
-                          <div className="artisan-anchor-loc">
-                            📍 {p.location || 'Accra, Ghana'}
+                          <div className="artisan-location-txt">
+                            <span>📍</span>
+                            <span>{p.location || 'Accra, Ghana'}</span>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Studio Body Content */}
-                      <div className="artisan-studio-body">
                         <h3 className="artisan-studio-headline">
                           <a href={`/profile.php?id=${p.user_id || p.id}`}>
                             {p.tagline || `${p.first_name} ${p.last_name} - Certified Ghanaian Specialist`}
