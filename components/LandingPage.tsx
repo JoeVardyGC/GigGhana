@@ -782,7 +782,7 @@ const occupationSlides = [
                         <div className="artisan-name-row">
                           <div className="artisan-name-title">
                             <span>{p.first_name} {p.last_name}</span>
-                            <BadgeCheck className="w-[18px] h-[18px] text-[#00D4C8] shrink-0" aria-label="Verified Provider" />
+                            <BadgeCheck className="w-[22px] h-[22px] text-[#00D4C8] fill-[#00D4C8]/15 shrink-0" strokeWidth={2.2} aria-label="Verified Provider" />
                           </div>
                           <div className="artisan-location-txt">
                             <span>📍</span>
