@@ -2102,10 +2102,11 @@ html.dark .artisan-studio-card:hover, [data-theme="dark"] .artisan-studio-card:h
 
 /* Card Body (Compact & Snug Around Content) */
 .artisan-studio-body {
-  padding: 14px 16px 16px;
+  padding: 14px 16px 14px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex: 1;
 }
 
 .artisan-name-row {
@@ -2280,15 +2281,15 @@ html.lm .artisan-skill-tag, [data-theme="light"] .artisan-skill-tag {
   box-shadow: 0 0 6px #00D4C8;
 }
 
-/* Footer & CTA */
+/* Footer & CTA (Anchored to Bottom of Card) */
 .artisan-studio-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1px solid var(--bd);
-  margin-top: 2px;
+  margin-top: auto;
 }
 
 .artisan-footer-tier {
