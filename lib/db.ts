@@ -1,5 +1,5 @@
 import mysql from 'mysql2/promise';
-import { LandingData, ghanaFallbackCats, testimonialFallbacks } from './types';
+import { LandingData, ghanaFallbackCats, testimonialFallbacks, fallbackRecentJobs } from './types';
 
 let pool: mysql.Pool | null = null;
 
@@ -35,7 +35,7 @@ export const defaultLandingData: LandingData = {
   categories: ghanaFallbackCats,
   featured: [],
   matchedProviders: [],
-  recentJobs: [],
+  recentJobs: fallbackRecentJobs,
   liveJobs: [],
   earningsData: [12000, 18500, 24000, 31000, 42000, 56000, 68000, 79000, 92000, 108000, 125000, 145000],
   earningsTotal: 800500,
@@ -93,9 +93,13 @@ export async function getLandingPageData(): Promise<LandingData> {
     );
 
     // Recent Jobs
-    const [recentJobs]: any = await db.query(
+    let [recentJobs]: any = await db.query(
       `SELECT j.id, j.title, j.description, j.budget_min, j.budget_max, j.budget_type, j.is_urgent, j.is_featured, j.proposal_count, j.created_at, u.first_name, u.last_name, u.avatar AS client_avatar, c.name AS cat_name, c.icon AS cat_icon FROM jobs j JOIN users u ON u.id=j.client_id LEFT JOIN categories c ON c.id=j.category_id WHERE j.status='open' ORDER BY j.is_featured DESC, j.is_urgent DESC, j.created_at DESC LIMIT 6`
     );
+
+    if (!recentJobs || recentJobs.length === 0) {
+      recentJobs = fallbackRecentJobs;
+    }
 
     // Live Jobs
     const [liveJobs]: any = await db.query(

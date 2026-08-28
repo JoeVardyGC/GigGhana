@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import type { LandingData } from '@/lib/types';
-import { iconMap } from '@/lib/types';
+import { iconMap, fallbackRecentJobs } from '@/lib/types';
 import confetti from 'canvas-confetti';
 import {
   Chart as ChartJS,
@@ -691,136 +691,97 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ CRAFT UNIFIED TRUST & METRICS ISLAND ══════ */}
-      <section className="stats-bar" ref={statsRef}>
-        <div className="trust-island">
-          <div className="trust-island-header">
-            <div className="trust-pulse-badge">
-              <span className="live-pulse-dot" />
-              <span>Verified Ghana National Marketplace</span>
-            </div>
-            <div className="trust-sub-note">🇬🇭 Powered by NIA Biometrics & BoG Escrow Vault</div>
-          </div>
-
-          <div className="trust-island-grid">
-            {/* Metric 1 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-blue">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countProviders.toLocaleString()}</div>
-                <div className="trust-lbl">Verified Freelancers</div>
-                <div className="trust-sub">Ghana Card KYC</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 2 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-amber">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countJobs.toLocaleString()}</div>
-                <div className="trust-lbl">Active Gigs & Jobs</div>
-                <div className="trust-sub">Across 16 Regions</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 3 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-emerald">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countCompleted.toLocaleString()}</div>
-                <div className="trust-lbl">Jobs Completed</div>
-                <div className="trust-sub">99.8% Client Rating</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 4 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-gold">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">₵{countEarnings.toLocaleString()}K+</div>
-                <div className="trust-lbl">Paid to Artisans</div>
-                <div className="trust-sub">⚡ Sub-60s MoMo</div>
-              </div>
-            </div>
-          </div>
+      {/* ══════ RECENTLY POSTED JOBS (CRAFT GRID) ══════ */}
+      <section className="section recent-jobs-section" id="jobs" ref={statsRef}>
+        <div className="s-head">
+          <div className="s-badge">🔥 Live Opportunities</div>
+          <h2 className="s-title">Recently Posted Jobs in Ghana</h2>
+          <p className="s-sub">
+            Fresh gigs and contracts posted by verified Ghanaian businesses and individuals. Send a proposal in minutes.
+          </p>
         </div>
-      </section>
 
-      {/* ══════ LIVE FEED ══════ */}
-      {liveJobs.length > 0 && (
-        <section className="section" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
-          <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', marginBottom: '16px' }}>
-              <div className="live-dot" />
-              <h3 style={{ fontSize: '15px', fontFamily: 'var(--fm)', fontWeight: 700 }}>
-                🔥 Live Job Feed
-              </h3>
-              <span style={{ fontSize: '11px', color: 'var(--tx-3)', marginLeft: 'auto' }}>
-                Real-time updates
-              </span>
-            </div>
-            {liveJobs.map((lj, idx) => (
-              <a
-                key={idx}
-                href="/jobs.php"
-                className="feed-item"
-                style={{ textDecoration: 'none', color: 'var(--tx)' }}
-              >
-                <div>
-                  <div className="feed-ttl">{lj.title}</div>
-                  <div className="feed-meta">
-                    {lj.cat_name || 'General'} · Posted {timeAgo(lj.created_at)}
+        <div className="recent-jobs-grid">
+          {(recentJobs && recentJobs.length > 0 ? recentJobs : fallbackRecentJobs).slice(0, 6).map((j: any, idx: number) => (
+            <SpotlightCard
+              key={j.id || idx}
+              spotlightColor="rgba(0, 212, 200, 0.14)"
+              className="recent-job-card p-0"
+            >
+              <div className="rjc-inner">
+                {/* Card Top: Category & Real-time posted tag */}
+                <div className="rjc-top">
+                  <div className="rjc-cat-pill">
+                    <span>{iconMap[j.cat_icon] || '💼'}</span>
+                    <span>{j.cat_name || 'General Gig'}</span>
+                  </div>
+                  <div className="rjc-time-badge">
+                    <span className="live-pulse-dot" />
+                    <span>{timeAgo(j.created_at)}</span>
                   </div>
                 </div>
-                <div
-                  style={{
-                    fontFamily: 'var(--fm)',
-                    fontWeight: 700,
-                    color: 'var(--cyan)',
-                    whiteSpace: 'nowrap',
-                    fontSize: '13px',
-                  }}
-                >
-                  {formatCurrency(lj.budget_min)}
-                  {lj.budget_type === 'hourly' ? '/hr' : ''}
+
+                {/* Card Title */}
+                <h3 className="rjc-title">
+                  <a href={`/jobs.php?id=${j.id}`}>{j.title}</a>
+                </h3>
+
+                {/* Description Excerpt */}
+                <p className="rjc-desc">
+                  {j.description ? j.description.slice(0, 118) + (j.description.length > 118 ? '...' : '') : 'Looking for a verified skilled professional in Ghana for this assignment.'}
+                </p>
+
+                {/* Meta Row: Location, Proposals & Urgent tag */}
+                <div className="rjc-meta-row">
+                  <div className="rjc-meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                      <circle cx="12" cy="10" r="3" />
+                    </svg>
+                    <span>{j.location || 'Accra, Ghana'}</span>
+                  </div>
+                  <div className="rjc-meta-item">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                      <circle cx="9" cy="7" r="4" />
+                      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                    </svg>
+                    <span>{j.proposal_count || 0} proposals</span>
+                  </div>
+                  {j.is_urgent === 1 && <span className="rjc-urgent-pill">⚡ Urgent</span>}
                 </div>
-              </a>
-            ))}
-            <div style={{ textAlign: 'center', marginTop: '14px' }}>
-              <a href="/jobs.php" className="btn btn-ghost">
-                View All Jobs →
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
+
+                {/* Footer: Budget & Apply button */}
+                <div className="rjc-footer">
+                  <div className="rjc-budget-wrap">
+                    <div className="rjc-budget-val">
+                      {formatCurrency(j.budget_min || 500)}
+                      {j.budget_max && j.budget_max > j.budget_min ? ` - ${formatCurrency(j.budget_max)}` : ''}
+                    </div>
+                    <div className="rjc-budget-type">
+                      {j.budget_type === 'hourly' ? 'Hourly Rate' : 'Fixed Escrow'}
+                    </div>
+                  </div>
+                  <a href={`/jobs.php?id=${j.id}`} className="btn btn-blue rjc-apply-btn">
+                    Apply Now →
+                  </a>
+                </div>
+              </div>
+            </SpotlightCard>
+          ))}
+        </div>
+
+        {/* Bottom CTA Row */}
+        <div className="recent-jobs-footer-cta">
+          <a href="/jobs.php" className="btn btn-ghost btn-lg">
+            Browse All 840+ Open Jobs →
+          </a>
+          <a href="/post-job.php" className="btn btn-gold btn-lg">
+            + Post a Job (Free)
+          </a>
+        </div>
+      </section>
 
       {/* ══════ CATEGORIES WITH SPOTLIGHT CARDS ══════ */}
       <section className="section" id="categories">
