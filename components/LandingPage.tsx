@@ -743,10 +743,9 @@ const occupationSlides = [
                   const coverImg = p.avatar || '/images/occupations/interior_designer.jpg';
 
                   return (
-                    <SpotlightCard
+                    <div
                       key={p.id || idx}
-                      spotlightColor={isLeadSpotlight ? 'rgba(245, 158, 11, 0.22)' : 'rgba(0, 212, 200, 0.16)'}
-                      className={`artisan-studio-card p-0 ${isLeadSpotlight ? 'artisan-card-highlight' : ''}`}
+                      className="artisan-studio-card p-0"
                     >
                       {/* Visual Studio Cover Banner */}
                       <div className="artisan-cover-wrap">
@@ -841,7 +840,7 @@ const occupationSlides = [
                           </a>
                         </div>
                       </div>
-                    </SpotlightCard>
+                    </div>
                   );
                 })}
               </div>
@@ -1116,9 +1115,8 @@ const occupationSlides = [
               const rating = Number(p.rating_avg || 5);
 
               return (
-                <SpotlightCard
+                <div
                   key={idx}
-                  spotlightColor="rgba(0, 212, 200, 0.18)"
                   className="prov-card p-0"
                 >
                   <div className="prov-img-wrap">
@@ -1136,7 +1134,7 @@ const occupationSlides = [
                     </div>
                     <div className="badge-row">
                       {bt === 'premium' ? (
-                        <span className="badge-premium">⭐ Premium</span>
+                         <span className="badge-premium">⭐ Premium</span>
                       ) : bt === 'verified' ? (
                         <span className="badge-verified">✓ Verified</span>
                       ) : (
@@ -1179,7 +1177,7 @@ const occupationSlides = [
                       </a>
                     </div>
                   </div>
-                </SpotlightCard>
+                </div>
               );
             })}
           </div>
