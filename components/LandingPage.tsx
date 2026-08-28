@@ -907,7 +907,7 @@ const occupationSlides = [
                   </div>
                   <h2 className="ljf-title">Live Job Feed</h2>
                   <p className="ljf-sub">
-                    Direct assignments posted by verified businesses across Ghana. Every milestone is protected with Bank of Ghana Escrow Vault &amp; Sub-60s MoMo payouts.
+                    Find real jobs posted by verified employers across Ghana. Your money is secured safely before you start, and paid directly to your MoMo the moment the work is done.
                   </p>
                 </div>
               </div>
