@@ -789,7 +789,7 @@ const occupationSlides = [
                           </div>
                           <div className="artisan-cover-status">
                             <span className="live-pulse-dot" />
-                            <span>● Available</span>
+                            <span>Available</span>
                           </div>
                         </div>
 
