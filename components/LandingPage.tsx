@@ -771,7 +771,7 @@ const occupationSlides = [
                       key={p.id || idx}
                       className="artisan-studio-card p-0"
                     >
-                      {/* Visual Studio Cover Banner */}
+                      {/* Visual Studio Cover Banner (Clean Editorial Photography) */}
                       <div className="artisan-cover-wrap">
                         <img
                           src={coverImg}
@@ -779,24 +779,8 @@ const occupationSlides = [
                           className="artisan-cover-img"
                           loading="lazy"
                         />
-                        <div className="artisan-cover-scrim" />
-
-                        {/* Top Overlays */}
-                        <div className="artisan-cover-top">
-                          <div className="artisan-cover-cat">
-                            {renderCatIcon(p.cat_name, p.cat_icon)}
-                            <span>{p.cat_name || 'Artisan Pro'}</span>
-                          </div>
-                          <div className="artisan-cover-status">
-                            <span className="live-pulse-dot" />
-                            <span>Available</span>
-                          </div>
-                        </div>
-
-                        {/* Benchmark Rate Tag */}
-                        <div className="artisan-cover-rate-tag">
-                          {formatCurrency(p.hourly_rate || 85)}
-                          <small style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)', marginLeft: '2px' }}>/hr</small>
+                        <div className="artisan-cover-live-dot" title="Available for hire">
+                          <span className="live-pulse-dot" />
                         </div>
                       </div>
 
@@ -855,15 +839,21 @@ const occupationSlides = [
 
                         {/* Card Action Footer */}
                         <div className="artisan-studio-footer">
-                          {tier === 'premium' ? (
-                            <div className="artisan-footer-tier artisan-tier-premium">
-                              ⭐ Premium
+                          <div className="artisan-footer-meta">
+                            <div className="artisan-footer-rate">
+                              <span className="artisan-rate-val">{formatCurrency(p.hourly_rate || 85)}</span>
+                              <span className="artisan-rate-unit">/hr</span>
                             </div>
-                          ) : tier === 'verified' ? (
-                            <div className="artisan-footer-tier artisan-tier-verified">
-                              ✓ Verified
-                            </div>
-                          ) : <div />}
+                            {tier === 'premium' ? (
+                              <div className="artisan-footer-tier artisan-tier-premium">
+                                ⭐ Premium
+                              </div>
+                            ) : tier === 'verified' ? (
+                              <div className="artisan-footer-tier artisan-tier-verified">
+                                ✓ Verified
+                              </div>
+                            ) : null}
+                          </div>
                           <a
                             href={`/profile.php?id=${p.user_id || p.id}`}
                             className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}

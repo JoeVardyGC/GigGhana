@@ -2015,7 +2015,7 @@ html.dark .artisan-studio-card:hover, [data-theme="dark"] .artisan-studio-card:h
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(245, 158, 11, 0.15);
 }
 
-/* Card Visual Profile Image Box (Compact Portrait Showcase) */
+/* Card Visual Profile Image Box (Clean Editorial Showcase) */
 .artisan-cover-wrap {
   position: relative;
   height: 190px;
@@ -2035,74 +2035,21 @@ html.dark .artisan-studio-card:hover, [data-theme="dark"] .artisan-studio-card:h
   transform: scale(1.05);
 }
 
-.artisan-cover-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(15, 23, 42, 0.65) 100%);
-}
-
-.artisan-cover-top {
+.artisan-cover-live-dot {
   position: absolute;
   top: 12px;
-  left: 12px;
   right: 12px;
+  z-index: 2;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 5px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  z-index: 2;
-}
-
-.artisan-cover-cat {
-  display: inline-flex;
-  align-items: center;
-  gap: 5.5px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #FFFFFF;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-family: var(--fm);
-  letter-spacing: -0.01em;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.artisan-cover-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #34D399;
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-family: var(--fm);
-  letter-spacing: -0.01em;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
-}
-
-.artisan-cover-rate-tag {
-  position: absolute;
-  bottom: 12px;
-  right: 12px;
-  z-index: 2;
-  font-size: 13px;
-  font-weight: 800;
-  color: #FBBF24;
-  background: rgba(15, 23, 42, 0.88);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(245, 158, 11, 0.45);
-  padding: 4px 12px;
-  border-radius: 8px;
-  font-family: var(--fm);
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 /* Card Body (Compact & Snug Around Content) */
@@ -2297,13 +2244,41 @@ html.lm .artisan-skill-tag, [data-theme="light"] .artisan-skill-tag {
   margin-top: auto;
 }
 
+.artisan-footer-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.artisan-footer-rate {
+  display: flex;
+  align-items: baseline;
+  gap: 1.5px;
+}
+
+.artisan-rate-val {
+  font-size: 14.5px;
+  font-weight: 800;
+  color: var(--tx);
+  font-family: var(--fm);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.artisan-rate-unit {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tx-3);
+}
+
 .artisan-footer-tier {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 750;
-  padding: 3.5px 9px;
+  padding: 3px 8px;
   border-radius: 6px;
   font-family: var(--fm);
 }
@@ -2331,11 +2306,12 @@ html.dark .artisan-tier-verified {
 }
 
 .artisan-footer-btn {
-  padding: 9px 16px;
-  font-size: 12.5px;
+  padding: 8px 14px;
+  font-size: 12px;
   font-weight: 750;
-  border-radius: 12px;
+  border-radius: 10px;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
 }
 
 /* Responsive Breakpoints */
