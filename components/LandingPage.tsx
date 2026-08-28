@@ -875,6 +875,9 @@ const occupationSlides = [
                   <span>Browse All Providers</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
                 </a>
+                <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
+                  + Join as a Provider (Free)
+                </a>
               </div>
             </div>
           </section>
