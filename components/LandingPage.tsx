@@ -631,10 +631,10 @@ const occupationSlides = [
             {/* Action Buttons */}
             <div className="hero-acts">
               <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
-                I Need Talent
+                I Want to Hire
               </a>
               <a href="/auth/register.php?role=provider" className="btn btn-blue btn-lg">
-                I Have Skills
+                I Want to Work
               </a>
             </div>
 
