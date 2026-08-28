@@ -1074,39 +1074,6 @@ const occupationSlides = [
                   + Post a Job (Free)
                 </a>
               </div>
-
-              {/* Bottom Trust Ribbon */}
-              <div className="rjh-trust-ribbon">
-                <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-box">
-                    <ShieldCheck className="w-5 h-5 text-[#10B981]" />
-                  </div>
-                  <div>
-                    <div className="rjh-tr-title">Bank of Ghana Escrow Vault</div>
-                    <div className="rjh-tr-desc">Client funds locked safely before work starts</div>
-                  </div>
-                </div>
-                <div className="rjh-tr-sep" />
-                <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-box">
-                    <BadgeCheck className="w-5 h-5 text-[#00D4C8]" />
-                  </div>
-                  <div>
-                    <div className="rjh-tr-title">100% NIA Biometric KYC</div>
-                    <div className="rjh-tr-desc">Verified Ghana Card employers &amp; providers</div>
-                  </div>
-                </div>
-                <div className="rjh-tr-sep" />
-                <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-box">
-                    <Zap className="w-5 h-5 text-[#F59E0B]" />
-                  </div>
-                  <div>
-                    <div className="rjh-tr-title">Sub-60s MoMo Settlement</div>
-                    <div className="rjh-tr-desc">Instant payout to MTN MoMo, Telecel &amp; AT</div>
-                  </div>
-                </div>
-              </div>
             </div>
           </section>
         );
