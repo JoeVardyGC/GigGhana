@@ -875,9 +875,6 @@ const occupationSlides = [
                   <span>Browse All Providers</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
                 </a>
-                <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
-                  + Join as a Provider (Free)
-                </a>
               </div>
             </div>
           </section>
@@ -912,13 +909,6 @@ const occupationSlides = [
                   <p className="ljf-sub">
                     Direct assignments posted by verified businesses across Ghana. Every milestone is protected with Bank of Ghana Escrow Vault &amp; Sub-60s MoMo payouts.
                   </p>
-                </div>
-
-                {/* Quick Action */}
-                <div className="ljf-header-right">
-                  <a href="/post-job.php" className="btn btn-gold btn-lg">
-                    + Post a Job (Free)
-                  </a>
                 </div>
               </div>
 
@@ -1050,9 +1040,6 @@ const occupationSlides = [
                   <Search className="w-4 h-4 text-[#00D4C8] shrink-0" />
                   <span>Browse All Jobs</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
-                </a>
-                <a href="/post-job.php" className="btn btn-gold btn-xl">
-                  + Post a Job (Free)
                 </a>
               </div>
 
