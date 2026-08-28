@@ -723,10 +723,6 @@ const occupationSlides = [
               {/* Header */}
               <div className="ljf-header">
                 <div className="ljf-header-left">
-                  <div className="hero-badge" style={{ marginBottom: '12px' }}>
-                    <span className="live-pulse-dot" />
-                    <span>🇬🇭 Ghana&apos;s Certified Master Artisans &amp; Specialists</span>
-                  </div>
                   <h2 className="ljf-title">Featured Freelancers &amp; Master Artisans</h2>
                   <p className="ljf-sub">
                     Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
