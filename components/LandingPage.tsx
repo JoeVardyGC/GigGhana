@@ -800,7 +800,7 @@ const occupationSlides = [
                           {p.bio || 'Verified master artisan & specialist providing reliable, escrow-protected services across Ghana.'}
                         </p>
 
-                        {/* Performance Stats Strip (Modern Segmented Metric Capsule) */}
+                        {/* Performance Stats Strip (Modern 2-Pillar Metric Capsule) */}
                         <div className="artisan-stats-strip">
                           <div className="artisan-strip-pill">
                             <div className="artisan-strip-val">
@@ -816,14 +816,6 @@ const occupationSlides = [
                               <span>{jobsCount}</span>
                             </div>
                             <span className="artisan-strip-lbl">Jobs Done</span>
-                          </div>
-                          <div className="artisan-strip-divider" />
-                          <div className="artisan-strip-pill">
-                            <div className="artisan-strip-val">
-                              <Zap className="w-3.5 h-3.5 fill-[#10B981] text-[#10B981] shrink-0" />
-                              <span>&lt;15m</span>
-                            </div>
-                            <span className="artisan-strip-lbl">Response</span>
                           </div>
                         </div>
 
