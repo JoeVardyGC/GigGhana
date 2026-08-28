@@ -732,9 +732,7 @@ const occupationSlides = [
               if (talentCatFilter === 'health') return p.cat_name?.toLowerCase().includes('health') || p.cat_name?.toLowerCase().includes('wellness');
               return true;
             });
-        const latestTalent = filteredTalent.slice(0, 7);
-        const leadArtisan = latestTalent[0];
-        const gridArtisans = latestTalent.slice(1);
+        const latestTalent = filteredTalent.slice(0, 6);
 
         return (
           <section className="section artisan-section" id="talent">
