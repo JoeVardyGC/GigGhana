@@ -258,16 +258,16 @@ export default function LandingPage({ initialData }: Props) {
   }, []);
 
 const occupationSlides = [
-  { id: 'hs1', label: '🎨 Painter', title: '🎨 Master Decorative Painter', location: 'Accra', rate: '₵65/hr', exp: '8 yrs exp' },
-  { id: 'hs2', label: '🏗️ Contractor', title: '🏗️ Certified Building Contractor', location: 'Airport City', rate: '₵120/hr', exp: '12 yrs exp' },
-  { id: 'hs3', label: '🛋️ Designer', title: '🛋️ Luxury Interior Designer', location: 'East Legon', rate: '₵95/hr', exp: '6 yrs exp' },
-  { id: 'hs4', label: '🪚 Carpenter', title: '🪚 Master Carpenter & Joiner', location: 'Kumasi', rate: '₵70/hr', exp: '10 yrs exp' },
-  { id: 'hs5', label: '🔌 Electrician', title: '🔌 Certified Solar & Electrical Pro', location: 'Takoradi', rate: '₵80/hr', exp: '7 yrs exp' },
-  { id: 'hs6', label: '🔧 Plumber', title: '🔧 Licensed Master Plumber', location: 'Tema & Accra', rate: '₵60/hr', exp: '9 yrs exp' },
-  { id: 'hs7', label: '🏛️ Architect', title: '🏛️ Architectural Wood Sculptor', location: 'Cape Coast', rate: '₵85/hr', exp: '14 yrs exp' },
-  { id: 'hs8', label: '💼 Executive', title: '💼 Creative Agency Director', location: 'Cantonments', rate: '₵150/hr', exp: '11 yrs exp' },
-  { id: 'hs9', label: '💻 Developer', title: '💻 Senior Full-Stack Developer', location: 'Accra Tech Hub', rate: '₵110/hr', exp: '5 yrs exp' },
-  { id: 'hs10', label: '🚀 FinTech', title: '🚀 FinTech & Cloud Architect', location: 'Airport Residential', rate: '₵180/hr', exp: '8 yrs exp' },
+  { id: 'hs1', label: 'Painter', title: 'Master Decorative Painter', location: 'Accra', rate: '₵65/hr', exp: '8 yrs exp' },
+  { id: 'hs2', label: 'Contractor', title: 'Certified Building Contractor', location: 'Airport City', rate: '₵120/hr', exp: '12 yrs exp' },
+  { id: 'hs3', label: 'Designer', title: 'Luxury Interior Designer', location: 'East Legon', rate: '₵95/hr', exp: '6 yrs exp' },
+  { id: 'hs4', label: 'Carpenter', title: 'Master Carpenter & Joiner', location: 'Kumasi', rate: '₵70/hr', exp: '10 yrs exp' },
+  { id: 'hs5', label: 'Electrician', title: 'Certified Solar & Electrical Pro', location: 'Takoradi', rate: '₵80/hr', exp: '7 yrs exp' },
+  { id: 'hs6', label: 'Plumber', title: 'Licensed Master Plumber', location: 'Tema & Accra', rate: '₵60/hr', exp: '9 yrs exp' },
+  { id: 'hs7', label: 'Architect', title: 'Architectural Wood Sculptor', location: 'Cape Coast', rate: '₵85/hr', exp: '14 yrs exp' },
+  { id: 'hs8', label: 'Executive', title: 'Creative Agency Director', location: 'Cantonments', rate: '₵150/hr', exp: '11 yrs exp' },
+  { id: 'hs9', label: 'Developer', title: 'Senior Full-Stack Developer', location: 'Accra Tech Hub', rate: '₵110/hr', exp: '5 yrs exp' },
+  { id: 'hs10', label: 'FinTech', title: 'FinTech & Cloud Architect', location: 'Airport Residential', rate: '₵180/hr', exp: '8 yrs exp' },
 ];
 
   // Hero carousel interval (10 custom Ghanaian occupation 8K slides)
