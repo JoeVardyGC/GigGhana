@@ -695,119 +695,183 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ STATS / TRUST ISLAND (PHP STRUCTURE) ══════ */}
-      <section className="stats-bar" ref={statsRef}>
-        <div className="trust-island">
-          <div className="trust-island-header">
-            <div className="trust-pulse-badge">
-              <span className="live-pulse-dot" />
-              <span>Verified Ghana National Marketplace</span>
-            </div>
-            <div className="trust-sub-note">🇬🇭 Powered by NIA Biometrics &amp; BoG Escrow Vault</div>
-          </div>
+      {/* ══════ LIVE JOB FEED (LATEST 7 JOBS + VIEW MORE JOBS) ══════ */}
+      {(() => {
+        const allJobsList = recentJobs && recentJobs.length > 0 ? recentJobs : fallbackRecentJobs;
+        const filteredJobs = jobCatFilter === 'all'
+          ? allJobsList
+          : allJobsList.filter((j: any) => {
+              if (jobCatFilter === 'tech') return j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it');
+              if (jobCatFilter === 'trades') return j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled');
+              if (jobCatFilter === 'design') return j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts') || j.cat_name?.toLowerCase().includes('design');
+              if (jobCatFilter === 'build') return j.cat_name?.toLowerCase().includes('construct') || j.cat_name?.toLowerCase().includes('build');
+              return true;
+            });
+        const latest7Jobs = filteredJobs.slice(0, 7);
 
-          <div className="trust-island-grid">
-            {/* Metric 1 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-blue">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                  <circle cx="9" cy="7" r="4" />
-                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countProviders.toLocaleString()}</div>
-                <div className="trust-lbl">Verified Freelancers</div>
-                <div className="trust-sub">Ghana Card KYC</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 2 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-amber">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect width="20" height="14" x="2" y="7" rx="2" ry="2" />
-                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countJobs.toLocaleString()}</div>
-                <div className="trust-lbl">Active Gigs &amp; Jobs</div>
-                <div className="trust-sub">Across 16 Regions</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 3 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-emerald">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">{countCompleted.toLocaleString()}</div>
-                <div className="trust-lbl">Jobs Completed</div>
-                <div className="trust-sub">99.8% Client Rating</div>
-              </div>
-            </div>
-
-            <div className="trust-divider" />
-
-            {/* Metric 4 */}
-            <div className="trust-item">
-              <div className="trust-icon-box ti-gold">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-                </svg>
-              </div>
-              <div className="trust-info">
-                <div className="trust-val">₵{countEarnings.toLocaleString()}K+</div>
-                <div className="trust-lbl">Paid to Artisans</div>
-                <div className="trust-sub">⚡ Sub-60s MoMo</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ══════ LIVE FEED ══════ */}
-      {liveJobs && liveJobs.length > 0 && (
-        <section className="section" style={{ paddingTop: '28px', paddingBottom: '28px' }}>
-          <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '9px', marginBottom: '16px' }}>
-              <div className="live-dot" />
-              <h3 style={{ fontSize: '15px', fontFamily: 'var(--fm)', fontWeight: 700 }}>
-                🔥 Live Job Feed
-              </h3>
-              <span style={{ fontSize: '11px', color: 'var(--tx-3)', marginLeft: 'auto' }}>
-                Real-time updates
-              </span>
-            </div>
-            <div className="live-feed-grid">
-              {liveJobs.slice(0, 4).map((j: any) => (
-                <div key={j.id} className="live-job-item">
-                  <div className="lj-top">
-                    <span className="lj-cat">{iconMap[j.cat_icon] || '💼'} {j.cat_name}</span>
-                    <span className="lj-time">{timeAgo(j.created_at)}</span>
+        return (
+          <section className="section live-job-feed-section" id="live-jobs" ref={statsRef}>
+            <div className="ljf-container">
+              {/* Feed Header */}
+              <div className="ljf-header">
+                <div className="ljf-header-left">
+                  <div className="hero-badge" style={{ marginBottom: '12px' }}>
+                    <span className="live-pulse-dot" />
+                    <span>🔥 Live Job Stream · Real-Time Opportunities in Ghana</span>
                   </div>
-                  <div className="lj-title"><a href={`/jobs.php?id=${j.id}`}>{j.title}</a></div>
-                  <div className="lj-foot">
-                    <span className="lj-price">{formatCurrency(j.budget_min)}</span>
-                    <span className="lj-loc">📍 {j.location}</span>
+                  <h2 className="ljf-title">Live Job Feed</h2>
+                  <p className="ljf-sub">
+                    Direct assignments posted by verified businesses across Ghana. Every milestone is protected with Bank of Ghana Escrow Vault &amp; Sub-60s MoMo payouts.
+                  </p>
+                </div>
+
+                {/* Quick Action */}
+                <div className="ljf-header-right">
+                  <a href="/post-job.php" className="btn btn-gold btn-lg">
+                    + Post a Job (Free)
+                  </a>
+                </div>
+              </div>
+
+              {/* Category Filter Pills */}
+              <div className="rjh-filter-tabs">
+                {[
+                  { id: 'all', label: '⚡ All Live Gigs', count: allJobsList.length },
+                  { id: 'tech', label: '💻 IT & Tech', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it')).length || 2 },
+                  { id: 'trades', label: '🔧 Skilled Trades', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled')).length || 3 },
+                  { id: 'design', label: '🎨 Creative & Arts', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts')).length || 2 },
+                  { id: 'build', label: '🏗️ Construction', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('construct')).length || 1 },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    className={`rjh-filter-btn ${jobCatFilter === tab.id ? 'active' : ''}`}
+                    onClick={() => setJobCatFilter(tab.id)}
+                  >
+                    <span>{tab.label}</span>
+                    <span className="rjh-filter-badge">{tab.count}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* Latest 7 Jobs Showcase Grid */}
+              <div className="ljf-grid">
+                {latest7Jobs.map((j: any, idx: number) => {
+                  const isFeaturedHeroCard = idx === 0;
+                  return (
+                    <SpotlightCard
+                      key={j.id || idx}
+                      spotlightColor="rgba(0, 212, 200, 0.16)"
+                      className={`ljf-card p-0 ${isFeaturedHeroCard ? 'ljf-card-lead' : ''}`}
+                    >
+                      <div className="ljf-card-inner">
+                        {/* Card Top: Category & Real-time posted tag */}
+                        <div className="rjh-jc-top">
+                          <div className="rjh-jc-cat">
+                            <span>{iconMap[j.cat_icon] || '💼'}</span>
+                            <span>{j.cat_name || 'General Gig'}</span>
+                          </div>
+                          <div className="rjh-jc-time">
+                            <span className="live-pulse-dot" />
+                            <span>{timeAgo(j.created_at)}</span>
+                          </div>
+                        </div>
+
+                        {/* Client details */}
+                        <div className="rjh-jc-client">
+                          <div className="rjh-jc-avatar">
+                            {initials(j.first_name, j.last_name)}
+                          </div>
+                          <div>
+                            <div className="rjh-jc-client-name">
+                              {j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}
+                              <span className="rjh-jc-kyc-tag">🇬🇭 NIA Verified</span>
+                            </div>
+                            <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
+                          </div>
+                          {j.is_urgent === 1 && <span className="rjh-jc-urgent">⚡ Urgent</span>}
+                          {isFeaturedHeroCard && <span className="ljf-spotlight-pill">⭐ Featured Lead</span>}
+                        </div>
+
+                        {/* Card Title */}
+                        <h3 className="rjh-jc-title">
+                          <a href={`/jobs.php?id=${j.id}`}>{j.title}</a>
+                        </h3>
+
+                        {/* Description Excerpt */}
+                        <p className="rjh-jc-desc">
+                          {j.description ? j.description.slice(0, isFeaturedHeroCard ? 200 : 115) + (j.description.length > (isFeaturedHeroCard ? 200 : 115) ? '...' : '') : 'Looking for a verified skilled professional in Ghana.'}
+                        </p>
+
+                        {/* Chips */}
+                        <div className="rjh-jc-chips">
+                          <span className="rjh-chip">🔒 100% Escrow Funded</span>
+                          <span className="rjh-chip">⚡ Sub-60s MoMo</span>
+                          <span className="rjh-chip">💬 {j.proposal_count || 0} proposals</span>
+                        </div>
+
+                        {/* Card Footer: Budget & Apply CTA */}
+                        <div className="rjh-jc-footer">
+                          <div className="rjh-jc-budget">
+                            <div className="rjh-jc-budget-val">
+                              {formatCurrency(j.budget_min || 1000)}
+                              {j.budget_max && j.budget_max > j.budget_min ? ` - ${formatCurrency(j.budget_max)}` : ''}
+                            </div>
+                            <div className="rjh-jc-budget-lbl">
+                              {j.budget_type === 'hourly' ? 'Hourly Rate' : 'Fixed Escrow'}
+                            </div>
+                          </div>
+                          <a href={`/jobs.php?id=${j.id}`} className="btn btn-blue rjh-jc-btn">
+                            Apply Now →
+                          </a>
+                        </div>
+                      </div>
+                    </SpotlightCard>
+                  );
+                })}
+              </div>
+
+              {/* View More Jobs CTA under the 7 jobs */}
+              <div className="ljf-footer-actions">
+                <a href="/jobs.php" className="btn btn-ghost btn-xl ljf-view-more-btn">
+                  <span>View More Jobs (840+ Open in Ghana)</span>
+                  <span className="ljf-btn-arrow">→</span>
+                </a>
+                <a href="/post-job.php" className="btn btn-gold btn-xl">
+                  + Post a Job (Free)
+                </a>
+              </div>
+
+              {/* Bottom Trust Ribbon */}
+              <div className="rjh-trust-ribbon">
+                <div className="rjh-tr-item">
+                  <span className="rjh-tr-icon">🛡️</span>
+                  <div>
+                    <div className="rjh-tr-title">Bank of Ghana Escrow Vault</div>
+                    <div className="rjh-tr-desc">Client funds locked safely before work starts</div>
                   </div>
                 </div>
-              ))}
+                <div className="rjh-tr-sep" />
+                <div className="rjh-tr-item">
+                  <span className="rjh-tr-icon">🇬🇭</span>
+                  <div>
+                    <div className="rjh-tr-title">100% NIA Biometric KYC</div>
+                    <div className="rjh-tr-desc">Verified Ghana Card employers &amp; providers</div>
+                  </div>
+                </div>
+                <div className="rjh-tr-sep" />
+                <div className="rjh-tr-item">
+                  <span className="rjh-tr-icon">⚡</span>
+                  <div>
+                    <div className="rjh-tr-title">Sub-60s MoMo Settlement</div>
+                    <div className="rjh-tr-desc">Instant payout to MTN MoMo, Telecel &amp; AT</div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </section>
-      )}
+          </section>
+        );
+      })()}
 
       {/* ══════ CATEGORIES WITH SPOTLIGHT CARDS ══════ */}
       <section className="section" id="categories">
@@ -1141,135 +1205,7 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ RECENTLY POSTED JOBS (HIGH CRAFT & FILTERABLE) ══════ */}
-      {(() => {
-        const allJobsList = recentJobs && recentJobs.length > 0 ? recentJobs : fallbackRecentJobs;
-        const filteredJobs = jobCatFilter === 'all'
-          ? allJobsList
-          : allJobsList.filter((j: any) => {
-              if (jobCatFilter === 'tech') return j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it');
-              if (jobCatFilter === 'trades') return j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled');
-              if (jobCatFilter === 'design') return j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts') || j.cat_name?.toLowerCase().includes('design');
-              if (jobCatFilter === 'build') return j.cat_name?.toLowerCase().includes('construct') || j.cat_name?.toLowerCase().includes('build');
-              return true;
-            });
 
-        return (
-          <section className="section" id="jobs">
-            <div className="s-head">
-              <div className="s-badge">Latest Opportunities</div>
-              <h2 className="s-title">Recently Posted Jobs in Ghana</h2>
-              <p className="s-sub">Businesses across Ghana are actively looking for verified professionals like you.</p>
-            </div>
-
-            <div className="rjh-container">
-              {/* Category Filter Pills */}
-              <div className="rjh-filter-tabs" style={{ justifyContent: 'center', marginBottom: '8px' }}>
-                {[
-                  { id: 'all', label: '⚡ All Live Gigs', count: allJobsList.length },
-                  { id: 'tech', label: '💻 IT & Tech', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it')).length || 2 },
-                  { id: 'trades', label: '🔧 Skilled Trades', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled')).length || 2 },
-                  { id: 'design', label: '🎨 Creative & Arts', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts')).length || 2 },
-                  { id: 'build', label: '🏗️ Construction', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('construct')).length || 1 },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    className={`rjh-filter-btn ${jobCatFilter === tab.id ? 'active' : ''}`}
-                    onClick={() => setJobCatFilter(tab.id)}
-                  >
-                    <span>{tab.label}</span>
-                    <span className="rjh-filter-badge">{tab.count}</span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Full Width Clean Grid of Jobs */}
-              <div className="rjh-jobs-grid">
-                {filteredJobs.slice(0, 6).map((j: any, idx: number) => (
-                  <SpotlightCard
-                    key={j.id || idx}
-                    spotlightColor="rgba(0, 212, 200, 0.16)"
-                    className="rjh-job-card p-0"
-                  >
-                    <div className="rjh-jc-inner">
-                      {/* Card Top: Category & Real-time posted tag */}
-                      <div className="rjh-jc-top">
-                        <div className="rjh-jc-cat">
-                          <span>{iconMap[j.cat_icon] || '💼'}</span>
-                          <span>{j.cat_name || 'General Gig'}</span>
-                        </div>
-                        <div className="rjh-jc-time">
-                          <span className="live-pulse-dot" />
-                          <span>{timeAgo(j.created_at)}</span>
-                        </div>
-                      </div>
-
-                      {/* Client row */}
-                      <div className="rjh-jc-client">
-                        <div className="rjh-jc-avatar">
-                          {initials(j.first_name, j.last_name)}
-                        </div>
-                        <div>
-                          <div className="rjh-jc-client-name">
-                            {j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}
-                            <span className="rjh-jc-kyc-tag">🇬🇭 NIA Verified</span>
-                          </div>
-                          <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
-                        </div>
-                        {j.is_urgent === 1 && <span className="rjh-jc-urgent">⚡ Urgent</span>}
-                      </div>
-
-                      {/* Card Title */}
-                      <h3 className="rjh-jc-title">
-                        <a href={`/jobs.php?id=${j.id}`}>{j.title}</a>
-                      </h3>
-
-                      {/* Description Excerpt */}
-                      <p className="rjh-jc-desc">
-                        {j.description ? j.description.slice(0, 115) + (j.description.length > 115 ? '...' : '') : 'Looking for a verified skilled professional in Ghana.'}
-                      </p>
-
-                      {/* Chips */}
-                      <div className="rjh-jc-chips">
-                        <span className="rjh-chip">🔒 100% Escrow Funded</span>
-                        <span className="rjh-chip">⚡ Sub-60s MoMo</span>
-                        <span className="rjh-chip">💬 {j.proposal_count || 0} proposals</span>
-                      </div>
-
-                      {/* Card Footer: Budget & Apply CTA */}
-                      <div className="rjh-jc-footer">
-                        <div className="rjh-jc-budget">
-                          <div className="rjh-jc-budget-val">
-                            {formatCurrency(j.budget_min || 1000)}
-                            {j.budget_max && j.budget_max > j.budget_min ? ` - ${formatCurrency(j.budget_max)}` : ''}
-                          </div>
-                          <div className="rjh-jc-budget-lbl">
-                            {j.budget_type === 'hourly' ? 'Hourly Rate' : 'Fixed Escrow'}
-                          </div>
-                        </div>
-                        <a href={`/jobs.php?id=${j.id}`} className="btn btn-blue rjh-jc-btn">
-                          Apply Now →
-                        </a>
-                      </div>
-                    </div>
-                  </SpotlightCard>
-                ))}
-              </div>
-
-              {/* Bottom Actions */}
-              <div className="recent-jobs-footer-cta">
-                <a href="/jobs.php" className="btn btn-ghost btn-lg">
-                  Browse All {allJobsList.length}+ Open Jobs →
-                </a>
-                <a href="/post-job.php" className="btn btn-gold btn-lg">
-                  + Post a Gig (Free)
-                </a>
-              </div>
-            </div>
-          </section>
-        );
-      })()}
 
       {/* ══════ TESTIMONIALS ══════ */}
       <section className="section" style={{ paddingTop: '32px' }}>
