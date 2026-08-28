@@ -35,27 +35,27 @@ export function LuxuryEstimator() {
   };
 
   return (
-    <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-8 sm:p-12 shadow-2xl backdrop-blur-2xl transition-all duration-300">
+    <div className="relative rounded-3xl border border-[var(--border-hi)] bg-[var(--card)] p-5 sm:p-8 md:p-12 shadow-2xl backdrop-blur-2xl transition-all duration-300">
       {/* Decorative luxury watermark */}
-      <div className="absolute top-6 right-8 opacity-5 text-7xl font-serif select-none pointer-events-none text-[var(--gold)]">
+      <div className="absolute top-6 right-8 opacity-5 text-7xl font-serif select-none pointer-events-none text-[var(--gold)] hidden sm:block">
         GG
       </div>
 
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-8 border-b border-[var(--border)] mb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 pb-6 sm:pb-8 border-b border-[var(--border)] mb-6 sm:mb-8">
         <div>
-          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[var(--gold)] font-sans mb-2">
+          <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-bold uppercase tracking-widest text-[var(--gold)] font-sans mb-2">
             <Gem className="w-3.5 h-3.5" />
             <span>SOVEREIGN PRACTICE ESTIMATOR</span>
           </div>
-          <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[var(--tx)] tracking-tight">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[var(--tx)] tracking-tight">
             Estimate Your Professional Earning Power
           </h3>
-          <p className="text-sm text-[var(--tx-2)] mt-2 max-w-xl">
+          <p className="text-xs sm:text-sm text-[var(--tx-2)] mt-2 max-w-xl">
             Independent Ghanaian practitioners and master artisans earn market-leading rates with verified client escrow protection.
           </p>
         </div>
 
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--gold-dim)] text-[var(--gold)] border border-[var(--border-hi)] text-xs font-bold w-fit">
+        <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--gold-dim)] text-[var(--gold)] border border-[var(--border-hi)] text-[11px] sm:text-xs font-bold w-fit">
           <TrendingUp className="w-4 h-4" />
           <span>Guaranteed Escrow Payouts</span>
         </div>
