@@ -739,6 +739,13 @@ const occupationSlides = [
                   const skills = p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : [];
                   const rating = Number(p.rating_avg || 5.0);
                   const jobsCount = Number(p.completed_jobs || (idx === 0 ? 42 : 25));
+                  const tier = p.membership_tier || p.tier || (
+                    p.badge?.toLowerCase().includes('premium') || p.badge?.toLowerCase().includes('elite') || (jobsCount >= 30)
+                      ? 'premium'
+                      : p.badge?.toLowerCase().includes('verified') || (p.is_verified && jobsCount >= 5)
+                        ? 'verified'
+                        : 'beginner'
+                  );
                   const init = initials(p.first_name, p.last_name);
                   const coverImg = p.avatar || '/images/occupations/interior_designer.jpg';
 
@@ -831,9 +838,15 @@ const occupationSlides = [
 
                         {/* Card Action Footer */}
                         <div className="artisan-studio-footer">
-                          <div className="artisan-footer-tier">
-                            {p.badge || '⭐ Verified Pro'}
-                          </div>
+                          {tier === 'premium' ? (
+                            <div className="artisan-footer-tier artisan-tier-premium">
+                              ⭐ Premium
+                            </div>
+                          ) : tier === 'verified' ? (
+                            <div className="artisan-footer-tier artisan-tier-verified">
+                              ✓ Verified
+                            </div>
+                          ) : <div />}
                           <a
                             href={`/profile.php?id=${p.user_id || p.id}`}
                             className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}
@@ -1139,9 +1152,7 @@ const occupationSlides = [
                          <span className="badge-premium">⭐ Premium</span>
                       ) : bt === 'verified' ? (
                         <span className="badge-verified">✓ Verified</span>
-                      ) : (
-                        <span className="badge-free">🌱 Beginner</span>
-                      )}
+                      ) : null}
                     </div>
                     <div className="prov-stars">
                       {[1, 2, 3, 4, 5].map((s) => (
