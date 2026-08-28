@@ -553,7 +553,7 @@ const occupationSlides = [
                       setAutocompleteOpen(true);
                     }}
                     onFocus={() => setAutocompleteOpen(true)}
-                    placeholder="e.g. Painter, Contractor, Interior Designer, React Dev…"
+                    placeholder="e.g. Painter, Developer, Plumber…"
                     autoComplete="off"
                   />
                 </div>
