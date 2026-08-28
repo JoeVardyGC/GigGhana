@@ -1964,361 +1964,255 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
 /* ══════════════════════════════════════════════════════════════════════
    MASTER FREELANCERS & ARTISANS STUDIO SHOWCASE CARDS (.artisan-*)
    ══════════════════════════════════════════════════════════════════════ */
-.artisan-section {
+/* ══════════════════════════════════════════════════════════════════════
+   MINIMALIST FREELANCERS & ARTISANS GRID SYSTEM (.artisan-min-*)
+   - PC View: Exactly 2 rows of 4 cards = 8 cards
+   - Mobile View: Exactly 4 cards displayed cleanly
+   ══════════════════════════════════════════════════════════════════════ */
+.artisan-min-section {
   position: relative;
-  padding: 56px 0 36px;
+  padding: 48px 0 32px;
 }
 
-.artisan-container {
+.artisan-min-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.artisan-grid {
+.artisan-min-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  margin-top: 28px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-top: 24px;
 }
 
-/* Studio Portfolio Card Container */
-.artisan-studio-card {
-  border-radius: 22px;
+/* Minimalist Card Component */
+.artisan-min-card {
+  border-radius: 18px;
   background: var(--surface);
   border: 1px solid var(--bd2);
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.04);
-}
-
-html.dark .artisan-studio-card, [data-theme="dark"] .artisan-studio-card {
-  background: rgba(17, 24, 39, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
-}
-
-.artisan-studio-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 0 30px rgba(245, 158, 11, 0.1);
-}
-
-/* Highlight / Lead Card Accent */
-.artisan-card-highlight {
-  border-color: rgba(245, 158, 11, 0.38) !important;
-  box-shadow: 0 10px 32px rgba(245, 158, 11, 0.12), 0 0 0 1px rgba(245, 158, 11, 0.25) !important;
-}
-
-/* Card Visual Cover Banner */
-.artisan-cover-wrap {
-  position: relative;
-  height: 135px;
-  width: 100%;
-  overflow: hidden;
-  background: linear-gradient(135deg, #1E293B, #0F172A);
-}
-
-.artisan-cover-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.artisan-studio-card:hover .artisan-cover-img {
-  transform: scale(1.04);
-}
-
-.artisan-cover-scrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, rgba(15, 23, 42, 0.75) 100%);
-}
-
-.artisan-cover-top {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  right: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 2;
-}
-
-.artisan-cover-cat {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #FFFFFF;
-  background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 4px 10px;
-  border-radius: 50px;
-  font-family: var(--fm);
-}
-
-.artisan-cover-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10.5px;
-  font-weight: 700;
-  color: #10B981;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(16, 185, 129, 0.4);
-  padding: 4px 9px;
-  border-radius: 50px;
-}
-
-.artisan-cover-rate-tag {
-  position: absolute;
-  bottom: 10px;
-  right: 12px;
-  z-index: 2;
-  font-size: 12.5px;
-  font-weight: 800;
-  color: #FBBF24;
-  background: rgba(15, 23, 42, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(245, 158, 11, 0.4);
-  padding: 3px 10px;
-  border-radius: 8px;
-  font-family: var(--fm);
-}
-
-/* Profile Anchor & Overlapping Avatar */
-.artisan-profile-anchor {
-  display: flex;
-  align-items: flex-end;
+  padding: 20px;
   gap: 14px;
-  padding: 0 20px;
-  margin-top: -34px;
-  position: relative;
-  z-index: 3;
+  height: 100%;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
-.artisan-avatar-ring {
-  width: 66px;
-  height: 66px;
-  border-radius: 50%;
-  padding: 3px;
-  background: linear-gradient(135deg, #F59E0B, #00D4C8);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+html.dark .artisan-min-card, [data-theme="dark"] .artisan-min-card {
+  background: rgba(17, 24, 39, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.artisan-min-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(0, 212, 200, 0.4);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 0 20px rgba(0, 212, 200, 0.08);
+}
+
+/* Top: Avatar, Name, Verified, Rate */
+.artisan-min-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.artisan-min-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   flex-shrink: 0;
   position: relative;
+  overflow: hidden;
+  border: 1.5px solid var(--bd2);
+  background: var(--s2);
 }
 
-.artisan-avatar-pic {
+.artisan-min-avatar img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   object-fit: cover;
-  background: var(--bg);
 }
 
-.artisan-avatar-init {
+.artisan-min-avatar-init {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  background: var(--surface);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--cyan);
   font-family: var(--fm);
 }
 
-.artisan-anchor-meta {
+.artisan-min-meta {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  padding-bottom: 2px;
   min-width: 0;
+  flex-grow: 1;
 }
 
-.artisan-anchor-name {
-  font-size: 16px;
-  font-weight: 800;
+.artisan-min-name {
+  font-size: 15px;
+  font-weight: 750;
   color: var(--tx);
   font-family: var(--fm);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.artisan-anchor-loc {
-  font-size: 12px;
+.artisan-min-nia {
+  color: #10B981;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.artisan-min-loc {
+  font-size: 11.5px;
   color: var(--tx-3);
-  display: flex;
+  margin-top: 1px;
+}
+
+.artisan-min-rate {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.artisan-min-rate-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: #F59E0B;
+  font-family: var(--fm);
+  line-height: 1.1;
+}
+
+.artisan-min-rate-val small {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--tx-3);
+}
+
+.artisan-min-rate-escrow {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: #10B981;
+  margin-top: 2px;
+}
+
+/* Category & Specialty */
+.artisan-min-cat-badge {
+  display: inline-flex;
   align-items: center;
   gap: 4px;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--cyan);
+  background: rgba(0, 212, 200, 0.08);
+  border: 1px solid rgba(0, 212, 200, 0.18);
+  padding: 2px 8px;
+  border-radius: 4px;
+  align-self: flex-start;
 }
 
-/* Card Body */
-.artisan-studio-body {
-  padding: 16px 20px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  flex-grow: 1;
-}
-
-.artisan-studio-headline {
-  font-size: 15px;
-  font-weight: 750;
+.artisan-min-role {
+  font-size: 13.5px;
+  font-weight: 700;
   color: var(--tx);
   line-height: 1.35;
   margin: 0;
-  letter-spacing: -0.015em;
 }
 
-.artisan-studio-headline a {
+.artisan-min-role a {
   text-decoration: none;
   color: inherit;
   transition: color 0.2s ease;
 }
 
-.artisan-studio-headline a:hover {
+.artisan-min-role a:hover {
   color: var(--cyan);
 }
 
-.artisan-studio-bio {
-  font-size: 13px;
+.artisan-min-bio {
+  font-size: 12px;
   color: var(--tx-2);
-  line-height: 1.5;
+  line-height: 1.45;
   margin: 0;
   flex-grow: 1;
 }
 
-/* Stats Pill Bar */
-.artisan-stats-strip {
+/* Stats Strip (Minimal) */
+.artisan-min-stats {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  background: var(--s2);
-  border: 1px solid var(--bd2);
-  border-radius: 12px;
-  padding: 8px 12px;
-}
-
-.artisan-strip-pill {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.artisan-strip-val {
-  font-size: 12.5px;
-  font-weight: 800;
-  color: var(--tx);
-  font-family: var(--fm);
-}
-
-.artisan-strip-lbl {
-  font-size: 10px;
+  gap: 8px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--tx-3);
-  margin-top: 1px;
+  padding: 6px 0;
+  border-top: 1px solid var(--bd);
+  border-bottom: 1px solid var(--bd);
 }
 
-.artisan-strip-divider {
-  width: 1px;
-  height: 22px;
-  background: var(--bd2);
+.artisan-min-stat-bullet {
+  color: var(--bd2);
 }
 
-/* Skills Chips */
-.artisan-skills-cloud {
+/* Skills Cloud (Compact) */
+.artisan-min-skills {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 4px;
 }
 
-.artisan-skill-tag {
-  font-size: 11px;
+.artisan-min-pill {
+  font-size: 10.5px;
   font-weight: 600;
   color: var(--tx-2);
   background: var(--s2);
   border: 1px solid var(--bd);
-  padding: 3px 8px;
-  border-radius: 6px;
+  padding: 2px 6px;
+  border-radius: 4px;
 }
 
-/* Footer & CTA */
-.artisan-studio-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  padding-top: 10px;
-  border-top: 1px solid var(--bd);
+/* Footer Button */
+.artisan-min-btn {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 10px;
+  text-align: center;
+  justify-content: center;
   margin-top: auto;
 }
 
-.artisan-footer-tier {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 700;
-  color: #F59E0B;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-
-.artisan-footer-btn {
-  padding: 9px 16px;
-  font-size: 12.5px;
-  font-weight: 750;
-  border-radius: 12px;
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Responsive Breakpoints */
-@media (max-width: 1024px) {
-  .artisan-grid {
+/* Responsive Grid Rules */
+@media (max-width: 1180px) {
+  .artisan-min-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 }
 
-@media (max-width: 640px) {
-  .artisan-grid {
+@media (max-width: 768px) {
+  .artisan-min-grid {
     grid-template-columns: 1fr;
-    gap: 18px;
+    gap: 14px;
   }
-  .artisan-studio-body {
-    padding: 16px;
+  .artisan-min-container {
+    padding: 0 16px;
   }
-  .artisan-studio-footer {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-  .artisan-footer-btn {
-    width: 100%;
-    justify-content: center;
-    text-align: center;
+  /* Mobile View: Display exactly 4 cards */
+  .artisan-mobile-hidden {
+    display: none !important;
   }
 }
 
