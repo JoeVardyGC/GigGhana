@@ -520,7 +520,9 @@ const occupationSlides = [
             </div>
 
             <h1 className="hero-title">
-              Your Skill. Your Success.
+              Your Skill.
+              <br />
+              Your Success.
               <br />
               <span className="gold">Your Ghana.</span>
             </h1>
