@@ -3097,41 +3097,12 @@ html, body {
     border-radius: 12px;
   }
 
-  /* Hero Social Proof on Mobile: Clean Single Row */
+  /* Hero Social Proof and Trust Bullets: Hidden on Mobile for Maximum Clarity */
   .hero-social-proof {
-    order: 7;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 16px;
+    display: none !important;
   }
-  .cluster-avatar {
-    width: 28px;
-    height: 28px;
-    font-size: 12px;
-  }
-  .social-proof-text {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-  .sp-stars {
-    font-size: 10px;
-    line-height: 1;
-  }
-  .sp-desc {
-    font-size: 11.5px;
-    line-height: 1.3;
-  }
-
-  /* Trust Indicators on Mobile: Balanced 2x2 Grid */
   .hero-trust {
-    order: 8;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px 12px;
-    width: 100%;
+    display: none !important;
   }
   .trust-i {
     font-size: 12px;
