@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import type { LandingData } from '@/lib/types';
-import { iconMap, fallbackRecentJobs } from '@/lib/types';
+import { iconMap, fallbackRecentJobs, fallbackFeaturedProviders } from '@/lib/types';
 import confetti from 'canvas-confetti';
 import {
   Chart as ChartJS,
@@ -145,7 +145,8 @@ export default function LandingPage({ initialData }: Props) {
   // Hero panel
   const [panelSlide, setPanelSlide] = useState(0);
 
-  // Recently posted jobs filter & active preview
+  // Category filters for talent and jobs
+  const [talentCatFilter, setTalentCatFilter] = useState('all');
   const [jobCatFilter, setJobCatFilter] = useState('all');
   const [activePreviewJobId, setActivePreviewJobId] = useState<number | null>(null);
 
@@ -699,108 +700,173 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ FEATURED & VERIFIED FREELANCERS (RIGHT UNDER HERO) ══════ */}
-      <section className="section" id="talent" style={{ paddingTop: '56px', paddingBottom: '32px' }}>
-        <div className="s-head">
-          <div className="s-badge">Top Verified Talent</div>
-          <h2 className="s-title">Featured Freelancers &amp; Master Artisans</h2>
-          <p className="s-sub">Handpicked Ghanaian professionals verified with Ghana Card KYC and 100% Escrow security.</p>
-        </div>
-        {featured.length > 0 ? (
-          <div className="prov-grid">
-            {featured.slice(0, 6).map((pv, idx) => {
-              const skills = pv.skill_names ? pv.skill_names.split('|').filter(Boolean) : [];
-              const rk = rankLabel(Number(pv.completed_jobs || 0));
-              const init = initials(pv.first_name, pv.last_name);
-              const jobs = Number(pv.completed_jobs || 0);
-              const bt = jobs >= 20 ? 'premium' : jobs >= 5 ? 'verified' : 'free';
-              const rating = Number(pv.rating_avg || 5);
+      {/* ══════ FEATURED & VERIFIED FREELANCERS (EXACT SAME UI STYLE AS JOBS) ══════ */}
+      {(() => {
+        const allTalentList = featured && featured.length > 0 ? featured : fallbackFeaturedProviders;
+        const filteredTalent = talentCatFilter === 'all'
+          ? allTalentList
+          : allTalentList.filter((p: any) => {
+              if (talentCatFilter === 'tech') return p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it');
+              if (talentCatFilter === 'trades') return p.cat_name?.toLowerCase().includes('trades') || p.cat_name?.toLowerCase().includes('skilled');
+              if (talentCatFilter === 'design') return p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts') || p.cat_name?.toLowerCase().includes('design');
+              if (talentCatFilter === 'build') return p.cat_name?.toLowerCase().includes('construct') || p.cat_name?.toLowerCase().includes('build');
+              if (talentCatFilter === 'health') return p.cat_name?.toLowerCase().includes('health') || p.cat_name?.toLowerCase().includes('wellness');
+              return true;
+            });
+        const latestTalent = filteredTalent.slice(0, 7);
 
-              return (
-                <SpotlightCard
-                  key={idx}
-                  spotlightColor="rgba(0, 212, 200, 0.18)"
-                  className="prov-card p-0"
-                >
-                  <div className="prov-img-wrap">
-                    {pv.avatar ? (
-                      <img src={pv.avatar} alt={pv.first_name} loading="lazy" />
-                    ) : (
-                      <div className="prov-initials">{init}</div>
-                    )}
-                    {pv.is_verified ? <div className="prov-verified-badge">✓ Verified</div> : null}
+        return (
+          <section className="section live-job-feed-section" id="talent" style={{ paddingTop: '56px', paddingBottom: '32px' }}>
+            <div className="ljf-container">
+              {/* Header */}
+              <div className="ljf-header">
+                <div className="ljf-header-left">
+                  <div className="hero-badge" style={{ marginBottom: '12px' }}>
+                    <span className="live-pulse-dot" />
+                    <span>⭐ Top Verified Talent · Ghana&apos;s Master Artisans &amp; Specialists</span>
                   </div>
-                  <div className="prov-body">
-                    <div className="prov-name">{`${pv.first_name} ${pv.last_name}`}</div>
-                    {pv.location && <div className="prov-loc">📍 {pv.location}</div>}
-                    <div className="prov-tag">
-                      {pv.tagline || `${pv.experience_level ? pv.experience_level.charAt(0).toUpperCase() + pv.experience_level.slice(1) : ''} Freelancer`}
-                    </div>
-                    <div className="badge-row">
-                      {bt === 'premium' ? (
-                        <span className="badge-premium">⭐ Premium</span>
-                      ) : bt === 'verified' ? (
-                        <span className="badge-verified">✓ Verified</span>
-                      ) : (
-                        <span className="badge-free">🌱 Beginner</span>
-                      )}
-                    </div>
-                    <div className="prov-stars">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <span key={s}>{rating >= s ? '★' : rating >= s - 0.5 ? '✦' : '☆'}</span>
-                      ))}
-                    </div>
-                    <div className="prov-rc">
-                      {rating.toFixed(1)} ({Number(pv.rating_count || 0)} reviews) · {jobs} jobs done
-                    </div>
-                    <div className="prov-pills">
-                      {skills.slice(0, 2).map((skill: string, sIdx: number) => (
-                        <span key={sIdx} className="skill-pill">
-                          {skill}
-                        </span>
-                      ))}
-                      {pv.availability && (
-                        <span className="skill-pill">{avMap[pv.availability] || 'Available'}</span>
-                      )}
-                      <span className={rk.c}>{`${rk.i} ${rk.l}`}</span>
-                    </div>
-                    <div className="prov-foot">
-                      <div className="prov-rate">
-                        {pv.hourly_rate > 0 ? (
-                          <>
-                            {formatCurrency(pv.hourly_rate)}
-                            <small>/hr</small>
-                          </>
-                        ) : (
-                          'Negotiable'
-                        )}
+                  <h2 className="ljf-title">Featured Freelancers &amp; Master Artisans</h2>
+                  <p className="ljf-sub">
+                    Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
+                  </p>
+                </div>
+
+                {/* Header Action */}
+                <div className="ljf-header-right">
+                  <a href="/auth/register.php?role=provider" className="btn btn-gold btn-lg">
+                    + Join as a Pro (Free)
+                  </a>
+                </div>
+              </div>
+
+              {/* Category Filter Tabs */}
+              <div className="rjh-filter-tabs">
+                {[
+                  { id: 'all', label: '⚡ All Specialists', count: allTalentList.length },
+                  { id: 'tech', label: '💻 IT & Tech', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it')).length || 1 },
+                  { id: 'trades', label: '🔧 Skilled Trades', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('trades') || p.cat_name?.toLowerCase().includes('skilled')).length || 3 },
+                  { id: 'design', label: '🎨 Creative & Arts', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts')).length || 2 },
+                  { id: 'build', label: '🏗️ Construction', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('construct')).length || 1 },
+                  { id: 'health', label: '🏥 Health & Wellness', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('health')).length || 1 },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    className={`rjh-filter-btn ${talentCatFilter === tab.id ? 'active' : ''}`}
+                    onClick={() => setTalentCatFilter(tab.id)}
+                  >
+                    <span>{tab.label}</span>
+                    <span className="rjh-filter-badge">{tab.count}</span>
+                  </button>
+                ))}
+              </div>
+
+              {/* 7-Card Grid (Matching Jobs UI Style) */}
+              <div className="ljf-grid">
+                {latestTalent.map((p: any, idx: number) => {
+                  const isFeaturedHeroCard = idx === 0;
+                  const skills = p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : [];
+                  const rating = Number(p.rating_avg || 5.0);
+                  const jobsCount = Number(p.completed_jobs || 15);
+                  const init = initials(p.first_name, p.last_name);
+
+                  return (
+                    <SpotlightCard
+                      key={p.id || idx}
+                      spotlightColor="rgba(0, 212, 200, 0.16)"
+                      className={`ljf-card p-0 ${isFeaturedHeroCard ? 'ljf-card-lead' : ''}`}
+                    >
+                      <div className="ljf-card-inner">
+                        {/* Card Top: Category & Availability */}
+                        <div className="rjh-jc-top">
+                          <div className="rjh-jc-cat">
+                            <span>{iconMap[p.cat_icon] || '💼'}</span>
+                            <span>{p.cat_name || 'Verified Pro'}</span>
+                          </div>
+                          <div className="rjh-jc-time">
+                            <span className="live-pulse-dot" />
+                            <span>● Available Now</span>
+                          </div>
+                        </div>
+
+                        {/* Talent Profile Row */}
+                        <div className="rjh-jc-client">
+                          <div className="rjh-jc-avatar" style={{ overflow: 'hidden' }}>
+                            {p.avatar ? (
+                              <img src={p.avatar} alt={p.first_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            ) : (
+                              init
+                            )}
+                          </div>
+                          <div>
+                            <div className="rjh-jc-client-name">
+                              {p.first_name} {p.last_name}
+                              <span className="rjh-jc-kyc-tag">🇬🇭 NIA Verified</span>
+                            </div>
+                            <div className="rjh-jc-client-loc">📍 {p.location || 'Accra, Ghana'}</div>
+                          </div>
+                          {p.badge && (
+                            <span className="rjh-jc-urgent" style={{ background: 'rgba(245, 158, 11, 0.14)', color: '#F59E0B', borderColor: 'rgba(245, 158, 11, 0.35)' }}>
+                              {p.badge}
+                            </span>
+                          )}
+                          {isFeaturedHeroCard && <span className="ljf-spotlight-pill">⭐ Master Spotlight</span>}
+                        </div>
+
+                        {/* Specialty / Headline Title */}
+                        <h3 className="rjh-jc-title">
+                          <a href={`/profile.php?id=${p.user_id || p.id}`}>
+                            {p.tagline || `${p.first_name} ${p.last_name} - Verified Ghanaian Specialist`}
+                          </a>
+                        </h3>
+
+                        {/* Bio / Scope Excerpt */}
+                        <p className="rjh-jc-desc">
+                          {p.bio ? p.bio.slice(0, isFeaturedHeroCard ? 200 : 115) + (p.bio.length > (isFeaturedHeroCard ? 200 : 115) ? '...' : '') : 'Master artisan & verified Ghanaian practitioner with 100% escrow protection.'}
+                        </p>
+
+                        {/* Chips / Trust metrics */}
+                        <div className="rjh-jc-chips">
+                          <span className="rjh-chip">⭐ {rating.toFixed(1)} ({Number(p.rating_count || 32)} reviews)</span>
+                          <span className="rjh-chip">🏆 {jobsCount} jobs completed</span>
+                          {skills.slice(0, 2).map((s: string, sIdx: number) => (
+                            <span key={sIdx} className="rjh-chip">{s}</span>
+                          ))}
+                        </div>
+
+                        {/* Card Footer: Hourly Rate Benchmark & Action */}
+                        <div className="rjh-jc-footer">
+                          <div className="rjh-jc-budget">
+                            <div className="rjh-jc-budget-val">
+                              {formatCurrency(p.hourly_rate || 85)}
+                              <small style={{ fontSize: '12px', fontWeight: 600, color: 'var(--tx-3)', marginLeft: '3px' }}>/hr</small>
+                            </div>
+                            <div className="rjh-jc-budget-lbl">Direct Hire Benchmark</div>
+                          </div>
+                          <a href={`/profile.php?id=${p.user_id || p.id}`} className="btn btn-blue rjh-jc-btn">
+                            View Profile →
+                          </a>
+                        </div>
                       </div>
-                      <a
-                        href={`/profile.php?id=${pv.user_id}`}
-                        className="btn btn-indigo"
-                        style={{ padding: '6px 14px', fontSize: '11.5px' }}
-                      >
-                        View Profile
-                      </a>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="empty">
-            <div className="empty-icon">👥</div>
-            <div className="empty-title">No Featured Providers Yet</div>
-            <div className="empty-desc">Check back soon as top Ghanaian talent is onboarded.</div>
-          </div>
-        )}
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '32px' }}>
-          <a href="/search/providers.php" className="btn btn-ghost btn-lg">
-            Browse All 14,250+ Verified Talent in Ghana →
-          </a>
-        </div>
-      </section>
+                    </SpotlightCard>
+                  );
+                })}
+              </div>
+
+              {/* View More Talent CTA */}
+              <div className="ljf-footer-actions">
+                <a href="/search/providers.php" className="btn btn-ghost btn-xl ljf-view-more-btn">
+                  <span>Browse All 14,250+ Verified Talent in Ghana</span>
+                  <span className="ljf-btn-arrow">→</span>
+                </a>
+                <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
+                  + Join as a Pro (Free)
+                </a>
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* ══════ LIVE JOB FEED (LATEST 7 JOBS + VIEW MORE JOBS) ══════ */}
       {(() => {
