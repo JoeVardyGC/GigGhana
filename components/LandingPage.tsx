@@ -700,165 +700,200 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ VERIFIED TALENT PORTFOLIO SHOWCASE (CONTRA/MALT INSPIRED) ══════ */}
+      {/* ══════ FEATURED FREELANCERS & MASTER ARTISANS (ELEVATED ARTISAN SHOWCASE) ══════ */}
       {(() => {
         const allTalentList = featured && featured.length > 0 ? featured : fallbackFeaturedProviders;
-        const talentCategories = [
-          { id: 'all', label: '⚡ All Talent' },
-          { id: 'tech', label: '💻 Technology' },
-          { id: 'creative', label: '🎨 Creative' },
-          { id: 'home', label: '🏡 Home Services' },
-          { id: 'business', label: '💼 Business' },
-          { id: 'education', label: '🎓 Education' },
-          { id: 'repairs', label: '🔧 Repairs & Trades' },
-        ];
-
         const filteredTalent = talentCatFilter === 'all'
           ? allTalentList
           : allTalentList.filter((p: any) => {
-              if (talentCatFilter === 'tech') return p.cat_id === 'tech' || p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it');
-              if (talentCatFilter === 'creative') return p.cat_id === 'creative' || p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts') || p.cat_name?.toLowerCase().includes('photo');
-              if (talentCatFilter === 'home') return p.cat_id === 'home' || p.cat_name?.toLowerCase().includes('home') || p.cat_name?.toLowerCase().includes('paint') || p.cat_name?.toLowerCase().includes('plaster');
-              if (talentCatFilter === 'business') return p.cat_id === 'business' || p.cat_name?.toLowerCase().includes('business') || p.cat_name?.toLowerCase().includes('consult');
-              if (talentCatFilter === 'education') return p.cat_id === 'education' || p.cat_name?.toLowerCase().includes('education') || p.cat_name?.toLowerCase().includes('tutor');
-              if (talentCatFilter === 'repairs') return p.cat_id === 'repairs' || p.cat_name?.toLowerCase().includes('repair') || p.cat_name?.toLowerCase().includes('electr') || p.cat_name?.toLowerCase().includes('trades');
+              if (talentCatFilter === 'tech') return p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it');
+              if (talentCatFilter === 'trades') return p.cat_name?.toLowerCase().includes('trades') || p.cat_name?.toLowerCase().includes('skilled');
+              if (talentCatFilter === 'design') return p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts') || p.cat_name?.toLowerCase().includes('design');
+              if (talentCatFilter === 'build') return p.cat_name?.toLowerCase().includes('construct') || p.cat_name?.toLowerCase().includes('build');
+              if (talentCatFilter === 'health') return p.cat_name?.toLowerCase().includes('health') || p.cat_name?.toLowerCase().includes('wellness');
               return true;
             });
-
-        // 6 cards (3x2) on PC, and CSS hides index >= 4 on mobile for exactly 4 cards
-        const displayTalent = filteredTalent.slice(0, 6);
+        const latestTalent = filteredTalent.slice(0, 7);
+        const leadArtisan = latestTalent[0];
+        const gridArtisans = latestTalent.slice(1);
 
         return (
-          <section className="section pro-showcase-section" id="talent">
-            <div className="pro-showcase-container">
+          <section className="section artisan-section" id="talent">
+            <div className="artisan-container">
               {/* Header */}
-              <div className="pro-showcase-header">
-                <div className="hero-badge" style={{ marginBottom: '6px' }}>
-                  <span className="live-pulse-dot" />
-                  <span>🇬🇭 Ghana&apos;s Verified Talent Network</span>
+              <div className="ljf-header">
+                <div className="ljf-header-left">
+                  <div className="hero-badge" style={{ marginBottom: '12px' }}>
+                    <span className="live-pulse-dot" />
+                    <span>🇬🇭 Ghana&apos;s Certified Master Artisans &amp; Specialists</span>
+                  </div>
+                  <h2 className="ljf-title">Featured Freelancers &amp; Master Artisans</h2>
+                  <p className="ljf-sub">
+                    Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
+                  </p>
                 </div>
-                <h2 className="pro-showcase-title">Find Trusted Professionals Across Ghana</h2>
-                <p className="pro-showcase-sub">
-                  Directly hire verified Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, client reviews, and 100% Escrow Vault security.
-                </p>
+
+                {/* Header Action */}
+                <div className="ljf-header-right">
+                  <a href="/auth/register.php?role=provider" className="btn btn-gold btn-lg">
+                    + Join as a Verified Pro
+                  </a>
+                </div>
               </div>
 
-              {/* Category Filter Pills */}
-              <div className="pro-showcase-pills">
-                {talentCategories.map((cat) => (
+              {/* Category Filter Tabs */}
+              <div className="rjh-filter-tabs">
+                {[
+                  { id: 'all', label: '⚡ All Artisans', count: allTalentList.length },
+                  { id: 'tech', label: '💻 IT & Tech', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it')).length || 1 },
+                  { id: 'trades', label: '🔧 Skilled Trades', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('trades') || p.cat_name?.toLowerCase().includes('skilled')).length || 3 },
+                  { id: 'design', label: '🎨 Creative & Arts', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts')).length || 2 },
+                  { id: 'build', label: '🏗️ Construction', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('construct')).length || 1 },
+                  { id: 'health', label: '🏥 Health & Wellness', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('health')).length || 1 },
+                ].map((tab) => (
                   <button
-                    key={cat.id}
+                    key={tab.id}
                     type="button"
-                    className={`pro-pill-btn ${talentCatFilter === cat.id ? 'active' : ''}`}
-                    onClick={() => setTalentCatFilter(cat.id)}
+                    className={`rjh-filter-btn ${talentCatFilter === tab.id ? 'active' : ''}`}
+                    onClick={() => setTalentCatFilter(tab.id)}
                   >
-                    {cat.label}
+                    <span>{tab.label}</span>
+                    <span className="rjh-filter-badge">{tab.count}</span>
                   </button>
                 ))}
               </div>
 
-              {/* Cards Grid: 2 Rows of 3 on PC (6 Cards), 4 Cards on Mobile */}
-              <div className="pro-showcase-grid">
-                {displayTalent.map((p: any, idx: number) => {
-                  const rating = Number(p.rating_avg || 4.9);
-                  const ratingCount = Number(p.rating_count || 32);
-                  const init = p.initials || initials(p.first_name, p.last_name);
-                  const role = p.role_title || p.tagline || 'Verified Specialist';
-                  const priceText = p.price_label || (p.hourly_rate ? `From GH₵${Number(p.hourly_rate).toLocaleString()}` : 'From GH₵500');
-                  const skillsList = p.skills || (p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : ['Verified Pro']);
-                  const isHiddenOnMobile = idx >= 4;
+              {/* 7-Card Studio Showcase Grid */}
+              <div className="artisan-grid">
+                {latestTalent.map((p: any, idx: number) => {
+                  const isLeadSpotlight = idx === 0;
+                  const skills = p.skill_names ? (Array.isArray(p.skill_names) ? p.skill_names : p.skill_names.split('|').filter(Boolean)) : [];
+                  const rating = Number(p.rating_avg || 5.0);
+                  const jobsCount = Number(p.completed_jobs || (idx === 0 ? 42 : 25));
+                  const init = initials(p.first_name, p.last_name);
+                  const coverImg = p.avatar || '/images/occupations/interior_designer.jpg';
 
                   return (
                     <SpotlightCard
                       key={p.id || idx}
-                      spotlightColor="rgba(0, 212, 200, 0.16)"
-                      className={`pro-card p-0 ${isHiddenOnMobile ? 'pro-mobile-hide' : ''}`}
+                      spotlightColor={isLeadSpotlight ? 'rgba(245, 158, 11, 0.22)' : 'rgba(0, 212, 200, 0.16)'}
+                      className={`artisan-studio-card p-0 ${isLeadSpotlight ? 'artisan-card-highlight' : ''}`}
                     >
-                      {/* Top Row: Prominent Avatar with Dual-Accent Ring & Status Dot */}
-                      <div className="pro-card-header">
-                        <div className="pro-profile-anchor">
-                          <div className="pro-avatar-ring">
-                            {p.avatar ? (
-                              <img src={p.avatar} alt={p.first_name} className="pro-avatar-img" loading="lazy" />
-                            ) : (
-                              <div className="pro-avatar-init">{init}</div>
-                            )}
-                            <span className="pro-status-dot" title="Available for hire" />
+                      {/* Visual Studio Cover Banner */}
+                      <div className="artisan-cover-wrap">
+                        <img
+                          src={coverImg}
+                          alt={p.tagline || p.first_name}
+                          className="artisan-cover-img"
+                          loading="lazy"
+                        />
+                        <div className="artisan-cover-scrim" />
+
+                        {/* Top Overlays */}
+                        <div className="artisan-cover-top">
+                          <div className="artisan-cover-cat">
+                            <span>{iconMap[p.cat_icon] || '👑'}</span>
+                            <span>{p.cat_name || 'Artisan Pro'}</span>
                           </div>
-                          <div className="pro-profile-meta">
-                            <div className="pro-profile-name">
-                              <a href={`/profile.php?id=${p.user_id || p.id}`}>
-                                {p.first_name} {p.last_name}
-                              </a>
-                            </div>
-                            <div className="pro-profile-role">{role}</div>
+                          <div className="artisan-cover-status">
+                            <span className="live-pulse-dot" />
+                            <span>● Available</span>
                           </div>
                         </div>
-                        <div className="pro-rating-capsule">
-                          <span>★</span>
-                          <span>{rating.toFixed(1)}</span>
-                          <span style={{ fontSize: '10.5px', color: 'var(--tx-3)', fontWeight: '600' }}>({ratingCount})</span>
+
+                        {/* Benchmark Rate Tag */}
+                        <div className="artisan-cover-rate-tag">
+                          {formatCurrency(p.hourly_rate || 85)}
+                          <small style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)', marginLeft: '2px' }}>/hr</small>
                         </div>
                       </div>
 
-                      {/* Location & Benchmark Rate Strip */}
-                      <div className="pro-rate-strip">
-                        <div className="pro-loc-txt">
-                          <span>📍</span>
-                          <span>{p.location || 'Accra, Ghana'}</span>
+                      {/* Profile Anchor & Overlapping Avatar */}
+                      <div className="artisan-profile-anchor">
+                        <div className="artisan-avatar-ring">
+                          {p.avatar ? (
+                            <img src={p.avatar} alt={p.first_name} className="artisan-avatar-pic" />
+                          ) : (
+                            <div className="artisan-avatar-init">{init}</div>
+                          )}
                         </div>
-                        <div className="pro-price-txt">
-                          {priceText}
+                        <div className="artisan-anchor-meta">
+                          <div className="artisan-anchor-name">
+                            {p.first_name} {p.last_name}
+                            <span className="artisan-nia-badge">✓ NIA</span>
+                          </div>
+                          <div className="artisan-anchor-loc">
+                            📍 {p.location || 'Accra, Ghana'}
+                          </div>
                         </div>
                       </div>
 
-                      {/* Skills Cloud & Badge */}
-                      <div className="pro-skills-cloud">
-                        {skillsList.slice(0, 3).map((skill: string, sIdx: number) => (
-                          <span key={sIdx} className="pro-skill-pill">
-                            {skill}
-                          </span>
-                        ))}
-                        {p.badge && (
-                          <span className="pro-tier-pill">
-                            {p.badge}
-                          </span>
-                        )}
-                      </div>
+                      {/* Studio Body Content */}
+                      <div className="artisan-studio-body">
+                        <h3 className="artisan-studio-headline">
+                          <a href={`/profile.php?id=${p.user_id || p.id}`}>
+                            {p.tagline || `${p.first_name} ${p.last_name} - Certified Ghanaian Specialist`}
+                          </a>
+                        </h3>
 
-                      {/* Card Footer: Biometric KYC & Direct Action */}
-                      <div className="pro-card-footer">
-                        <div className="pro-verified-tag">
-                          <span>🇬🇭</span>
-                          <span>Ghana Card Verified</span>
+                        <p className="artisan-studio-bio">
+                          {p.bio || 'Verified master artisan & specialist providing reliable, escrow-protected services across Ghana.'}
+                        </p>
+
+                        {/* Performance Stats Strip */}
+                        <div className="artisan-stats-strip">
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">⭐ {rating.toFixed(1)}</span>
+                            <span className="artisan-strip-lbl">{Number(p.rating_count || 32)} reviews</span>
+                          </div>
+                          <div className="artisan-strip-divider" />
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">🏆 {jobsCount}</span>
+                            <span className="artisan-strip-lbl">Jobs Done</span>
+                          </div>
+                          <div className="artisan-strip-divider" />
+                          <div className="artisan-strip-pill">
+                            <span className="artisan-strip-val">⚡ &lt;15m</span>
+                            <span className="artisan-strip-lbl">Response</span>
+                          </div>
                         </div>
-                        <a
-                          href={`/profile.php?id=${p.user_id || p.id}`}
-                          className="pro-view-link"
-                        >
-                          <span>View Profile</span>
-                          <span>→</span>
-                        </a>
+
+                        {/* Capability Skills Tags */}
+                        <div className="artisan-skills-cloud">
+                          {skills.slice(0, 3).map((skill: string, sIdx: number) => (
+                            <span key={sIdx} className="artisan-skill-tag">
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+
+                        {/* Card Action Footer */}
+                        <div className="artisan-studio-footer">
+                          <div className="artisan-footer-tier">
+                            {p.badge || '⭐ Verified Pro'}
+                          </div>
+                          <a
+                            href={`/profile.php?id=${p.user_id || p.id}`}
+                            className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}
+                          >
+                            View Profile &amp; Hire →
+                          </a>
+                        </div>
                       </div>
                     </SpotlightCard>
                   );
                 })}
               </div>
 
-              {/* Bottom Caption & Action Buttons */}
-              <div className="pro-bottom-wrap">
-                <p className="pro-bottom-caption">
-                  Every professional on GigGhana builds a verified profile, receives client reviews, and is backed by 100% Escrow security.
-                </p>
-                <div className="pro-bottom-actions">
-                  <a href="/search/providers.php" className="btn btn-gold btn-xl">
-                    <span>Find A Professional</span>
-                    <span>→</span>
-                  </a>
-                  <a href="/auth/register.php?role=provider" className="btn btn-ghost btn-xl">
-                    + Become A Provider
-                  </a>
-                </div>
+              {/* View More Talent CTA */}
+              <div className="ljf-footer-actions">
+                <a href="/search/providers.php" className="btn btn-ghost btn-xl ljf-view-more-btn">
+                  <span>Browse All 14,250+ Verified Talent in Ghana</span>
+                  <span className="ljf-btn-arrow">→</span>
+                </a>
+                <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
+                  + Join as a Pro (Free)
+                </a>
               </div>
             </div>
           </section>
