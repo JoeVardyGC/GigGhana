@@ -21,7 +21,7 @@ import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2 } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -97,6 +97,23 @@ function rankLabel(jobs: number) {
   if (jobs >= 20) return { i: '⭐', l: 'Top Rated', c: 'rk-blue' };
   if (jobs >= 5) return { i: '📈', l: 'Rising Talent', c: 'rk-teal' };
   return { i: '🌱', l: 'New Provider', c: 'rk-dim' };
+}
+
+function renderCatIcon(catName?: string, iconKey?: string) {
+  const c = (catName || iconKey || '').toLowerCase();
+  if (c.includes('trade') || c.includes('tool') || c.includes('plumb') || c.includes('elect') || c.includes('carp')) {
+    return <Wrench className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />;
+  }
+  if (c.includes('creative') || c.includes('design') || c.includes('art') || c.includes('pen') || c.includes('paint')) {
+    return <Palette className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />;
+  }
+  if (c.includes('code') || c.includes('tech') || c.includes('it') || c.includes('soft') || c.includes('web')) {
+    return <Code className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />;
+  }
+  if (c.includes('construct') || c.includes('build') || c.includes('architect')) {
+    return <Building2 className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />;
+  }
+  return <Sparkles className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />;
 }
 
 function initials(first: string = '', last: string = '') {
@@ -767,7 +784,7 @@ const occupationSlides = [
                         {/* Top Overlays */}
                         <div className="artisan-cover-top">
                           <div className="artisan-cover-cat">
-                            <span>{iconMap[p.cat_icon] || '👑'}</span>
+                            {renderCatIcon(p.cat_name, p.cat_icon)}
                             <span>{p.cat_name || 'Artisan Pro'}</span>
                           </div>
                           <div className="artisan-cover-status">
