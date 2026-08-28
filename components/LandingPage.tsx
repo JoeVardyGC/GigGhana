@@ -730,35 +730,6 @@ const occupationSlides = [
                     Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
                   </p>
                 </div>
-
-                {/* Header Action */}
-                <div className="ljf-header-right">
-                  <a href="/auth/register.php?role=provider" className="btn btn-gold btn-lg">
-                    + Join as a Verified Pro
-                  </a>
-                </div>
-              </div>
-
-              {/* Category Filter Tabs */}
-              <div className="rjh-filter-tabs">
-                {[
-                  { id: 'all', label: '⚡ All Artisans', count: allTalentList.length },
-                  { id: 'tech', label: '💻 IT & Tech', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it')).length || 1 },
-                  { id: 'trades', label: '🔧 Skilled Trades', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('trades') || p.cat_name?.toLowerCase().includes('skilled')).length || 3 },
-                  { id: 'design', label: '🎨 Creative & Arts', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts')).length || 2 },
-                  { id: 'build', label: '🏗️ Construction', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('construct')).length || 1 },
-                  { id: 'health', label: '🏥 Health & Wellness', count: allTalentList.filter((p: any) => p.cat_name?.toLowerCase().includes('health')).length || 1 },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    className={`rjh-filter-btn ${talentCatFilter === tab.id ? 'active' : ''}`}
-                    onClick={() => setTalentCatFilter(tab.id)}
-                  >
-                    <span>{tab.label}</span>
-                    <span className="rjh-filter-badge">{tab.count}</span>
-                  </button>
-                ))}
               </div>
 
               {/* 7-Card Studio Showcase Grid */}
