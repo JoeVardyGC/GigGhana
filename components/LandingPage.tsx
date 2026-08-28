@@ -21,7 +21,7 @@ import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -800,20 +800,29 @@ const occupationSlides = [
                           {p.bio || 'Verified master artisan & specialist providing reliable, escrow-protected services across Ghana.'}
                         </p>
 
-                        {/* Performance Stats Strip */}
+                        {/* Performance Stats Strip (Modern Segmented Metric Capsule) */}
                         <div className="artisan-stats-strip">
                           <div className="artisan-strip-pill">
-                            <span className="artisan-strip-val">⭐ {rating.toFixed(1)}</span>
+                            <div className="artisan-strip-val">
+                              <Star className="w-3.5 h-3.5 fill-[#F59E0B] text-[#F59E0B] shrink-0" />
+                              <span>{rating.toFixed(1)}</span>
+                            </div>
                             <span className="artisan-strip-lbl">{Number(p.rating_count || 32)} reviews</span>
                           </div>
                           <div className="artisan-strip-divider" />
                           <div className="artisan-strip-pill">
-                            <span className="artisan-strip-val">🏆 {jobsCount}</span>
+                            <div className="artisan-strip-val">
+                              <Briefcase className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                              <span>{jobsCount}</span>
+                            </div>
                             <span className="artisan-strip-lbl">Jobs Done</span>
                           </div>
                           <div className="artisan-strip-divider" />
                           <div className="artisan-strip-pill">
-                            <span className="artisan-strip-val">⚡ &lt;15m</span>
+                            <div className="artisan-strip-val">
+                              <Zap className="w-3.5 h-3.5 fill-[#10B981] text-[#10B981] shrink-0" />
+                              <span>&lt;15m</span>
+                            </div>
                             <span className="artisan-strip-lbl">Response</span>
                           </div>
                         </div>
