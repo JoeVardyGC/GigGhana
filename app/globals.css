@@ -782,6 +782,7 @@ html.dark .ticker-text, [data-theme="dark"] .ticker-text {
   animation: fadU 0.7s 0.1s ease both;
   color: #FFFFFF;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  text-align: left;
 }
 
 html.lm .hero-title, [data-theme="light"] .hero-title {
@@ -798,6 +799,7 @@ html.dark .hero-title, [data-theme="dark"] .hero-title {
   background: linear-gradient(135deg, #F59E0B, #E67E22);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  text-align: left;
 }
 
 .hero-sub {
@@ -808,6 +810,7 @@ html.dark .hero-title, [data-theme="dark"] .hero-title {
   animation: fadU 0.7s 0.2s ease both;
   line-height: 1.65;
   font-weight: 400;
+  text-align: left;
 }
 
 html.lm .hero-sub, [data-theme="light"] .hero-sub {
@@ -2957,11 +2960,14 @@ html, body {
   .hero-container {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     padding: 0 16px;
     gap: 0px;
+    text-align: left;
   }
   .hero-left {
     display: contents;
+    text-align: left;
   }
   .hero-badge {
     order: 1;
@@ -2970,6 +2976,7 @@ html, body {
     margin-top: 8px;
     margin-bottom: 14px;
     align-self: flex-start;
+    text-align: left;
   }
   .hero-title {
     order: 2;
@@ -2978,18 +2985,23 @@ html, body {
     line-height: 1.02;
     letter-spacing: -0.04em;
     margin-bottom: 14px;
+    text-align: left;
+    width: 100%;
     text-shadow: 0 2px 24px rgba(0, 0, 0, 0.6);
   }
   .hero-title .gold {
     display: inline-block;
     font-weight: 950;
     letter-spacing: -0.03em;
+    text-align: left;
   }
   .hero-sub {
     order: 3;
     font-size: 14.5px;
     line-height: 1.5;
     margin-bottom: 16px;
+    text-align: left;
+    width: 100%;
   }
 
   /* Hero Showcase on Mobile: Placed above Search Box */
@@ -3334,11 +3346,13 @@ html, body {
     line-height: 1.03;
     letter-spacing: -0.04em;
     margin-bottom: 16px;
+    text-align: left;
   }
   .hero-sub {
     font-size: 14.5px;
     line-height: 1.5;
     margin-bottom: 18px;
+    text-align: left;
   }
   .cat-grid {
     grid-template-columns: 1fr;
@@ -3349,6 +3363,8 @@ html, body {
     padding: 5px 12px;
     margin-top: 8px;
     margin-bottom: 16px;
+    text-align: left;
+    align-self: flex-start;
   }
   .rjh-jc-footer {
     flex-direction: column;
@@ -3366,6 +3382,7 @@ html, body {
   .hero-title {
     font-size: 32px;
     line-height: 1.05;
+    text-align: left;
   }
   .hero-acts {
     grid-template-columns: 1fr;
