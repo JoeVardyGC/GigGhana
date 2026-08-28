@@ -26,111 +26,101 @@ import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, Ar
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
   
-  // Tech & Digital -> Cyan Palette
   if (name.includes('tech') || name.includes('it') || name.includes('code')) {
     return {
       icon: <Code className="w-5 h-5 text-[#00D4C8]" />,
       themeColor: '#00D4C8',
-      themeDim: 'rgba(0, 212, 200, 0.10)',
-      themeBorder: 'rgba(0, 212, 200, 0.28)',
+      themeDim: 'rgba(0, 212, 200, 0.12)',
+      themeBorder: 'rgba(0, 212, 200, 0.35)',
       tags: ['Web & Apps', 'Solar & IT', 'UI/UX Design'],
       count: '180+ Pros',
     };
   }
-  // Trades & Artisans -> Gold / Amber Palette
   if (name.includes('trade') || name.includes('tool') || name.includes('carpenter') || name.includes('plumb') || name.includes('electric')) {
     return {
       icon: <Wrench className="w-5 h-5 text-[#F59E0B]" />,
       themeColor: '#F59E0B',
-      themeDim: 'rgba(245, 158, 11, 0.10)',
-      themeBorder: 'rgba(245, 158, 11, 0.28)',
+      themeDim: 'rgba(245, 158, 11, 0.12)',
+      themeBorder: 'rgba(245, 158, 11, 0.35)',
       tags: ['POP Ceilings', 'Solar Wiring', 'Plumbing & Pipe'],
       count: '420+ Artisans',
     };
   }
-  // Construction & Building -> Gold / Amber Palette
   if (name.includes('construct') || name.includes('build')) {
     return {
-      icon: <Building2 className="w-5 h-5 text-[#F59E0B]" />,
-      themeColor: '#F59E0B',
-      themeDim: 'rgba(245, 158, 11, 0.10)',
-      themeBorder: 'rgba(245, 158, 11, 0.28)',
+      icon: <Building2 className="w-5 h-5 text-[#3B82F6]" />,
+      themeColor: '#3B82F6',
+      themeDim: 'rgba(59, 130, 246, 0.12)',
+      themeBorder: 'rgba(59, 130, 246, 0.35)',
       tags: ['Masonry Blocks', 'Building Plans', 'Tile Laying'],
       count: '260+ Pros',
     };
   }
-  // Creative Arts & Haute Couture -> Cyan Palette
   if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
     return {
-      icon: <Palette className="w-5 h-5 text-[#00D4C8]" />,
-      themeColor: '#00D4C8',
-      themeDim: 'rgba(0, 212, 200, 0.10)',
-      themeBorder: 'rgba(0, 212, 200, 0.28)',
+      icon: <Palette className="w-5 h-5 text-[#A78BFA]" />,
+      themeColor: '#A78BFA',
+      themeDim: 'rgba(167, 139, 250, 0.12)',
+      themeBorder: 'rgba(167, 139, 250, 0.35)',
       tags: ['Haute Couture', 'Photo & Film', 'Branding & Logo'],
       count: '310+ Creatives',
     };
   }
-  // Health & Care -> Emerald Green Palette
   if (name.includes('health') || name.includes('wellness') || name.includes('nurse')) {
     return {
       icon: <ShieldCheck className="w-5 h-5 text-[#10B981]" />,
       themeColor: '#10B981',
-      themeDim: 'rgba(16, 185, 129, 0.10)',
-      themeBorder: 'rgba(16, 185, 129, 0.28)',
+      themeDim: 'rgba(16, 185, 129, 0.12)',
+      themeBorder: 'rgba(16, 185, 129, 0.35)',
       tags: ['Home Nursing', 'Physiotherapy', 'Wellness Care'],
       count: '150+ Specialists',
     };
   }
-  // Business & Legal -> Cyan Palette
   if (name.includes('biz') || name.includes('business') || name.includes('consult')) {
     return {
-      icon: <Briefcase className="w-5 h-5 text-[#00D4C8]" />,
-      themeColor: '#00D4C8',
-      themeDim: 'rgba(0, 212, 200, 0.10)',
-      themeBorder: 'rgba(0, 212, 200, 0.28)',
+      icon: <Briefcase className="w-5 h-5 text-[#EC4899]" />,
+      themeColor: '#EC4899',
+      themeDim: 'rgba(236, 72, 153, 0.12)',
+      themeBorder: 'rgba(236, 72, 153, 0.35)',
       tags: ['GRA Tax Filing', 'Legal Advisory', 'Admin Support'],
       count: '190+ Experts',
     };
   }
-  // Hospitality & Food -> Emerald Green Palette
   if (name.includes('hosp') || name.includes('food') || name.includes('chef')) {
     return {
-      icon: <Sparkles className="w-5 h-5 text-[#10B981]" />,
-      themeColor: '#10B981',
-      themeDim: 'rgba(16, 185, 129, 0.10)',
-      themeBorder: 'rgba(16, 185, 129, 0.28)',
+      icon: <Sparkles className="w-5 h-5 text-[#FB923C]" />,
+      themeColor: '#FB923C',
+      themeDim: 'rgba(251, 146, 60, 0.12)',
+      themeBorder: 'rgba(251, 146, 60, 0.35)',
       tags: ['Private Chefs', 'Event Decor', 'Catering'],
       count: '210+ Pros',
     };
   }
-  // Education & Tutoring -> Cyan Palette
   if (name.includes('edu') || name.includes('teach')) {
     return {
-      icon: <Layers className="w-5 h-5 text-[#00D4C8]" />,
-      themeColor: '#00D4C8',
-      themeDim: 'rgba(0, 212, 200, 0.10)',
-      themeBorder: 'rgba(0, 212, 200, 0.28)',
+      icon: <Layers className="w-5 h-5 text-[#38BDF8]" />,
+      themeColor: '#38BDF8',
+      themeDim: 'rgba(56, 189, 248, 0.12)',
+      themeBorder: 'rgba(56, 189, 248, 0.35)',
       tags: ['STEM Tutors', 'Languages', 'Music Lessons'],
       count: '140+ Tutors',
     };
   }
-  // Agriculture & Farming -> Emerald Green Palette
   if (name.includes('farm') || name.includes('agri')) {
     return {
-      icon: <Sparkles className="w-5 h-5 text-[#10B981]" />,
-      themeColor: '#10B981',
-      themeDim: 'rgba(16, 185, 129, 0.10)',
-      themeBorder: 'rgba(16, 185, 129, 0.28)',
+      icon: <Sparkles className="w-5 h-5 text-[#84CC16]" />,
+      themeColor: '#84CC16',
+      themeDim: 'rgba(132, 204, 22, 0.12)',
+      themeBorder: 'rgba(132, 204, 22, 0.35)',
       tags: ['Agri-Tech', 'Poultry Farming', 'Crop Science'],
       count: '95+ Specialists',
     };
   }
-  // Default -> Cyan Palette
   return {
     icon: <Sparkles className="w-5 h-5 text-[#00D4C8]" />,
     themeColor: '#00D4C8',
-    themeDim: 'rgba(0, 212, 200, 0.10)',
-    themeBorder: 'rgba(0, 212, 200, 0.28)',
+    themeDim: 'rgba(0, 212, 200, 0.12)',
+    themeBorder: 'rgba(0, 212, 200, 0.35)',
     tags: ['Delivery', 'Security', 'Handyman'],
     count: '100+ Pros',
   };

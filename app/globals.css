@@ -2043,7 +2043,7 @@ html.dark .rjh-tr-icon-box, [data-theme="dark"] .rjh-tr-icon-box {
   background: var(--bd2);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1024px) and (min-width: 768px) {
   .ljf-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -2060,7 +2060,7 @@ html.dark .rjh-tr-icon-box, [data-theme="dark"] .rjh-tr-icon-box {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 767px) {
   .ljf-grid {
     grid-template-columns: 1fr;
     gap: 16px;
