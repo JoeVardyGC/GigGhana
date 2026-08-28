@@ -21,7 +21,7 @@ import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Lock } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare } from 'lucide-react';
 
 ChartJS.register(
   CategoryScale,
@@ -631,10 +631,10 @@ const occupationSlides = [
             {/* Action Buttons */}
             <div className="hero-acts">
               <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
-                I Want to Hire
+                I Need Talent
               </a>
               <a href="/auth/register.php?role=provider" className="btn btn-blue btn-lg">
-                I Want to Work
+                I Have Skills
               </a>
             </div>
 
@@ -893,7 +893,7 @@ const occupationSlides = [
               if (jobCatFilter === 'build') return j.cat_name?.toLowerCase().includes('construct') || j.cat_name?.toLowerCase().includes('build');
               return true;
             });
-        const latest6Jobs = filteredJobs.slice(0, 6);
+        const latestJobs = filteredJobs.slice(0, 6);
 
         return (
           <section className="section live-job-feed-section" id="live-jobs" ref={statsRef}>
@@ -903,7 +903,7 @@ const occupationSlides = [
                 <div className="ljf-header-left">
                   <div className="hero-badge" style={{ marginBottom: '12px' }}>
                     <span className="live-pulse-dot" />
-                    <span>Live Job Stream · Real-Time Opportunities in Ghana</span>
+                    <span>Live Job Opportunities in Ghana</span>
                   </div>
                   <h2 className="ljf-title">Live Job Feed</h2>
                   <p className="ljf-sub">
@@ -922,11 +922,11 @@ const occupationSlides = [
               {/* Category Filter Pills */}
               <div className="rjh-filter-tabs">
                 {[
-                  { id: 'all', label: 'All Live Gigs', icon: <Sparkles className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />, count: allJobsList.length },
-                  { id: 'tech', label: 'IT & Tech', icon: <Code className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />, count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it')).length || 2 },
-                  { id: 'trades', label: 'Skilled Trades', icon: <Wrench className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />, count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled')).length || 3 },
-                  { id: 'design', label: 'Creative & Arts', icon: <Palette className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />, count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts')).length || 2 },
-                  { id: 'build', label: 'Construction', icon: <Building2 className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />, count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('construct')).length || 1 },
+                  { id: 'all', label: 'All Open Gigs', count: allJobsList.length },
+                  { id: 'tech', label: 'IT & Tech', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('tech') || j.cat_name?.toLowerCase().includes('it')).length || 2 },
+                  { id: 'trades', label: 'Skilled Trades', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('trades') || j.cat_name?.toLowerCase().includes('skilled')).length || 3 },
+                  { id: 'design', label: 'Creative & Arts', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('creative') || j.cat_name?.toLowerCase().includes('arts')).length || 2 },
+                  { id: 'build', label: 'Construction', count: allJobsList.filter((j: any) => j.cat_name?.toLowerCase().includes('construct')).length || 1 },
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -934,7 +934,6 @@ const occupationSlides = [
                     className={`rjh-filter-btn ${jobCatFilter === tab.id ? 'active' : ''}`}
                     onClick={() => setJobCatFilter(tab.id)}
                   >
-                    {tab.icon}
                     <span>{tab.label}</span>
                     <span className="rjh-filter-badge">{tab.count}</span>
                   </button>
@@ -943,11 +942,12 @@ const occupationSlides = [
 
               {/* Latest 6 Jobs Showcase Grid */}
               <div className="ljf-grid">
-                {latest6Jobs.map((j: any, idx: number) => {
+                {latestJobs.map((j: any, idx: number) => {
+                  const isFeaturedHeroCard = idx === 0;
                   return (
                     <div
                       key={j.id || idx}
-                      className="ljf-card p-0"
+                      className={`ljf-card p-0 ${isFeaturedHeroCard ? 'ljf-card-lead' : ''}`}
                     >
                       <div className="ljf-card-inner">
                         {/* Card Top: Category & Real-time posted tag */}
@@ -971,16 +971,22 @@ const occupationSlides = [
                             <div className="rjh-jc-client-name">
                               <span>{j.first_name} {j.last_name ? j.last_name[0] + '.' : ''}</span>
                               <span className="rjh-jc-kyc-tag">
-                                <BadgeCheck className="w-3 h-3 text-[#00D4C8] shrink-0" />
-                                <span>NIA Verified</span>
+                                <BadgeCheck className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                                <span>Verified Employer</span>
                               </span>
                             </div>
                             <div className="rjh-jc-client-loc">📍 {j.location || 'Accra, Ghana'}</div>
                           </div>
                           {j.is_urgent === 1 && (
                             <span className="rjh-jc-urgent">
-                              <Zap className="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" />
+                              <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
                               <span>Urgent</span>
+                            </span>
+                          )}
+                          {isFeaturedHeroCard && (
+                            <span className="ljf-spotlight-pill">
+                              <Star className="w-3 h-3 fill-[#F59E0B] text-[#F59E0B]" />
+                              <span>Featured Lead</span>
                             </span>
                           )}
                         </div>
@@ -992,21 +998,21 @@ const occupationSlides = [
 
                         {/* Description Excerpt */}
                         <p className="rjh-jc-desc">
-                          {j.description ? j.description.slice(0, 120) + (j.description.length > 120 ? '...' : '') : 'Looking for a verified skilled service provider in Ghana.'}
+                          {j.description || 'Looking for a verified skilled professional in Ghana.'}
                         </p>
 
-                        {/* Capability Chips */}
+                        {/* Chips */}
                         <div className="rjh-jc-chips">
                           <span className="rjh-chip">
-                            <ShieldCheck className="w-3 h-3 text-[#00D4C8] shrink-0" />
-                            <span>100% Escrow</span>
+                            <ShieldCheck className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                            <span>Escrow Funded</span>
                           </span>
                           <span className="rjh-chip">
-                            <Zap className="w-3 h-3 text-amber-400 shrink-0" />
+                            <Zap className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
                             <span>Sub-60s MoMo</span>
                           </span>
                           <span className="rjh-chip">
-                            <MessageSquare className="w-3 h-3 text-slate-400 shrink-0" />
+                            <MessageSquare className="w-3.5 h-3.5 text-slate-400 shrink-0" />
                             <span>{j.proposal_count || 0} proposals</span>
                           </span>
                         </div>
@@ -1032,7 +1038,7 @@ const occupationSlides = [
                 })}
               </div>
 
-              {/* View More Jobs CTA under the 6 jobs */}
+              {/* View More Jobs Action Footer */}
               <div className="ljf-footer-actions">
                 <a href="/jobs.php" className="btn btn-ghost btn-xl ljf-view-more-btn group">
                   <Search className="w-4 h-4 text-[#00D4C8] shrink-0" />
@@ -1047,8 +1053,8 @@ const occupationSlides = [
               {/* Bottom Trust Ribbon */}
               <div className="rjh-trust-ribbon">
                 <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-wrap">
-                    <ShieldCheck className="w-5 h-5 text-[#00D4C8]" />
+                  <div className="rjh-tr-icon-box">
+                    <ShieldCheck className="w-5 h-5 text-[#10B981]" />
                   </div>
                   <div>
                     <div className="rjh-tr-title">Bank of Ghana Escrow Vault</div>
@@ -1057,8 +1063,8 @@ const occupationSlides = [
                 </div>
                 <div className="rjh-tr-sep" />
                 <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-wrap">
-                    <BadgeCheck className="w-5 h-5 text-[#10B981]" />
+                  <div className="rjh-tr-icon-box">
+                    <BadgeCheck className="w-5 h-5 text-[#00D4C8]" />
                   </div>
                   <div>
                     <div className="rjh-tr-title">100% NIA Biometric KYC</div>
@@ -1067,7 +1073,7 @@ const occupationSlides = [
                 </div>
                 <div className="rjh-tr-sep" />
                 <div className="rjh-tr-item">
-                  <div className="rjh-tr-icon-wrap">
+                  <div className="rjh-tr-icon-box">
                     <Zap className="w-5 h-5 text-[#F59E0B]" />
                   </div>
                   <div>
