@@ -774,11 +774,11 @@ html.dark .ticker-text, [data-theme="dark"] .ticker-text {
 }
 
 .hero-title {
-  font-size: clamp(44px, 5.6vw, 68px);
-  font-weight: 850;
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  margin-bottom: 22px;
+  font-size: clamp(36px, 4.8vw, 60px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
   animation: fadU 0.7s 0.1s ease both;
   color: #FFFFFF;
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
@@ -803,10 +803,10 @@ html.dark .hero-title, [data-theme="dark"] .hero-title {
 }
 
 .hero-sub {
-  font-size: clamp(15.5px, 1.6vw, 18.5px);
+  font-size: clamp(15.5px, 1.5vw, 18px);
   color: #CBD5E1;
-  max-width: 600px;
-  margin-bottom: 34px;
+  max-width: 580px;
+  margin-bottom: 30px;
   animation: fadU 0.7s 0.2s ease both;
   line-height: 1.65;
   font-weight: 400;
