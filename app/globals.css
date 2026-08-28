@@ -774,40 +774,39 @@ html.dark .ticker-text, [data-theme="dark"] .ticker-text {
 }
 
 .hero-title {
-  font-size: clamp(40px, 5.8vw, 76px);
-  font-weight: 900;
-  line-height: 1.04;
-  letter-spacing: -0.038em;
-  margin-bottom: 22px;
+  font-size: clamp(36px, 4.8vw, 60px);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+  margin-bottom: 20px;
   animation: fadU 0.7s 0.1s ease both;
   color: #FFFFFF;
-  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
 html.lm .hero-title, [data-theme="light"] .hero-title {
-  color: #0B1120 !important;
+  color: #0F172A !important;
   text-shadow: none;
 }
 
 html.dark .hero-title, [data-theme="dark"] .hero-title {
   color: #FFFFFF !important;
-  text-shadow: 0 2px 28px rgba(0, 0, 0, 0.55);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hero-title .gold {
-  background: linear-gradient(135deg, #FBBF24, #F59E0B 40%, #E67E22);
+  background: linear-gradient(135deg, #F59E0B, #E67E22);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 2px 14px rgba(245, 158, 11, 0.3));
 }
 
 .hero-sub {
-  font-size: clamp(16px, 1.8vw, 20.5px);
+  font-size: clamp(15.5px, 1.6vw, 18.5px);
   color: #CBD5E1;
-  max-width: 620px;
+  max-width: 600px;
   margin-bottom: 34px;
   animation: fadU 0.7s 0.2s ease both;
-  line-height: 1.62;
+  line-height: 1.65;
   font-weight: 400;
 }
 
