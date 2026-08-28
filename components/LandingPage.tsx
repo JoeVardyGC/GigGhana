@@ -700,18 +700,17 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ FIGMA REFERENCE: FIND TRUSTED PROFESSIONALS ACROSS GHANA ══════ */}
+      {/* ══════ VERIFIED TALENT PORTFOLIO SHOWCASE (CONTRA/MALT INSPIRED) ══════ */}
       {(() => {
         const allTalentList = featured && featured.length > 0 ? featured : fallbackFeaturedProviders;
-        const figmaCategories = [
-          { id: 'all', label: 'All' },
-          { id: 'tech', label: 'Technology' },
-          { id: 'creative', label: 'Creative' },
-          { id: 'home', label: 'Home Services' },
-          { id: 'business', label: 'Business' },
-          { id: 'education', label: 'Education' },
-          { id: 'events', label: 'Events' },
-          { id: 'repairs', label: 'Repairs' },
+        const talentCategories = [
+          { id: 'all', label: '⚡ All Talent' },
+          { id: 'tech', label: '💻 Technology' },
+          { id: 'creative', label: '🎨 Creative' },
+          { id: 'home', label: '🏡 Home Services' },
+          { id: 'business', label: '💼 Business' },
+          { id: 'education', label: '🎓 Education' },
+          { id: 'repairs', label: '🔧 Repairs & Trades' },
         ];
 
         const filteredTalent = talentCatFilter === 'all'
@@ -719,11 +718,10 @@ const occupationSlides = [
           : allTalentList.filter((p: any) => {
               if (talentCatFilter === 'tech') return p.cat_id === 'tech' || p.cat_name?.toLowerCase().includes('tech') || p.cat_name?.toLowerCase().includes('it');
               if (talentCatFilter === 'creative') return p.cat_id === 'creative' || p.cat_name?.toLowerCase().includes('creative') || p.cat_name?.toLowerCase().includes('arts') || p.cat_name?.toLowerCase().includes('photo');
-              if (talentCatFilter === 'home') return p.cat_id === 'home' || p.cat_name?.toLowerCase().includes('home') || p.cat_name?.toLowerCase().includes('paint') || p.cat_name?.toLowerCase().includes('plaster') || p.cat_name?.toLowerCase().includes('trades');
+              if (talentCatFilter === 'home') return p.cat_id === 'home' || p.cat_name?.toLowerCase().includes('home') || p.cat_name?.toLowerCase().includes('paint') || p.cat_name?.toLowerCase().includes('plaster');
               if (talentCatFilter === 'business') return p.cat_id === 'business' || p.cat_name?.toLowerCase().includes('business') || p.cat_name?.toLowerCase().includes('consult');
-              if (talentCatFilter === 'education') return p.cat_id === 'education' || p.cat_name?.toLowerCase().includes('education') || p.cat_name?.toLowerCase().includes('tutor') || p.cat_name?.toLowerCase().includes('teach');
-              if (talentCatFilter === 'events') return p.cat_id === 'events' || p.cat_name?.toLowerCase().includes('event') || p.cat_name?.toLowerCase().includes('photo');
-              if (talentCatFilter === 'repairs') return p.cat_id === 'repairs' || p.cat_name?.toLowerCase().includes('repair') || p.cat_name?.toLowerCase().includes('electr') || p.cat_name?.toLowerCase().includes('plumb');
+              if (talentCatFilter === 'education') return p.cat_id === 'education' || p.cat_name?.toLowerCase().includes('education') || p.cat_name?.toLowerCase().includes('tutor');
+              if (talentCatFilter === 'repairs') return p.cat_id === 'repairs' || p.cat_name?.toLowerCase().includes('repair') || p.cat_name?.toLowerCase().includes('electr') || p.cat_name?.toLowerCase().includes('trades');
               return true;
             });
 
@@ -731,27 +729,27 @@ const occupationSlides = [
         const displayTalent = filteredTalent.slice(0, 6);
 
         return (
-          <section className="section figma-talent-section" id="talent">
-            <div className="figma-talent-container">
+          <section className="section pro-showcase-section" id="talent">
+            <div className="pro-showcase-container">
               {/* Header */}
-              <div className="figma-talent-header">
+              <div className="pro-showcase-header">
                 <div className="hero-badge" style={{ marginBottom: '6px' }}>
                   <span className="live-pulse-dot" />
                   <span>🇬🇭 Ghana&apos;s Verified Talent Network</span>
                 </div>
-                <h2 className="figma-talent-title">Find Trusted Professionals Across Ghana</h2>
-                <p className="figma-talent-sub">
-                  Whether you need a website developer, master painter, photographer, electrician, designer, tutor, or business consultant, GigGhana connects you with verified professionals ready to work.
+                <h2 className="pro-showcase-title">Find Trusted Professionals Across Ghana</h2>
+                <p className="pro-showcase-sub">
+                  Directly hire verified Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, client reviews, and 100% Escrow Vault security.
                 </p>
               </div>
 
               {/* Category Filter Pills */}
-              <div className="figma-talent-pills">
-                {figmaCategories.map((cat) => (
+              <div className="pro-showcase-pills">
+                {talentCategories.map((cat) => (
                   <button
                     key={cat.id}
                     type="button"
-                    className={`figma-pill-btn ${talentCatFilter === cat.id ? 'active' : ''}`}
+                    className={`pro-pill-btn ${talentCatFilter === cat.id ? 'active' : ''}`}
                     onClick={() => setTalentCatFilter(cat.id)}
                   >
                     {cat.label}
@@ -760,9 +758,10 @@ const occupationSlides = [
               </div>
 
               {/* Cards Grid: 2 Rows of 3 on PC (6 Cards), 4 Cards on Mobile */}
-              <div className="figma-talent-grid">
+              <div className="pro-showcase-grid">
                 {displayTalent.map((p: any, idx: number) => {
                   const rating = Number(p.rating_avg || 4.9);
+                  const ratingCount = Number(p.rating_count || 32);
                   const init = p.initials || initials(p.first_name, p.last_name);
                   const role = p.role_title || p.tagline || 'Verified Specialist';
                   const priceText = p.price_label || (p.hourly_rate ? `From GH₵${Number(p.hourly_rate).toLocaleString()}` : 'From GH₵500');
@@ -772,60 +771,74 @@ const occupationSlides = [
                   return (
                     <SpotlightCard
                       key={p.id || idx}
-                      spotlightColor="rgba(0, 212, 200, 0.15)"
-                      className={`figma-card p-0 ${isHiddenOnMobile ? 'figma-mobile-hide' : ''}`}
+                      spotlightColor="rgba(0, 212, 200, 0.16)"
+                      className={`pro-card p-0 ${isHiddenOnMobile ? 'pro-mobile-hide' : ''}`}
                     >
-                      {/* Top Row: Avatar + Name + Role on Left, Rating Pill on Right */}
-                      <div className="figma-card-top">
-                        <div className="figma-avatar-meta">
-                          <div className="figma-avatar">
+                      {/* Top Row: Prominent Avatar with Dual-Accent Ring & Status Dot */}
+                      <div className="pro-card-header">
+                        <div className="pro-profile-anchor">
+                          <div className="pro-avatar-ring">
                             {p.avatar ? (
-                              <img src={p.avatar} alt={p.first_name} loading="lazy" />
+                              <img src={p.avatar} alt={p.first_name} className="pro-avatar-img" loading="lazy" />
                             ) : (
-                              init
+                              <div className="pro-avatar-init">{init}</div>
                             )}
+                            <span className="pro-status-dot" title="Available for hire" />
                           </div>
-                          <div className="figma-meta">
-                            <div className="figma-name">
-                              <a href={`/profile.php?id=${p.user_id || p.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                          <div className="pro-profile-meta">
+                            <div className="pro-profile-name">
+                              <a href={`/profile.php?id=${p.user_id || p.id}`}>
                                 {p.first_name} {p.last_name}
                               </a>
                             </div>
-                            <div className="figma-role">{role}</div>
+                            <div className="pro-profile-role">{role}</div>
                           </div>
                         </div>
-                        <div className="figma-rating-pill">
-                          <span className="figma-rating-star">★</span>
+                        <div className="pro-rating-capsule">
+                          <span>★</span>
                           <span>{rating.toFixed(1)}</span>
+                          <span style={{ fontSize: '10.5px', color: 'var(--tx-3)', fontWeight: '600' }}>({ratingCount})</span>
                         </div>
                       </div>
 
-                      {/* Location & Pricing Line */}
-                      <div className="figma-location-price">
-                        <span>📍 {p.location || 'Accra'}</span>
-                        <span>•</span>
-                        <span className="figma-price-bold">{priceText}</span>
+                      {/* Location & Benchmark Rate Strip */}
+                      <div className="pro-rate-strip">
+                        <div className="pro-loc-txt">
+                          <span>📍</span>
+                          <span>{p.location || 'Accra, Ghana'}</span>
+                        </div>
+                        <div className="pro-price-txt">
+                          {priceText}
+                        </div>
                       </div>
 
-                      {/* Skills Row */}
-                      <div className="figma-skills-row">
-                        {skillsList.map((skill: string, sIdx: number) => (
-                          <span key={sIdx} className="figma-skill-pill">
+                      {/* Skills Cloud & Badge */}
+                      <div className="pro-skills-cloud">
+                        {skillsList.slice(0, 3).map((skill: string, sIdx: number) => (
+                          <span key={sIdx} className="pro-skill-pill">
                             {skill}
                           </span>
                         ))}
+                        {p.badge && (
+                          <span className="pro-tier-pill">
+                            {p.badge}
+                          </span>
+                        )}
                       </div>
 
-                      {/* Card Footer: Verified + Availability */}
-                      <div className="figma-card-footer">
-                        <div className="figma-verified-tag">
+                      {/* Card Footer: Biometric KYC & Direct Action */}
+                      <div className="pro-card-footer">
+                        <div className="pro-verified-tag">
                           <span>🇬🇭</span>
                           <span>Ghana Card Verified</span>
                         </div>
-                        <div className="figma-avail-text">
-                          <span className="live-pulse-dot" style={{ width: '6px', height: '6px' }} />
-                          <span>Available This Week</span>
-                        </div>
+                        <a
+                          href={`/profile.php?id=${p.user_id || p.id}`}
+                          className="pro-view-link"
+                        >
+                          <span>View Profile</span>
+                          <span>→</span>
+                        </a>
                       </div>
                     </SpotlightCard>
                   );
@@ -833,11 +846,11 @@ const occupationSlides = [
               </div>
 
               {/* Bottom Caption & Action Buttons */}
-              <div className="figma-bottom-wrap">
-                <p className="figma-bottom-caption">
-                  Every professional on GigGhana builds a verified profile, receives client reviews, and is protected with 100% Escrow security.
+              <div className="pro-bottom-wrap">
+                <p className="pro-bottom-caption">
+                  Every professional on GigGhana builds a verified profile, receives client reviews, and is backed by 100% Escrow security.
                 </p>
-                <div className="figma-bottom-actions">
+                <div className="pro-bottom-actions">
                   <a href="/search/providers.php" className="btn btn-gold btn-xl">
                     <span>Find A Professional</span>
                     <span>→</span>

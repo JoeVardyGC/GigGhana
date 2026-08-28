@@ -1981,29 +1981,37 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
    - Mobile: Exactly 4 cards displayed cleanly
    - Verified NIA Biometrics & 100% Escrow Vault tags
    ══════════════════════════════════════════════════════════════════════ */
-.figma-talent-section {
-  padding: 60px 0 44px;
+/* ══════════════════════════════════════════════════════════════════════
+   VERIFIED TALENT PORTFOLIO SHOWCASE (.pro-showcase-*)
+   - Inspired by Contra, Malt, ReadCV & Stripe
+   - High-visibility authentic Ghanaian portrait avatars with status ring
+   - Clean rate & escrow assurance bar
+   - Capability pill cloud
+   - Direct profile triggers
+   ══════════════════════════════════════════════════════════════════════ */
+.pro-showcase-section {
+  padding: 64px 0 48px;
   position: relative;
 }
 
-.figma-talent-container {
+.pro-showcase-container {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
 }
 
-.figma-talent-header {
+.pro-showcase-header {
   text-align: center;
   max-width: 820px;
-  margin: 0 auto 34px;
+  margin: 0 auto 36px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
 }
 
-.figma-talent-title {
-  font-size: clamp(28px, 3.8vw, 42px);
+.pro-showcase-title {
+  font-size: clamp(28px, 3.8vw, 44px);
   font-weight: 850;
   color: var(--tx);
   line-height: 1.15;
@@ -2012,16 +2020,16 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
   font-family: var(--fm);
 }
 
-.figma-talent-sub {
+.pro-showcase-sub {
   font-size: clamp(14.5px, 1.5vw, 16.5px);
   color: var(--tx-2);
   line-height: 1.6;
   margin: 0;
-  max-width: 700px;
+  max-width: 720px;
 }
 
-/* Category Filter Pills (Refined Brand Style) */
-.figma-talent-pills {
+/* Category Filter Pills */
+.pro-showcase-pills {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2030,7 +2038,7 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
   margin-bottom: 34px;
 }
 
-.figma-pill-btn {
+.pro-pill-btn {
   padding: 8px 20px;
   font-size: 13.5px;
   font-weight: 650;
@@ -2044,13 +2052,13 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
 }
 
-.figma-pill-btn:hover {
+.pro-pill-btn:hover {
   border-color: var(--cyan);
   color: var(--cyan);
   transform: translateY(-1px);
 }
 
-.figma-pill-btn.active {
+.pro-pill-btn.active {
   background: linear-gradient(135deg, #00D4C8 0%, #00A89D 100%);
   color: #051A18 !important;
   font-weight: 800;
@@ -2058,98 +2066,117 @@ html.dark .rjh-trust-ribbon, [data-theme="dark"] .rjh-trust-ribbon {
   box-shadow: 0 4px 16px rgba(0, 212, 200, 0.32), 0 0 0 1px rgba(0, 212, 200, 0.4);
 }
 
-html.dark .figma-pill-btn.active {
+html.dark .pro-pill-btn.active {
   background: linear-gradient(135deg, #00D4C8 0%, #00B4A8 100%);
   color: #031412 !important;
 }
 
-/* 3-Column Responsive Grid */
-.figma-talent-grid {
+/* Responsive Grid */
+.pro-showcase-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 22px;
   margin-bottom: 38px;
 }
 
-/* GigGhana Refined Card */
-.figma-card {
+/* Showcase Card Component */
+.pro-card {
   background: var(--surface);
   border: 1px solid var(--bd2);
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 22px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  transition: all 0.26s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
   height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
-html.dark .figma-card, [data-theme="dark"] .figma-card {
+html.dark .pro-card, [data-theme="dark"] .pro-card {
   background: rgba(17, 24, 39, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 26px rgba(0, 0, 0, 0.45);
 }
 
-.figma-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 212, 200, 0.45);
-  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08), 0 0 24px rgba(0, 212, 200, 0.1);
+.pro-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 212, 200, 0.5);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.08), 0 0 26px rgba(0, 212, 200, 0.12);
 }
 
-/* Card Top: Avatar, Name, Role, Rating */
-.figma-card-top {
+/* Card Header: Avatar Focus + Meta + Rating */
+.pro-card-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
 }
 
-.figma-avatar-meta {
+.pro-profile-anchor {
   display: flex;
   align-items: center;
-  gap: 13px;
+  gap: 14px;
   min-width: 0;
+  flex-grow: 1;
 }
 
-.figma-avatar {
-  width: 50px;
-  height: 50px;
+.pro-avatar-ring {
+  width: 58px;
+  height: 58px;
+  border-radius: 17px;
+  padding: 2px;
+  background: linear-gradient(135deg, #F59E0B, #00D4C8);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  position: relative;
+  flex-shrink: 0;
+}
+
+.pro-avatar-img {
+  width: 100%;
+  height: 100%;
   border-radius: 15px;
-  background: var(--cyan-dim);
-  border: 1.5px solid rgba(0, 212, 200, 0.28);
+  object-fit: cover;
+  background: var(--bg);
+}
+
+.pro-avatar-init {
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  background: var(--surface);
   color: var(--cyan);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 850;
   font-family: var(--fm);
-  flex-shrink: 0;
-  overflow: hidden;
 }
 
-.figma-avatar img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.pro-status-dot {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #10B981;
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
 }
 
-html.dark .figma-avatar, [data-theme="dark"] .figma-avatar {
-  background: rgba(0, 212, 200, 0.14);
-  border-color: rgba(0, 212, 200, 0.32);
-}
-
-.figma-meta {
+.pro-profile-meta {
   display: flex;
   flex-direction: column;
   gap: 2px;
   min-width: 0;
 }
 
-.figma-name {
-  font-size: 16px;
+.pro-profile-name {
+  font-size: 16.5px;
   font-weight: 800;
   color: var(--tx);
   line-height: 1.25;
@@ -2159,60 +2186,76 @@ html.dark .figma-avatar, [data-theme="dark"] .figma-avatar {
   text-overflow: ellipsis;
 }
 
-.figma-role {
+.pro-profile-name a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.pro-profile-name a:hover {
+  color: var(--cyan);
+}
+
+.pro-profile-role {
   font-size: 13.5px;
   font-weight: 650;
   color: var(--cyan);
   line-height: 1.2;
 }
 
-html:not(.dark) .figma-role {
+html:not(.dark) .pro-profile-role {
   color: #0284C7;
 }
 
-.figma-rating-pill {
+.pro-rating-capsule {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 800;
   color: #F59E0B;
   background: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.25);
+  border: 1px solid rgba(245, 158, 11, 0.28);
   padding: 4px 9px;
   border-radius: 8px;
   font-family: var(--fm);
   flex-shrink: 0;
 }
 
-.figma-rating-star {
-  font-size: 11px;
-  color: #F59E0B;
+/* Location & Pricing Strip */
+.pro-rate-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--s2);
+  border: 1px solid var(--bd2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
 }
 
-/* Location & Pricing Line */
-.figma-location-price {
-  font-size: 13.5px;
+.pro-loc-txt {
   color: var(--tx-3);
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 5px;
+  font-weight: 550;
 }
 
-.figma-price-bold {
+.pro-price-txt {
   color: #F59E0B;
   font-weight: 800;
   font-family: var(--fm);
 }
 
-/* Skills Row */
-.figma-skills-row {
+/* Skills Cloud */
+.pro-skills-cloud {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
-.figma-skill-pill {
+.pro-skill-pill {
   font-size: 11.5px;
   font-weight: 600;
   color: var(--tx-2);
@@ -2223,13 +2266,23 @@ html:not(.dark) .figma-role {
   transition: all 0.18s ease;
 }
 
-.figma-skill-pill:hover {
+.pro-skill-pill:hover {
   border-color: rgba(0, 212, 200, 0.3);
   color: var(--tx);
 }
 
-/* Card Bottom: Verified + Availability */
-.figma-card-footer {
+.pro-tier-pill {
+  font-size: 11px;
+  font-weight: 750;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  padding: 4px 9px;
+  border-radius: 7px;
+}
+
+/* Card Bottom: Verified + Direct Action */
+.pro-card-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2239,7 +2292,7 @@ html:not(.dark) .figma-role {
   margin-top: auto;
 }
 
-.figma-verified-tag {
+.pro-verified-tag {
   display: inline-flex;
   align-items: center;
   gap: 5px;
@@ -2252,17 +2305,24 @@ html:not(.dark) .figma-role {
   border-radius: 6px;
 }
 
-.figma-avail-text {
-  font-size: 11.5px;
-  color: var(--tx-3);
-  font-weight: 600;
-  display: flex;
+.pro-view-link {
+  display: inline-flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
+  font-size: 12.5px;
+  font-weight: 750;
+  color: var(--tx);
+  text-decoration: none;
+  transition: all 0.2s ease;
 }
 
-/* Bottom Caption & Action Buttons */
-.figma-bottom-wrap {
+.pro-view-link:hover {
+  color: var(--cyan);
+  transform: translateX(2px);
+}
+
+/* Bottom Actions */
+.pro-bottom-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2271,7 +2331,7 @@ html:not(.dark) .figma-role {
   margin-top: 14px;
 }
 
-.figma-bottom-caption {
+.pro-bottom-caption {
   font-size: 14px;
   color: var(--tx-3);
   max-width: 620px;
@@ -2279,7 +2339,7 @@ html:not(.dark) .figma-role {
   margin: 0;
 }
 
-.figma-bottom-actions {
+.pro-bottom-actions {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2287,22 +2347,22 @@ html:not(.dark) .figma-role {
   flex-wrap: wrap;
 }
 
-/* Responsive Rules */
+/* Responsive Breakpoints */
 @media (max-width: 1080px) {
-  .figma-talent-grid {
+  .pro-showcase-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 18px;
   }
 }
 
 @media (max-width: 768px) {
-  .figma-talent-section {
+  .pro-showcase-section {
     padding: 44px 0 30px;
   }
-  .figma-talent-container {
+  .pro-showcase-container {
     padding: 0 16px;
   }
-  .figma-talent-pills {
+  .pro-showcase-pills {
     justify-content: flex-start;
     overflow-x: auto;
     flex-wrap: nowrap;
@@ -2310,25 +2370,25 @@ html:not(.dark) .figma-role {
     padding-bottom: 6px;
     scrollbar-width: none;
   }
-  .figma-talent-pills::-webkit-scrollbar {
+  .pro-showcase-pills::-webkit-scrollbar {
     display: none;
   }
-  .figma-pill-btn {
+  .pro-pill-btn {
     flex-shrink: 0;
   }
-  .figma-talent-grid {
+  .pro-showcase-grid {
     grid-template-columns: 1fr;
     gap: 14px;
   }
   /* Exactly 4 cards on mobile */
-  .figma-mobile-hide {
+  .pro-mobile-hide {
     display: none !important;
   }
-  .figma-bottom-actions {
+  .pro-bottom-actions {
     flex-direction: column;
     width: 100%;
   }
-  .figma-bottom-actions .btn {
+  .pro-bottom-actions .btn {
     width: 100%;
     justify-content: center;
   }
