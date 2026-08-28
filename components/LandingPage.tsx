@@ -656,6 +656,14 @@ const occupationSlides = [
                 onMouseEnter={() => setIsHeroPaused(true)}
                 onMouseLeave={() => setIsHeroPaused(false)}
               >
+                {/* Smooth Progress Bar */}
+                <div className="showcase-progress-bar">
+                  <div
+                    key={heroSlide}
+                    className={`showcase-progress-fill ${isHeroPaused ? 'paused' : ''}`}
+                  />
+                </div>
+
                 {/* The 10 8K Occupation Slides */}
                 <div className="showcase-slides">
                   {occupationSlides.map((s, idx) => (
@@ -666,13 +674,35 @@ const occupationSlides = [
                   ))}
                 </div>
 
-                {/* Top Floating Badge with Dynamic Location */}
+                {/* Top Floating Badge with Dynamic Location & Smooth Text Fade */}
                 <div className="showcase-top-badge">
                   <span className="live-pulse-dot" />
-                  <span>
+                  <span key={heroSlide} className="sc-fade-text">
                     {occupationSlides[heroSlide]?.title} · {occupationSlides[heroSlide]?.location}
                   </span>
                 </div>
+
+                {/* Left & Right Smooth Arrow Controls */}
+                <button
+                  type="button"
+                  className="sc-arrow sc-prev"
+                  aria-label="Previous Slide"
+                  onClick={() =>
+                    setHeroSlide((prev) => (prev === 0 ? occupationSlides.length - 1 : prev - 1))
+                  }
+                >
+                  ‹
+                </button>
+                <button
+                  type="button"
+                  className="sc-arrow sc-next"
+                  aria-label="Next Slide"
+                  onClick={() =>
+                    setHeroSlide((prev) => (prev + 1) % occupationSlides.length)
+                  }
+                >
+                  ›
+                </button>
 
                 {/* Bottom Floating Stats Strip with Rate and Experience */}
                 <div className="showcase-bottom-card">
@@ -682,11 +712,15 @@ const occupationSlides = [
                       <div className="showcase-lbl">Biometric KYC</div>
                     </div>
                     <div className="showcase-stat-item">
-                      <div className="showcase-val">★ 5.0 ({occupationSlides[heroSlide]?.exp})</div>
+                      <div key={heroSlide} className="showcase-val sc-fade-text">
+                        ★ 5.0 ({occupationSlides[heroSlide]?.exp})
+                      </div>
                       <div className="showcase-lbl">Verified Rating</div>
                     </div>
                     <div className="showcase-stat-item">
-                      <div className="showcase-val">{occupationSlides[heroSlide]?.rate}</div>
+                      <div key={heroSlide} className="showcase-val sc-fade-text">
+                        {occupationSlides[heroSlide]?.rate}
+                      </div>
                       <div className="showcase-lbl">⚡ Sub-60s MoMo</div>
                     </div>
                   </div>
@@ -695,8 +729,10 @@ const occupationSlides = [
                 {/* Floating Rotator Pagination */}
                 <div className="showcase-dots">
                   {occupationSlides.map((_, idx) => (
-                    <div
+                    <button
                       key={idx}
+                      type="button"
+                      aria-label={`Go to slide ${idx + 1}`}
                       className={`sc-dot ${heroSlide === idx ? 'active' : ''}`}
                       onClick={() => setHeroSlide(idx)}
                     />
