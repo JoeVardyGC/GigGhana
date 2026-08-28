@@ -42,7 +42,7 @@ export function CommandSearchDialog({
             <div className="flex items-center border-b border-[var(--border)] px-4 py-3">
               <Search className="mr-3 h-4 w-4 shrink-0 text-[var(--cyan)]" />
               <Command.Input
-                placeholder="Search freelance services, jobs, categories..."
+                placeholder="Search service providers, trades, jobs..."
                 className="w-full bg-transparent text-sm placeholder:text-[var(--tx-3)] focus:outline-none font-body text-[var(--tx)]"
               />
               <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded bg-[var(--surface-2)] text-[var(--tx-3)] border border-[var(--border)]">
@@ -72,7 +72,7 @@ export function CommandSearchDialog({
                 >
                   <div className="flex items-center gap-2.5">
                     <User className="w-4 h-4 text-[var(--cyan)]" />
-                    <span>Find Verified Freelancers</span>
+                    <span>Find Verified Service Providers</span>
                   </div>
                   <ArrowRight className="w-3.5 h-3.5 opacity-60" />
                 </Command.Item>

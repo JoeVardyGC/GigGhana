@@ -96,7 +96,7 @@ function rankLabel(jobs: number) {
   if (jobs >= 50) return { i: '🏆', l: 'Elite Expert', c: 'rk-gold' };
   if (jobs >= 20) return { i: '⭐', l: 'Top Rated', c: 'rk-blue' };
   if (jobs >= 5) return { i: '📈', l: 'Rising Talent', c: 'rk-teal' };
-  return { i: '🌱', l: 'New Freelancer', c: 'rk-dim' };
+  return { i: '🌱', l: 'New Provider', c: 'rk-dim' };
 }
 
 function initials(first: string = '', last: string = '') {
@@ -702,7 +702,7 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ FEATURED FREELANCERS & MASTER ARTISANS (ELEVATED ARTISAN SHOWCASE) ══════ */}
+      {/* ══════ FEATURED SERVICE PROVIDERS & MASTER ARTISANS (ELEVATED ARTISAN SHOWCASE) ══════ */}
       {(() => {
         const allTalentList = featured && featured.length > 0 ? featured : fallbackFeaturedProviders;
         const filteredTalent = talentCatFilter === 'all'
@@ -725,7 +725,7 @@ const occupationSlides = [
               {/* Header */}
               <div className="ljf-header">
                 <div className="ljf-header-left">
-                  <h2 className="ljf-title">Featured Freelancers &amp; Master Artisans</h2>
+                  <h2 className="ljf-title">Featured Service Providers &amp; Master Artisans</h2>
                   <p className="ljf-sub">
                     Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
                   </p>
@@ -1103,7 +1103,7 @@ const occupationSlides = [
         >
           <div className="s-head">
             <div className="s-badge">AI Matching</div>
-            <h2 className="s-title">Recommended Freelancers</h2>
+            <h2 className="s-title">Recommended Service Providers</h2>
             <p className="s-sub">Smart suggestions based on platform ratings and activity.</p>
           </div>
           <div className="prov-grid">
@@ -1132,7 +1132,7 @@ const occupationSlides = [
                   <div className="prov-body">
                     <div className="prov-name">{`${p.first_name} ${p.last_name}`}</div>
                     <div className="prov-tag">
-                      {p.tagline || `${p.experience_level ? p.experience_level.charAt(0).toUpperCase() + p.experience_level.slice(1) : ''} Freelancer`}
+                      {p.tagline || `${p.experience_level ? p.experience_level.charAt(0).toUpperCase() + p.experience_level.slice(1) : ''} Provider`}
                     </div>
                     <div className="badge-row">
                       {bt === 'premium' ? (
@@ -1337,7 +1337,7 @@ const occupationSlides = [
         <div className="cta-inner">
           <h2 className="cta-title">Join Thousands of Ghanaians Winning Every Day</h2>
           <p className="cta-sub">
-            Join {stats.providers.toLocaleString()} verified freelancers and {stats.clients.toLocaleString()} businesses already on GigGhana. Africa&apos;s talent economy starts here.
+            Join {stats.providers.toLocaleString()} verified service providers, master artisans, and {stats.clients.toLocaleString()} businesses already on GigGhana. Africa&apos;s talent economy starts here.
           </p>
           <div className="cta-btns">
             <a
@@ -1495,7 +1495,7 @@ const occupationSlides = [
               </span>
             </a>
             <p className="footer-brand">
-              Africa&apos;s premier freelance marketplace connecting every Ghanaian talent — from IT and design to trades, health and education — with forward-thinking businesses.
+              Africa&apos;s premier service marketplace connecting every Ghanaian specialist — from building construction, painting, and skilled trades to health, design, and IT — with forward-thinking businesses.
             </p>
             <div className="footer-nl">
               <div style={{ fontSize: '12.5px', color: 'var(--tx-2)', fontWeight: 600, fontFamily: 'var(--fm)' }}>
