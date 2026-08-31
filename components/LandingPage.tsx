@@ -1078,7 +1078,7 @@ const occupationSlides = [
                           <div className="rjh-jc-badges-right">
                             {j.is_urgent === 1 && (
                               <span className="rjh-jc-urgent">
-                                <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
+                                <Zap className="w-3 h-3 fill-[#D97706] text-[#D97706]" />
                                 <span>Urgent</span>
                               </span>
                             )}
@@ -1189,7 +1189,7 @@ const occupationSlides = [
                     </div>
                     {isHot ? (
                       <span className="cat-hot-pill">
-                        <Zap className="w-3 h-3 fill-[#EF4444] text-[#EF4444]" />
+                        <Zap className="w-3 h-3 fill-[#D97706] text-[#D97706]" />
                         <span>High Demand</span>
                       </span>
                     ) : (
