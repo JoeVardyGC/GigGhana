@@ -25,10 +25,11 @@ import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, Ar
 
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
+  const emo = (e: string) => <span style={{ fontSize: '22px', lineHeight: 1 }}>{e}</span>;
   
   if (name.includes('tech') || name.includes('it') || name.includes('code')) {
     return {
-      icon: <Code className="w-5 h-5 text-[#00D4C8]" />,
+      icon: emo('💻'),
       themeColor: '#00D4C8',
       themeDim: 'rgba(0, 212, 200, 0.12)',
       themeBorder: 'rgba(0, 212, 200, 0.35)',
@@ -38,7 +39,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('trade') || name.includes('tool') || name.includes('carpenter') || name.includes('plumb') || name.includes('electric')) {
     return {
-      icon: <Wrench className="w-5 h-5 text-[#F59E0B]" />,
+      icon: emo('🔧'),
       themeColor: '#F59E0B',
       themeDim: 'rgba(245, 158, 11, 0.12)',
       themeBorder: 'rgba(245, 158, 11, 0.35)',
@@ -48,7 +49,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('construct') || name.includes('build')) {
     return {
-      icon: <Building2 className="w-5 h-5 text-[#3B82F6]" />,
+      icon: emo('🏗️'),
       themeColor: '#3B82F6',
       themeDim: 'rgba(59, 130, 246, 0.12)',
       themeBorder: 'rgba(59, 130, 246, 0.35)',
@@ -58,7 +59,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
     return {
-      icon: <Palette className="w-5 h-5 text-[#A78BFA]" />,
+      icon: emo('🎨'),
       themeColor: '#A78BFA',
       themeDim: 'rgba(167, 139, 250, 0.12)',
       themeBorder: 'rgba(167, 139, 250, 0.35)',
@@ -68,7 +69,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('health') || name.includes('wellness') || name.includes('nurse')) {
     return {
-      icon: <ShieldCheck className="w-5 h-5 text-[#10B981]" />,
+      icon: emo('🏥'),
       themeColor: '#10B981',
       themeDim: 'rgba(16, 185, 129, 0.12)',
       themeBorder: 'rgba(16, 185, 129, 0.35)',
@@ -78,7 +79,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('biz') || name.includes('business') || name.includes('consult')) {
     return {
-      icon: <Briefcase className="w-5 h-5 text-[#EC4899]" />,
+      icon: emo('💼'),
       themeColor: '#EC4899',
       themeDim: 'rgba(236, 72, 153, 0.12)',
       themeBorder: 'rgba(236, 72, 153, 0.35)',
@@ -88,7 +89,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('hosp') || name.includes('food') || name.includes('chef')) {
     return {
-      icon: <Sparkles className="w-5 h-5 text-[#FB923C]" />,
+      icon: emo('🍽️'),
       themeColor: '#FB923C',
       themeDim: 'rgba(251, 146, 60, 0.12)',
       themeBorder: 'rgba(251, 146, 60, 0.35)',
@@ -98,7 +99,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('edu') || name.includes('teach')) {
     return {
-      icon: <Layers className="w-5 h-5 text-[#38BDF8]" />,
+      icon: emo('📚'),
       themeColor: '#38BDF8',
       themeDim: 'rgba(56, 189, 248, 0.12)',
       themeBorder: 'rgba(56, 189, 248, 0.35)',
@@ -108,7 +109,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('farm') || name.includes('agri')) {
     return {
-      icon: <Sparkles className="w-5 h-5 text-[#84CC16]" />,
+      icon: emo('🌾'),
       themeColor: '#84CC16',
       themeDim: 'rgba(132, 204, 22, 0.12)',
       themeBorder: 'rgba(132, 204, 22, 0.35)',
@@ -117,7 +118,7 @@ const getCategoryTheme = (cat: any) => {
     };
   }
   return {
-    icon: <Sparkles className="w-5 h-5 text-[#00D4C8]" />,
+    icon: emo('🛠️'),
     themeColor: '#00D4C8',
     themeDim: 'rgba(0, 212, 200, 0.12)',
     themeBorder: 'rgba(0, 212, 200, 0.35)',
