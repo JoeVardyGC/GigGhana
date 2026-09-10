@@ -4,18 +4,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import type { LandingData } from '@/lib/types';
 import { iconMap, fallbackRecentJobs, fallbackFeaturedProviders } from '@/lib/types';
 import confetti from 'canvas-confetti';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
@@ -126,17 +114,6 @@ const getCategoryTheme = (cat: any) => {
     count: '100+ Pros',
   };
 };
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
 
 interface Props {
   initialData: LandingData;
@@ -263,13 +240,9 @@ export default function LandingPage({ initialData }: Props) {
   const [heroSlide, setHeroSlide] = useState(0);
   const [isHeroPaused, setIsHeroPaused] = useState(false);
 
-  // Hero panel
-  const [panelSlide, setPanelSlide] = useState(0);
-
   // Category filters for talent and jobs
   const [talentCatFilter, setTalentCatFilter] = useState('all');
   const [jobCatFilter, setJobCatFilter] = useState('all');
-  const [activePreviewJobId, setActivePreviewJobId] = useState<number | null>(null);
 
   // Search input & autocomplete & region
   const [searchQuery, setSearchQuery] = useState('');
@@ -400,14 +373,6 @@ const occupationSlides = [
     return () => clearInterval(timer);
   }, [isHeroPaused]);
 
-  // Hero panel interval
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setPanelSlide((prev) => (prev + 1) % 3);
-    }, 5200);
-    return () => clearInterval(timer);
-  }, []);
-
   // Profession ticker interval
   useEffect(() => {
     const timer = setInterval(() => {
@@ -492,59 +457,6 @@ const occupationSlides = [
     triggerConfetti();
     showToast('Subscribed! 🇬🇭', 'Thank you for joining GigGhana updates.', 'success');
     setNlEmail('');
-  };
-
-  // Chart Config
-  const chartData = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [
-      {
-        label: 'Earnings Released (₵)',
-        data: earningsData,
-        borderColor: '#00D4C8',
-        backgroundColor: 'rgba(0,212,200,0.07)',
-        borderWidth: 2.5,
-        pointBackgroundColor: '#00D4C8',
-        pointRadius: earningsData.some((v) => v > 0) ? 4 : 0,
-        pointHoverRadius: 6,
-        fill: true,
-        tension: 0.42,
-      },
-    ],
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        backgroundColor: '#13161E',
-        titleColor: '#F2F4F8',
-        bodyColor: '#4E5A6E',
-        borderColor: 'rgba(0,212,200,0.15)',
-        borderWidth: 1,
-        titleFont: { family: 'Plus Jakarta Sans', weight: 700 as const },
-        callbacks: {
-          label: (context: any) =>
-            ' ₵' + context.parsed.y.toLocaleString('en-GH', { minimumFractionDigits: 2 }),
-        },
-      },
-    },
-    scales: {
-      x: {
-        grid: { color: 'rgba(78,90,110,0.08)' },
-        ticks: { color: '#4E5A6E', font: { size: 11, family: 'DM Sans' } },
-      },
-      y: {
-        grid: { color: 'rgba(78,90,110,0.08)' },
-        beginAtZero: true,
-        ticks: {
-          color: '#4E5A6E',
-          font: { size: 11, family: 'DM Sans' },
-          callback: (v: any) => '₵' + Number(v).toLocaleString(),
-        },
-      },
-    },
   };
 
   return (
@@ -842,13 +754,15 @@ const occupationSlides = [
           <section className="section artisan-section" id="talent">
             <div className="artisan-container">
               {/* Header */}
-              <div className="ljf-header">
-                <div className="ljf-header-left">
-                  <h2 className="ljf-title">Featured Service Providers &amp; Master Artisans</h2>
-                  <p className="ljf-sub">
-                    Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
-                  </p>
+              <div className="s-head">
+                <div className="s-badge">
+                  <span className="live-pulse-dot" />
+                  <span>Top Verified Talent</span>
                 </div>
+                <h2 className="s-title">Featured Service Providers &amp; Master Artisans</h2>
+                <p className="s-sub">
+                  Directly hire handpicked Ghanaian specialists. Every contract is backed by Ghana Card NIA Biometrics, verified client ratings, and 100% Escrow Vault protection.
+                </p>
               </div>
 
               {/* 7-Card Studio Showcase Grid */}
@@ -1006,17 +920,15 @@ const occupationSlides = [
           <section className="section live-job-feed-section" id="live-jobs" ref={statsRef}>
             <div className="ljf-container">
               {/* Feed Header */}
-              <div className="ljf-header">
-                <div className="ljf-header-left">
-                  <div className="hero-badge" style={{ marginBottom: '12px' }}>
-                    <span className="live-pulse-dot" />
-                    <span>Live Job Opportunities in Ghana</span>
-                  </div>
-                  <h2 className="ljf-title">Live Job Feed</h2>
-                  <p className="ljf-sub">
-                    Find real jobs posted by verified employers across Ghana. Your money is secured safely before you start, and paid directly to your MoMo the moment the work is done.
-                  </p>
+              <div className="s-head">
+                <div className="s-badge">
+                  <span className="live-pulse-dot" />
+                  <span>Live Job Opportunities in Ghana</span>
                 </div>
+                <h2 className="s-title">Live Job Feed</h2>
+                <p className="s-sub">
+                  Find real jobs posted by verified employers across Ghana. Your money is secured safely before you start, and paid directly to your MoMo the moment the work is done.
+                </p>
               </div>
 
               {/* Category Filter Pills */}
@@ -1157,7 +1069,10 @@ const occupationSlides = [
       {/* ══════ CATEGORIES WITH SPOTLIGHT CARDS ══════ */}
       <section className="section" id="categories">
         <div className="s-head">
-          <div className="s-badge">Explore Categories</div>
+          <div className="s-badge">
+            <span className="live-pulse-dot" />
+            <span>Explore Categories</span>
+          </div>
           <h2 className="s-title">Every Skill. Every Master Craft in Ghana.</h2>
           <p className="s-sub">
             Direct access to verified Ghanaian artisans, tech engineers, creative directors, and building contractors.
@@ -1236,7 +1151,10 @@ const occupationSlides = [
       {/* ══════ TRENDING SKILLS SEARCH PILLS ══════ */}
       <section className="section" id="trending" style={{ paddingTop: '4px', paddingBottom: '28px' }}>
         <div className="s-head">
-          <div className="s-badge">Trending Searches</div>
+          <div className="s-badge">
+            <span className="live-pulse-dot" />
+            <span>Trending Searches</span>
+          </div>
           <h2 className="s-title">Most In-Demand Skills This Week</h2>
           <p className="s-sub">Real-time keyword searches by homeowners, developers, and businesses across Accra, Kumasi, and Takoradi.</p>
         </div>
@@ -1258,7 +1176,10 @@ const occupationSlides = [
       {/* ══════ MODERN BENTO GRID: WHY GIGHANA & PROCESS ══════ */}
       <section className="section" id="how">
         <div className="s-head">
-          <div className="s-badge">Platform Highlights</div>
+          <div className="s-badge">
+            <span className="live-pulse-dot" />
+            <span>Platform Highlights</span>
+          </div>
           <h2 className="s-title">Why Ghanaian Talent &amp; Businesses Choose GigGhana</h2>
           <p className="s-sub">Built from the ground up for safety, speed, and real-world African commerce.</p>
         </div>
@@ -1433,7 +1354,10 @@ const occupationSlides = [
       {/* ══════ REVIEWS & TESTIMONIALS ══════ */}
       <section className="section" id="reviews" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
         <div className="s-head">
-          <div className="s-badge">Member Stories</div>
+          <div className="s-badge">
+            <span className="live-pulse-dot" />
+            <span>Member Stories</span>
+          </div>
           <h2 className="s-title">Ghanaians Winning on GigGhana</h2>
           <p className="s-sub">Real feedback from master painters, nurses, carpenters, chefs, and verified homeowners across Ghana.</p>
         </div>
