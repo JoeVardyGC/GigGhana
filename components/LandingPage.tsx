@@ -1458,10 +1458,12 @@ const occupationSlides = [
         <div className="s-head">
           <div className="s-badge">
             <span className="live-pulse-dot" />
-            <span>Member Stories</span>
+            <span>🇬🇭 Real Stories from the Field</span>
           </div>
-          <h2 className="s-title">Ghanaians Winning on GigGhana</h2>
-          <p className="s-sub">Real feedback from master painters, nurses, carpenters, chefs, and verified homeowners across Ghana.</p>
+          <h2 className="s-title">Real Talk from Verified Masters &amp; Clients</h2>
+          <p className="s-sub">
+            No stories. No chasing clients for money. See how Ghana Card verification, secure escrow, and instant Mobile Money settlements transformed work across Ghana.
+          </p>
         </div>
         <div className="rv-carousel-outer">
           <div
@@ -1472,30 +1474,32 @@ const occupationSlides = [
           >
             {reviews.map((rv, idx) => {
               const init = initials(rv.first_name, rv.last_name);
-              const rating = Number(rv.rating_overall || 5);
               const isProvider = rv.role === 'provider';
 
               return (
                 <div key={idx} className="rv-card">
                   <div className="rv-card-top-row">
-                    <div className="rv-stars">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star
-                          key={s}
-                          className={`w-4 h-4 ${rating >= s ? 'text-[#F59E0B] fill-[#F59E0B]' : 'text-gray-300'}`}
-                        />
-                      ))}
+                    <div className="rv-proof-pill">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                      <span>{rv.payout_proof || (isProvider ? '✓ Milestone Escrow Released' : '✓ Verified Project Signed Off')}</span>
                     </div>
-                    <MessageSquare className="w-4 h-4 text-[#00D4C8] opacity-60" />
+                    <span className="rv-trade-badge">
+                      {rv.trade || (isProvider ? 'Master Artisan' : 'Verified Client')}
+                    </span>
                   </div>
                   <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
                   <div className="rv-author">
                     <div className="rv-av">
                       {rv.avatar ? <img src={rv.avatar} alt="" loading="lazy" /> : init}
                     </div>
-                    <div>
-                      <div className="rv-name">
-                        {`${rv.first_name} ${rv.last_name}`}
+                    <div className="rv-author-info">
+                      <div className="rv-name-row">
+                        <span className="rv-name">
+                          {`${rv.first_name} ${rv.last_name}`}
+                        </span>
+                        <span className="rv-verified-check" title="Biometric Ghana Card Verified">
+                          <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
+                        </span>
                       </div>
                       <div className="rv-role-line">
                         <span className="rv-role-tag">
@@ -1528,33 +1532,80 @@ const occupationSlides = [
         </div>
       </section>
 
-      {/* ══════ FINAL HIGH-IMPACT CTA ══════ */}
-      <div className="cta-wrap">
-        <div className="cta-glo" />
-        <div className="cta-glo2" />
-        <div className="cta-inner">
-          <h2 className="cta-title">Join Thousands of Ghanaians Winning Every Day</h2>
-          <p className="cta-sub">
-            Join {stats.providers.toLocaleString()} verified service providers, master artisans, and {stats.clients.toLocaleString()} businesses already on GigGhana. Africa&apos;s talent economy starts here.
-          </p>
-          <div className="cta-btns">
+      {/* ══════ FINAL HIGH-IMPACT DUAL-ACTION CTA ══════ */}
+      <section className="cta-dual-section">
+        <div className="cta-dual-grid">
+          {/* Card 1: For Ghanaian Providers & Artisans */}
+          <div className="cta-choice-card provider-card">
+            <div className="cta-choice-badge provider-pill">
+              <span>🛠️ For Skilled Artisans &amp; Specialists</span>
+            </div>
+            <h3 className="cta-choice-title">
+              Ready to Earn with Zero Payment Stress?
+            </h3>
+            <p className="cta-choice-desc">
+              Never chase a client for payment again. Accept jobs with upfront escrow protection and withdraw your earnings directly to your Mobile Money wallet in seconds.
+            </p>
+            <div className="cta-perks-list">
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                <span>100% Free profile with Ghana Card biometric trust badge</span>
+              </div>
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                <span>Every milestone funded in escrow before you lift a tool</span>
+              </div>
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
+                <span>Sub-60s payouts to MTN MoMo, Telecel Cash &amp; AT Money</span>
+              </div>
+            </div>
             <a
               href="/auth/register.php?role=provider"
-              className="btn btn-gold btn-lg"
+              className="btn btn-gold btn-lg cta-choice-btn"
               onClick={triggerConfetti}
             >
-              Sign Up as Provider
+              <span>Join as a Verified Provider</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
+          </div>
+
+          {/* Card 2: For Clients & Homeowners */}
+          <div className="cta-choice-card client-card">
+            <div className="cta-choice-badge client-pill">
+              <span>🏢 For Homeowners &amp; Businesses</span>
+            </div>
+            <h3 className="cta-choice-title">
+              Need a Trusted Ghanaian Specialist?
+            </h3>
+            <p className="cta-choice-desc">
+              Post your project requirements in under 2 minutes. Get matched with authenticated local contractors and release funds only when milestones are completed.
+            </p>
+            <div className="cta-perks-list">
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
+                <span>100% NIA Biometric verification eliminates ghost artisans</span>
+              </div>
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
+                <span>Funds released only after you personally inspect and approve</span>
+              </div>
+              <div className="cta-perk-row">
+                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
+                <span>Bank-grade vault protection with 24/7 contract mediation</span>
+              </div>
+            </div>
             <a
               href="/auth/register.php?role=client"
-              className="btn btn-blue btn-lg"
+              className="btn btn-cyan btn-lg cta-choice-btn"
               onClick={triggerConfetti}
             >
-              Hire a Provider
+              <span>Post a Job &amp; Hire Talent</span>
+              <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* ══════ INFINITE PARTNER MARQUEE ══════ */}
       <div className="pay-section">
