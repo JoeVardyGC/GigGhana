@@ -8,8 +8,7 @@ import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
-import { LuxuryEstimator } from './ui/luxury-estimator';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, CheckCircle2, ArrowRight, ArrowLeft, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, ArrowLeft, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
 
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
@@ -1196,15 +1195,18 @@ const occupationSlides = [
             header={
               <div className="ghana-card-sim">
                 <div className="ghana-card-topbar">
-                  <div className="ghana-flag-pill">
-                    <div className="ghana-flag-strip">
-                      <div />
-                      <div>
-                        <span style={{ position: 'absolute', top: '-4px', left: '1px', fontSize: '9px', lineHeight: 1, color: '#000' }}>★</span>
+                  <div className="ghana-card-title-wrap">
+                    <div className="flex items-center gap-2">
+                      <div className="ghana-flag-strip">
+                        <div />
+                        <div>
+                          <span style={{ position: 'absolute', top: '-4px', left: '1px', fontSize: '9px', lineHeight: 1, color: '#000' }}>★</span>
+                        </div>
+                        <div />
                       </div>
-                      <div />
+                      <span className="ghana-card-title-main">Republic of Ghana</span>
                     </div>
-                    <span>Republic of Ghana · National Identity Card</span>
+                    <span className="ghana-card-title-sub">National Identity Card · Carte Nationale d&apos;Identité</span>
                   </div>
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/512px-Coat_of_arms_of_Ghana.svg.png"
@@ -1213,20 +1215,37 @@ const occupationSlides = [
                   />
                 </div>
                 <div className="ghana-card-body">
-                  <img
-                    src="/images/occupations/building_contractor.jpg"
-                    alt="Kwame Asante"
-                    className="ghana-card-photo"
-                  />
+                  <div className="ghana-card-left">
+                    <img
+                      src="/images/ghana_passport_photo.jpg"
+                      alt="Kwame Asante Passport Photo"
+                      className="ghana-card-photo"
+                    />
+                    <div className="ghana-card-chip" title="Gold Biometric EMV Chip" />
+                  </div>
                   <div className="ghana-card-details">
-                    <div className="ghana-card-name">ASANTE, KWAME MENSAH</div>
-                    <div className="ghana-card-pin">GHA-712849103-2</div>
+                    <div className="ghana-card-field">
+                      <span className="ghana-card-lbl">Surname / Nom</span>
+                      <span className="ghana-card-val">ASANTE</span>
+                    </div>
+                    <div className="ghana-card-field">
+                      <span className="ghana-card-lbl">First Names / Prénoms</span>
+                      <span className="ghana-card-val">KWAME MENSAH</span>
+                    </div>
+                    <div className="ghana-card-field">
+                      <span className="ghana-card-lbl">National ID PIN</span>
+                      <span className="ghana-card-pin">GHA-712849103-2</span>
+                    </div>
+                    <div className="ghana-card-meta-row">
+                      <span><strong>Nationality:</strong> GHANAIAN</span>
+                      <span><strong>Sex:</strong> M</span>
+                      <span><strong>DOB:</strong> 14/08/1988</span>
+                    </div>
                     <div className="ghana-card-verified-tag">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <CheckCircle2 className="w-3 h-3" />
                       <span>100% NIA Biometric Verified</span>
                     </div>
                   </div>
-                  <div className="ghana-card-chip" title="Gold Biometric Chip" />
                 </div>
               </div>
             }
@@ -1273,16 +1292,16 @@ const occupationSlides = [
                     <span className="text-[#10B981] font-bold">42s Settlement</span>
                   </div>
                   <div className="font-semibold text-[var(--tx)] text-[11px]">
-                    Received: ₵2,500.00 from BoG Escrow
+                    Received: ₵2,500.00 from Escrow Vault
                   </div>
                 </div>
               </div>
             }
           />
 
-          {/* Card 4: Bank of Ghana Regulated Escrow Vault */}
+          {/* Card 4: Bank-Grade Regulated Escrow Vault */}
           <BentoCard
-            title="4. Bank of Ghana Regulated Escrow Vault"
+            title="4. Bank-Grade Regulated Escrow Vault"
             description="Clients never risk paying upfront for shoddy work, and artisans never risk non-payment after completion. Funds stay safe in escrow until you inspect and approve."
             icon={<Award className="w-5 h-5 text-[var(--cyan)]" />}
             badge="100% Zero-Fraud"
@@ -1292,7 +1311,7 @@ const occupationSlides = [
               <div className="escrow-vault-sim">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-[var(--cyan)] font-bold">🔒 Bank of Ghana Regulated Escrow Vault</span>
+                    <span className="text-[var(--cyan)] font-bold">🔒 Bank-Grade Regulated Escrow Vault</span>
                   </div>
                   <span className="text-[11px] font-mono text-[var(--tx-3)]">Contract #GG-8849 · ₵6,500</span>
                 </div>
@@ -1325,19 +1344,19 @@ const occupationSlides = [
         {/* ══════ MEMBERSHIP TIERS ══════ */}
         <div className="badge-tiers mt-12">
           {/* Beginner Tier */}
-          <div className="badge-tier-card">
+          <div className="badge-tier-card tier-beginner">
             <div className="bt-top-row">
-              <div className="bt-icon-box">
-                <Sparkles className="w-5 h-5 text-[var(--tx-2)]" />
+              <div className="bt-icon-box beginner-icon">
+                <Sprout className="w-5 h-5 text-[#10B981]" />
               </div>
-              <span className="bt-tier-pill">Starter</span>
+              <span className="bt-tier-pill beginner-pill">🌱 Starter Seed</span>
             </div>
             <div className="bt-name">Beginner</div>
             <div className="bt-price">
               <span className="bt-price-val">Free</span>
               <span className="bt-price-sub">/ forever</span>
             </div>
-            <p className="bt-desc">Get started at no cost. Create your public profile and start bidding on local gigs.</p>
+            <p className="bt-desc">Plant your seeds at zero cost. Create your public profile and start bidding on local gigs.</p>
             <div className="bt-perks-list">
               <div className="bt-perk-item">
                 <Check className="w-4 h-4 text-[#10B981] shrink-0" />
@@ -1352,7 +1371,7 @@ const occupationSlides = [
                 <span>Mobile Money escrow payouts</span>
               </div>
             </div>
-            <a href="/auth/register.php?role=provider" className="btn btn-ghost bt-action-btn">
+            <a href="/auth/register.php?role=provider" className="btn btn-ghost bt-action-btn bt-btn-beginner">
               Get Started Free
             </a>
           </div>
@@ -1364,7 +1383,7 @@ const occupationSlides = [
               <div className="bt-icon-box featured-icon">
                 <BadgeCheck className="w-5 h-5 text-[#00D4C8]" />
               </div>
-              <span className="bt-tier-pill featured-pill">Verified</span>
+              <span className="bt-tier-pill featured-pill">Verified Pro</span>
             </div>
             <div className="bt-name">Verified Pro</div>
             <div className="bt-price">
@@ -1396,12 +1415,12 @@ const occupationSlides = [
           </div>
 
           {/* Premium Tier */}
-          <div className="badge-tier-card">
+          <div className="badge-tier-card tier-premium">
             <div className="bt-top-row">
               <div className="bt-icon-box premium-icon">
                 <Star className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
               </div>
-              <span className="bt-tier-pill premium-pill">Top Tier</span>
+              <span className="bt-tier-pill premium-pill">⭐ Elite Master</span>
             </div>
             <div className="bt-name">Premium Master</div>
             <div className="bt-price">
@@ -1427,17 +1446,10 @@ const occupationSlides = [
                 <span>Zero commission fee on first ₵5,000</span>
               </div>
             </div>
-            <a href="/auth/register.php?role=provider&tier=premium" className="btn btn-ghost bt-action-btn">
+            <a href="/auth/register.php?role=provider&tier=premium" className="btn bt-action-btn bt-btn-premium">
               Upgrade to Premium
             </a>
           </div>
-        </div>
-      </section>
-
-      {/* ══════ PROFESSIONAL INCOME ESTIMATOR ══════ */}
-      <section className="section" id="calculator" style={{ paddingTop: '12px', paddingBottom: '24px' }}>
-        <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-          <LuxuryEstimator />
         </div>
       </section>
 
@@ -1603,7 +1615,7 @@ const occupationSlides = [
               />
               <span className="pay-txt">Mastercard</span>
             </div>
-            <div className="pay-logo" title="Bank of Ghana Escrow Vault" style={{ background: 'var(--green-dim)' }}>
+            <div className="pay-logo" title="Bank-Grade Escrow Vault" style={{ background: 'var(--green-dim)' }}>
               <span
                 style={{
                   fontFamily: 'var(--fm)',
@@ -1615,7 +1627,7 @@ const occupationSlides = [
                   gap: '5px',
                 }}
               >
-                🔒 Bank of Ghana Escrow Vault
+                🔒 Bank-Grade Escrow Vault
               </span>
             </div>
           </Marquee>
@@ -1653,7 +1665,7 @@ const occupationSlides = [
               </form>
             </div>
             <div className="footer-badges">
-              <div className="f-badge">🔒 Bank of Ghana Escrow Protected</div>
+              <div className="f-badge">🔒 Bank-Grade Escrow Protected</div>
               <div className="f-badge">🇬🇭 Ghana Registered (GRA)</div>
               <div className="f-badge">✓ 100% Ghana Card Verified</div>
               <div className="f-badge">🌍 Africa-wide</div>

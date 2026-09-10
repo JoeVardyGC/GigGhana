@@ -2752,19 +2752,29 @@ html.dark .trend-num, [data-theme="dark"] .trend-num {
 
 /* ══════ WORLD-CLASS PLATFORM HIGHLIGHTS BENTO MICRO-UI ══════ */
 .ghana-card-sim {
-  background: linear-gradient(135deg, rgba(0, 212, 200, 0.08) 0%, rgba(245, 158, 11, 0.05) 50%, rgba(16, 185, 129, 0.08) 100%);
+  background: linear-gradient(135deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.94) 100%);
   border: 1.5px solid rgba(0, 212, 200, 0.35);
   border-radius: 18px;
   padding: 16px 18px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 html.dark .ghana-card-sim, [data-theme="dark"] .ghana-card-sim {
-  background: linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%);
+  background: linear-gradient(135deg, #0f172a 0%, #111d2e 100%);
   border-color: rgba(0, 212, 200, 0.4);
-  box-shadow: 0 4px 24px rgba(0, 212, 200, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 212, 200, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.ghana-card-sim::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #CE1126 0%, #CE1126 33.3%, #FCD116 33.3%, #FCD116 66.6%, #006B3F 66.6%, #006B3F 100%);
 }
 
 .ghana-card-topbar {
@@ -2773,18 +2783,33 @@ html.dark .ghana-card-sim, [data-theme="dark"] .ghana-card-sim {
   justify-content: space-between;
   margin-bottom: 12px;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(0, 212, 200, 0.2);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
-.ghana-flag-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+html.dark .ghana-card-topbar, [data-theme="dark"] .ghana-card-topbar {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.ghana-card-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.ghana-card-title-main {
   font-size: 11px;
-  font-weight: 800;
-  font-family: var(--fm);
-  letter-spacing: 0.5px;
+  font-weight: 900;
+  letter-spacing: 0.6px;
   color: var(--tx);
+  text-transform: uppercase;
+  font-family: var(--fm);
+}
+
+.ghana-card-title-sub {
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--tx-3);
   text-transform: uppercase;
 }
 
@@ -2796,20 +2821,50 @@ html.dark .ghana-card-sim, [data-theme="dark"] .ghana-card-sim {
   overflow: hidden;
   position: relative;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
 }
 
 .ghana-flag-strip > div:nth-child(1) { flex: 1; background: #CE1126; }
 .ghana-flag-strip > div:nth-child(2) { flex: 1; background: #FCD116; position: relative; }
 .ghana-flag-strip > div:nth-child(3) { flex: 1; background: #006B3F; }
 
+.ghana-card-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.ghana-card-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.ghana-card-photo {
+  width: 68px;
+  height: 82px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1.5px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+html.dark .ghana-card-photo, [data-theme="dark"] .ghana-card-photo {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
 .ghana-card-chip {
-  width: 28px;
-  height: 22px;
-  background: linear-gradient(135deg, #FCD116 0%, #D4AF37 50%, #B8860B 100%);
+  width: 32px;
+  height: 24px;
+  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
   border-radius: 4px;
   position: relative;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
-  border: 1px solid #AA8010;
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 1px 3px rgba(0, 0, 0, 0.2);
+  border: 1px solid #B45309;
+  flex-shrink: 0;
 }
 
 .ghana-card-chip::after {
@@ -2819,64 +2874,74 @@ html.dark .ghana-card-sim, [data-theme="dark"] .ghana-card-sim {
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.25);
   border-radius: 2px;
-}
-
-.ghana-card-body {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.ghana-card-photo {
-  width: 52px;
-  height: 52px;
-  border-radius: 12px;
-  object-fit: cover;
-  border: 2px solid rgba(0, 212, 200, 0.4);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  flex-shrink: 0;
 }
 
 .ghana-card-details {
   flex: 1;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.ghana-card-name {
-  font-size: 13.5px;
+.ghana-card-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.ghana-card-lbl {
+  font-size: 8.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--tx-3);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.ghana-card-val {
+  font-size: 13px;
   font-weight: 800;
   color: var(--tx);
   letter-spacing: -0.01em;
   line-height: 1.2;
-  margin-bottom: 2px;
 }
 
 .ghana-card-pin {
   font-family: monospace;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 800;
   color: #008B82;
-  letter-spacing: 0.8px;
-  margin-bottom: 4px;
+  letter-spacing: 0.6px;
 }
 
 html.dark .ghana-card-pin, [data-theme="dark"] .ghana-card-pin {
   color: #00D4C8;
 }
 
+.ghana-card-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 10px;
+  color: var(--tx-2);
+  font-weight: 600;
+}
+
 .ghana-card-verified-tag {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 800;
   padding: 3px 9px;
   border-radius: 50px;
   background: rgba(16, 185, 129, 0.12);
   border: 1px solid rgba(16, 185, 129, 0.35);
   color: #059669;
+  width: fit-content;
+  margin-top: 2px;
 }
 
 html.dark .ghana-card-verified-tag, [data-theme="dark"] .ghana-card-verified-tag {
@@ -3054,10 +3119,35 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   box-shadow: 0 16px 38px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
+/* Tier 1: Beginner (Germinating Seedling Green Theme) */
+.badge-tier-card.tier-beginner {
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.07) 0%, var(--surface) 100%);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
+.badge-tier-card.tier-beginner:hover {
+  transform: translateY(-4px);
+  border-color: #10B981;
+  box-shadow: 0 16px 38px rgba(16, 185, 129, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+/* Tier 2: Verified Pro (Featured High-Trust Cyan Theme) */
 .badge-tier-card.featured {
   border-color: var(--cyan);
   background: linear-gradient(180deg, var(--cyan-dim) 0%, var(--surface) 100%);
   box-shadow: 0 14px 38px rgba(0, 212, 200, 0.12), 0 0 0 1px rgba(0, 212, 200, 0.3);
+}
+
+/* Tier 3: Premium Master (Elite Luxury Gold & Amber Theme) */
+.badge-tier-card.tier-premium {
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.09) 0%, var(--surface) 100%);
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.badge-tier-card.tier-premium:hover {
+  transform: translateY(-4px);
+  border-color: #F59E0B;
+  box-shadow: 0 16px 38px rgba(245, 158, 11, 0.2), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .bt-pop-badge {
@@ -3095,14 +3185,20 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   justify-content: center;
 }
 
+.bt-icon-box.beginner-icon {
+  background: rgba(16, 185, 129, 0.12);
+  border-color: rgba(16, 185, 129, 0.35);
+  color: #10B981;
+}
+
 .bt-icon-box.featured-icon {
   background: rgba(0, 212, 200, 0.12);
   border-color: rgba(0, 212, 200, 0.35);
 }
 
 .bt-icon-box.premium-icon {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.4);
 }
 
 .bt-tier-pill {
@@ -3114,6 +3210,12 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   background: var(--s2);
   color: var(--tx-2);
   border: 1px solid var(--bd2);
+}
+
+.bt-tier-pill.beginner-pill {
+  background: rgba(16, 185, 129, 0.14);
+  color: #10B981;
+  border-color: rgba(16, 185, 129, 0.35);
 }
 
 .bt-tier-pill.featured-pill {
@@ -3188,6 +3290,29 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   font-weight: 750;
   border-radius: 50px;
   padding: 12px 20px;
+}
+
+.bt-btn-beginner {
+  border: 1.5px solid rgba(16, 185, 129, 0.45) !important;
+  color: var(--tx) !important;
+}
+
+.bt-btn-beginner:hover {
+  border-color: #10B981 !important;
+  background: rgba(16, 185, 129, 0.12) !important;
+  color: #10B981 !important;
+}
+
+.bt-btn-premium {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28) !important;
+  border: none !important;
+}
+
+.bt-btn-premium:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 20px rgba(245, 158, 11, 0.38) !important;
 }
 
 /* ══════ REVIEWS CAROUSEL ══════ */
