@@ -8,7 +8,7 @@ import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, ArrowLeft, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
 
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
@@ -253,9 +253,6 @@ export default function LandingPage({ initialData }: Props) {
   const [tickerIndex, setTickerIndex] = useState(0);
   const [tickerFade, setTickerFade] = useState(false);
 
-  // Reviews carousel
-  const [rvPos, setRvPos] = useState(0);
-
   // Toast notifications
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
@@ -383,18 +380,6 @@ const occupationSlides = [
     }, 2600);
     return () => clearInterval(timer);
   }, []);
-
-  // Reviews carousel auto-advance
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setRvPos((prev) => {
-        const visible = window.innerWidth < 768 ? 1 : 2;
-        const max = Math.max(0, reviews.length - visible);
-        return prev >= max ? 0 : prev + 1;
-      });
-    }, 5800);
-    return () => clearInterval(timer);
-  }, [reviews.length]);
 
   // Stats Intersection Observer Animation
   useEffect(() => {
@@ -1465,147 +1450,79 @@ const occupationSlides = [
             No stories. No chasing clients for money. See how Ghana Card verification, secure escrow, and instant Mobile Money settlements transformed work across Ghana.
           </p>
         </div>
-        <div className="rv-carousel-outer">
-          <div
-            className="rv-track"
-            style={{
-              transform: `translateX(-${rvPos * 100}%)`,
-            }}
-          >
-            {reviews.map((rv, idx) => {
-              const init = initials(rv.first_name, rv.last_name);
-              const isProvider = rv.role === 'provider';
+        <div className="rv-grid">
+          {reviews.slice(0, 4).map((rv, idx) => {
+            const init = initials(rv.first_name, rv.last_name);
+            const isProvider = rv.role === 'provider';
 
-              return (
-                <div key={idx} className="rv-card">
-                  <div className="rv-card-top-row">
-                    <div className="rv-proof-pill">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                      <span>{rv.payout_proof || (isProvider ? '✓ Milestone Escrow Released' : '✓ Verified Project Signed Off')}</span>
-                    </div>
-                    <span className="rv-trade-badge">
-                      {rv.trade || (isProvider ? 'Master Artisan' : 'Verified Client')}
-                    </span>
+            return (
+              <div key={idx} className="rv-card">
+                <div className="rv-card-top-row">
+                  <div className="rv-proof-pill">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                    <span>{rv.payout_proof || (isProvider ? '✓ Milestone Escrow Released' : '✓ Verified Project Signed Off')}</span>
                   </div>
-                  <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
-                  <div className="rv-author">
-                    <div className="rv-av">
-                      {rv.avatar ? <img src={rv.avatar} alt="" loading="lazy" /> : init}
+                  <span className="rv-trade-badge">
+                    {rv.trade || (isProvider ? 'Master Artisan' : 'Verified Client')}
+                  </span>
+                </div>
+                <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
+                <div className="rv-author">
+                  <div className="rv-av">
+                    {rv.avatar ? <img src={rv.avatar} alt="" loading="lazy" /> : init}
+                  </div>
+                  <div className="rv-author-info">
+                    <div className="rv-name-row">
+                      <span className="rv-name">
+                        {`${rv.first_name} ${rv.last_name}`}
+                      </span>
+                      <span className="rv-verified-check" title="Biometric Ghana Card Verified">
+                        <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
+                      </span>
                     </div>
-                    <div className="rv-author-info">
-                      <div className="rv-name-row">
-                        <span className="rv-name">
-                          {`${rv.first_name} ${rv.last_name}`}
-                        </span>
-                        <span className="rv-verified-check" title="Biometric Ghana Card Verified">
-                          <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
-                        </span>
-                      </div>
-                      <div className="rv-role-line">
-                        <span className="rv-role-tag">
-                          {isProvider ? '🇬🇭 Verified Specialist' : '🏢 Verified Client'}
-                        </span>
-                        {rv.location ? <span className="rv-loc-text"> · {rv.location}</span> : null}
-                      </div>
+                    <div className="rv-role-line">
+                      <span className="rv-role-tag">
+                        {isProvider ? '🇬🇭 Verified Specialist' : '🏢 Verified Client'}
+                      </span>
+                      {rv.location ? <span className="rv-loc-text"> · {rv.location}</span> : null}
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="rv-nav">
-          <button
-            className="rv-nav-btn"
-            onClick={() => setRvPos((prev) => Math.max(0, prev - 1))}
-            aria-label="Previous Testimonial"
-          >
-            <ArrowLeft className="w-4 h-4" />
-          </button>
-          <button
-            className="rv-nav-btn"
-            onClick={() => setRvPos((prev) => Math.min(reviews.length - 1, prev + 1))}
-            aria-label="Next Testimonial"
-          >
-            <ArrowRight className="w-4 h-4" />
-          </button>
+              </div>
+            );
+          })}
         </div>
       </section>
 
-      {/* ══════ FINAL HIGH-IMPACT DUAL-ACTION CTA ══════ */}
-      <section className="cta-dual-section">
-        <div className="cta-dual-grid">
-          {/* Card 1: For Ghanaian Providers & Artisans */}
-          <div className="cta-choice-card provider-card">
-            <div className="cta-choice-badge provider-pill">
-              <span>🛠️ For Skilled Artisans &amp; Specialists</span>
-            </div>
-            <h3 className="cta-choice-title">
-              Ready to Earn with Zero Payment Stress?
-            </h3>
-            <p className="cta-choice-desc">
-              Never chase a client for payment again. Accept jobs with upfront escrow protection and withdraw your earnings directly to your Mobile Money wallet in seconds.
-            </p>
-            <div className="cta-perks-list">
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                <span>100% Free profile with Ghana Card biometric trust badge</span>
-              </div>
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                <span>Every milestone funded in escrow before you lift a tool</span>
-              </div>
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
-                <span>Sub-60s payouts to MTN MoMo, Telecel Cash &amp; AT Money</span>
-              </div>
-            </div>
+      {/* ══════ REVERTED FINAL CTA ══════ */}
+      <div className="cta-wrap">
+        <div className="cta-glo" />
+        <div className="cta-glo2" />
+        <div className="cta-inner">
+          <h2 className="cta-title">
+            Join Thousands of Ghanaians<br />Winning Every Day
+          </h2>
+          <p className="cta-sub">
+            Join {stats.providers.toLocaleString()} verified service providers, master artisans, and {stats.clients.toLocaleString()} businesses already on GigGhana.<br className="hidden md:inline" /> Africa&apos;s talent economy starts here.
+          </p>
+          <div className="cta-btns">
             <a
               href="/auth/register.php?role=provider"
-              className="btn btn-gold btn-lg cta-choice-btn"
+              className="btn btn-gold btn-lg"
               onClick={triggerConfetti}
             >
-              <span>Join as a Verified Provider</span>
-              <ArrowRight className="w-4 h-4" />
+              Sign Up as Provider
             </a>
-          </div>
-
-          {/* Card 2: For Clients & Homeowners */}
-          <div className="cta-choice-card client-card">
-            <div className="cta-choice-badge client-pill">
-              <span>🏢 For Homeowners &amp; Businesses</span>
-            </div>
-            <h3 className="cta-choice-title">
-              Need a Trusted Ghanaian Specialist?
-            </h3>
-            <p className="cta-choice-desc">
-              Post your project requirements in under 2 minutes. Get matched with authenticated local contractors and release funds only when milestones are completed.
-            </p>
-            <div className="cta-perks-list">
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
-                <span>100% NIA Biometric verification eliminates ghost artisans</span>
-              </div>
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
-                <span>Funds released only after you personally inspect and approve</span>
-              </div>
-              <div className="cta-perk-row">
-                <CheckCircle2 className="w-4 h-4 text-[#00D4C8] shrink-0 mt-0.5" />
-                <span>Bank-grade vault protection with 24/7 contract mediation</span>
-              </div>
-            </div>
             <a
               href="/auth/register.php?role=client"
-              className="btn btn-cyan btn-lg cta-choice-btn"
+              className="btn btn-blue btn-lg"
               onClick={triggerConfetti}
             >
-              <span>Post a Job &amp; Hire Talent</span>
-              <ArrowRight className="w-4 h-4" />
+              Hire a Provider
             </a>
           </div>
         </div>
-      </section>
+      </div>
 
       {/* ══════ INFINITE PARTNER MARQUEE ══════ */}
       <div className="pay-section">
