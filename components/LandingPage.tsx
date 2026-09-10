@@ -1185,48 +1185,138 @@ const occupationSlides = [
         </div>
 
         <BentoGrid>
+          {/* Card 1: Photorealistic Ghana Card Biometric Verification */}
           <BentoCard
-            title="1. Create &amp; Verify Your Profile"
-            description="Sign up free with your Ghana Card. Choose Beginner, Verified, or Premium badge tiers to immediately establish trust with prospective clients."
-            icon={<ShieldCheck className="w-6 h-6 text-[var(--cyan)]" />}
-            badge="Trust &amp; Safety"
+            title="1. 100% Ghana Card Biometric Verification"
+            description="Every artisan, freelancer, and contractor is strictly authenticated with the National Identification Authority (NIA) database. Zero fake accounts, zero impostors."
+            icon={<ShieldCheck className="w-5 h-5 text-[var(--cyan)]" />}
+            badge="National Trust"
             spotlightColor="rgba(0, 212, 200, 0.18)"
             className="md:col-span-2"
             header={
-              <div className="flex items-center gap-2 p-3 rounded-xl bg-[var(--surface-2)] border border-[var(--border)] text-xs text-[var(--tx-2)]">
-                <CheckCircle2 className="w-4 h-4 text-[var(--green)]" />
-                <span>Instant Ghana Card biometric verification and skill certification</span>
+              <div className="ghana-card-sim">
+                <div className="ghana-card-topbar">
+                  <div className="ghana-flag-pill">
+                    <div className="ghana-flag-strip">
+                      <div />
+                      <div>
+                        <span style={{ position: 'absolute', top: '-4px', left: '1px', fontSize: '9px', lineHeight: 1, color: '#000' }}>★</span>
+                      </div>
+                      <div />
+                    </div>
+                    <span>Republic of Ghana · National Identity Card</span>
+                  </div>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/512px-Coat_of_arms_of_Ghana.svg.png"
+                    alt="Ghana Coat of Arms"
+                    style={{ height: '24px', width: 'auto' }}
+                  />
+                </div>
+                <div className="ghana-card-body">
+                  <img
+                    src="/images/occupations/building_contractor.jpg"
+                    alt="Kwame Asante"
+                    className="ghana-card-photo"
+                  />
+                  <div className="ghana-card-details">
+                    <div className="ghana-card-name">ASANTE, KWAME MENSAH</div>
+                    <div className="ghana-card-pin">GHA-712849103-2</div>
+                    <div className="ghana-card-verified-tag">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      <span>100% NIA Biometric Verified</span>
+                    </div>
+                  </div>
+                  <div className="ghana-card-chip" title="Gold Biometric Chip" />
+                </div>
               </div>
             }
           />
 
+          {/* Card 2: AI Scope Generator & Transparent Cedi Milestones */}
           <BentoCard
-            title="2. Smart Proposals &amp; Match"
-            description="Use AI-assisted proposal starters to land jobs 3x faster with transparent milestone negotiations."
-            icon={<Zap className="w-6 h-6 text-[var(--coral)]" />}
+            title="2. AI Scopes &amp; Cedi Milestones"
+            description="Our Ghanaian AI analyzes project requirements, generates market-rate Cedi (₵) estimates, and auto-matches verified artisans in your town within 15 minutes."
+            icon={<Zap className="w-5 h-5 text-[#F59E0B]" />}
             badge="AI Powered"
-            spotlightColor="rgba(255, 107, 74, 0.18)"
-          />
-
-          <BentoCard
-            title="3. Instant MoMo &amp; Bank Payouts"
-            description="Direct integration with MTN Mobile Money, Telecel Cash, AT Money, and Ghanaian commercial banks for sub-60s payouts."
-            icon={<Smartphone className="w-6 h-6 text-[var(--green)]" />}
-            badge="Zero Delay"
-            spotlightColor="rgba(31, 217, 160, 0.18)"
-          />
-
-          <BentoCard
-            title="Guaranteed Escrow Protection"
-            description="Funds are securely locked in escrow before project kick-off and released only when deliverables are approved by the client."
-            icon={<Award className="w-6 h-6 text-[var(--gold)]" />}
-            badge="100% Secure"
             spotlightColor="rgba(245, 158, 11, 0.18)"
+            header={
+              <div className="ai-scope-sim">
+                <div className="ai-scope-prompt">
+                  <Sparkles className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+                  <span className="truncate">&ldquo;POP Ceiling for 3-Bedroom Hall in Kumasi&rdquo;</span>
+                </div>
+                <div className="ai-scope-result">
+                  <span className="font-semibold text-[var(--tx)]">Est. ₵3,800 – ₵4,400</span>
+                  <span className="ai-scope-badge">⚡ 3 Pros Ready</span>
+                </div>
+              </div>
+            }
+          />
+
+          {/* Card 3: Sub-60s Mobile Money Payouts with Realistic Logos */}
+          <BentoCard
+            title="3. Sub-60s Mobile Money Settlements"
+            description="Direct integration with MTN MoMo, Telecel Cash, and AT Money. Deliverables signed off? Funds transfer to your wallet with zero withdrawal wait."
+            icon={<Smartphone className="w-5 h-5 text-[#10B981]" />}
+            badge="Instant Payouts"
+            spotlightColor="rgba(16, 185, 129, 0.18)"
+            header={
+              <div className="momo-sim">
+                <div className="momo-logos-row">
+                  <span className="momo-brand-badge momo-brand-mtn">MTN MoMo</span>
+                  <span className="momo-brand-badge momo-brand-telecel">Telecel Cash</span>
+                  <span className="momo-brand-badge momo-brand-at">AT Money</span>
+                </div>
+                <div className="momo-alert-box">
+                  <div className="flex items-center justify-between text-[10px] text-[var(--tx-3)] mb-1">
+                    <span>🔔 Mobile Money Alert</span>
+                    <span className="text-[#10B981] font-bold">42s Settlement</span>
+                  </div>
+                  <div className="font-semibold text-[var(--tx)] text-[11px]">
+                    Received: ₵2,500.00 from BoG Escrow
+                  </div>
+                </div>
+              </div>
+            }
+          />
+
+          {/* Card 4: Bank of Ghana Regulated Escrow Vault */}
+          <BentoCard
+            title="4. Bank of Ghana Regulated Escrow Vault"
+            description="Clients never risk paying upfront for shoddy work, and artisans never risk non-payment after completion. Funds stay safe in escrow until you inspect and approve."
+            icon={<Award className="w-5 h-5 text-[var(--cyan)]" />}
+            badge="100% Zero-Fraud"
+            spotlightColor="rgba(0, 212, 200, 0.18)"
             className="md:col-span-2"
             header={
-              <div className="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-emerald-950/30 to-cyan-950/20 border border-emerald-500/20 text-xs">
-                <span className="text-[var(--green)] font-bold">🔒 Escrow Active</span>
-                <span className="text-[var(--tx-3)]">Milestone released upon sign-off</span>
+              <div className="escrow-vault-sim">
+                <div className="flex items-center justify-between text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[var(--cyan)] font-bold">🔒 Bank of Ghana Regulated Escrow Vault</span>
+                  </div>
+                  <span className="text-[11px] font-mono text-[var(--tx-3)]">Contract #GG-8849 · ₵6,500</span>
+                </div>
+                <div className="escrow-milestones-track">
+                  <div className="escrow-milestone-step completed">
+                    <div className="font-bold text-[#10B981] flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" />
+                      <span>Phase 1: Framing</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--tx-2)] mt-0.5">₵2,000 Released to MoMo</div>
+                  </div>
+                  <div className="escrow-milestone-step locked">
+                    <div className="font-bold text-[#D97706] flex items-center gap-1">
+                      <span>🔒 Phase 2: Wiring</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--tx-2)] mt-0.5">₵3,000 Locked in Vault</div>
+                  </div>
+                  <div className="escrow-milestone-step">
+                    <div className="font-bold text-[var(--tx-3)] flex items-center gap-1">
+                      <span>⏳ Phase 3: Paint</span>
+                    </div>
+                    <div className="text-[10px] text-[var(--tx-2)] mt-0.5">₵1,500 Pending Approval</div>
+                  </div>
+                </div>
               </div>
             }
           />
