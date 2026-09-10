@@ -2750,203 +2750,6 @@ html.dark .trend-num, [data-theme="dark"] .trend-num {
 }
 
 /* ══════ WORLD-CLASS PLATFORM HIGHLIGHTS BENTO MICRO-UI ══════ */
-.ghana-card-sim {
-  background: linear-gradient(135deg, rgba(248, 250, 252, 0.96) 0%, rgba(241, 245, 249, 0.94) 100%);
-  border: 1.5px solid rgba(0, 212, 200, 0.35);
-  border-radius: 18px;
-  padding: 16px 18px;
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
-}
-
-html.dark .ghana-card-sim, [data-theme="dark"] .ghana-card-sim {
-  background: linear-gradient(135deg, #0f172a 0%, #111d2e 100%);
-  border-color: rgba(0, 212, 200, 0.4);
-  box-shadow: 0 4px 24px rgba(0, 212, 200, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-}
-
-.ghana-card-sim::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #CE1126 0%, #CE1126 33.3%, #FCD116 33.3%, #FCD116 66.6%, #006B3F 66.6%, #006B3F 100%);
-}
-
-.ghana-card-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-html.dark .ghana-card-topbar, [data-theme="dark"] .ghana-card-topbar {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
-}
-
-.ghana-card-title-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.ghana-card-title-main {
-  font-size: 11px;
-  font-weight: 900;
-  letter-spacing: 0.6px;
-  color: var(--tx);
-  text-transform: uppercase;
-  font-family: var(--fm);
-}
-
-.ghana-card-title-sub {
-  font-size: 8.5px;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-  color: var(--tx-3);
-  text-transform: uppercase;
-}
-
-.ghana-flag-strip {
-  display: inline-flex;
-  height: 12px;
-  width: 22px;
-  border-radius: 2px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
-  flex-shrink: 0;
-}
-
-.ghana-flag-strip > div:nth-child(1) { flex: 1; background: #CE1126; }
-.ghana-flag-strip > div:nth-child(2) { flex: 1; background: #FCD116; position: relative; }
-.ghana-flag-strip > div:nth-child(3) { flex: 1; background: #006B3F; }
-
-.ghana-card-body {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
-}
-
-.ghana-card-left {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.ghana-card-photo {
-  width: 68px;
-  height: 82px;
-  border-radius: 6px;
-  object-fit: cover;
-  border: 1.5px solid rgba(0, 0, 0, 0.15);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-  flex-shrink: 0;
-}
-
-html.dark .ghana-card-photo, [data-theme="dark"] .ghana-card-photo {
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-.ghana-card-chip {
-  width: 32px;
-  height: 24px;
-  background: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
-  border-radius: 4px;
-  position: relative;
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.5), 0 1px 3px rgba(0, 0, 0, 0.2);
-  border: 1px solid #B45309;
-  flex-shrink: 0;
-}
-
-.ghana-card-chip::after {
-  content: '';
-  position: absolute;
-  top: 4px;
-  left: 4px;
-  right: 4px;
-  bottom: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  border-radius: 2px;
-}
-
-.ghana-card-details {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-.ghana-card-field {
-  display: flex;
-  flex-direction: column;
-}
-
-.ghana-card-lbl {
-  font-size: 8.5px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: var(--tx-3);
-  letter-spacing: 0.5px;
-  line-height: 1.2;
-}
-
-.ghana-card-val {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--tx);
-  letter-spacing: -0.01em;
-  line-height: 1.2;
-}
-
-.ghana-card-pin {
-  font-family: monospace;
-  font-size: 12px;
-  font-weight: 800;
-  color: #008B82;
-  letter-spacing: 0.6px;
-}
-
-html.dark .ghana-card-pin, [data-theme="dark"] .ghana-card-pin {
-  color: #00D4C8;
-}
-
-.ghana-card-meta-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 10px;
-  color: var(--tx-2);
-  font-weight: 600;
-}
-
-.ghana-card-verified-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 10px;
-  font-weight: 800;
-  padding: 3px 9px;
-  border-radius: 50px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.35);
-  color: #059669;
-  width: fit-content;
-  margin-top: 2px;
-}
-
-html.dark .ghana-card-verified-tag, [data-theme="dark"] .ghana-card-verified-tag {
-  color: #10B981;
-}
-
 /* AI Scope Simulator */
 .ai-scope-sim {
   background: rgba(245, 158, 11, 0.04);
@@ -3087,20 +2890,21 @@ html.dark .escrow-vault-sim, [data-theme="dark"] .escrow-vault-sim {
 }
 
 /* ══════ LUXURY MEMBERSHIP PRICING TIERS ══════ */
+/* ══════ MEMBERSHIP TIERS (COMPACT & SQUEEZED) ══════ */
 .badge-tiers {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1160px;
-  margin: 40px auto 0;
+  gap: 18px;
+  max-width: 1040px;
+  margin: 32px auto 0;
   align-items: stretch;
 }
 
 .badge-tier-card {
   background: var(--surface);
   border: 1.5px solid var(--bd2);
-  border-radius: 24px;
-  padding: 32px 26px;
+  border-radius: 18px;
+  padding: 22px 20px;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -3113,28 +2917,28 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
 }
 
 .badge-tier-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: var(--cyan-border);
-  box-shadow: 0 16px 38px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 28px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
-/* Tier 1: Beginner (Germinating Seedling Green Theme) */
+/* Tier 1: Beginner */
 .badge-tier-card.tier-beginner {
   background: linear-gradient(180deg, rgba(16, 185, 129, 0.07) 0%, var(--surface) 100%);
   border-color: rgba(16, 185, 129, 0.35);
 }
 
 .badge-tier-card.tier-beginner:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: #10B981;
-  box-shadow: 0 16px 38px rgba(16, 185, 129, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 28px rgba(16, 185, 129, 0.16), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 /* Tier 2: Verified Pro (Featured High-Trust Cyan Theme) */
 .badge-tier-card.featured {
   border-color: var(--cyan);
   background: linear-gradient(180deg, var(--cyan-dim) 0%, var(--surface) 100%);
-  box-shadow: 0 14px 38px rgba(0, 212, 200, 0.12), 0 0 0 1px rgba(0, 212, 200, 0.3);
+  box-shadow: 0 10px 28px rgba(0, 212, 200, 0.12), 0 0 0 1px rgba(0, 212, 200, 0.3);
 }
 
 /* Tier 3: Premium Master (Elite Luxury Gold & Amber Theme) */
@@ -3144,39 +2948,39 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
 }
 
 .badge-tier-card.tier-premium:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: #F59E0B;
-  box-shadow: 0 16px 38px rgba(245, 158, 11, 0.2), 0 2px 6px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 12px 28px rgba(245, 158, 11, 0.2), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .bt-pop-badge {
   position: absolute;
-  top: -12px;
+  top: -10px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #F59E0B, #D97706);
   color: #FFFFFF;
-  padding: 4px 14px;
+  padding: 3px 11px;
   border-radius: 50px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 800;
   font-family: var(--fm);
   letter-spacing: -0.01em;
   white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  box-shadow: 0 3px 10px rgba(245, 158, 11, 0.25);
 }
 
 .bt-top-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
 }
 
 .bt-icon-box {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: var(--s2);
   border: 1px solid var(--bd2);
   display: flex;
@@ -3201,10 +3005,10 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
 }
 
 .bt-tier-pill {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   font-family: var(--fm);
-  padding: 3px 9px;
+  padding: 2.5px 8px;
   border-radius: 50px;
   background: var(--s2);
   color: var(--tx-2);
@@ -3230,22 +3034,22 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
 }
 
 .bt-name {
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 800;
   color: var(--tx);
   font-family: var(--fm);
-  margin-bottom: 6px;
+  margin-bottom: 2px;
 }
 
 .bt-price {
   display: flex;
   align-items: baseline;
   gap: 4px;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .bt-price-val {
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 900;
   color: var(--tx);
   font-family: var(--fm);
@@ -3253,42 +3057,42 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
 }
 
 .bt-price-sub {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--tx-3);
   font-weight: 600;
 }
 
 .bt-desc {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--tx-3);
-  line-height: 1.55;
-  margin-bottom: 20px;
+  line-height: 1.42;
+  margin-bottom: 12px;
 }
 
 .bt-perks-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 28px;
+  gap: 8px;
+  margin-bottom: 18px;
 }
 
 .bt-perk-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13px;
+  gap: 8px;
+  font-size: 12px;
   color: var(--tx-2);
-  line-height: 1.4;
+  line-height: 1.35;
 }
 
 .bt-action-btn {
   margin-top: auto;
   width: 100%;
   justify-content: center;
-  font-size: 13.5px;
+  font-size: 12.5px;
   font-weight: 750;
   border-radius: 50px;
-  padding: 12px 20px;
+  padding: 9px 16px;
 }
 
 .bt-btn-beginner {
@@ -3314,25 +3118,28 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.38) !important;
 }
 
-/* ══════ REVIEWS SHOWCASE GRID ══════ */
-.rv-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 22px;
-  max-width: 1160px;
-  margin: 0 auto;
+/* ══════ REVIEWS SLIDING CAROUSEL (SWIPING LEFT TO RIGHT) ══════ */
+.rv-carousel-wrap {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  margin-top: 10px;
 }
 
 .rv-card {
+  width: 320px;
+  max-width: 85vw;
+  flex-shrink: 0;
   background: var(--surface);
   border: 1.5px solid var(--bd2);
-  border-radius: 22px;
-  padding: 28px 26px;
+  border-radius: 18px;
+  padding: 20px 18px;
   display: flex;
   flex-direction: column;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
   position: relative;
+  user-select: none;
 }
 
 html.dark .rv-card, [data-theme="dark"] .rv-card {
@@ -3342,32 +3149,30 @@ html.dark .rv-card, [data-theme="dark"] .rv-card {
 .rv-card:hover {
   transform: translateY(-3px);
   border-color: var(--cyan-border);
-  box-shadow: 0 14px 34px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 12px 28px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.06);
 }
 
 html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
-  box-shadow: 0 12px 34px rgba(0, 212, 200, 0.14), 0 0 0 1.5px rgba(0, 212, 200, 0.25);
+  box-shadow: 0 12px 28px rgba(0, 212, 200, 0.14), 0 0 0 1.5px rgba(0, 212, 200, 0.25);
 }
 
 .rv-card-top-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
 }
 
 .rv-proof-pill {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-size: 11px;
+  gap: 5px;
+  font-size: 10.5px;
   font-weight: 800;
   color: #059669;
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.3);
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 50px;
   font-family: var(--fm);
 }
@@ -3378,22 +3183,11 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
   border-color: rgba(16, 185, 129, 0.4);
 }
 
-.rv-trade-badge {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--tx-2);
-  background: var(--s2);
-  border: 1px solid var(--bd2);
-  padding: 3px 9px;
-  border-radius: 6px;
-  font-family: var(--fm);
-}
-
 .rv-text {
-  font-size: 14px;
-  line-height: 1.65;
+  font-size: 13.5px;
+  line-height: 1.55;
   color: var(--tx);
-  margin-bottom: 20px;
+  margin-bottom: 14px;
   font-weight: 450;
   letter-spacing: -0.01em;
 }
@@ -3401,26 +3195,23 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
 .rv-author {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   margin-top: auto;
-  padding-top: 14px;
+  padding-top: 10px;
   border-top: 1px solid var(--bd);
 }
 
 .rv-av {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(0, 212, 200, 0.15), var(--surface));
   border: 1.5px solid var(--cyan-border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 800;
-  font-size: 13px;
-  color: var(--cyan);
   flex-shrink: 0;
   overflow: hidden;
+  background: var(--s2);
 }
 
 .rv-av img {
@@ -3437,12 +3228,12 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
 .rv-name-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .rv-name {
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--tx);
   font-family: var(--fm);
 }
@@ -3452,66 +3243,28 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
   align-items: center;
 }
 
-.rv-role-line {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  margin-top: 2px;
-  font-size: 11px;
-}
-
-.rv-role-tag {
-  font-weight: 700;
-  color: var(--cyan);
-  font-family: var(--fm);
-}
-
-.rv-loc-text {
-  color: var(--tx-3);
-  font-weight: 500;
-}
-
-/* Squeezed Mobile Layout for Testimonial Cards */
+/* Squeezed Mobile Layout for Testimonials */
 @media (max-width: 768px) {
-  .rv-grid {
+  .badge-tiers {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
   }
   .rv-card {
-    padding: 18px 16px;
-    border-radius: 18px;
-  }
-  .rv-card-top-row {
-    margin-bottom: 10px;
-    gap: 8px;
-  }
-  .rv-proof-pill {
-    font-size: 10px;
-    padding: 2.5px 8px;
-  }
-  .rv-trade-badge {
-    font-size: 10px;
-    padding: 2px 7px;
+    width: 275px;
+    padding: 16px 14px;
+    border-radius: 16px;
   }
   .rv-text {
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 14px;
-  }
-  .rv-author {
-    padding-top: 10px;
-    gap: 10px;
+    font-size: 12.5px;
+    line-height: 1.48;
+    margin-bottom: 10px;
   }
   .rv-av {
     width: 34px;
     height: 34px;
-    font-size: 12px;
   }
   .rv-name {
-    font-size: 13px;
-  }
-  .rv-role-line {
-    font-size: 10.5px;
+    font-size: 12.5px;
   }
 }
 

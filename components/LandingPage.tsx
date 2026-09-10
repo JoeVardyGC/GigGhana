@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import type { LandingData } from '@/lib/types';
-import { iconMap, fallbackRecentJobs, fallbackFeaturedProviders } from '@/lib/types';
+import { iconMap, fallbackRecentJobs, fallbackFeaturedProviders, testimonialFallbacks } from '@/lib/types';
 import confetti from 'canvas-confetti';
 import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
@@ -1169,7 +1169,7 @@ const occupationSlides = [
         </div>
 
         <BentoGrid>
-          {/* Card 1: Photorealistic Ghana Card Biometric Verification */}
+          {/* Card 1: 100% Ghana Card Biometric Verification */}
           <BentoCard
             title="1. 100% Ghana Card Biometric Verification"
             description="Every artisan, freelancer, and contractor is strictly authenticated with the National Identification Authority (NIA) database. Zero fake accounts, zero impostors."
@@ -1177,63 +1177,6 @@ const occupationSlides = [
             badge="National Trust"
             spotlightColor="rgba(0, 212, 200, 0.18)"
             className="md:col-span-2"
-            header={
-              <div className="ghana-card-sim">
-                <div className="ghana-card-topbar">
-                  <div className="ghana-card-title-wrap">
-                    <div className="flex items-center gap-2">
-                      <div className="ghana-flag-strip">
-                        <div />
-                        <div>
-                          <span style={{ position: 'absolute', top: '-4px', left: '1px', fontSize: '9px', lineHeight: 1, color: '#000' }}>★</span>
-                        </div>
-                        <div />
-                      </div>
-                      <span className="ghana-card-title-main">Republic of Ghana</span>
-                    </div>
-                    <span className="ghana-card-title-sub">National Identity Card · Carte Nationale d&apos;Identité</span>
-                  </div>
-                  <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/Coat_of_arms_of_Ghana.svg/512px-Coat_of_arms_of_Ghana.svg.png"
-                    alt="Ghana Coat of Arms"
-                    style={{ height: '24px', width: 'auto' }}
-                  />
-                </div>
-                <div className="ghana-card-body">
-                  <div className="ghana-card-left">
-                    <img
-                      src="/images/ghana_passport_photo.jpg"
-                      alt="Kwame Asante Passport Photo"
-                      className="ghana-card-photo"
-                    />
-                    <div className="ghana-card-chip" title="Gold Biometric EMV Chip" />
-                  </div>
-                  <div className="ghana-card-details">
-                    <div className="ghana-card-field">
-                      <span className="ghana-card-lbl">Surname / Nom</span>
-                      <span className="ghana-card-val">ASANTE</span>
-                    </div>
-                    <div className="ghana-card-field">
-                      <span className="ghana-card-lbl">First Names / Prénoms</span>
-                      <span className="ghana-card-val">KWAME MENSAH</span>
-                    </div>
-                    <div className="ghana-card-field">
-                      <span className="ghana-card-lbl">National ID PIN</span>
-                      <span className="ghana-card-pin">GHA-712849103-2</span>
-                    </div>
-                    <div className="ghana-card-meta-row">
-                      <span><strong>Nationality:</strong> GHANAIAN</span>
-                      <span><strong>Sex:</strong> M</span>
-                      <span><strong>DOB:</strong> 14/08/1988</span>
-                    </div>
-                    <div className="ghana-card-verified-tag">
-                      <CheckCircle2 className="w-3 h-3" />
-                      <span>100% NIA Biometric Verified</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            }
           />
 
           {/* Card 2: AI Scope Generator & Transparent Cedi Milestones */}
@@ -1326,34 +1269,34 @@ const occupationSlides = [
           />
         </BentoGrid>
 
-        {/* ══════ MEMBERSHIP TIERS ══════ */}
-        <div className="badge-tiers mt-12">
+        {/* ══════ MEMBERSHIP TIERS (COMPACT & SQUEEZED) ══════ */}
+        <div className="badge-tiers mt-10">
           {/* Beginner Tier */}
           <div className="badge-tier-card tier-beginner">
             <div className="bt-top-row">
               <div className="bt-icon-box beginner-icon">
-                <Sprout className="w-5 h-5 text-[#10B981]" />
+                <Sprout className="w-4 h-4 text-[#10B981]" />
               </div>
-              <span className="bt-tier-pill beginner-pill">🌱 Starter Seed</span>
+              <span className="bt-tier-pill beginner-pill">🌱 Starter</span>
             </div>
             <div className="bt-name">Beginner</div>
             <div className="bt-price">
               <span className="bt-price-val">Free</span>
               <span className="bt-price-sub">/ forever</span>
             </div>
-            <p className="bt-desc">Plant your seeds at zero cost. Create your public profile and start bidding on local gigs.</p>
+            <p className="bt-desc">Plant your roots at zero cost. Set up your profile and start bidding.</p>
             <div className="bt-perks-list">
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
-                <span>3 Job proposals per month</span>
+                <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                <span>3 proposals per month</span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
                 <span>Standard directory listing</span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#10B981] shrink-0" />
-                <span>Mobile Money escrow payouts</span>
+                <Check className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                <span>MoMo escrow payouts</span>
               </div>
             </div>
             <a href="/auth/register.php?role=provider" className="btn btn-ghost bt-action-btn bt-btn-beginner">
@@ -1363,10 +1306,10 @@ const occupationSlides = [
 
           {/* Verified Tier (Highlighted) */}
           <div className="badge-tier-card featured">
-            <div className="bt-pop-badge">👑 Most Popular · High Trust</div>
+            <div className="bt-pop-badge">👑 Most Popular</div>
             <div className="bt-top-row">
               <div className="bt-icon-box featured-icon">
-                <BadgeCheck className="w-5 h-5 text-[#00D4C8]" />
+                <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
               </div>
               <span className="bt-tier-pill featured-pill">Verified Pro</span>
             </div>
@@ -1375,23 +1318,19 @@ const occupationSlides = [
               <span className="bt-price-val">₵49</span>
               <span className="bt-price-sub">/ month</span>
             </div>
-            <p className="bt-desc">For active pros and master artisans looking to build high client trust and win jobs faster.</p>
+            <p className="bt-desc">Build high client trust and win verified jobs faster across Ghana.</p>
             <div className="bt-perks-list">
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
+                <Check className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
                 <span><strong>✓ Verified Ghana Card badge</strong></span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
-                <span><strong>Unlimited</strong> job proposals &amp; contracts</span>
+                <Check className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                <span><strong>Unlimited</strong> proposals &amp; gigs</span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
-                <span><strong>3x Higher</strong> search visibility in Ghana</span>
-              </div>
-              <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#00D4C8] shrink-0" />
-                <span>Sub-60s instant MoMo withdrawals</span>
+                <Check className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                <span><strong>3x Higher</strong> search visibility</span>
               </div>
             </div>
             <a href="/auth/register.php?role=provider&tier=verified" className="btn btn-gold bt-action-btn">
@@ -1403,32 +1342,28 @@ const occupationSlides = [
           <div className="badge-tier-card tier-premium">
             <div className="bt-top-row">
               <div className="bt-icon-box premium-icon">
-                <Star className="w-5 h-5 text-[#F59E0B] fill-[#F59E0B]" />
+                <Star className="w-4 h-4 text-[#F59E0B] fill-[#F59E0B]" />
               </div>
-              <span className="bt-tier-pill premium-pill">⭐ Elite Master</span>
+              <span className="bt-tier-pill premium-pill">⭐ Elite</span>
             </div>
             <div className="bt-name">Premium Master</div>
             <div className="bt-price">
               <span className="bt-price-val">₵99</span>
               <span className="bt-price-sub">/ month</span>
             </div>
-            <p className="bt-desc">For leading contractors, agencies, and elite specialists seeking top placement &amp; direct invites.</p>
+            <p className="bt-desc">For top contractors and specialists seeking direct client contracts.</p>
             <div className="bt-perks-list">
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                <span><strong>⭐ Featured Top Listing</strong> on homepage</span>
+                <Check className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+                <span><strong>⭐ Featured Top Listing</strong> on home</span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                <span>Direct client contract invitations</span>
+                <Check className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+                <span>Direct client invitations</span>
               </div>
               <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                <span>Priority 24/7 dedicated account support</span>
-              </div>
-              <div className="bt-perk-item">
-                <Check className="w-4 h-4 text-[#F59E0B] shrink-0" />
-                <span>Zero commission fee on first ₵5,000</span>
+                <Check className="w-3.5 h-3.5 text-[#F59E0B] shrink-0" />
+                <span>Priority 24/7 dedicated support</span>
               </div>
             </div>
             <a href="/auth/register.php?role=provider&tier=premium" className="btn bt-action-btn bt-btn-premium">
@@ -1443,54 +1378,56 @@ const occupationSlides = [
         <div className="s-head">
           <div className="s-badge">
             <span className="live-pulse-dot" />
-            <span>🇬🇭 Real Stories from the Field</span>
+            <span>Real Stories from the Field</span>
           </div>
           <h2 className="s-title">Real Talk from Verified Masters &amp; Clients</h2>
           <p className="s-sub">
             No stories. No chasing clients for money. See how Ghana Card verification, secure escrow, and instant Mobile Money settlements transformed work across Ghana.
           </p>
         </div>
-        <div className="rv-grid">
-          {reviews.slice(0, 4).map((rv, idx) => {
-            const init = initials(rv.first_name, rv.last_name);
-            const isProvider = rv.role === 'provider';
 
-            return (
-              <div key={idx} className="rv-card">
-                <div className="rv-card-top-row">
-                  <div className="rv-proof-pill">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                    <span>{rv.payout_proof || (isProvider ? '✓ Milestone Escrow Released' : '✓ Verified Project Signed Off')}</span>
-                  </div>
-                  <span className="rv-trade-badge">
-                    {rv.trade || (isProvider ? 'Master Artisan' : 'Verified Client')}
-                  </span>
-                </div>
-                <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
-                <div className="rv-author">
-                  <div className="rv-av">
-                    {rv.avatar ? <img src={rv.avatar} alt="" loading="lazy" /> : init}
-                  </div>
-                  <div className="rv-author-info">
-                    <div className="rv-name-row">
-                      <span className="rv-name">
-                        {`${rv.first_name} ${rv.last_name}`}
-                      </span>
-                      <span className="rv-verified-check" title="Biometric Ghana Card Verified">
-                        <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
-                      </span>
-                    </div>
-                    <div className="rv-role-line">
-                      <span className="rv-role-tag">
-                        {isProvider ? '🇬🇭 Verified Specialist' : '🏢 Verified Client'}
-                      </span>
-                      {rv.location ? <span className="rv-loc-text"> · {rv.location}</span> : null}
+        {/* Sliding Carousel Swiping Left to Right */}
+        <div className="rv-carousel-wrap">
+          <Marquee reverse pauseOnHover className="[--duration:30s] py-3">
+            {testimonialFallbacks.map((rv, idx) => {
+              const avatarFallbacks = [
+                '/images/avatars/avatar_male_1.jpg',
+                '/images/avatars/avatar_female_1.jpg',
+                '/images/avatars/avatar_male_2.jpg',
+                '/images/avatars/avatar_female_3.jpg',
+                '/images/avatars/avatar_female_2.jpg',
+                '/images/avatars/avatar_male_3.jpg',
+              ];
+              const avatarSrc = rv.avatar || avatarFallbacks[idx % avatarFallbacks.length];
+
+              return (
+                <div key={idx} className="rv-card">
+                  <div className="rv-card-top-row">
+                    <div className="rv-proof-pill">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                      <span>Verified Review</span>
                     </div>
                   </div>
+                  <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
+                  <div className="rv-author">
+                    <div className="rv-av">
+                      <img src={avatarSrc} alt={`${rv.first_name} ${rv.last_name}`} loading="lazy" />
+                    </div>
+                    <div className="rv-author-info">
+                      <div className="rv-name-row">
+                        <span className="rv-name">
+                          {`${rv.first_name} ${rv.last_name}`}
+                        </span>
+                        <span className="rv-verified-check" title="Biometric Ghana Card Verified">
+                          <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </Marquee>
         </div>
       </section>
 
