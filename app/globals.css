@@ -3243,8 +3243,28 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
   align-items: center;
 }
 
-/* Squeezed Mobile Layout for Testimonials */
+/* Squeezed Mobile Layout for Testimonials & Full-Bleed Carousel */
+.section-reviews {
+  position: relative;
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
+  .section-reviews {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    overflow-x: clip !important;
+  }
+  .section-reviews .s-head {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .section-reviews .rv-carousel-wrap {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    margin-right: calc(-50vw + 50%);
+    overflow: visible;
+  }
   .badge-tiers {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -3388,10 +3408,10 @@ html.dark .cta-wrap, [data-theme="dark"] .cta-wrap {
   color: var(--tx-2);
 }
 
-/* ══════ WORLD-CLASS EXECUTIVE FOOTER (DEVELOPED BY TECHROOM GHANA) ══════ */
+/* ══════ MINIMAL EXECUTIVE FOOTER (DEVELOPED BY TECHROOM GHANA) ══════ */
 .footer-wrap {
   background: var(--s1);
-  border-top: 1.5px solid var(--bd);
+  border-top: 1px solid var(--bd);
   padding: 0 5%;
   position: relative;
 }
@@ -3401,219 +3421,162 @@ html.dark .footer-wrap, [data-theme="dark"] .footer-wrap {
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Pre-Footer Trust Ribbon */
-.footer-trust-ribbon {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
-  max-width: 1200px;
+.footer-minimal-container {
+  max-width: 1160px;
   margin: 0 auto;
-  padding: 32px 0;
-  border-bottom: 1px solid var(--bd);
-}
-
-.ftr-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.ftr-text {
+  padding: 44px 0 32px;
   display: flex;
   flex-direction: column;
+  gap: 28px;
 }
 
-.ftr-title {
-  font-size: 13px;
-  font-weight: 800;
-  color: var(--tx);
-  font-family: var(--fm);
-}
-
-.ftr-desc {
-  font-size: 11.5px;
-  color: var(--tx-3);
-  margin-top: 2px;
-  line-height: 1.35;
-}
-
-/* Main Top 5-Column Grid */
-.footer-top {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr 1fr;
-  gap: 32px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 48px 0 36px;
-}
-
-.footer-brand-col {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.footer-brand-desc {
-  color: var(--tx-3);
-  font-size: 12.5px;
-  line-height: 1.65;
-  max-width: 320px;
-}
-
-.footer-contact-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.footer-contact-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--tx-2);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-contact-item:hover {
-  color: var(--cyan);
-}
-
-.footer-contact-item.whatsapp-item {
-  color: #10B981;
-  font-weight: 600;
-}
-
-.footer-contact-item.whatsapp-item:hover {
-  filter: brightness(1.15);
-}
-
-.footer-contact-item.text-muted {
-  color: var(--tx-3);
-  font-size: 11.5px;
-}
-
-.footer-nl {
-  margin-top: 6px;
-}
-
-.footer-nl-label {
-  font-size: 12px;
-  font-weight: 750;
-  color: var(--tx);
-  font-family: var(--fm);
-  margin-bottom: 6px;
-}
-
-.nl-btn {
-  padding: 8px 16px !important;
-  font-size: 12px !important;
-  font-weight: 700 !important;
-}
-
-.footer-ttl {
-  font-weight: 800;
-  font-size: 12.5px;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 16px;
-  color: var(--tx);
-  font-family: var(--fm);
-}
-
-.footer-links {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
-}
-
-.footer-links a {
-  color: var(--tx-3);
-  text-decoration: none;
-  font-size: 12.5px;
-  transition: color 0.2s ease, transform 0.2s ease;
-  display: inline-block;
-}
-
-.footer-links a:hover {
-  color: var(--cyan);
-  transform: translateX(2px);
-}
-
-/* Regional Hubs Bar */
-.footer-regions-bar {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 16px 0;
-  border-top: 1px solid var(--bd);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.footer-regions-title {
-  font-size: 11.5px;
-  font-weight: 800;
-  color: var(--tx);
-  font-family: var(--fm);
-  white-space: nowrap;
-}
-
-.footer-regions-list {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  font-size: 11.5px;
-}
-
-.footer-regions-list a {
-  color: var(--tx-3);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.footer-regions-list a:hover {
-  color: var(--cyan);
-}
-
-.dot-sep {
-  color: var(--tx-3);
-  opacity: 0.4;
-}
-
-/* Bottom Bar */
-.footer-bar {
+/* Top: Brand & Minimal Horizontal Navigation */
+.footer-minimal-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 22px 0 30px;
-  border-top: 1px solid var(--bd);
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 24px;
 }
 
-.footer-copy {
-  font-size: 12px;
+.footer-minimal-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-minimal-tagline {
+  font-size: 13px;
   color: var(--tx-3);
+  margin: 0;
+  max-width: 440px;
+  line-height: 1.5;
+}
+
+.footer-minimal-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-minimal-nav a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tx-2);
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-minimal-nav a:hover {
+  color: var(--cyan);
+  transform: translateY(-1px);
+}
+
+.footer-minimal-nav .footer-nav-whatsapp {
+  color: #10B981;
+  font-weight: 700;
+}
+
+/* Middle: Trusted Payments & Escrow Security Strip */
+.footer-payments-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 18px 0;
+  border-top: 1px solid var(--bd);
+  border-bottom: 1px solid var(--bd);
+}
+
+.footer-payments-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.9px;
+  color: var(--tx-3);
+  font-family: var(--fm);
+}
+
+.footer-payments-grid {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.footer-pay-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--surface);
+  border: 1px solid var(--bd2);
+  padding: 5px 12px;
+  border-radius: 999px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+html.dark .footer-pay-pill, [data-theme="dark"] .footer-pay-pill {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.footer-pay-pill:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan-border);
+  box-shadow: 0 4px 12px var(--cyan-dim);
+}
+
+.pay-badge-img {
+  height: 18px;
+  width: auto;
+  max-width: 44px;
+  object-fit: contain;
+}
+
+.pay-badge-name {
+  font-size: 11.5px;
+  font-weight: 750;
+  color: var(--tx-2);
+  font-family: var(--fm);
+}
+
+.footer-pay-vault {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  flex-wrap: wrap;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 750;
+  color: #10B981;
+  font-family: var(--fm);
 }
 
-/* Developed by TechRoom Ghana Badge */
+/* Bottom: TechRoom Ghana Attribution, Copyright & Socials */
+.footer-minimal-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 4px;
+}
+
+.footer-copy {
+  font-size: 12.5px;
+  color: var(--tx-3);
+}
+
 .footer-credit {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 12px;
+  font-size: 12.5px;
   color: var(--tx-3);
 }
 
@@ -3623,11 +3586,11 @@ html.dark .footer-wrap, [data-theme="dark"] .footer-wrap {
   gap: 7px;
   background: var(--surface);
   border: 1px solid var(--bd2);
-  padding: 5px 12px;
+  padding: 6px 14px;
   border-radius: 50px;
   color: var(--tx);
   text-decoration: none;
-  font-size: 12px;
+  font-size: 12.5px;
   font-family: var(--fm);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
@@ -4164,42 +4127,38 @@ html, body {
     padding: 13px 20px;
   }
 
-  /* Footer on Mobile */
+  /* Minimal Footer on Mobile */
   .footer-wrap {
     padding: 0 16px;
   }
-  .footer-trust-ribbon {
-    grid-template-columns: 1fr;
-    gap: 14px;
-    padding: 24px 0;
+  .footer-minimal-container {
+    padding: 36px 0 28px;
+    gap: 22px;
   }
-  .footer-top {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding: 32px 0 24px;
-  }
-  .footer-brand-col {
-    gap: 12px;
-  }
-  .footer-regions-bar {
+  .footer-minimal-top {
     flex-direction: column;
     align-items: flex-start;
-    gap: 8px;
-    padding: 14px 0;
+    gap: 16px;
   }
-  .footer-bar {
+  .footer-minimal-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+  }
+  .footer-payments-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px 0;
+  }
+  .footer-payments-grid {
+    gap: 8px;
+  }
+  .footer-minimal-bottom {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 14px;
-    padding: 20px 0 28px;
-  }
-  .footer-copy {
-    justify-content: center;
-    text-align: center;
-  }
-  .footer-credit {
-    justify-content: center;
+    gap: 16px;
   }
 }
 
