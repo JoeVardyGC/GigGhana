@@ -1539,89 +1539,199 @@ const occupationSlides = [
         </div>
       </div>
 
-      {/* ══════ EXECUTIVE FOOTER ══════ */}
+      {/* ══════ WORLD-CLASS EXECUTIVE FOOTER (DEVELOPED BY TECHROOM GHANA) ══════ */}
       <footer className="footer-wrap">
+        {/* Trust & Security Assurance Bar */}
+        <div className="footer-trust-ribbon">
+          <div className="ftr-item">
+            <ShieldCheck className="w-5 h-5 text-[#00D4C8] shrink-0" />
+            <div className="ftr-text">
+              <span className="ftr-title">100% Escrow Vault</span>
+              <span className="ftr-desc">Funds released only after you approve</span>
+            </div>
+          </div>
+          <div className="ftr-item">
+            <BadgeCheck className="w-5 h-5 text-[#10B981] shrink-0" />
+            <div className="ftr-text">
+              <span className="ftr-title">NIA Biometric Verified</span>
+              <span className="ftr-desc">Zero ghost workers or unverified artisans</span>
+            </div>
+          </div>
+          <div className="ftr-item">
+            <Smartphone className="w-5 h-5 text-[#F59E0B] shrink-0" />
+            <div className="ftr-text">
+              <span className="ftr-title">Sub-60s MoMo Settlement</span>
+              <span className="ftr-desc">Direct payouts to MTN, Telecel &amp; AT Money</span>
+            </div>
+          </div>
+          <div className="ftr-item">
+            <Building2 className="w-5 h-5 text-[#3B82F6] shrink-0" />
+            <div className="ftr-text">
+              <span className="ftr-title">Act 843 Regulated</span>
+              <span className="ftr-desc">Ghana Data Protection Commission compliance</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Footer Links & Information Grid */}
         <div className="footer-top">
-          <div>
+          {/* Brand & Direct Contact Column */}
+          <div className="footer-brand-col">
             <a href="/" className="logo">
               <div className="logo-mark">G</div>
               <span className="logo-text">
                 Gig<span>Ghana</span>
               </span>
             </a>
-            <p className="footer-brand">
-              Africa&apos;s premier service marketplace connecting every Ghanaian specialist — from building construction, painting, and skilled trades to health, design, and IT — with forward-thinking businesses.
+            <p className="footer-brand-desc">
+              Ghana&apos;s leading on-demand talent ecosystem connecting authenticated master artisans, technicians, and digital specialists with homeowners and enterprises nationwide.
             </p>
-            <div className="footer-nl">
-              <div style={{ fontSize: '12.5px', color: 'var(--tx-2)', fontWeight: 600, fontFamily: 'var(--fm)' }}>
-                Stay in the Loop
+            
+            {/* Quick Contacts */}
+            <div className="footer-contact-list">
+              <a href="mailto:support@gigghana.com" className="footer-contact-item">
+                <Mail className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                <span>support@gigghana.com</span>
+              </a>
+              <a href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" className="footer-contact-item whatsapp-item">
+                <Phone className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                <span>+233 (0) 50 123 4567 · 24/7 WhatsApp</span>
+              </a>
+              <div className="footer-contact-item text-muted">
+                <span>📍 Accra Digital Center, Ring Road West, Accra</span>
               </div>
+            </div>
+
+            {/* Newsletter Subscription */}
+            <div className="footer-nl">
+              <div className="footer-nl-label">Get Job &amp; Market Rate Alerts</div>
               <form className="nl-form" onSubmit={handleSubscribeNL}>
                 <input
                   className="nl-input"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="Enter your email"
                   value={nlEmail}
                   onChange={(e) => setNlEmail(e.target.value)}
                 />
-                <button type="submit" className="btn btn-gold" style={{ padding: '8px 16px', fontSize: '12px' }}>
+                <button type="submit" className="btn btn-gold nl-btn">
                   Subscribe
                 </button>
               </form>
             </div>
-            <div className="footer-badges">
-              <div className="f-badge">🔒 Bank-Grade Escrow Protected</div>
-              <div className="f-badge">🇬🇭 Ghana Registered (GRA)</div>
-              <div className="f-badge">✓ 100% Ghana Card Verified</div>
-              <div className="f-badge">🌍 Africa-wide</div>
-            </div>
           </div>
+
+          {/* Column 2: In-Demand Trades */}
           <div>
-            <div className="footer-ttl">Platform</div>
+            <div className="footer-ttl">Master Trades</div>
             <ul className="footer-links">
-              <li><a href="/search/providers.php">Find Talent</a></li>
-              <li><a href="/jobs.php">Browse Jobs</a></li>
-              <li><a href="/auth/register.php">Post a Job</a></li>
-              <li><a href="#">Enterprise</a></li>
-              <li><a href="#how">Pricing &amp; Tiers</a></li>
-              <li><a href="/auth/register.php?role=provider">Upgrade Badge</a></li>
+              <li><a href="/search/providers.php?cat=trades">Building &amp; Masonry</a></li>
+              <li><a href="/search/providers.php?cat=trades">POP Ceilings &amp; Painting</a></li>
+              <li><a href="/search/providers.php?cat=trades">Electrical &amp; Solar Inverters</a></li>
+              <li><a href="/search/providers.php?cat=trades">Plumbing &amp; Water Systems</a></li>
+              <li><a href="/search/providers.php?cat=trades">Bespoke Joinery &amp; Wood</a></li>
+              <li><a href="/search/providers.php?cat=tech">Software &amp; Web Apps</a></li>
+              <li><a href="/search/providers.php?cat=creative">Fashion &amp; Haute Couture</a></li>
             </ul>
           </div>
+
+          {/* Column 3: For Employers & Clients */}
           <div>
-            <div className="footer-ttl">Company</div>
+            <div className="footer-ttl">For Clients</div>
             <ul className="footer-links">
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Press</a></li>
-              <li><a href="#">Partners</a></li>
+              <li><a href="/search/providers.php">Find Verified Talent</a></li>
+              <li><a href="/jobs.php">Browse Live Opportunities</a></li>
+              <li><a href="/auth/register.php?role=client">Post a Job Requirement</a></li>
+              <li><a href="#how">How Escrow Protects You</a></li>
+              <li><a href="/search/providers.php?loc=Accra">Contractors in Accra</a></li>
+              <li><a href="/search/providers.php?loc=Kumasi">Artisans in Kumasi</a></li>
+              <li><a href="/search/providers.php?loc=Takoradi">Specialists in Takoradi</a></li>
             </ul>
           </div>
+
+          {/* Column 4: For Providers & Pros */}
           <div>
-            <div className="footer-ttl">Support &amp; Trust</div>
+            <div className="footer-ttl">For Providers</div>
             <ul className="footer-links">
-              <li><a href="#">Help Centre</a></li>
-              <li><a href="/privacy.php">Privacy Policy</a></li>
+              <li><a href="/auth/register.php?role=provider">Join as an Artisan</a></li>
+              <li><a href="#how">Membership Tiers &amp; Pricing</a></li>
+              <li><a href="/auth/register.php?role=provider&tier=verified">Get Verified Pro Badge</a></li>
+              <li><a href="#how">Ghana Card Verification Guide</a></li>
+              <li><a href="#how">Instant MoMo Withdrawal FAQ</a></li>
+              <li><a href="#reviews">Provider Success Stories</a></li>
+              <li><a href="#">Artisan Code of Conduct</a></li>
+            </ul>
+          </div>
+
+          {/* Column 5: Trust & Company */}
+          <div>
+            <div className="footer-ttl">Trust &amp; Legal</div>
+            <ul className="footer-links">
+              <li><a href="#">About GigGhana</a></li>
               <li><a href="/terms.php">Terms of Service</a></li>
-              <li><a href="#">Dispute Resolution</a></li>
+              <li><a href="/privacy.php">Privacy Policy (Act 843)</a></li>
+              <li><a href="#">Escrow Vault Guarantee</a></li>
+              <li><a href="#">Dispute Resolution Process</a></li>
+              <li><a href="#">Community Standards</a></li>
               <li>
-                <a href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" style={{ color: '#10B981', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                  💬 WhatsApp Support
+                <a href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" style={{ color: '#10B981', fontWeight: 650 }}>
+                  Help &amp; Live Concierge →
                 </a>
               </li>
             </ul>
           </div>
         </div>
+
+        {/* Regional Hubs Ribbon */}
+        <div className="footer-regions-bar">
+          <span className="footer-regions-title">Serving All 16 Regions:</span>
+          <div className="footer-regions-list">
+            <a href="/search/providers.php?loc=Accra">Greater Accra</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Kumasi">Ashanti (Kumasi)</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Takoradi">Western (Takoradi)</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Tamale">Northern (Tamale)</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=CapeCoast">Central (Cape Coast)</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Sunyani">Bono (Sunyani)</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Tema">Tema Industrial</a>
+            <span className="dot-sep">·</span>
+            <a href="/search/providers.php?loc=Ho">Volta (Ho)</a>
+          </div>
+        </div>
+
+        {/* Executive Bottom Bar with TechRoom Ghana Credits */}
         <div className="footer-bar">
-          <span className="footer-copy">
-            © {new Date().getFullYear()} GigGhana Ltd. Made with ❤️ in Accra, Ghana 🇬🇭
-          </span>
+          <div className="footer-copy">
+            <span>© {new Date().getFullYear()} GigGhana Ltd. All rights reserved.</span>
+            <span className="hidden sm:inline"> · </span>
+            <span className="text-muted">Empowering Ghanaian Talent 🇬🇭</span>
+          </div>
+
+          {/* Developed by TechRoom Ghana Badge */}
+          <div className="footer-credit">
+            <span>Developed by</span>
+            <a
+              href="https://techroomghana.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="techroom-badge"
+              title="TechRoom Ghana · Enterprise Software & Engineering"
+            >
+              <span className="techroom-pulse" />
+              <strong>TechRoom Ghana</strong>
+            </a>
+          </div>
+
           <div className="footer-socials">
-            <a className="soc-btn" href="#" title="Twitter / X">𝕏</a>
-            <a className="soc-btn" href="#" title="LinkedIn">in</a>
-            <a className="soc-btn" href="#" title="Instagram">ig</a>
-            <a className="soc-btn" href="#" title="Facebook">fb</a>
-            <a className="soc-btn" href="#" title="TikTok" style={{ fontSize: '11px' }}>TT</a>
+            <a className="soc-btn" href="#" title="Twitter / X" aria-label="Twitter">𝕏</a>
+            <a className="soc-btn" href="#" title="LinkedIn" aria-label="LinkedIn">in</a>
+            <a className="soc-btn" href="#" title="Instagram" aria-label="Instagram">ig</a>
+            <a className="soc-btn" href="#" title="Facebook" aria-label="Facebook">fb</a>
+            <a className="soc-btn" href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">wa</a>
           </div>
         </div>
       </footer>
