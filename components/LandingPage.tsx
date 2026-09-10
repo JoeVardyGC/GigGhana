@@ -8,6 +8,7 @@ import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { CommandSearchDialog } from './ui/command-dialog';
+import { WhatsAppIcon, FacebookIcon, LinkedInIcon, InstagramIcon, TwitterXIcon } from './ui/social-icons';
 import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
 
 const getCategoryTheme = (cat: any) => {
@@ -1388,7 +1389,7 @@ const occupationSlides = [
 
         {/* Sliding Carousel Swiping Left to Right */}
         <div className="rv-carousel-wrap">
-          <Marquee reverse pauseOnHover className="[--duration:30s] py-3">
+          <Marquee reverse pauseOnHover className="[--duration:28s] py-2">
             {testimonialFallbacks.map((rv, idx) => {
               const avatarFallbacks = [
                 '/images/avatars/avatar_male_1.jpg',
@@ -1402,28 +1403,31 @@ const occupationSlides = [
 
               return (
                 <div key={idx} className="rv-card">
-                  <div className="rv-card-top-row">
+                  <div className="rv-card-header">
+                    <div className="rv-av-box">
+                      <img
+                        src={avatarSrc}
+                        alt={`${rv.first_name} ${rv.last_name}`}
+                        className="rv-avatar-img"
+                        loading="eager"
+                      />
+                      <span className="rv-online-dot" />
+                    </div>
+                    <div className="rv-meta">
+                      <div className="rv-name-row">
+                        <span className="rv-name">{rv.first_name} {rv.last_name}</span>
+                        <span className="rv-verified-check" title="Biometric Ghana Card Verified">
+                          <BadgeCheck className="w-3.5 h-3.5 text-[#00D4C8]" />
+                        </span>
+                      </div>
+                      <span className="rv-trade">{rv.trade} · {rv.location}</span>
+                    </div>
                     <div className="rv-proof-pill">
-                      <CheckCircle2 className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                      <span>Verified Review</span>
+                      <CheckCircle2 className="w-3 h-3 text-[#10B981] shrink-0" />
+                      <span>{rv.payout_proof || 'Verified'}</span>
                     </div>
                   </div>
                   <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
-                  <div className="rv-author">
-                    <div className="rv-av">
-                      <img src={avatarSrc} alt={`${rv.first_name} ${rv.last_name}`} loading="lazy" />
-                    </div>
-                    <div className="rv-author-info">
-                      <div className="rv-name-row">
-                        <span className="rv-name">
-                          {`${rv.first_name} ${rv.last_name}`}
-                        </span>
-                        <span className="rv-verified-check" title="Biometric Ghana Card Verified">
-                          <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               );
             })}
@@ -1461,40 +1465,143 @@ const occupationSlides = [
         </div>
       </div>
 
-      {/* ══════ MINIMAL EXECUTIVE FOOTER (DEVELOPED BY TECHROOM GHANA) ══════ */}
+      {/* ══════ EXECUTIVE FOOTER (DEVELOPED BY TECHROOM GHANA) ══════ */}
       <footer className="footer-wrap">
-        <div className="footer-minimal-container">
-          {/* Top Row: Brand & Quick Navigation */}
-          <div className="footer-minimal-top">
-            <div className="footer-minimal-brand">
+        <div className="footer-container">
+          {/* Main 4-Column Directory Grid */}
+          <div className="footer-grid">
+            {/* Column 1: Brand & Live WhatsApp Concierge */}
+            <div className="footer-brand-col">
               <a href="/" className="logo">
                 <div className="logo-mark">G</div>
                 <span className="logo-text">
                   Gig<span>Ghana</span>
                 </span>
               </a>
-              <p className="footer-minimal-tagline">
-                Ghana&apos;s verified on-demand talent &amp; master artisan ecosystem.
+              <p className="footer-brand-desc">
+                Ghana&apos;s verified on-demand talent ecosystem connecting authenticated master artisans, skilled technicians, and digital pros with clients nationwide.
               </p>
+
+              {/* Dedicated WhatsApp Concierge Pill with Official WhatsApp Logo */}
+              <a
+                href="https://wa.me/233200000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-whatsapp-btn"
+                title="Live 24/7 WhatsApp Concierge"
+              >
+                <WhatsAppIcon className="w-5 h-5 shrink-0" />
+                <div className="f-wa-text">
+                  <span className="f-wa-title">WhatsApp Concierge</span>
+                  <span className="f-wa-sub">Instant Support · 24/7 Online</span>
+                </div>
+              </a>
+
+              {/* Direct Contacts */}
+              <div className="footer-contacts">
+                <a href="mailto:support@gigghana.com" className="footer-contact-link">
+                  <Mail className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
+                  <span>support@gigghana.com</span>
+                </a>
+                <a href="tel:+233501234567" className="footer-contact-link">
+                  <Phone className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
+                  <span>+233 (0) 50 123 4567</span>
+                </a>
+                <div className="footer-contact-link text-muted">
+                  <span>📍 Accra Digital Center, Ring Road West</span>
+                </div>
+              </div>
             </div>
 
-            <nav className="footer-minimal-nav" aria-label="Footer navigation">
-              <a href="/search/providers.php">Find Talent</a>
-              <a href="/jobs.php">Browse Jobs</a>
-              <a href="/auth/register.php?role=client">Post a Project</a>
-              <a href="#how">Membership Tiers</a>
-              <a href="#how">Escrow Vault</a>
-              <a href="/terms.php">Terms &amp; Privacy</a>
-              <a href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" className="footer-nav-whatsapp">
-                WhatsApp Support
-              </a>
-            </nav>
+            {/* Column 2: Master Trades */}
+            <div className="footer-col">
+              <div className="footer-col-ttl">Master Trades</div>
+              <ul className="footer-col-links">
+                <li><a href="/search/providers.php?cat=trades">Building &amp; Masonry</a></li>
+                <li><a href="/search/providers.php?cat=trades">POP Ceilings &amp; Painting</a></li>
+                <li><a href="/search/providers.php?cat=trades">Electrical &amp; Solar Inverters</a></li>
+                <li><a href="/search/providers.php?cat=trades">Plumbing &amp; Water Systems</a></li>
+                <li><a href="/search/providers.php?cat=trades">Bespoke Joinery &amp; Furniture</a></li>
+                <li><a href="/search/providers.php?cat=tech">Software &amp; Web Apps</a></li>
+                <li><a href="/search/providers.php?cat=creative">Fashion &amp; Haute Couture</a></li>
+              </ul>
+            </div>
+
+            {/* Column 3: For Clients */}
+            <div className="footer-col">
+              <div className="footer-col-ttl">For Clients</div>
+              <ul className="footer-col-links">
+                <li><a href="/search/providers.php">Find Verified Talent</a></li>
+                <li><a href="/jobs.php">Browse Live Job Feed</a></li>
+                <li><a href="/auth/register.php?role=client">Post a Project Requirement</a></li>
+                <li><a href="#how">How Escrow Protects You</a></li>
+                <li><a href="/search/providers.php?loc=Accra">Artisans in Accra</a></li>
+                <li><a href="/search/providers.php?loc=Kumasi">Contractors in Kumasi</a></li>
+                <li><a href="#how">Milestone Inspection Guide</a></li>
+              </ul>
+            </div>
+
+            {/* Column 4: For Artisans & Company */}
+            <div className="footer-col">
+              <div className="footer-col-ttl">For Artisans &amp; Trust</div>
+              <ul className="footer-col-links">
+                <li><a href="/auth/register.php?role=provider">Join as an Artisan</a></li>
+                <li><a href="#how">Membership Tiers (₵0 - ₵99)</a></li>
+                <li><a href="/auth/register.php?role=provider&tier=verified">Get Verified Pro Badge</a></li>
+                <li><a href="#how">Ghana Card Biometric Guide</a></li>
+                <li><a href="#how">Instant MoMo Withdrawal FAQ</a></li>
+                <li><a href="/terms.php">Terms of Service</a></li>
+                <li><a href="/privacy.php">Privacy Policy (Act 843)</a></li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Newsletter & Rate Alert Strip */}
+          <div className="footer-nl-strip">
+            <div className="footer-nl-info">
+              <span className="footer-nl-title">Get Weekly Artisan Market Rates &amp; Job Alerts</span>
+              <span className="footer-nl-desc">Stay ahead with verified trade rates, pricing trends, and project briefs in Ghana.</span>
+            </div>
+            <form className="nl-form" onSubmit={handleSubscribeNL}>
+              <input
+                className="nl-input"
+                type="email"
+                placeholder="Enter your email address"
+                value={nlEmail}
+                onChange={(e) => setNlEmail(e.target.value)}
+              />
+              <button type="submit" className="btn btn-gold nl-btn">
+                Subscribe
+              </button>
+            </form>
+          </div>
+
+          {/* Regional Hubs Ribbon */}
+          <div className="footer-regions-bar">
+            <span className="footer-regions-title">Serving All 16 Regions:</span>
+            <div className="footer-regions-list">
+              <a href="/search/providers.php?loc=Accra">Greater Accra</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Kumasi">Ashanti (Kumasi)</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Takoradi">Western (Takoradi)</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Tamale">Northern (Tamale)</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=CapeCoast">Central (Cape Coast)</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Sunyani">Bono (Sunyani)</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Tema">Tema Industrial</a>
+              <span className="dot-sep">·</span>
+              <a href="/search/providers.php?loc=Ho">Volta (Ho)</a>
+            </div>
           </div>
 
           {/* Middle Row: Trusted Payment Methods & Bank-Grade Security */}
           <div className="footer-payments-bar">
             <div className="footer-payments-label">
-              <span>Trusted Payment Methods</span>
+              <span>Trusted Payment Methods &amp; Escrow</span>
             </div>
             <div className="footer-payments-grid">
               <div className="footer-pay-pill" title="MTN Mobile Money">
@@ -1528,10 +1635,12 @@ const occupationSlides = [
             </div>
           </div>
 
-          {/* Bottom Row: TechRoom Ghana Attribution, Copyright & Socials */}
-          <div className="footer-minimal-bottom">
+          {/* Bottom Row: TechRoom Ghana Attribution, Copyright & Realistic Social Icons */}
+          <div className="footer-bottom-bar">
             <div className="footer-copy">
               <span>© {new Date().getFullYear()} GigGhana Ltd. All rights reserved.</span>
+              <span className="hidden sm:inline"> · </span>
+              <span className="text-muted">Empowering Ghanaian Talent 🇬🇭</span>
             </div>
 
             {/* Developed by TechRoom Ghana Badge */}
@@ -1549,12 +1658,50 @@ const occupationSlides = [
               </a>
             </div>
 
-            <div className="footer-socials">
-              <a className="soc-btn" href="#" title="Twitter / X" aria-label="Twitter">𝕏</a>
-              <a className="soc-btn" href="#" title="LinkedIn" aria-label="LinkedIn">in</a>
-              <a className="soc-btn" href="#" title="Instagram" aria-label="Instagram">ig</a>
-              <a className="soc-btn" href="#" title="Facebook" aria-label="Facebook">fb</a>
-              <a className="soc-btn" href="https://wa.me/233200000000" target="_blank" rel="noopener noreferrer" title="WhatsApp" aria-label="WhatsApp">wa</a>
+            {/* Realistic Social Media Icons */}
+            <div className="footer-socials-realistic">
+              <a
+                className="soc-btn-realistic"
+                href="https://wa.me/233200000000"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="WhatsApp"
+                aria-label="WhatsApp"
+              >
+                <WhatsAppIcon className="w-5 h-5" />
+              </a>
+              <a
+                className="soc-btn-realistic"
+                href="#"
+                title="X / Twitter"
+                aria-label="Twitter"
+              >
+                <TwitterXIcon className="w-5 h-5" />
+              </a>
+              <a
+                className="soc-btn-realistic"
+                href="#"
+                title="LinkedIn"
+                aria-label="LinkedIn"
+              >
+                <LinkedInIcon className="w-5 h-5" />
+              </a>
+              <a
+                className="soc-btn-realistic"
+                href="#"
+                title="Instagram"
+                aria-label="Instagram"
+              >
+                <InstagramIcon className="w-5 h-5" />
+              </a>
+              <a
+                className="soc-btn-realistic"
+                href="#"
+                title="Facebook"
+                aria-label="Facebook"
+              >
+                <FacebookIcon className="w-5 h-5" />
+              </a>
             </div>
           </div>
         </div>
