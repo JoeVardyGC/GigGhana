@@ -73,7 +73,7 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
         <Link href="/" className="logo group">
           <div className="logo-mark group-hover:scale-105 transition-transform">G</div>
           <span className="logo-text">
-            Gig<span className="text-[var(--cyan)]">Ghana</span>
+            Gig<span>Ghana</span>
           </span>
         </Link>
 

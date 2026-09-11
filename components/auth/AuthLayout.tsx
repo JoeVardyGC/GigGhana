@@ -30,13 +30,11 @@ export function AuthLayout({
 
       {/* Top Brand Navigation Header */}
       <header className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2.5 group">
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#00D4C8] via-[#008B82] to-[#F59E0B] flex items-center justify-center text-slate-950 font-black text-lg shadow-md group-hover:scale-105 transition-transform">
-            G
-          </div>
-          <div className="text-xl font-black tracking-tight text-[var(--tx)]">
-            Gig<span className="text-[var(--cyan)]">Ghana</span>
-          </div>
+        <a href="/" className="logo group">
+          <div className="logo-mark group-hover:scale-105 transition-transform">G</div>
+          <span className="logo-text">
+            Gig<span>Ghana</span>
+          </span>
         </a>
 
         <a
