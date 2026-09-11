@@ -515,11 +515,11 @@ const occupationSlides = [
           <button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
             {isLight ? '☀️' : '🌙'}
           </button>
-          <a href="/auth/login.php" className="btn btn-ghost">
+          <a href="/auth/login" className="btn btn-ghost">
             Sign In
           </a>
           <a
-            href="/auth/register.php"
+            href="/auth/register"
             className="btn btn-gold"
             onClick={triggerConfetti}
           >
@@ -551,8 +551,8 @@ const occupationSlides = [
         <a href="#how">How It Works</a>
         <a href="#categories">Categories</a>
         <a href="#trending">Trending</a>
-        <a href="/auth/login.php">Sign In</a>
-        <a href="/auth/register.php">Get Started Free</a>
+        <a href="/auth/login">Sign In</a>
+        <a href="/auth/register">Get Started Free</a>
       </div>
 
       {/* ══════ HERO SECTION (STRATEGY 1: ASYMMETRICAL 2-COLUMN SPLIT) ══════ */}
@@ -670,10 +670,10 @@ const occupationSlides = [
 
             {/* Action Buttons */}
             <div className="hero-acts">
-              <a href="/auth/register.php?role=client" className="btn btn-gold btn-lg">
+              <a href="/auth/register?role=client" className="btn btn-gold btn-lg">
                 Hire a Provider
               </a>
-              <a href="/auth/register.php?role=provider" className="btn btn-blue btn-lg">
+              <a href="/auth/register?role=provider" className="btn btn-blue btn-lg">
                 Find Jobs &amp; Work
               </a>
             </div>
@@ -917,7 +917,7 @@ const occupationSlides = [
                   <span>Browse All Providers</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
                 </a>
-                <a href="/auth/register.php?role=provider" className="btn btn-gold btn-xl">
+                <a href="/auth/register?role=provider" className="btn btn-gold btn-xl">
                   + Join as a Provider (Free)
                 </a>
               </div>
@@ -1344,7 +1344,7 @@ const occupationSlides = [
                 <span>MoMo escrow payouts</span>
               </div>
             </div>
-            <a href="/auth/register.php?role=provider" className="btn btn-ghost bt-action-btn bt-btn-beginner">
+            <a href="/auth/register?role=provider" className="btn btn-ghost bt-action-btn bt-btn-beginner">
               Get Started Free
             </a>
           </div>
@@ -1378,7 +1378,7 @@ const occupationSlides = [
                 <span><strong>3x Higher</strong> search visibility</span>
               </div>
             </div>
-            <a href="/auth/register.php?role=provider&tier=verified" className="btn btn-gold bt-action-btn">
+            <a href="/auth/register?role=provider&tier=verified" className="btn btn-gold bt-action-btn">
               Get Verified Status
             </a>
           </div>
@@ -1411,7 +1411,7 @@ const occupationSlides = [
                 <span>Priority 24/7 dedicated support</span>
               </div>
             </div>
-            <a href="/auth/register.php?role=provider&tier=premium" className="btn bt-action-btn bt-btn-premium">
+            <a href="/auth/register?role=provider&tier=premium" className="btn bt-action-btn bt-btn-premium">
               Upgrade to Premium
             </a>
           </div>
@@ -1542,14 +1542,14 @@ const occupationSlides = [
           </p>
           <div className="cta-btns">
             <a
-              href="/auth/register.php?role=provider"
+              href="/auth/register?role=provider"
               className="btn btn-gold btn-lg"
               onClick={triggerConfetti}
             >
               Sign Up as Provider
             </a>
             <a
-              href="/auth/register.php?role=client"
+              href="/auth/register?role=client"
               className="btn btn-blue btn-lg"
               onClick={triggerConfetti}
             >
@@ -1627,7 +1627,7 @@ const occupationSlides = [
               <ul className="footer-col-links">
                 <li><a href="/search/providers.php">Find Verified Talent</a></li>
                 <li><a href="/jobs.php">Browse Live Job Feed</a></li>
-                <li><a href="/auth/register.php?role=client">Post a Project Requirement</a></li>
+                <li><a href="/auth/register?role=client">Post a Project Requirement</a></li>
                 <li><a href="#how">How Escrow Protects You</a></li>
                 <li><a href="/search/providers.php?loc=Accra">Artisans in Accra</a></li>
                 <li><a href="/search/providers.php?loc=Kumasi">Contractors in Kumasi</a></li>
@@ -1639,9 +1639,9 @@ const occupationSlides = [
             <div className="footer-col">
               <div className="footer-col-ttl">For Artisans &amp; Trust</div>
               <ul className="footer-col-links">
-                <li><a href="/auth/register.php?role=provider">Join as an Artisan</a></li>
+                <li><a href="/auth/register?role=provider">Join as an Artisan</a></li>
                 <li><a href="#how">Membership Tiers (₵0 - ₵99)</a></li>
-                <li><a href="/auth/register.php?role=provider&tier=verified">Get Verified Pro Badge</a></li>
+                <li><a href="/auth/register?role=provider&tier=verified">Get Verified Pro Badge</a></li>
                 <li><a href="#how">Ghana Card Biometric Guide</a></li>
                 <li><a href="#how">Instant MoMo Withdrawal FAQ</a></li>
                 <li><a href="/terms.php">Terms of Service</a></li>
