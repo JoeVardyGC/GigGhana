@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, useMemo } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { AuthLayout } from '@/components/auth/AuthLayout';
 import { PhoneInput, TelecomNetwork } from '@/components/ui/phone-input';
@@ -23,18 +23,124 @@ import {
   BadgeCheck,
   Star,
   MapPin,
+  Search,
+  X,
+  Paintbrush,
+  Zap,
+  Hammer,
+  HardHat,
+  Flame,
+  Wind,
+  Car,
+  Laptop,
+  Palette,
+  Cpu,
+  Scissors,
+  Camera,
+  Stethoscope,
+  Utensils,
+  Truck,
+  FileText,
+  AlertCircle,
 } from 'lucide-react';
 
-const GHANA_TRADES = [
-  { id: 'pop', name: 'POP Ceilings & Decorative Plastering', icon: '🎨', defaultRate: 85 },
-  { id: 'solar', name: 'Solar PV & 3-Phase Electrical', icon: '⚡', defaultRate: 90 },
-  { id: 'plumbing', name: 'Industrial & Domestic Plumbing', icon: '🔧', defaultRate: 75 },
-  { id: 'carpentry', name: 'Bespoke Joinery & Cabinetry', icon: '🪚', defaultRate: 80 },
-  { id: 'masonry', name: 'Masonry & Tiling Construction', icon: '🧱', defaultRate: 85 },
-  { id: 'tech', name: 'Full-Stack Web & Mobile Apps', icon: '💻', defaultRate: 110 },
-  { id: 'couture', name: 'Haute Couture & Bespoke Fashion', icon: '👗', defaultRate: 95 },
-  { id: 'health', name: 'Physiotherapy & Home Nursing', icon: '🏥', defaultRate: 100 },
+export interface GhanaTradeOption {
+  id: string;
+  name: string;
+  category: string;
+  defaultRate: number;
+  iconName: string;
+}
+
+const GHANA_TRADES: GhanaTradeOption[] = [
+  // Construction & Finishing
+  { id: 'pop', name: 'POP Ceilings & Decorative Plastering', category: 'Finishing', defaultRate: 85, iconName: 'Paintbrush' },
+  { id: 'tiling', name: 'Ceramic, Porcelain & Marble Tiling', category: 'Finishing', defaultRate: 80, iconName: 'HardHat' },
+  { id: 'painting', name: 'Interior & Exterior Painting & Stucco', category: 'Finishing', defaultRate: 70, iconName: 'Paintbrush' },
+  { id: 'masonry', name: 'Masonry, Bricklaying & Concrete Works', category: 'Construction', defaultRate: 85, iconName: 'Building2' },
+  { id: 'carpentry', name: 'Bespoke Joinery & Cabinetry', category: 'Woodwork', defaultRate: 80, iconName: 'Hammer' },
+  { id: 'roofing', name: 'Roofing Truss, Slate & Sheet Installation', category: 'Construction', defaultRate: 90, iconName: 'HardHat' },
+  { id: 'welding', name: 'Metal Fabrication, Gates & Burglar Proofing', category: 'Metalwork', defaultRate: 85, iconName: 'Flame' },
+  { id: 'aluminum', name: 'Aluminum Glazing & Sliding Windows', category: 'Finishing', defaultRate: 75, iconName: 'Wrench' },
+
+  // Electrical & Security
+  { id: 'solar', name: 'Solar PV & Inverter Systems Installation', category: 'Electrical', defaultRate: 95, iconName: 'Zap' },
+  { id: 'electrical', name: 'Commercial & 3-Phase Domestic Electrical', category: 'Electrical', defaultRate: 90, iconName: 'Zap' },
+  { id: 'cctv', name: 'CCTV, Electric Fence & Smart Home Security', category: 'Security', defaultRate: 85, iconName: 'ShieldCheck' },
+  { id: 'hvac', name: 'Air Conditioning & Commercial Refrigeration', category: 'Mechanical', defaultRate: 80, iconName: 'Wind' },
+
+  // Plumbing
+  { id: 'plumbing', name: 'Industrial & Domestic Piping & Plumbing', category: 'Plumbing', defaultRate: 75, iconName: 'Wrench' },
+  { id: 'borehole', name: 'Borehole Drilling & Pumping Mechanics', category: 'Plumbing', defaultRate: 110, iconName: 'Wrench' },
+
+  // Automotive
+  { id: 'auto-mechanic', name: 'Automotive Engine & Mechanical Diagnostics', category: 'Automotive', defaultRate: 85, iconName: 'Car' },
+  { id: 'auto-electrical', name: 'Automotive Electrical & ECU Programming', category: 'Automotive', defaultRate: 90, iconName: 'Car' },
+
+  // Digital & Technology
+  { id: 'software', name: 'Full-Stack Web & Mobile App Development', category: 'Tech', defaultRate: 115, iconName: 'Laptop' },
+  { id: 'uiux', name: 'UI/UX Product Design & Brand Identity', category: 'Tech', defaultRate: 95, iconName: 'Palette' },
+  { id: 'it-support', name: 'Network Engineering & IT Hardware Support', category: 'Tech', defaultRate: 80, iconName: 'Cpu' },
+
+  // Creative & Lifestyle
+  { id: 'couture', name: 'Haute Couture, Kente & Bespoke Fashion', category: 'Fashion', defaultRate: 95, iconName: 'Scissors' },
+  { id: 'photography', name: 'Event Photography, Drone & Video Production', category: 'Media', defaultRate: 100, iconName: 'Camera' },
+  { id: 'hair-beauty', name: 'Bridal Hair Styling & Professional Makeup', category: 'Beauty', defaultRate: 80, iconName: 'Sparkles' },
+
+  // Health
+  { id: 'nursing', name: 'Physiotherapy, Geriatric & Home Nursing', category: 'Health', defaultRate: 100, iconName: 'Stethoscope' },
+
+  // Services
+  { id: 'catering', name: 'Commercial Catering & Event Culinary Services', category: 'Events', defaultRate: 85, iconName: 'Utensils' },
+  { id: 'logistics', name: 'Cargo Haulage & Inter-City Moving Services', category: 'Logistics', defaultRate: 100, iconName: 'Truck' },
+  { id: 'cleaning', name: 'Industrial Cleaning & Fumigation Services', category: 'Services', defaultRate: 70, iconName: 'Sparkles' },
 ];
+
+function getTradeIcon(iconName: string) {
+  const iconProps = { className: 'w-4 h-4 text-[var(--cyan)] shrink-0' };
+  switch (iconName) {
+    case 'Paintbrush':
+      return <Paintbrush {...iconProps} />;
+    case 'HardHat':
+      return <HardHat {...iconProps} />;
+    case 'Building2':
+      return <Building2 {...iconProps} />;
+    case 'Hammer':
+      return <Hammer {...iconProps} />;
+    case 'Flame':
+      return <Flame {...iconProps} />;
+    case 'Zap':
+      return <Zap {...iconProps} />;
+    case 'ShieldCheck':
+      return <ShieldCheck {...iconProps} />;
+    case 'Wind':
+      return <Wind {...iconProps} />;
+    case 'Wrench':
+      return <Wrench {...iconProps} />;
+    case 'Car':
+      return <Car {...iconProps} />;
+    case 'Laptop':
+      return <Laptop {...iconProps} />;
+    case 'Palette':
+      return <Palette {...iconProps} />;
+    case 'Cpu':
+      return <Cpu {...iconProps} />;
+    case 'Scissors':
+      return <Scissors {...iconProps} />;
+    case 'Camera':
+      return <Camera {...iconProps} />;
+    case 'Sparkles':
+      return <Sparkles {...iconProps} />;
+    case 'Stethoscope':
+      return <Stethoscope {...iconProps} />;
+    case 'Utensils':
+      return <Utensils {...iconProps} />;
+    case 'Truck':
+      return <Truck {...iconProps} />;
+    default:
+      return <Wrench {...iconProps} />;
+  }
+}
 
 const GHANA_CITIES = [
   'Airport Hills, Accra',
@@ -83,6 +189,7 @@ function RegisterContent() {
 
   // Provider specific
   const [selectedTrade, setSelectedTrade] = useState(GHANA_TRADES[0].name);
+  const [tradeSearchQuery, setTradeSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState(GHANA_CITIES[0]);
   const [hourlyRate, setHourlyRate] = useState<number>(GHANA_TRADES[0].defaultRate);
   const [ghanaCardPin, setGhanaCardPin] = useState('');
@@ -91,6 +198,17 @@ function RegisterContent() {
   const [cardBackImg, setCardBackImg] = useState<string | null>(null);
   const [payoutWallet, setPayoutWallet] = useState<'mtn' | 'telecel' | 'at'>('mtn');
   const [walletPhone, setWalletPhone] = useState('');
+
+  // Real-time filtered trades based on user typing in search bar
+  const filteredTrades = useMemo(() => {
+    if (!tradeSearchQuery.trim()) return GHANA_TRADES;
+    const q = tradeSearchQuery.toLowerCase().trim();
+    return GHANA_TRADES.filter(
+      (t) =>
+        t.name.toLowerCase().includes(q) ||
+        t.category.toLowerCase().includes(q)
+    );
+  }, [tradeSearchQuery]);
 
   // Client specific
   const [companyName, setCompanyName] = useState('');
@@ -129,6 +247,19 @@ function RegisterContent() {
       if (!password || password.length < 6) {
         setErrorMsg('Password must be at least 6 characters.');
         return;
+      }
+    }
+
+    if (role === 'provider' && step === 2) {
+      if (tradeSearchQuery.trim() && (filteredTrades.length === 0 || selectedTrade === GHANA_TRADES[0].name)) {
+        setSelectedTrade(tradeSearchQuery.trim());
+      }
+      if (!selectedTrade.trim() && !tradeSearchQuery.trim()) {
+        setErrorMsg('Please select or type your occupation/trade.');
+        return;
+      }
+      if (!selectedTrade.trim() && tradeSearchQuery.trim()) {
+        setSelectedTrade(tradeSearchQuery.trim());
       }
     }
 
@@ -282,7 +413,7 @@ function RegisterContent() {
                 <div className="flex items-center gap-2">
                   <BadgeCheck className="w-4 h-4 text-[#F59E0B]" />
                   <span className="font-semibold text-[var(--tx)]">
-                    Selected Tier: <strong>{tier === 'premium' ? '⭐ Premium Master (₵99/mo)' : '👑 Verified Pro (₵49/mo)'}</strong>
+                    Selected Tier: <strong>{tier === 'premium' ? 'Premium Master (₵99/mo)' : 'Verified Pro (₵49/mo)'}</strong>
                   </span>
                 </div>
                 <button
@@ -380,36 +511,135 @@ function RegisterContent() {
         {/* PROVIDER STEP 2: Trade & Location */}
         {role === 'provider' && step === 2 && (
           <>
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
-                <span>Select Your Master Specialization</span>
-                <span className="text-[10.5px] font-normal text-[var(--tx-3)]">Primary Trade</span>
-              </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                {GHANA_TRADES.map((trade) => (
-                  <button
-                    key={trade.id}
-                    type="button"
-                    onClick={() => {
-                      setSelectedTrade(trade.name);
-                      setHourlyRate(trade.defaultRate);
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between mb-1.5">
+                  <span>Select or Type Your Occupation</span>
+                  <span className="text-[10.5px] font-normal text-[var(--tx-3)]">Primary Trade</span>
+                </label>
+                <div className="relative flex items-center">
+                  <Search className="w-4 h-4 text-[var(--tx-3)] absolute left-3.5 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={tradeSearchQuery}
+                    onChange={(e) => {
+                      setTradeSearchQuery(e.target.value);
                     }}
-                    className={`p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
-                      selectedTrade === trade.name
-                        ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.08] shadow-xs'
-                        : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)]'
-                    }`}
-                  >
-                    <span className="text-lg leading-none">{trade.icon}</span>
-                    <div className="min-w-0 flex-1">
-                      <div className="text-xs font-bold text-[var(--tx)] truncate">{trade.name}</div>
-                      <div className="text-[10px] text-[var(--tx-3)]">Avg. ₵{trade.defaultRate}/hr</div>
+                    placeholder="Type your occupation (e.g. Electrician, POP, Tiler, Fashion)..."
+                    className="w-full h-11 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                  />
+                  {tradeSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setTradeSearchQuery('')}
+                      className="absolute right-3 text-[var(--tx-3)] hover:text-[var(--tx)] p-1 rounded-md transition-colors"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* Quick option to confirm whatever custom trade user typed */}
+              {tradeSearchQuery.trim() && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedTrade(tradeSearchQuery.trim());
+                  }}
+                  className={`w-full p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
+                    selectedTrade.toLowerCase() === tradeSearchQuery.trim().toLowerCase()
+                      ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.1] text-[var(--cyan)] ring-1 ring-[var(--cyan)]/30'
+                      : 'border-dashed border-[var(--cyan)]/50 hover:border-[var(--cyan)] bg-[var(--surface)] hover:bg-[var(--cyan)]/[0.04]'
+                  }`}
+                >
+                  <div className="w-7 h-7 rounded-lg bg-[var(--cyan)]/10 flex items-center justify-center shrink-0">
+                    <Wrench className="w-3.5 h-3.5 text-[var(--cyan)]" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="text-xs font-bold text-[var(--tx)] flex items-center gap-1.5">
+                      <span>Use Typed Occupation:</span>
+                      <span className="text-[var(--cyan)] font-semibold truncate underline">"{tradeSearchQuery.trim()}"</span>
                     </div>
-                    {selectedTrade === trade.name && (
-                      <Check className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />
-                    )}
-                  </button>
-                ))}
+                    <div className="text-[10px] text-[var(--tx-3)]">Click to confirm as your primary registered trade</div>
+                  </div>
+                  {selectedTrade.toLowerCase() === tradeSearchQuery.trim().toLowerCase() ? (
+                    <Check className="w-4 h-4 text-[var(--cyan)] shrink-0" />
+                  ) : (
+                    <span className="text-[10.5px] font-bold text-[var(--cyan)] shrink-0">Select</span>
+                  )}
+                </button>
+              )}
+
+              {/* Active Selection Badge */}
+              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-xs">
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="text-[var(--tx-3)] text-[11px] shrink-0">Selected Trade:</span>
+                  <span className="font-bold text-[var(--tx)] truncate">{selectedTrade || 'None selected'}</span>
+                </div>
+                <span className="text-[11px] font-mono text-[var(--cyan)] font-semibold shrink-0 ml-2">
+                  ₵{hourlyRate}/hr base
+                </span>
+              </div>
+
+              {/* Scrollable list of matched trades */}
+              <div className="space-y-1.5">
+                <div className="text-[10.5px] font-semibold uppercase tracking-wider text-[var(--tx-3)] flex items-center justify-between px-0.5">
+                  <span>Available Occupations {tradeSearchQuery && `(${filteredTrades.length} matches)`}</span>
+                  {tradeSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => setTradeSearchQuery('')}
+                      className="text-[10px] text-[var(--cyan)] hover:underline normal-case font-medium"
+                    >
+                      Clear search
+                    </button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-[220px] overflow-y-auto pr-1">
+                  {filteredTrades.length > 0 ? (
+                    filteredTrades.map((trade) => {
+                      const isSelected = selectedTrade === trade.name;
+                      return (
+                        <button
+                          key={trade.id}
+                          type="button"
+                          onClick={() => {
+                            setSelectedTrade(trade.name);
+                            setHourlyRate(trade.defaultRate);
+                          }}
+                          className={`p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
+                            isSelected
+                              ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.1] ring-1 ring-[var(--cyan)]/30'
+                              : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)]'
+                          }`}
+                        >
+                          <div className="w-7 h-7 rounded-lg bg-[var(--cyan)]/10 flex items-center justify-center shrink-0">
+                            {getTradeIcon(trade.iconName)}
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div className="text-xs font-bold text-[var(--tx)] truncate">{trade.name}</div>
+                            <div className="text-[10px] text-[var(--tx-3)] flex items-center gap-1.5">
+                              <span className="text-[var(--cyan)] font-medium">{trade.category}</span>
+                              <span>&bull;</span>
+                              <span>Avg. ₵{trade.defaultRate}/hr</span>
+                            </div>
+                          </div>
+                          {isSelected && <Check className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />}
+                        </button>
+                      );
+                    })
+                  ) : (
+                    <div className="col-span-full py-4 px-3 text-center text-xs text-[var(--tx-3)] bg-[var(--surface)] rounded-xl border border-dashed border-[var(--bd2)]">
+                      <p className="font-semibold text-[var(--tx)]">No preset trades matching "{tradeSearchQuery}"</p>
+                      <p className="text-[11px] mt-1 text-[var(--tx-2)]">
+                        Click the <span className="text-[var(--cyan)] font-bold">"Use Typed Occupation"</span> button above to register with this custom profession.
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -556,7 +786,10 @@ function RegisterContent() {
                       : 'border-[var(--bd2)] bg-[var(--surface)] hover:border-[var(--bd)]'
                   }`}
                 >
-                  <div className="text-xs font-bold text-[var(--tx)] mb-0.5">🔍 Browse &amp; Direct Hire</div>
+                  <div className="text-xs font-bold text-[var(--tx)] mb-0.5 flex items-center gap-1.5">
+                    <Search className="w-3.5 h-3.5 text-[var(--cyan)]" />
+                    <span>Browse &amp; Direct Hire</span>
+                  </div>
                   <div className="text-[11px] text-[var(--tx-3)]">Look through Ghana Card verified profiles and message them.</div>
                 </button>
 
@@ -569,7 +802,10 @@ function RegisterContent() {
                       : 'border-[var(--bd2)] bg-[var(--surface)] hover:border-[var(--bd)]'
                   }`}
                 >
-                  <div className="text-xs font-bold text-[var(--tx)] mb-0.5">📝 Post a Project Brief</div>
+                  <div className="text-xs font-bold text-[var(--tx)] mb-0.5 flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-[#F59E0B]" />
+                    <span>Post a Project Brief</span>
+                  </div>
                   <div className="text-[11px] text-[var(--tx-3)]">Receive competitive Cedi proposals from top local masters within 15 min.</div>
                 </button>
               </div>
@@ -588,7 +824,7 @@ function RegisterContent() {
         {/* Error message alert */}
         {errorMsg && (
           <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
-            <span>⚠️</span>
+            <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
