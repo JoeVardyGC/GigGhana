@@ -9,7 +9,6 @@ import { SiteFooter } from '@/components/layout/SiteFooter';
 import { useAuth } from '@/lib/context/AuthContext';
 import { detectGhanaNetwork } from '@/components/ui/phone-input';
 import { formatGhanaCardPin, validateGhanaCardPin } from '@/components/ui/ghana-card-input';
-import { SpotlightCard } from '@/components/ui/spotlight-card';
 import confetti from 'canvas-confetti';
 import {
   ShieldCheck,
@@ -483,92 +482,21 @@ function LoginContent() {
 
           </div>
 
-          {/* ══════ RIGHT COLUMN: AUTHENTICATION SUITE (HOMEPAGE LUXURY GLOWING CARD) ══════ */}
-          <div className="hero-right-showcase w-full max-w-[620px]">
+          {/* ══════ RIGHT COLUMN: AUTHENTICATION SUITE (HOMEPAGE LUXURY CARD) ══════ */}
+          <div className="hero-right-showcase w-full">
             <div className="showcase-outer-wrap">
-              <SpotlightCard
-                spotlightColor={
-                  activeInterface === 'provider'
-                    ? 'rgba(0, 212, 200, 0.22)'
-                    : 'rgba(245, 158, 11, 0.22)'
-                }
-                className={`relative overflow-hidden rounded-3xl transition-all duration-500 p-6 sm:p-9 flex flex-col gap-5 ${
-                  activeInterface === 'provider'
-                    ? 'border-cyan-500/40 shadow-[0_24px_65px_rgba(0,0,0,0.5),0_0_35px_rgba(0,212,200,0.22),0_0_0_1px_rgba(0,212,200,0.35)]'
-                    : 'border-amber-500/40 shadow-[0_24px_65px_rgba(0,0,0,0.5),0_0_35px_rgba(245,158,11,0.22),0_0_0_1px_rgba(245,158,11,0.35)]'
-                }`}
+              <div
+                className="showcase-card"
                 style={{
-                  background:
-                    activeInterface === 'provider'
-                      ? 'linear-gradient(180deg, rgba(0, 212, 200, 0.05) 0%, var(--surface) 28%)'
-                      : 'linear-gradient(180deg, rgba(245, 158, 11, 0.05) 0%, var(--surface) 28%)',
-                  backdropFilter: 'blur(20px)',
+                  height: 'auto',
+                  padding: '32px 28px',
+                  background: 'var(--surface)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '20px',
+                  boxShadow: '0 24px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--bd)',
                 }}
               >
-                {/* Top Neon Accent Beam with Glow (Signature Homepage Edge) */}
-                <div
-                  className="absolute -top-[1px] left-6 right-6 h-[2.5px] rounded-full transition-all duration-500 pointer-events-none z-20"
-                  style={{
-                    background:
-                      activeInterface === 'provider'
-                        ? 'linear-gradient(90deg, transparent, var(--cyan) 25%, #4DFFE8 50%, var(--cyan) 75%, transparent)'
-                        : 'linear-gradient(90deg, transparent, var(--gold) 25%, #FDE68A 50%, var(--gold) 75%, transparent)',
-                    boxShadow:
-                      activeInterface === 'provider'
-                        ? '0 0 16px var(--cyan), 0 0 32px var(--cyan)'
-                        : '0 0 16px var(--gold), 0 0 32px var(--gold)',
-                  }}
-                />
-
-                {/* Bottom Neon Accent Line */}
-                <div
-                  className="absolute -bottom-[1px] left-12 right-12 h-[1.5px] rounded-full transition-all duration-500 pointer-events-none opacity-70 z-20"
-                  style={{
-                    background:
-                      activeInterface === 'provider'
-                        ? 'linear-gradient(90deg, transparent, var(--cyan), transparent)'
-                        : 'linear-gradient(90deg, transparent, var(--gold), transparent)',
-                    boxShadow:
-                      activeInterface === 'provider'
-                        ? '0 0 10px var(--cyan)'
-                        : '0 0 10px var(--gold)',
-                  }}
-                />
-
-                {/* Ambient Corner Glow Filters (Matching Homepage .cta-glo) */}
-                <div
-                  className="absolute -top-16 -right-16 w-52 h-52 rounded-full pointer-events-none filter blur-2xl transition-all duration-500"
-                  style={{
-                    background:
-                      activeInterface === 'provider'
-                        ? 'radial-gradient(circle, rgba(0, 212, 200, 0.18) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(245, 158, 11, 0.18) 0%, transparent 70%)',
-                  }}
-                />
-                <div
-                  className="absolute -bottom-16 -left-16 w-52 h-52 rounded-full pointer-events-none filter blur-2xl transition-all duration-500"
-                  style={{
-                    background:
-                      activeInterface === 'provider'
-                        ? 'radial-gradient(circle, rgba(16, 185, 129, 0.14) 0%, transparent 70%)'
-                        : 'radial-gradient(circle, rgba(217, 119, 6, 0.14) 0%, transparent 70%)',
-                  }}
-                />
-
-                {/* ══════ HOMEPAGE BRAND LOGO ══════ */}
-                <div className="flex flex-col items-center justify-center pt-1 pb-1 text-center relative z-10">
-                  <Link href="/" className="logo group inline-flex items-center gap-2.5 transition-transform hover:scale-105">
-                    <div className="logo-mark group-hover:scale-105 transition-transform">G</div>
-                    <span className="logo-text text-2xl">
-                      Gig<span>Ghana</span>
-                    </span>
-                  </Link>
-                  <span className="text-[11px] text-[var(--tx-3)] font-mono mt-1.5 flex items-center gap-1.5">
-                    <ShieldCheck className="w-3.5 h-3.5 text-[var(--cyan)]" />
-                    <span>Escrow Protected &amp; Ghana Card Verified 🇬🇭</span>
-                  </span>
-                </div>
-
                 {/* Top Floating Gateway Badge */}
                 <div className="showcase-top-badge" style={{ position: 'static', transform: 'none', margin: '0 auto' }}>
                   <span className="live-pulse-dot" />
@@ -578,13 +506,13 @@ function LoginContent() {
                 </div>
 
                 {/* ══════ DUAL-ROLE INTERFACE TOGGLE ══════ */}
-                <div className="space-y-1.5 relative z-10">
+                <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs font-bold text-[var(--tx-2)]">
                     <span>Select Interface Mode:</span>
                     <span className="text-[10px] text-[var(--tx-3)] font-mono">2 Dedicated Gateways</span>
                   </div>
 
-                  <div className="p-1.5 rounded-xl bg-[var(--surface-2)] border border-[var(--bd)] grid grid-cols-2 gap-1.5 shadow-inner">
+                  <div className="p-1.5 rounded-2xl bg-[var(--surface-2)] border border-[var(--bd)] grid grid-cols-2 gap-1.5 shadow-inner">
                     <button
                       type="button"
                       onClick={() => {
@@ -620,14 +548,14 @@ function LoginContent() {
                 </div>
 
                 {/* ══════ AUTHENTICATION METHOD SELECTOR (3 TABS) ══════ */}
-                <div className="border-b border-[var(--bd)] pb-2 flex items-center justify-between gap-1 text-xs relative z-10">
+                <div className="border-b border-[var(--bd)] pb-2 flex items-center justify-between gap-1 text-xs">
                   <button
                     type="button"
                     onClick={() => {
                       setAuthMethod('password');
                       setErrorMsg('');
                     }}
-                    className={`flex-1 py-2 px-2.5 rounded-xl font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
                       authMethod === 'password'
                         ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
                         : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
@@ -643,7 +571,7 @@ function LoginContent() {
                       setAuthMethod('otp');
                       setErrorMsg('');
                     }}
-                    className={`flex-1 py-2 px-2.5 rounded-xl font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
                       authMethod === 'otp'
                         ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
                         : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
@@ -659,7 +587,7 @@ function LoginContent() {
                       setAuthMethod('ghanacard');
                       setErrorMsg('');
                     }}
-                    className={`flex-1 py-2 px-2.5 rounded-xl font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
                       authMethod === 'ghanacard'
                         ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
                         : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
@@ -672,7 +600,7 @@ function LoginContent() {
 
                 {/* ══════ METHOD 1: STANDARD PASSWORD FORM ══════ */}
                 {authMethod === 'password' && (
-                  <form onSubmit={handlePasswordSubmit} className="space-y-4 relative z-10">
+                  <form onSubmit={handlePasswordSubmit} className="space-y-4">
                     {/* Identifier */}
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs font-bold text-[var(--tx)]">
@@ -714,11 +642,7 @@ function LoginContent() {
                               ? 'e.g. 024 412 3456 or kwame@gigghana.com'
                               : 'e.g. 020 899 1234 or dr.frimpong@estate.com'
                           }
-                          className={`w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd)] ${
-                            activeInterface === 'provider'
-                              ? 'focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20'
-                              : 'focus:border-[var(--gold)] focus:ring-2 focus:ring-[var(--gold)]/20'
-                          } focus:outline-none transition-all shadow-inner`}
+                          className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-2xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all shadow-inner"
                           required
                         />
                         <div className="absolute right-4 text-[var(--tx-3)] pointer-events-none">
@@ -756,11 +680,7 @@ function LoginContent() {
                           value={password}
                           onChange={(e) => setPassword(e.target.value)}
                           placeholder="••••••••••••"
-                          className={`w-full h-12 pl-4 pr-12 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd)] ${
-                            activeInterface === 'provider'
-                              ? 'focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20'
-                              : 'focus:border-[var(--gold)] focus:ring-2 focus:ring-[var(--gold)]/20'
-                          } focus:outline-none transition-all shadow-inner`}
+                          className="w-full h-12 pl-4 pr-12 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-2xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all shadow-inner"
                           required
                         />
                         <button
@@ -788,7 +708,7 @@ function LoginContent() {
                     </div>
 
                     {errorMsg && (
-                      <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+                      <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 shrink-0" />
                         <span>{errorMsg}</span>
                       </div>
@@ -797,7 +717,7 @@ function LoginContent() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className={`btn w-full h-12 font-bold text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
+                      className={`btn w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
                         activeInterface === 'provider' ? 'btn-blue' : 'btn-gold'
                       }`}
                     >
@@ -818,7 +738,7 @@ function LoginContent() {
 
                 {/* ══════ METHOD 2: MOBILE MONEY SMS OTP FORM ══════ */}
                 {authMethod === 'otp' && (
-                  <div className="space-y-4 relative z-10">
+                  <div className="space-y-4">
                     {otpStep === 'request' ? (
                       <form onSubmit={handleRequestOtp} className="space-y-4">
                         <div className="space-y-1.5">
@@ -848,7 +768,7 @@ function LoginContent() {
                               value={otpPhone}
                               onChange={(e) => setOtpPhone(e.target.value)}
                               placeholder="024 XXX XXXX"
-                              className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-semibold rounded-xl border border-[var(--bd)] focus:border-emerald-500 focus:outline-none transition-all shadow-inner"
+                              className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-semibold rounded-2xl border border-[var(--bd)] focus:border-emerald-500 focus:outline-none transition-all shadow-inner"
                               required
                             />
                             <Smartphone className="w-4 h-4 text-emerald-400 absolute right-4 pointer-events-none" />
@@ -859,7 +779,7 @@ function LoginContent() {
                         </div>
 
                         {errorMsg && (
-                          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+                          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
                             <AlertCircle className="w-4 h-4 shrink-0" />
                             <span>{errorMsg}</span>
                           </div>
@@ -868,7 +788,7 @@ function LoginContent() {
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="btn btn-blue w-full h-12 font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+                          className="btn btn-blue w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
                         >
                           {isLoading ? (
                             <>
@@ -887,7 +807,7 @@ function LoginContent() {
                       <form onSubmit={handleVerifyOtp} className="space-y-4 animate-in fade-in duration-200">
                         
                         {/* Simulated Incoming SMS Toast */}
-                        <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-500 flex items-start gap-2.5 shadow-sm">
+                        <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-500 flex items-start gap-2.5 shadow-sm">
                           <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
                           <div className="flex-1">
                             <div className="font-bold font-mono">[SMS Simulation Received]</div>
@@ -950,7 +870,7 @@ function LoginContent() {
                         </div>
 
                         {errorMsg && (
-                          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+                          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
                             <AlertCircle className="w-4 h-4 shrink-0" />
                             <span>{errorMsg}</span>
                           </div>
@@ -959,7 +879,7 @@ function LoginContent() {
                         <button
                           type="submit"
                           disabled={isLoading}
-                          className="btn btn-blue w-full h-12 font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+                          className="btn btn-blue w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
                         >
                           {isLoading ? (
                             <>
@@ -980,7 +900,7 @@ function LoginContent() {
 
                 {/* ══════ METHOD 3: GHANA CARD BIOMETRIC PIN FORM ══════ */}
                 {authMethod === 'ghanacard' && (
-                  <form onSubmit={handleGhanaCardSubmit} className="space-y-4 animate-in fade-in duration-200 relative z-10">
+                  <form onSubmit={handleGhanaCardSubmit} className="space-y-4 animate-in fade-in duration-200">
                     <div className="space-y-1.5">
                       <div className="flex items-center justify-between text-xs font-bold text-[var(--tx)]">
                         <label htmlFor="ghana-card-pin">National Identity PIN</label>
@@ -994,7 +914,7 @@ function LoginContent() {
                           value={ghanaCardPin}
                           onChange={(e) => setGhanaCardPin(formatGhanaCardPin(e.target.value))}
                           placeholder="GHA-XXXXXXXXX-X"
-                          className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-bold tracking-wider rounded-xl border border-[var(--bd)] focus:border-amber-500 focus:outline-none transition-all shadow-inner uppercase"
+                          className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-bold tracking-wider rounded-2xl border border-[var(--bd)] focus:border-amber-500 focus:outline-none transition-all shadow-inner uppercase"
                           required
                         />
                         <ShieldCheck className="w-4 h-4 text-amber-400 absolute right-4 pointer-events-none" />
@@ -1005,7 +925,7 @@ function LoginContent() {
                     </div>
 
                     {/* Biometric Sensor Simulation Banner */}
-                    <div className="p-3.5 rounded-xl bg-amber-500/10 border border-amber-500/25 flex items-center gap-3">
+                    <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center gap-3">
                       <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
                         <Fingerprint className="w-6 h-6 animate-pulse" />
                       </div>
@@ -1018,7 +938,7 @@ function LoginContent() {
                     </div>
 
                     {errorMsg && (
-                      <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+                      <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
                         <AlertCircle className="w-4 h-4 shrink-0" />
                         <span>{errorMsg}</span>
                       </div>
@@ -1027,7 +947,7 @@ function LoginContent() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="btn btn-gold w-full h-12 font-bold text-sm shadow-xl flex items-center justify-center gap-2"
+                      className="btn btn-gold w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
                     >
                       {isScanningBiometric ? (
                         <>
@@ -1045,13 +965,13 @@ function LoginContent() {
                 )}
 
                 {/* Device & Session Security Footnote */}
-                <div className="pt-2 flex items-center justify-center gap-2 text-[10px] text-[var(--tx-3)] font-mono relative z-10">
+                <div className="pt-2 flex items-center justify-center gap-2 text-[10px] text-[var(--tx-3)] font-mono">
                   <Lock className="w-3 h-3 text-emerald-400" />
                   <span>256-Bit SSL Encrypted · Accra, Ghana Session</span>
                 </div>
 
                 {/* Register Switcher */}
-                <div className="pt-4 border-t border-[var(--bd)] text-center text-xs text-[var(--tx-2)] space-y-2 relative z-10">
+                <div className="pt-4 border-t border-[var(--bd)] text-center text-xs text-[var(--tx-2)] space-y-2">
                   <div>New to GigGhana? Register with your national ID:</div>
                   <div className="flex items-center justify-center gap-3">
                     <Link
@@ -1072,7 +992,7 @@ function LoginContent() {
                   </div>
                 </div>
 
-              </SpotlightCard>
+              </div>
             </div>
           </div>
 
@@ -1130,14 +1050,14 @@ function LoginContent() {
                   <button
                     type="button"
                     onClick={() => setIsForgotModalOpen(false)}
-                    className="btn btn-ghost px-4 py-2 text-xs font-bold"
+                    className="px-4 py-2 rounded-xl border border-[var(--bd)] text-xs text-[var(--tx)]"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isResetting}
-                    className="btn btn-blue px-4 py-2 text-xs font-bold flex items-center gap-1.5"
+                    className="btn btn-blue px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5"
                   >
                     {isResetting ? 'Sending...' : 'Send Recovery Code'}
                   </button>
@@ -1180,14 +1100,14 @@ function LoginContent() {
                   <button
                     type="button"
                     onClick={() => setResetStep('request')}
-                    className="btn btn-ghost px-3 py-2 text-xs font-bold"
+                    className="px-3 py-2 text-xs text-[var(--tx-3)] hover:text-[var(--tx)]"
                   >
                     Back
                   </button>
                   <button
                     type="submit"
                     disabled={isResetting}
-                    className="btn btn-gold px-4 py-2 text-xs font-bold flex items-center gap-1.5"
+                    className="btn btn-gold px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5"
                   >
                     {isResetting ? 'Updating...' : 'Set New Password'}
                   </button>

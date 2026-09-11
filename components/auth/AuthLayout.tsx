@@ -30,8 +30,8 @@ export function AuthLayout({
 
       {/* Top Brand Navigation Header */}
       <header className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 py-6 flex items-center justify-between">
-        <a href="/" className="logo group">
-          <div className="logo-mark group-hover:scale-105 transition-transform">G</div>
+        <a href="/" className="logo">
+          <div className="logo-mark">G</div>
           <span className="logo-text">
             Gig<span>Ghana</span>
           </span>

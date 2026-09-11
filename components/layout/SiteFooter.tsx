@@ -54,7 +54,7 @@ export function SiteFooter() {
             <Link href="/" className="logo">
               <div className="logo-mark">G</div>
               <span className="logo-text">
-                Gig<span className="text-[var(--cyan)]">Ghana</span>
+                Gig<span>Ghana</span>
               </span>
             </Link>
             <p className="text-xs sm:text-sm text-[var(--tx-2)] max-w-sm leading-relaxed">

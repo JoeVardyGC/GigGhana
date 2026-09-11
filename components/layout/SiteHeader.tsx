@@ -70,8 +70,8 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
     <>
       <header className={`navbar ${scrolledNav ? 'on' : ''}`} style={{ transition: 'all 0.3s ease' }}>
         {/* Brand Logo */}
-        <Link href="/" className="logo group">
-          <div className="logo-mark group-hover:scale-105 transition-transform">G</div>
+        <Link href="/" className="logo">
+          <div className="logo-mark">G</div>
           <span className="logo-text">
             Gig<span>Ghana</span>
           </span>
