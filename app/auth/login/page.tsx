@@ -45,7 +45,8 @@ function LoginContent() {
         } catch (_) {}
 
         setTimeout(() => {
-          router.push('/');
+          const userRole = res.user?.role || 'provider';
+          router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
         }, 800);
       } else {
         setErrorMsg(res.message || 'Invalid credentials. Please try again.');
@@ -68,7 +69,7 @@ function LoginContent() {
       });
     } catch (_) {}
     setTimeout(() => {
-      router.push('/');
+      router.push(demo === 'frimpong_client' ? '/dashboard/client' : '/dashboard/provider');
     }, 600);
   };
 

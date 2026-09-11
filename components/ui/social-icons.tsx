@@ -1,8 +1,13 @@
 import React from 'react';
 
-export function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
+interface SocialIconProps {
+  className?: string;
+  size?: number;
+}
+
+export function WhatsAppIcon({ className = "w-5 h-5", size }: SocialIconProps) {
   return (
-    <svg viewBox="0 0 256 258" className={className} fill="none">
+    <svg viewBox="0 0 256 258" className={className} width={size} height={size} fill="none">
       <defs>
         <linearGradient id="wa-grad-1" x1="50%" x2="50%" y1="100%" y2="0%">
           <stop offset="0%" stopColor="#1faf38" />
@@ -29,9 +34,9 @@ export function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) 
   );
 }
 
-export function FacebookIcon({ className = "w-5 h-5" }: { className?: string }) {
+export function FacebookIcon({ className = "w-5 h-5", size }: SocialIconProps) {
   return (
-    <svg viewBox="0 0 256 256" className={className} fill="none">
+    <svg viewBox="0 0 256 256" className={className} width={size} height={size} fill="none">
       <path
         fill="#1877f2"
         d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128c0 63.888 46.808 116.843 108 126.445V165H75.5v-37H108V99.8c0-32.08 19.11-49.8 48.348-49.8C170.352 50 185 52.5 185 52.5V84h-16.14C152.959 84 148 93.867 148 103.99V128h35.5l-5.675 37H148v89.445c61.192-9.602 108-62.556 108-126.445"
@@ -44,9 +49,9 @@ export function FacebookIcon({ className = "w-5 h-5" }: { className?: string }) 
   );
 }
 
-export function LinkedInIcon({ className = "w-5 h-5" }: { className?: string }) {
+export function LinkedInIcon({ className = "w-5 h-5", size }: SocialIconProps) {
   return (
-    <svg viewBox="0 0 256 256" className={className} fill="none">
+    <svg viewBox="0 0 256 256" className={className} width={size} height={size} fill="none">
       <rect width="256" height="256" rx="56" fill="#0A66C2" />
       <path
         fill="#ffffff"
@@ -56,9 +61,9 @@ export function LinkedInIcon({ className = "w-5 h-5" }: { className?: string }) 
   );
 }
 
-export function InstagramIcon({ className = "w-5 h-5" }: { className?: string }) {
+export function InstagramIcon({ className = "w-5 h-5", size }: SocialIconProps) {
   return (
-    <svg viewBox="0 0 256 256" className={className} fill="none">
+    <svg viewBox="0 0 256 256" className={className} width={size} height={size} fill="none">
       <defs>
         <radialGradient
           id="ig-rad-1"
@@ -96,9 +101,9 @@ export function InstagramIcon({ className = "w-5 h-5" }: { className?: string })
   );
 }
 
-export function TwitterXIcon({ className = "w-5 h-5" }: { className?: string }) {
+export function TwitterXIcon({ className = "w-5 h-5", size }: SocialIconProps) {
   return (
-    <svg viewBox="0 0 256 256" className={className} fill="none">
+    <svg viewBox="0 0 256 256" className={className} width={size} height={size} fill="none">
       <rect width="256" height="256" rx="56" fill="#0f1419" />
       <path
         fill="#ffffff"

@@ -12,6 +12,18 @@ const nextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/jobs.php',
+        destination: '/jobs',
+      },
+      {
+        source: '/search/providers.php',
+        destination: '/search/providers',
+      },
+    ];
+  },
 };
 
 export default nextConfig;

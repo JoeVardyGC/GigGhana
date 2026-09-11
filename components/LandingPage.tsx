@@ -10,7 +10,8 @@ import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { GhanaCard } from './ui/ghana-card';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { WhatsAppIcon, FacebookIcon, LinkedInIcon, InstagramIcon, TwitterXIcon } from './ui/social-icons';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers, LogOut } from 'lucide-react';
+import { useAuth } from '@/lib/context/AuthContext';
 
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
@@ -262,6 +263,7 @@ interface ToastItem {
 
 export default function LandingPage({ initialData }: Props) {
   const { stats, categories, featured, matchedProviders, recentJobs, liveJobs, earningsData, earningsTotal, reviews } = initialData;
+  const { user, isAuthenticated, logout } = useAuth();
 
   // Language state
   const [lang, setLang] = useState<'en' | 'tw'>('en');
@@ -501,8 +503,8 @@ const occupationSlides = [
           </span>
         </a>
         <div className="nav-links">
-          <a href="/search/providers.php">Find Talent</a>
-          <a href="/jobs.php">Browse Jobs</a>
+          <a href="/search/providers">Find Talent</a>
+          <a href="/jobs">Browse Jobs</a>
           <a href="#how">How It Works</a>
           <a href="#categories">Categories</a>
           <a href="#trending">Trending</a>
@@ -515,16 +517,43 @@ const occupationSlides = [
           <button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
             {isLight ? '☀️' : '🌙'}
           </button>
-          <a href="/auth/login" className="btn btn-ghost">
-            Sign In
-          </a>
-          <a
-            href="/auth/register"
-            className="btn btn-gold"
-            onClick={triggerConfetti}
-          >
-            Get Started Free
-          </a>
+          {isAuthenticated && user ? (
+            <div className="flex items-center gap-2">
+              <a
+                href={user.role === 'client' ? '/dashboard/client' : '/dashboard/provider'}
+                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[var(--cyan-border)] bg-[var(--cyan-dim)] text-[var(--cyan)] hover:bg-[var(--cyan)] hover:text-black font-semibold text-xs transition-all shadow-sm group"
+              >
+                <div className="w-6 h-6 rounded-full bg-[var(--cyan)] text-black font-bold flex items-center justify-center text-[11px]">
+                  {user.first_name[0]}
+                </div>
+                <span className="hidden sm:inline">{user.first_name}</span>
+                <span className="text-[10px] opacity-80 uppercase tracking-wider hidden lg:inline">
+                  ({user.role === 'client' ? 'Client' : 'Artisan'})
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              </a>
+              <button
+                onClick={logout}
+                title="Log Out"
+                className="p-2 rounded-xl text-[var(--tx-3)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
+            </div>
+          ) : (
+            <>
+              <a href="/auth/login" className="btn btn-ghost">
+                Sign In
+              </a>
+              <a
+                href="/auth/register"
+                className="btn btn-gold"
+                onClick={triggerConfetti}
+              >
+                Get Started Free
+              </a>
+            </>
+          )}
         </div>
         <div className="ham" onClick={() => setIsMobOpen(!isMobOpen)}>
           <span
@@ -546,13 +575,38 @@ const occupationSlides = [
       </nav>
 
       <div className={`mobile-nav ${isMobOpen ? 'open' : ''}`}>
-        <a href="/search/providers.php">Find Talent</a>
-        <a href="/jobs.php">Browse Jobs</a>
-        <a href="#how">How It Works</a>
-        <a href="#categories">Categories</a>
-        <a href="#trending">Trending</a>
-        <a href="/auth/login">Sign In</a>
-        <a href="/auth/register">Get Started Free</a>
+        <a href="/search/providers" onClick={() => setIsMobOpen(false)}>Find Talent</a>
+        <a href="/jobs" onClick={() => setIsMobOpen(false)}>Browse Jobs</a>
+        <a href="#how" onClick={() => setIsMobOpen(false)}>How It Works</a>
+        <a href="#categories" onClick={() => setIsMobOpen(false)}>Categories</a>
+        <a href="#trending" onClick={() => setIsMobOpen(false)}>Trending</a>
+        {isAuthenticated && user ? (
+          <div className="pt-2 flex flex-col gap-2">
+            <a
+              href={user.role === 'client' ? '/dashboard/client' : '/dashboard/provider'}
+              onClick={() => setIsMobOpen(false)}
+              className="w-full py-2.5 rounded-xl bg-[var(--cyan)] text-black font-bold text-xs text-center flex items-center justify-center gap-1.5"
+            >
+              <span>Go to {user.role === 'client' ? 'Client' : 'Provider'} Workspace</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+            <button
+              onClick={() => {
+                logout();
+                setIsMobOpen(false);
+              }}
+              className="w-full py-2 rounded-xl border border-red-500/20 text-red-500 font-semibold text-xs flex items-center justify-center gap-1.5 hover:bg-red-500/10"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Log Out</span>
+            </button>
+          </div>
+        ) : (
+          <>
+            <a href="/auth/login" onClick={() => setIsMobOpen(false)}>Sign In</a>
+            <a href="/auth/register" onClick={() => setIsMobOpen(false)}>Get Started Free</a>
+          </>
+        )}
       </div>
 
       {/* ══════ HERO SECTION (STRATEGY 1: ASYMMETRICAL 2-COLUMN SPLIT) ══════ */}
@@ -596,7 +650,7 @@ const occupationSlides = [
                 className="search-wrap"
                 onSubmit={(e) => {
                   e.preventDefault();
-                  const target = `/search/providers.php?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}&region=${encodeURIComponent(selectedRegion)}`;
+                  const target = `/search/providers?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}&region=${encodeURIComponent(selectedRegion)}`;
                   window.location.href = target;
                 }}
               >
@@ -654,7 +708,7 @@ const occupationSlides = [
                       onClick={() => {
                         setSearchQuery(m.text);
                         setAutocompleteOpen(false);
-                        window.location.href = `/search/providers.php?q=${encodeURIComponent(m.text)}`;
+                        window.location.href = `/search/providers?q=${encodeURIComponent(m.text)}`;
                       }}
                     >
                       <div className="auto-icon">{m.icon}</div>
@@ -848,7 +902,7 @@ const occupationSlides = [
                         </div>
 
                         <h3 className="artisan-studio-headline">
-                          <a href={`/profile.php?id=${p.user_id || p.id}`}>
+                          <a href={`/search/providers?q=${encodeURIComponent(p.first_name)}`}>
                             {p.tagline || `${p.first_name} ${p.last_name} - Certified Ghanaian Specialist`}
                           </a>
                         </h3>
@@ -898,7 +952,7 @@ const occupationSlides = [
                             </div>
                           ) : <div />}
                           <a
-                            href={`/profile.php?id=${p.user_id || p.id}`}
+                            href={`/search/providers?q=${encodeURIComponent(p.first_name)}`}
                             className={`btn ${isLeadSpotlight ? 'btn-gold' : 'btn-blue'} artisan-footer-btn`}
                           >
                             View Profile &amp; Hire →
@@ -912,7 +966,7 @@ const occupationSlides = [
 
               {/* View More Providers Action Footer */}
               <div className="ljf-footer-actions">
-                <a href="/search/providers.php" className="btn btn-ghost btn-xl ljf-view-more-btn group">
+                <a href="/search/providers" className="btn btn-ghost btn-xl ljf-view-more-btn group">
                   <Search className="w-4 h-4 text-[#00D4C8] shrink-0" />
                   <span>Browse All Providers</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
@@ -1029,7 +1083,7 @@ const occupationSlides = [
 
                         {/* Card Title */}
                         <h3 className="rjh-jc-title">
-                          <a href={`/jobs.php?id=${j.id}`}>{j.title}</a>
+                          <a href="/jobs">{j.title}</a>
                         </h3>
 
                         {/* Description Excerpt */}
@@ -1064,8 +1118,8 @@ const occupationSlides = [
                               {j.budget_type === 'hourly' ? 'Hourly Rate' : 'Fixed Escrow'}
                             </div>
                           </div>
-                          <a href={`/jobs.php?id=${j.id}`} className="btn btn-blue rjh-jc-btn">
-                            Apply Now →
+                          <a href="/jobs" className="btn btn-blue rjh-jc-btn">
+                            Apply in Escrow →
                           </a>
                         </div>
                       </div>
@@ -1076,13 +1130,13 @@ const occupationSlides = [
 
               {/* View More Jobs Action Footer */}
               <div className="ljf-footer-actions">
-                <a href="/jobs.php" className="btn btn-ghost btn-xl ljf-view-more-btn group">
+                <a href="/jobs" className="btn btn-ghost btn-xl ljf-view-more-btn group">
                   <Search className="w-4 h-4 text-[#00D4C8] shrink-0" />
                   <span>Browse All Jobs</span>
                   <ArrowRight className="w-4 h-4 text-current transition-transform duration-200 group-hover:translate-x-1 shrink-0" />
                 </a>
-                <a href="/post-job.php" className="btn btn-gold btn-xl">
-                  + Post a Job (Free)
+                <a href="/dashboard/client" className="btn btn-gold btn-xl">
+                  + Post a Project Brief
                 </a>
               </div>
             </div>
@@ -1113,7 +1167,7 @@ const occupationSlides = [
                 className="cat-card p-0"
               >
                 <a
-                  href={`/search/providers.php?category=${cat.id}`}
+                  href={`/search/providers?category=${cat.id}`}
                   className="cat-card-inner group"
                 >
                   <div className="cat-card-top">
@@ -1186,7 +1240,7 @@ const occupationSlides = [
           {trends.map(([ic, lb, nm], idx) => (
             <a
               key={idx}
-              href={`/search/providers.php?q=${encodeURIComponent(lb)}`}
+              href={`/search/providers?q=${encodeURIComponent(lb)}`}
               className="trend-pill group"
             >
               <Search className="w-3.5 h-3.5 text-[#00D4C8] opacity-75 group-hover:opacity-100 transition-opacity" />
@@ -1611,13 +1665,13 @@ const occupationSlides = [
             <div className="footer-col">
               <div className="footer-col-ttl">Master Trades</div>
               <ul className="footer-col-links">
-                <li><a href="/search/providers.php?cat=trades">Building &amp; Masonry</a></li>
-                <li><a href="/search/providers.php?cat=trades">POP Ceilings &amp; Painting</a></li>
-                <li><a href="/search/providers.php?cat=trades">Electrical &amp; Solar Inverters</a></li>
-                <li><a href="/search/providers.php?cat=trades">Plumbing &amp; Water Systems</a></li>
-                <li><a href="/search/providers.php?cat=trades">Bespoke Joinery &amp; Furniture</a></li>
-                <li><a href="/search/providers.php?cat=tech">Software &amp; Web Apps</a></li>
-                <li><a href="/search/providers.php?cat=creative">Fashion &amp; Haute Couture</a></li>
+                <li><a href="/search/providers?cat=trades">Building &amp; Masonry</a></li>
+                <li><a href="/search/providers?cat=trades">POP Ceilings &amp; Painting</a></li>
+                <li><a href="/search/providers?cat=trades">Electrical &amp; Solar Inverters</a></li>
+                <li><a href="/search/providers?cat=trades">Plumbing &amp; Water Systems</a></li>
+                <li><a href="/search/providers?cat=trades">Bespoke Joinery &amp; Furniture</a></li>
+                <li><a href="/search/providers?cat=tech">Software &amp; Web Apps</a></li>
+                <li><a href="/search/providers?cat=creative">Fashion &amp; Haute Couture</a></li>
               </ul>
             </div>
 
@@ -1625,12 +1679,12 @@ const occupationSlides = [
             <div className="footer-col">
               <div className="footer-col-ttl">For Clients</div>
               <ul className="footer-col-links">
-                <li><a href="/search/providers.php">Find Verified Talent</a></li>
-                <li><a href="/jobs.php">Browse Live Job Feed</a></li>
+                <li><a href="/search/providers">Find Verified Talent</a></li>
+                <li><a href="/jobs">Browse Live Job Feed</a></li>
                 <li><a href="/auth/register?role=client">Post a Project Requirement</a></li>
                 <li><a href="#how">How Escrow Protects You</a></li>
-                <li><a href="/search/providers.php?loc=Accra">Artisans in Accra</a></li>
-                <li><a href="/search/providers.php?loc=Kumasi">Contractors in Kumasi</a></li>
+                <li><a href="/search/providers?loc=Accra">Artisans in Accra</a></li>
+                <li><a href="/search/providers?loc=Kumasi">Contractors in Kumasi</a></li>
                 <li><a href="#how">Milestone Inspection Guide</a></li>
               </ul>
             </div>
@@ -1644,8 +1698,8 @@ const occupationSlides = [
                 <li><a href="/auth/register?role=provider&tier=verified">Get Verified Pro Badge</a></li>
                 <li><a href="#how">Ghana Card Biometric Guide</a></li>
                 <li><a href="#how">Instant MoMo Withdrawal FAQ</a></li>
-                <li><a href="/terms.php">Terms of Service</a></li>
-                <li><a href="/privacy.php">Privacy Policy (Act 843)</a></li>
+                <li><a href="/#how">Terms of Escrow Service</a></li>
+                <li><a href="/#how">Privacy Policy (Act 843)</a></li>
               </ul>
             </div>
           </div>
@@ -1674,21 +1728,21 @@ const occupationSlides = [
           <div className="footer-regions-bar">
             <span className="footer-regions-title">Serving All 16 Regions:</span>
             <div className="footer-regions-list">
-              <a href="/search/providers.php?loc=Accra">Greater Accra</a>
+              <a href="/search/providers?loc=Accra">Greater Accra</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Kumasi">Ashanti (Kumasi)</a>
+              <a href="/search/providers?loc=Kumasi">Ashanti (Kumasi)</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Takoradi">Western (Takoradi)</a>
+              <a href="/search/providers?loc=Takoradi">Western (Takoradi)</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Tamale">Northern (Tamale)</a>
+              <a href="/search/providers?loc=Tamale">Northern (Tamale)</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=CapeCoast">Central (Cape Coast)</a>
+              <a href="/search/providers?loc=CapeCoast">Central (Cape Coast)</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Sunyani">Bono (Sunyani)</a>
+              <a href="/search/providers?loc=Sunyani">Bono (Sunyani)</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Tema">Tema Industrial</a>
+              <a href="/search/providers?loc=Tema">Tema Industrial</a>
               <span className="dot-sep">·</span>
-              <a href="/search/providers.php?loc=Ho">Volta (Ho)</a>
+              <a href="/search/providers?loc=Ho">Volta (Ho)</a>
             </div>
           </div>
 
