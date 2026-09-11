@@ -1692,43 +1692,6 @@ const occupationSlides = [
             </div>
           </div>
 
-          {/* Middle Row: Trusted Payment Methods & Bank-Grade Security */}
-          <div className="footer-payments-bar">
-            <div className="footer-payments-label">
-              <span>Trusted Payment Methods &amp; Escrow</span>
-            </div>
-            <div className="footer-payments-grid">
-              <div className="footer-pay-pill" title="MTN Mobile Money">
-                <img src="/images/payments/mtn_momo.svg" alt="MTN MoMo" className="pay-badge-img" />
-                <span className="pay-badge-name">MTN MoMo</span>
-              </div>
-              <div className="footer-pay-pill" title="Telecel Cash">
-                <img src="/images/payments/telecel_cash.svg" alt="Telecel Cash" className="pay-badge-img" />
-                <span className="pay-badge-name">Telecel Cash</span>
-              </div>
-              <div className="footer-pay-pill" title="AT Money">
-                <img src="/images/payments/at_money.svg" alt="AT Money" className="pay-badge-img" />
-                <span className="pay-badge-name">AT Money</span>
-              </div>
-              <div className="footer-pay-pill" title="Paystack">
-                <img src="/images/payments/paystack.svg" alt="Paystack" className="pay-badge-img" />
-                <span className="pay-badge-name">Paystack</span>
-              </div>
-              <div className="footer-pay-pill" title="Visa">
-                <img src="/images/payments/visa.svg" alt="Visa" className="pay-badge-img" />
-                <span className="pay-badge-name">Visa</span>
-              </div>
-              <div className="footer-pay-pill" title="Mastercard">
-                <img src="/images/payments/mastercard.svg" alt="Mastercard" className="pay-badge-img" />
-                <span className="pay-badge-name">Mastercard</span>
-              </div>
-              <div className="footer-pay-vault" title="100% Escrow Vault Guarantee">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#10B981] shrink-0" />
-                <span>100% Escrow Secured</span>
-              </div>
-            </div>
-          </div>
-
           {/* Bottom Row: TechRoom Ghana Attribution, Copyright & Realistic Social Icons */}
           <div className="footer-bottom-bar">
             <div className="footer-copy">
