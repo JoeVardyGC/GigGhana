@@ -1521,12 +1521,20 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
   position: relative;
 }
 
+.live-job-feed-section .s-head {
+  margin-bottom: 8px;
+}
+
+.live-job-feed-section .s-sub {
+  margin-bottom: 0;
+}
+
 .ljf-container {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 16px;
 }
 
 .ljf-header {
@@ -1564,7 +1572,7 @@ html.dark .panel-slide p, [data-theme="dark"] .panel-slide p {
   justify-content: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin: 0 auto 6px;
+  margin: 4px auto 14px;
 }
 
 .rjh-filter-btn {
@@ -3118,43 +3126,165 @@ html.dark .badge-tier-card, [data-theme="dark"] .badge-tier-card {
   box-shadow: 0 6px 20px rgba(245, 158, 11, 0.38) !important;
 }
 
-/* ══════ REVIEWS SLIDING CAROUSEL (SWIPING LEFT TO RIGHT) ══════ */
+/* ══════ TRUSTED PAYMENT & ESCROW PARTNERS MARQUEE (UNDER TIERS) ══════ */
+.pay-partners-marquee-wrap {
+  text-align: center;
+  margin-top: 42px;
+  padding: 0 12px;
+}
+
+.pay-partners-head {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.pay-partners-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 212, 200, 0.08);
+  border: 1px solid rgba(0, 212, 200, 0.28);
+  color: var(--cyan);
+  padding: 4px 14px;
+  border-radius: 50px;
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-family: var(--fm);
+}
+
+.pay-partners-title {
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 800;
+  color: var(--tx);
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+}
+
+.pay-partners-sub {
+  font-size: 13.5px;
+  color: var(--tx-2);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pay-marquee-outer {
+  position: relative;
+  overflow: hidden;
+}
+
+.pay-partner-card {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--bd2);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin: 0 8px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+}
+
+html.dark .pay-partner-card, [data-theme="dark"] .pay-partner-card {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), var(--surface);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.pay-partner-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--cyan-border);
+  box-shadow: 0 8px 20px rgba(0, 212, 200, 0.12);
+}
+
+.pay-partner-logo {
+  height: 26px;
+  width: auto;
+  max-width: 72px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.pay-partner-icon-box {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(0, 212, 200, 0.1);
+  border: 1px solid rgba(0, 212, 200, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.pay-partner-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  text-align: left;
+}
+
+.pay-partner-name {
+  font-weight: 750;
+  font-size: 12.5px;
+  color: var(--tx);
+  font-family: var(--fm);
+  white-space: nowrap;
+}
+
+.pay-partner-badge-text {
+  font-size: 10px;
+  color: var(--tx-3);
+  font-weight: 550;
+  white-space: nowrap;
+}
+
+/* ══════ WORLD-CLASS REVIEWS & TESTIMONIALS CAROUSEL ══════ */
 .rv-carousel-wrap {
   width: 100%;
-  overflow: hidden;
   position: relative;
-  margin-top: 10px;
+  overflow: hidden;
+  margin-top: 14px;
 }
 
 .rv-card {
-  width: 320px;
-  max-width: 82vw;
-  flex-shrink: 0;
+  width: 350px;
+  max-width: 350px;
+  min-width: 350px;
+  flex: 0 0 350px;
   background: var(--surface);
-  border: 1.5px solid var(--bd2);
-  border-radius: 16px;
-  padding: 14px 16px;
+  border: 1px solid var(--bd2);
+  border-radius: 18px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 0 10px;
   transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   position: relative;
   user-select: none;
+  box-sizing: border-box;
 }
 
 html.dark .rv-card, [data-theme="dark"] .rv-card {
-  box-shadow: 0 4px 20px rgba(255, 255, 255, 0.05), 0 0 0 1px rgba(255, 255, 255, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%), var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
 }
 
 .rv-card:hover {
-  transform: translateY(-3px);
+  transform: translateY(-4px);
   border-color: var(--cyan-border);
-  box-shadow: 0 12px 28px var(--cyan-dim), 0 2px 6px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 14px 30px rgba(0, 212, 200, 0.14), 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
-  box-shadow: 0 12px 28px rgba(0, 212, 200, 0.14), 0 0 0 1.5px rgba(0, 212, 200, 0.25);
+  box-shadow: 0 14px 30px rgba(0, 212, 200, 0.2), 0 0 0 1.5px rgba(0, 212, 200, 0.3);
 }
 
 .rv-card-header {
@@ -3164,10 +3294,10 @@ html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
 }
 
 .rv-av-box {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  border: 1.5px solid var(--cyan-border);
+  border: 2px solid var(--cyan-border);
   position: relative;
   flex-shrink: 0;
   overflow: hidden;
@@ -3183,19 +3313,19 @@ html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
 
 .rv-online-dot {
   position: absolute;
-  bottom: 1px;
-  right: 1px;
+  bottom: 2px;
+  right: 2px;
   width: 9px;
   height: 9px;
   background: #10B981;
-  border: 2px solid var(--surface);
+  border: 1.5px solid var(--surface);
   border-radius: 50%;
 }
 
 .rv-meta {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 1.5px;
   min-width: 0;
   flex: 1;
 }
@@ -3230,12 +3360,53 @@ html.dark .rv-card:hover, [data-theme="dark"] .rv-card:hover {
   font-weight: 550;
 }
 
+.rv-stars {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.rv-text {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--tx);
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.rv-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--bd2);
+}
+
+html.dark .rv-card-footer, [data-theme="dark"] .rv-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.06);
+}
+
+.rv-tag-pill {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--tx-2);
+  background: var(--s2);
+  border: 1px solid var(--bd2);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-family: var(--fm);
+  white-space: nowrap;
+}
+
 .rv-proof-pill {
   display: inline-flex;
   align-items: center;
   gap: 4px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 750;
   color: #059669;
   background: rgba(16, 185, 129, 0.08);
   border: 1px solid rgba(16, 185, 129, 0.25);
@@ -3250,15 +3421,6 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
   color: #10B981;
   background: rgba(16, 185, 129, 0.16);
   border-color: rgba(16, 185, 129, 0.4);
-}
-
-.rv-text {
-  font-size: 12.5px;
-  line-height: 1.48;
-  color: var(--tx);
-  font-weight: 450;
-  letter-spacing: -0.01em;
-  margin: 0;
 }
 
 /* Squeezed Mobile Layout for Testimonials & Full-Bleed Carousel */
@@ -3288,10 +3450,13 @@ html.dark .rv-proof-pill, [data-theme="dark"] .rv-proof-pill {
     gap: 16px;
   }
   .rv-card {
-    width: clamp(255px, 76vw, 300px);
-    padding: 12px 14px;
-    border-radius: 14px;
-    gap: 8px;
+    width: clamp(270px, 80vw, 320px) !important;
+    max-width: clamp(270px, 80vw, 320px) !important;
+    min-width: clamp(270px, 80vw, 320px) !important;
+    flex: 0 0 clamp(270px, 80vw, 320px) !important;
+    padding: 13px 15px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
   }
   .rv-av-box {
     width: 38px;
@@ -3975,9 +4140,6 @@ html, body {
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
   }
-  .rv-card {
-    min-width: 100%;
-  }
 }
 
 @media (max-width: 768px) {
@@ -4309,12 +4471,7 @@ html, body {
     justify-content: center;
   }
 
-  /* Reviews on Mobile */
-  .rv-card {
-    min-width: 100%;
-    padding: 22px 18px;
-    border-radius: 20px;
-  }
+  /* Reviews on Mobile Navigation */
   .rv-nav {
     gap: 10px;
     justify-content: center;

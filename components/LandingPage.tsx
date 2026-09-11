@@ -7,6 +7,7 @@ import confetti from 'canvas-confetti';
 import { Marquee } from './ui/marquee';
 import { SpotlightCard } from './ui/spotlight-card';
 import { BentoGrid, BentoCard } from './ui/bento-grid';
+import { GhanaCard } from './ui/ghana-card';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { WhatsAppIcon, FacebookIcon, LinkedInIcon, InstagramIcon, TwitterXIcon } from './ui/social-icons';
 import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers } from 'lucide-react';
@@ -164,6 +165,44 @@ const trends = [
   ['📱', 'App Developer', '#8'],
   ['🌿', 'Landscaper', '#9'],
   ['🎓', 'Math Tutor', '#10'],
+];
+
+const paymentPartners = [
+  {
+    name: 'MTN Mobile Money',
+    badge: 'Sub-60s MoMo STK Payout',
+    icon: '/images/payments/mtn_momo.svg',
+  },
+  {
+    name: 'Telecel Cash',
+    badge: 'Instant Wallet Settlement',
+    icon: '/images/payments/telecel_cash.svg',
+  },
+  {
+    name: 'AT Money',
+    badge: 'Direct Cedi Transfer',
+    icon: '/images/payments/at_money.svg',
+  },
+  {
+    name: 'Paystack Gateway',
+    badge: 'PCI-DSS Level 1 Secure',
+    icon: '/images/payments/paystack.svg',
+  },
+  {
+    name: 'Visa Debit/Credit',
+    badge: 'Verified by Visa 3DS',
+    icon: '/images/payments/visa.svg',
+  },
+  {
+    name: 'Mastercard SecureCode',
+    badge: 'Global Bank Settlement',
+    icon: '/images/payments/mastercard.svg',
+  },
+  {
+    name: '100% Escrow Vault Guarantee',
+    badge: 'Funds Protected Until Approval',
+    icon: null,
+  },
 ];
 
 const hotSlugs = ['it-tech', 'skilled-trades', 'hospitality', 'tech', 'trades', 'hosp', 'web-development', 'graphic-design'];
@@ -1178,6 +1217,11 @@ const occupationSlides = [
             badge="National Trust"
             spotlightColor="rgba(0, 212, 200, 0.18)"
             className="md:col-span-2"
+            header={
+              <div className="hidden md:block mt-3.5 w-full">
+                <GhanaCard />
+              </div>
+            }
           />
 
           {/* Card 2: AI Scope Generator & Transparent Cedi Milestones */}
@@ -1372,10 +1416,47 @@ const occupationSlides = [
             </a>
           </div>
         </div>
+
+        {/* ══════ TRUSTED PAYMENT & ESCROW SETTLEMENT PARTNERS MARQUEE ══════ */}
+        <div className="pay-partners-marquee-wrap mt-12">
+          <div className="pay-partners-head">
+            <div className="pay-partners-badge">
+              <span className="live-pulse-dot" />
+              <span>Instant MoMo &amp; Escrow Infrastructure</span>
+            </div>
+            <h3 className="pay-partners-title">Trusted Payment &amp; Escrow Settlement Partners</h3>
+            <p className="pay-partners-sub">
+              Sub-60s payouts directly to all Ghanaian mobile wallets and bank cards with 100% bank-grade escrow protection.
+            </p>
+          </div>
+
+          <div className="pay-marquee-outer relative overflow-hidden mt-6">
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-28 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-28 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
+
+            <Marquee pauseOnHover className="[--duration:26s] py-2">
+              {paymentPartners.map((item, idx) => (
+                <div key={idx} className="pay-partner-card">
+                  {item.icon ? (
+                    <img src={item.icon} alt={item.name} className="pay-partner-logo" />
+                  ) : (
+                    <div className="pay-partner-icon-box">
+                      <ShieldCheck className="w-5 h-5 text-[var(--cyan)]" />
+                    </div>
+                  )}
+                  <div className="pay-partner-meta">
+                    <span className="pay-partner-name">{item.name}</span>
+                    <span className="pay-partner-badge-text">{item.badge}</span>
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+        </div>
       </section>
 
       {/* ══════ REVIEWS & TESTIMONIALS ══════ */}
-      <section className="section section-reviews" id="reviews" style={{ paddingTop: '20px', paddingBottom: '32px' }}>
+      <section className="section section-reviews" id="reviews" style={{ paddingTop: '20px', paddingBottom: '36px' }}>
         <div className="s-head">
           <div className="s-badge">
             <span className="live-pulse-dot" />
@@ -1388,8 +1469,11 @@ const occupationSlides = [
         </div>
 
         {/* Sliding Carousel Swiping Left to Right */}
-        <div className="rv-carousel-wrap">
-          <Marquee reverse pauseOnHover className="[--duration:28s] py-2">
+        <div className="rv-carousel-wrap relative overflow-hidden">
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-16 md:w-32 bg-gradient-to-r from-[var(--bg)] to-transparent z-10" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-16 md:w-32 bg-gradient-to-l from-[var(--bg)] to-transparent z-10" />
+
+          <Marquee reverse pauseOnHover className="[--duration:28s] py-3">
             {testimonialFallbacks.map((rv, idx) => {
               const avatarFallbacks = [
                 '/images/avatars/avatar_male_1.jpg',
@@ -1422,12 +1506,22 @@ const occupationSlides = [
                       </div>
                       <span className="rv-trade">{rv.trade} · {rv.location}</span>
                     </div>
-                    <div className="rv-proof-pill">
-                      <CheckCircle2 className="w-3 h-3 text-[#10B981] shrink-0" />
-                      <span>{rv.payout_proof || 'Verified'}</span>
+                    <div className="rv-stars flex items-center gap-0.5 shrink-0" aria-label="5 stars">
+                      {[...Array(5)].map((_, sIdx) => (
+                        <Star key={sIdx} className="w-3 h-3 text-[#F59E0B] fill-[#F59E0B]" />
+                      ))}
                     </div>
                   </div>
-                  <div className="rv-text">&ldquo;{rv.comment}&rdquo;</div>
+                  <p className="rv-text">&ldquo;{rv.comment}&rdquo;</p>
+                  <div className="rv-card-footer">
+                    <span className="rv-tag-pill">
+                      {rv.role === 'provider' ? '🛠️ Verified Master' : '🏢 Verified Client'}
+                    </span>
+                    <div className="rv-proof-pill">
+                      <CheckCircle2 className="w-3 h-3 text-[#10B981] shrink-0" />
+                      <span>{rv.payout_proof || 'Escrow Released'}</span>
+                    </div>
+                  </div>
                 </div>
               );
             })}
