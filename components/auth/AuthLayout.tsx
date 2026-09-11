@@ -49,22 +49,26 @@ export function AuthLayout({
       </header>
 
       {/* Main Container */}
-      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-6 sm:py-10">
+      <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-8 sm:py-12">
         <div className="w-full max-w-xl mx-auto">
           {/* Header titles */}
-          <div className="text-center mb-6 sm:mb-8">
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[var(--tx)] tracking-tight mb-2 font-display">
+          <div className="text-center mb-8 sm:mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--cyan-dim)] border border-[var(--cyan-border)] text-[var(--cyan)] font-bold text-xs uppercase tracking-wider mb-3.5 shadow-xs">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>National Identity Secured Marketplace 🇬🇭</span>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--tx)] tracking-tight mb-3 font-heading leading-tight">
               {title}
             </h1>
-            <p className="text-xs sm:text-sm text-[var(--tx-2)] max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--tx-2)] max-w-lg mx-auto leading-relaxed">
               {subtitle}
             </p>
           </div>
 
-          {/* Form Card */}
-          <div className="relative rounded-2xl bg-[var(--surface)]/90 backdrop-blur-xl border border-[var(--bd2)] p-5 sm:p-8 shadow-2xl shadow-black/5 dark:shadow-black/40">
+          {/* Form Card with Homepage Card Styling */}
+          <div className="relative rounded-3xl bg-[var(--surface)] border border-[var(--cyan-border)] p-6 sm:p-10 shadow-2xl shadow-cyan-500/5 overflow-hidden">
             {/* Top Accent Line */}
-            <div className="absolute -top-[1px] left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-80" />
+            <div className="absolute -top-[1px] left-8 right-8 h-[2.5px] bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-90" />
             
             {children}
           </div>
