@@ -24,6 +24,10 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (emailOrPhone: string, password?: string) => Promise<{ success: boolean; user?: AuthUser; message?: string }>;
+  loginWithOtp: (phone: string, otp: string) => Promise<{ success: boolean; user?: AuthUser; message?: string }>;
+  loginWithGhanaCard: (pin: string) => Promise<{ success: boolean; user?: AuthUser; message?: string }>;
+  requestPasswordReset: (identifier: string) => Promise<{ success: boolean; message: string }>;
+  resetPassword: (identifier: string, code: string, newPass: string) => Promise<{ success: boolean; message: string }>;
   register: (userData: Partial<AuthUser> & { password?: string }) => Promise<{ success: boolean; user?: AuthUser; message?: string }>;
   logout: () => void;
   loginDemoUser: (demoType: 'kwame_provider' | 'frimpong_client') => void;
@@ -120,6 +124,61 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return { success: true, user: u };
   };
 
+  const loginWithOtp = async (phone: string, otp: string) => {
+    setIsLoading(true);
+    await new Promise((res) => setTimeout(res, 700));
+
+    if (!otp || otp.trim().length < 4) {
+      setIsLoading(false);
+      return { success: false, message: 'Invalid SMS verification code. Please enter the 6-digit code.' };
+    }
+
+    const clean = phone.replace(/\s+/g, '');
+    if (clean.includes('020') || clean.includes('050')) {
+      const u = DEMO_USERS.frimpong_client;
+      saveUserSession(u);
+      setIsLoading(false);
+      return { success: true, user: u };
+    }
+
+    const u = DEMO_USERS.kwame_provider;
+    saveUserSession(u);
+    setIsLoading(false);
+    return { success: true, user: u };
+  };
+
+  const loginWithGhanaCard = async (pin: string) => {
+    setIsLoading(true);
+    await new Promise((res) => setTimeout(res, 850));
+
+    const clean = pin.toUpperCase().trim();
+    if (!clean.startsWith('GHA-')) {
+      setIsLoading(false);
+      return { success: false, message: 'Invalid Ghana Card format. Must start with GHA-.' };
+    }
+
+    const u = DEMO_USERS.kwame_provider;
+    saveUserSession(u);
+    setIsLoading(false);
+    return { success: true, user: u };
+  };
+
+  const requestPasswordReset = async (identifier: string) => {
+    await new Promise((res) => setTimeout(res, 600));
+    return {
+      success: true,
+      message: `A 6-digit secure recovery token has been dispatched to ${identifier}.`,
+    };
+  };
+
+  const resetPassword = async (_identifier: string, code: string, _newPass: string) => {
+    await new Promise((res) => setTimeout(res, 800));
+    if (!code || code.length < 4) {
+      return { success: false, message: 'Invalid recovery code. Please check your SMS or email.' };
+    }
+    return { success: true, message: 'Password has been successfully updated. You may now sign in.' };
+  };
+
   const register = async (userData: Partial<AuthUser>) => {
     setIsLoading(true);
     await new Promise((res) => setTimeout(res, 800));
@@ -169,6 +228,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         isAuthenticated: Boolean(user),
         isLoading,
         login,
+        loginWithOtp,
+        loginWithGhanaCard,
+        requestPasswordReset,
+        resetPassword,
         register,
         logout,
         loginDemoUser,
