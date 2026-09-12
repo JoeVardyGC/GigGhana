@@ -9,6 +9,8 @@ interface AuthLayoutProps {
   subtitle: string;
   backHref?: string;
   backLabel?: string;
+  showBadge?: boolean;
+  titleClassName?: string;
 }
 
 export function AuthLayout({
@@ -17,6 +19,8 @@ export function AuthLayout({
   subtitle,
   backHref = '/',
   backLabel = 'Back to Home',
+  showBadge = false,
+  titleClassName,
 }: AuthLayoutProps) {
   return (
     <div className="min-h-screen w-full relative flex flex-col justify-between bg-[var(--bg)] text-[var(--tx)] selection:bg-[var(--cyan)] selection:text-black overflow-x-hidden font-sans">
@@ -51,11 +55,13 @@ export function AuthLayout({
         <div className="w-full max-w-xl mx-auto">
           {/* Header titles */}
           <div className="text-center mb-8 sm:mb-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--cyan-dim)] border border-[var(--cyan-border)] text-[var(--cyan)] font-bold text-xs uppercase tracking-wider mb-3.5 shadow-xs">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>National Identity Secured Marketplace 🇬🇭</span>
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[var(--tx)] tracking-tight mb-3 font-heading leading-tight">
+            {showBadge && (
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--cyan-dim)] border border-[var(--cyan-border)] text-[var(--cyan)] font-bold text-xs uppercase tracking-wider mb-3.5 shadow-xs">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>National Identity Secured Marketplace 🇬🇭</span>
+              </div>
+            )}
+            <h1 className={titleClassName || "text-4xl sm:text-5xl lg:text-6xl font-black text-[var(--tx)] tracking-tight mb-3 font-heading leading-tight"}>
               {title}
             </h1>
             <p className="text-xs sm:text-sm text-[var(--tx-2)] max-w-lg mx-auto leading-relaxed">

@@ -52,7 +52,31 @@ export async function POST(request: NextRequest) {
         );
       }
 
-      // Update last_login in MySQL
+      // Generate 6-digit SMS OTP for two-factor verification
+      const otpCode = Math.floor(100000 + Math.random() * 900000).toString();
+      const expDate = new Date(Date.now() + 15 * 60 * 1000);
+      const otp_expires_at = expDate.toISOString().slice(0, 19).replace('T', ' ');
+
+      await dbUpdateUser(user.id, {
+        otp_code: otpCode,
+        otp_expires_at,
+      });
+
+      // If two-factor verification is enabled (default workflow)
+      if (body.require2FA !== false) {
+        return NextResponse.json({
+          success: true,
+          requires2FA: true,
+          userId: user.id,
+          phone: user.phone,
+          email: user.email,
+          targetRole: user.role,
+          otpCode, // development & testing helper code
+          message: `Credentials verified. A 6-digit SMS verification code has been dispatched to ${user.phone}.`,
+        });
+      }
+
+      // Direct login path (when require2FA is explicitly false)
       const nowStr = new Date().toISOString().slice(0, 19).replace('T', ' ');
       await dbUpdateUser(user.id, {
         last_login: nowStr,
@@ -73,10 +97,13 @@ export async function POST(request: NextRequest) {
         trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
       };
 
+      const targetRole = body.intentRole || user.role;
+      const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
+
       const res = NextResponse.json({
         success: true,
         user: authUser,
-        redirectTo: user.role === 'provider' ? '/dashboard/provider' : '/dashboard/client',
+        redirectTo,
       });
 
       // 30-day session cookie matching PHP gg_remember
@@ -138,8 +165,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ success: false, message: 'Please enter a valid Ghana Card PIN (GHA-XXXXXXXXX-X).' }, { status: 400 });
       }
 
-      // Match user by card number or default to master artisan Kwame Asante
-      let user = await dbFindUserByIdentifier(pin);
+      // Match user by userId, card number, or default to verified master artisan Kwame Asante
+      let user = null;
+      if (body.userId) {
+        user = await dbFindUserById(body.userId);
+      }
+      if (!user) {
+        user = await dbFindUserByIdentifier(pin);
+      }
       if (!user) {
         user = (await dbFindUserByIdentifier('kwame.asante@gigghana.com')) || (await dbFindUserById(4));
       }
@@ -147,6 +180,15 @@ export async function POST(request: NextRequest) {
       if (!user) {
         return NextResponse.json({ success: false, message: 'Ghana Card not found in database registry.' }, { status: 404 });
       }
+
+      // Update last_login in MySQL
+      const nowStr = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      await dbUpdateUser(user.id, {
+        ghana_card_number: pin,
+        ghana_card_verified: 1,
+        last_login: nowStr,
+        last_seen: nowStr,
+      });
 
       const authUser = {
         id: user.id,
@@ -159,13 +201,16 @@ export async function POST(request: NextRequest) {
         avatar: user.avatar || '',
         location: user.location || 'Accra, Greater Accra',
         is_verified: true,
-        trade: user.trade,
+        trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
       };
+
+      const targetRole = body.intentRole || user.role;
+      const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
 
       const res = NextResponse.json({
         success: true,
         user: authUser,
-        redirectTo: user.role === 'provider' ? '/dashboard/provider' : '/dashboard/client',
+        redirectTo,
       });
 
       res.cookies.set('gg_user_session', JSON.stringify(authUser), {

@@ -55,7 +55,7 @@ function ForgotPasswordContent() {
       }
     } catch {
       setIsLoading(false);
-      setErrorMsg('Failed to connect to database.');
+      setErrorMsg('Could not send verification code. Please try again.');
     }
   };
 

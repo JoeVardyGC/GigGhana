@@ -45,12 +45,16 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, message: 'Invalid verification code. Please check and try again.' }, { status: 400 });
     }
 
-    // Update user in MySQL: mark verified, clear OTP
+    // Update user in MySQL: mark verified, clear OTP, update login timestamp
+    const nowStr = new Date().toISOString().slice(0, 19).replace('T', ' ');
     await dbUpdateUser(user.id, {
       email_verified: 1,
+      phone_verified: 1,
       is_active: 1,
       otp_code: null,
       otp_expires_at: null,
+      last_login: nowStr,
+      last_seen: nowStr,
     });
 
     const authUser = {
@@ -62,16 +66,19 @@ export async function POST(request: NextRequest) {
       phone: user.phone,
       role: user.role,
       avatar: user.avatar || '',
-      location: user.location,
+      location: user.location || 'Accra, Greater Accra',
       is_verified: true,
-      trade: user.trade,
+      trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
     };
+
+    const targetRole = body.intentRole || user.role;
+    const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
 
     const res = NextResponse.json({
       success: true,
       user: authUser,
-      message: 'Account verified successfully!',
-      redirectTo: user.role === 'provider' ? '/dashboard/provider' : '/dashboard/client',
+      message: 'Security verification successful!',
+      redirectTo,
     });
 
     // Set 30-day session cookie

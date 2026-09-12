@@ -96,7 +96,7 @@ function VerifyOtpContent() {
       }
     } catch {
       setIsLoading(false);
-      setErrorMsg('Verification failed. Please check your database connection.');
+      setErrorMsg('Verification failed. Please try again.');
     }
   };
 

@@ -23,6 +23,10 @@ export function getDbPool() {
 }
 
 export function isDbConfigured(): boolean {
+  // Pure front-end mode: bypass MySQL network calls completely during front-end construction
+  if (process.env.ENABLE_MYSQL !== 'true') {
+    return false;
+  }
   const host = process.env.DB_HOST;
   if (!host) return false;
   if ((process.env.VERCEL || process.env.CI) && (host === '127.0.0.1' || host === 'localhost')) {
@@ -272,6 +276,7 @@ function writeLocalStore(store: {
  * Initializes MySQL tables matching gigghana.sql if MySQL is available
  */
 export async function ensureAuthTables(): Promise<boolean> {
+  if (!isDbConfigured()) return true;
   try {
     const db = getDbPool();
     await db.query(`
@@ -351,16 +356,18 @@ export async function dbFindUserByIdentifier(identifier: string): Promise<DbUser
   const clean = identifier.trim().toLowerCase();
   const cleanPhone = identifier.replace(/\D/g, '');
 
-  try {
-    const db = getDbPool();
-    const [rows]: any = await db.query(
-      `SELECT * FROM users WHERE LOWER(email) = ? OR REPLACE(REPLACE(phone, ' ', ''), '-', '') LIKE ? LIMIT 1`,
-      [clean, `%${cleanPhone}%`]
-    );
-    if (rows && rows.length > 0) {
-      return rows[0] as DbUserRecord;
-    }
-  } catch {}
+  if (isDbConfigured()) {
+    try {
+      const db = getDbPool();
+      const [rows]: any = await db.query(
+        `SELECT * FROM users WHERE LOWER(email) = ? OR REPLACE(REPLACE(phone, ' ', ''), '-', '') LIKE ? LIMIT 1`,
+        [clean, `%${cleanPhone}%`]
+      );
+      if (rows && rows.length > 0) {
+        return rows[0] as DbUserRecord;
+      }
+    } catch {}
+  }
 
   // Local fallback
   const store = readLocalStore();
@@ -378,13 +385,15 @@ export async function dbFindUserByIdentifier(identifier: string): Promise<DbUser
 export async function dbFindUserById(id: number | string): Promise<DbUserRecord | null> {
   const numId = Number(id);
 
-  try {
-    const db = getDbPool();
-    const [rows]: any = await db.query(`SELECT * FROM users WHERE id = ? LIMIT 1`, [numId]);
-    if (rows && rows.length > 0) {
-      return rows[0] as DbUserRecord;
-    }
-  } catch {}
+  if (isDbConfigured()) {
+    try {
+      const db = getDbPool();
+      const [rows]: any = await db.query(`SELECT * FROM users WHERE id = ? LIMIT 1`, [numId]);
+      if (rows && rows.length > 0) {
+        return rows[0] as DbUserRecord;
+      }
+    } catch {}
+  }
 
   const store = readLocalStore();
   return store.users.find((u) => u.id === numId) || null;
@@ -396,56 +405,58 @@ export async function dbFindUserById(id: number | string): Promise<DbUserRecord 
 export async function dbCreateUser(userData: Omit<DbUserRecord, 'id' | 'created_at' | 'updated_at'>): Promise<DbUserRecord> {
   const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-  try {
-    const db = getDbPool();
-    const [result]: any = await db.query(
-      `INSERT INTO users (
-        uuid, first_name, last_name, email, phone, password_hash, role,
-        location, country, ghana_card_number, ghana_card_verified,
-        email_verified, phone_verified, is_active, is_banned,
-        otp_code, otp_expires_at, created_at, updated_at
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-      [
-        userData.uuid,
-        userData.first_name,
-        userData.last_name,
-        userData.email,
-        userData.phone,
-        userData.password_hash,
-        userData.role,
-        userData.location || 'Accra, Greater Accra',
-        userData.country || 'Ghana',
-        userData.ghana_card_number || null,
-        userData.ghana_card_verified || 0,
-        userData.email_verified || 0,
-        userData.phone_verified || 0,
-        userData.is_active || 1,
-        userData.is_banned || 0,
-        userData.otp_code || null,
-        userData.otp_expires_at || null,
-      ]
-    );
-
-    const newId = result.insertId;
-
-    // Create wallet
-    await db.query(`INSERT INTO wallets (user_id, balance, pending_balance, currency) VALUES (?, 0.00, 0.00, 'GHS')`, [newId]);
-
-    // If provider, create provider profile
-    if (userData.role === 'provider') {
-      await db.query(
-        `INSERT INTO providers (user_id, tagline, hourly_rate, rating_avg, rating_count, completed_jobs, is_verified, availability) VALUES (?, ?, ?, 5.00, 0, 0, ?, 'available')`,
-        [newId, userData.trade || 'Skilled Master Artisan', userData.hourly_rate || 80, userData.ghana_card_verified || 0]
+  if (isDbConfigured()) {
+    try {
+      const db = getDbPool();
+      const [result]: any = await db.query(
+        `INSERT INTO users (
+          uuid, first_name, last_name, email, phone, password_hash, role,
+          location, country, ghana_card_number, ghana_card_verified,
+          email_verified, phone_verified, is_active, is_banned,
+          otp_code, otp_expires_at, created_at, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())`,
+        [
+          userData.uuid,
+          userData.first_name,
+          userData.last_name,
+          userData.email,
+          userData.phone,
+          userData.password_hash,
+          userData.role,
+          userData.location || 'Accra, Greater Accra',
+          userData.country || 'Ghana',
+          userData.ghana_card_number || null,
+          userData.ghana_card_verified || 0,
+          userData.email_verified || 0,
+          userData.phone_verified || 0,
+          userData.is_active || 1,
+          userData.is_banned || 0,
+          userData.otp_code || null,
+          userData.otp_expires_at || null,
+        ]
       );
-    }
 
-    return {
-      ...userData,
-      id: newId,
-      created_at: now,
-      updated_at: now,
-    };
-  } catch {}
+      const newId = result.insertId;
+
+      // Create wallet
+      await db.query(`INSERT INTO wallets (user_id, balance, pending_balance, currency) VALUES (?, 0.00, 0.00, 'GHS')`, [newId]);
+
+      // If provider, create provider profile
+      if (userData.role === 'provider') {
+        await db.query(
+          `INSERT INTO providers (user_id, tagline, hourly_rate, rating_avg, rating_count, completed_jobs, is_verified, availability) VALUES (?, ?, ?, 5.00, 0, 0, ?, 'available')`,
+          [newId, userData.trade || 'Skilled Master Artisan', userData.hourly_rate || 80, userData.ghana_card_verified || 0]
+        );
+      }
+
+      return {
+        ...userData,
+        id: newId,
+        created_at: now,
+        updated_at: now,
+      };
+    } catch {}
+  }
 
   // Local fallback
   const store = readLocalStore();
@@ -491,22 +502,24 @@ export async function dbCreateUser(userData: Omit<DbUserRecord, 'id' | 'created_
  * Updates user in MySQL (with fallback to local store)
  */
 export async function dbUpdateUser(id: number, updates: Partial<DbUserRecord>): Promise<boolean> {
-  try {
-    const db = getDbPool();
-    const setClauses: string[] = [];
-    const values: any[] = [];
+  if (isDbConfigured()) {
+    try {
+      const db = getDbPool();
+      const setClauses: string[] = [];
+      const values: any[] = [];
 
-    for (const [key, val] of Object.entries(updates)) {
-      setClauses.push(`${key} = ?`);
-      values.push(val);
-    }
+      for (const [key, val] of Object.entries(updates)) {
+        setClauses.push(`${key} = ?`);
+        values.push(val);
+      }
 
-    if (setClauses.length > 0) {
-      values.push(id);
-      await db.query(`UPDATE users SET ${setClauses.join(', ')}, updated_at = NOW() WHERE id = ?`, values);
-      return true;
-    }
-  } catch {}
+      if (setClauses.length > 0) {
+        values.push(id);
+        await db.query(`UPDATE users SET ${setClauses.join(', ')}, updated_at = NOW() WHERE id = ?`, values);
+        return true;
+      }
+    } catch {}
+  }
 
   const store = readLocalStore();
   const idx = store.users.findIndex((u) => u.id === id);

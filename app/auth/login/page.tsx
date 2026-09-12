@@ -13,7 +13,7 @@ import {
   Eye,
   EyeOff,
   ArrowRight,
-  Sparkles,
+  ArrowLeft,
   Mail,
   Building2,
   Wrench,
@@ -25,32 +25,49 @@ import {
   X,
   Send,
   ShieldCheck,
+  Globe,
 } from 'lucide-react';
+
+function maskPhoneNumber(phone?: string): string {
+  if (!phone) return 'your registered phone number';
+  const clean = phone.replace(/\s+/g, '');
+  if (clean.length < 6) return phone;
+  const prefix = clean.slice(0, 3);
+  const suffix = clean.slice(-2);
+  return `${prefix} ••• ••${suffix}`;
+}
 
 function LoginContent() {
   const router = useRouter();
-  const { login, loginWithOtp, loginWithGhanaCard, requestPasswordReset, resetPassword } = useAuth();
+  const {
+    login,
+    verifyLoginOtp,
+    resendLoginOtp,
+    loginWithGhanaCard,
+    requestPasswordReset,
+    resetPassword,
+  } = useAuth();
 
-  // Active Gateway: 'provider' (Artisan) vs 'client' (Employer)
+  // Active Workspace / Intent: 'provider' (Find Jobs & Work) vs 'client' (Hire a Worker)
   const [activeInterface, setActiveInterface] = useState<'provider' | 'client'>('provider');
 
-  // Sign-in Method: 'password' | 'otp' | 'ghanacard'
-  const [authMethod, setAuthMethod] = useState<'password' | 'otp' | 'ghanacard'>('password');
+  // Multi-step Authentication Flow: 'credentials' (Step 1) -> 'sms_verify' (Step 2)
+  const [authStep, setAuthStep] = useState<'credentials' | 'sms_verify'>('credentials');
 
-  // Form State - Password Login (PHP structure)
+  // Form State - Step 1: Credentials
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
 
-  // Form State - OTP Login
-  const [otpPhone, setOtpPhone] = useState('');
-  const [otpStep, setOtpStep] = useState<'request' | 'verify'>('request');
+  // Form State - Step 2: 2FA Verification (SMS OTP / Ghana Card PIN alternative)
+  const [verificationMode, setVerificationMode] = useState<'sms' | 'ghanacard'>('sms');
+  const [pendingUserId, setPendingUserId] = useState<number | undefined>(undefined);
+  const [pendingPhone, setPendingPhone] = useState('');
+  const [pendingEmail, setPendingEmail] = useState('');
   const [otpCode, setOtpCode] = useState(['', '', '', '', '', '']);
   const [resendTimer, setResendTimer] = useState(0);
   const [simulatedReceivedCode, setSimulatedReceivedCode] = useState('');
-
-  // Form State - Ghana Card Login
   const [ghanaCardPin, setGhanaCardPin] = useState('');
   const [isScanningBiometric, setIsScanningBiometric] = useState(false);
 
@@ -70,10 +87,9 @@ function LoginContent() {
 
   // Telecom auto-detection for Ghanaian phone numbers
   const detectedNetwork = useMemo(() => {
-    const input = authMethod === 'otp' ? otpPhone : identifier;
-    if (input.includes('@')) return 'email';
-    return detectGhanaNetwork(input);
-  }, [authMethod, otpPhone, identifier]);
+    if (identifier.includes('@')) return 'email';
+    return detectGhanaNetwork(identifier);
+  }, [identifier]);
 
   // Countdown timer for OTP
   useEffect(() => {
@@ -97,8 +113,8 @@ function LoginContent() {
     } catch {}
   };
 
-  // Handle Standard Password Login (PHP auth/login.php flow)
-  const handlePasswordSubmit = async (e: React.FormEvent) => {
+  // Step 1: Submit Credentials (Email/Phone + Password)
+  const handleCredentialsSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
     setSuccessMsg('');
@@ -114,89 +130,92 @@ function LoginContent() {
 
     setIsLoading(true);
     try {
-      const res = await login(identifier, password, rememberMe);
+      const res = await login(identifier, password, rememberMe, true, activeInterface);
+      setIsLoading(false);
+
       if (res.success) {
-        setSuccessMsg('Login successful! Redirecting to your dashboard...');
-        triggerSuccessCelebration();
-        setTimeout(() => {
-          const userRole = res.user?.role || activeInterface;
-          router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
-        }, 800);
+        if (res.requires2FA) {
+          // Advance to Step 2: SMS Verification
+          setPendingUserId(res.userId);
+          setPendingPhone(res.phone || identifier);
+          setPendingEmail(res.email || '');
+          setSimulatedReceivedCode(res.otpCode || '123456');
+          setResendTimer(60);
+          setOtpCode(['', '', '', '', '', '']);
+          setAuthStep('sms_verify');
+          setVerificationMode('sms');
+          setSuccessMsg('Credentials verified! Please enter the 6-digit SMS code sent to your phone.');
+        } else {
+          // Direct login fallback
+          setSuccessMsg('Login successful! Redirecting to your workspace...');
+          triggerSuccessCelebration();
+          setTimeout(() => {
+            const targetRedirect = res.redirectTo || (activeInterface === 'client' ? '/dashboard/client' : '/dashboard/provider');
+            router.push(targetRedirect);
+          }, 700);
+        }
       } else {
         setErrorMsg(res.message || 'Invalid email/phone or password. Please try again.');
-        setIsLoading(false);
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Login failed. Please verify database connection.');
       setIsLoading(false);
+      setErrorMsg(err?.message || 'Login failed. Please try again.');
     }
   };
 
-  // Handle Requesting OTP Code
-  const handleRequestOtp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrorMsg('');
-
-    if (!otpPhone.trim() || otpPhone.replace(/\D/g, '').length < 9) {
-      setErrorMsg('Please enter a valid 10-digit Ghanaian phone number (e.g. 024 XXX XXXX).');
-      return;
-    }
-
-    setIsLoading(true);
-    try {
-      const res = await fetch('/api/auth/verify-otp', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'resend', identifier: otpPhone }),
-      });
-      const data = await res.json();
-      setIsLoading(false);
-
-      const generated = data.otpCode || Math.floor(100000 + Math.random() * 900000).toString();
-      setSimulatedReceivedCode(generated);
-      setOtpStep('verify');
-      setResendTimer(60);
-    } catch {
-      setIsLoading(false);
-      const generated = Math.floor(100000 + Math.random() * 900000).toString();
-      setSimulatedReceivedCode(generated);
-      setOtpStep('verify');
-      setResendTimer(60);
-    }
-  };
-
-  // Handle Verifying OTP Code
+  // Step 2A: Verify 6-digit SMS Code
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
     const fullCode = otpCode.join('');
     if (fullCode.length !== 6) {
-      setErrorMsg('Please enter the complete 6-digit verification code.');
+      setErrorMsg('Please enter the complete 6-digit SMS verification code.');
       return;
     }
 
     setIsLoading(true);
     try {
-      const res = await loginWithOtp(otpPhone, fullCode);
+      const res = await verifyLoginOtp(pendingUserId, fullCode, activeInterface, pendingPhone || identifier);
+      setIsLoading(false);
+
       if (res.success) {
-        setSuccessMsg('Phone verified! Loading dashboard...');
+        setSuccessMsg('Phone verified! Loading your dashboard...');
         triggerSuccessCelebration();
         setTimeout(() => {
-          const userRole = res.user?.role || activeInterface;
-          router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
-        }, 800);
+          const targetUrl = res.redirectTo || (activeInterface === 'client' ? '/dashboard/client' : '/dashboard/provider');
+          router.push(targetUrl);
+        }, 700);
       } else {
-        setErrorMsg(res.message || 'Invalid code. Please check your SMS and try again.');
-        setIsLoading(false);
+        setErrorMsg(res.message || 'Invalid SMS verification code. Please check and try again.');
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'OTP verification failed.');
       setIsLoading(false);
+      setErrorMsg(err?.message || 'Verification failed. Please try again.');
     }
   };
 
-  // Handle Ghana Card PIN Login
+  // Step 2B: Resend 6-digit SMS Code
+  const handleResendOtp = async () => {
+    if (resendTimer > 0) return;
+    setErrorMsg('');
+    try {
+      const res = await resendLoginOtp(pendingUserId, pendingPhone || identifier);
+      if (res.success) {
+        if (res.otpCode) {
+          setSimulatedReceivedCode(res.otpCode);
+        }
+        setResendTimer(60);
+        setSuccessMsg(res.message || 'A fresh 6-digit code has been dispatched to your phone.');
+      } else {
+        setErrorMsg(res.message || 'Could not resend code. Please try again.');
+      }
+    } catch {
+      setErrorMsg('Failed to dispatch code. Please try again.');
+    }
+  };
+
+  // Step 2C: Alternative Ghana Card Biometric PIN Verification
   const handleGhanaCardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
@@ -211,23 +230,24 @@ function LoginContent() {
     setIsLoading(true);
 
     try {
-      const res = await loginWithGhanaCard(cleanPin);
+      const res = await loginWithGhanaCard(cleanPin, pendingUserId, activeInterface);
+      setIsLoading(false);
+      setIsScanningBiometric(false);
+
       if (res.success) {
         setSuccessMsg('Ghana Card verified! Welcome back.');
         triggerSuccessCelebration();
         setTimeout(() => {
-          const userRole = res.user?.role || activeInterface;
-          router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
-        }, 900);
+          const targetUrl = res.redirectTo || (activeInterface === 'client' ? '/dashboard/client' : '/dashboard/provider');
+          router.push(targetUrl);
+        }, 800);
       } else {
-        setErrorMsg(res.message || 'Ghana Card not found in registry.');
-        setIsScanningBiometric(false);
-        setIsLoading(false);
+        setErrorMsg(res.message || 'Ghana Card verification failed.');
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Verification failed.');
-      setIsScanningBiometric(false);
       setIsLoading(false);
+      setIsScanningBiometric(false);
+      setErrorMsg(err?.message || 'Verification failed.');
     }
   };
 
@@ -294,34 +314,35 @@ function LoginContent() {
   return (
     <AuthLayout
       title="Welcome Back"
+      titleClassName="text-5xl sm:text-6xl lg:text-7xl font-black text-[var(--tx)] tracking-tight mb-3 font-heading leading-tight"
       subtitle="Sign in to access your dashboard, active contracts, and secure escrow vault."
+      showBadge={false}
       backHref="/"
       backLabel="Back to Home"
     >
       <div className="space-y-6">
 
-        {/* ══════ DUAL-ROLE GATEWAY SELECTOR (Artisan vs Client) ══════ */}
-        <div className="space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-bold text-[var(--tx-2)]">
-            <span>Workspace Gateway:</span>
-            <span className="text-[10px] text-[var(--tx-3)] font-mono">2 Dedicated Consoles</span>
+        {/* ══════ I WANT TO: SELECTOR (Find Jobs & Work vs Hire a Worker) ══════ */}
+        <div className="space-y-2">
+          <div className="flex items-center text-xs font-black uppercase tracking-wider text-[var(--tx-2)]">
+            <span>I want to:</span>
           </div>
 
-          <div className="p-1.5 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--bd2)] grid grid-cols-2 gap-1.5 shadow-inner">
+          <div className="p-1.5 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--bd2)] grid grid-cols-2 gap-2 shadow-inner">
             <button
               type="button"
               onClick={() => {
                 setActiveInterface('provider');
                 setErrorMsg('');
               }}
-              className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-3.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2 ${
                 activeInterface === 'provider'
-                  ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-md shadow-cyan-500/20 scale-[1.01]'
+                  ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-md shadow-cyan-500/25 scale-[1.01]'
                   : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
               }`}
             >
-              <Wrench className="w-3.5 h-3.5" />
-              <span>Artisan Gateway</span>
+              <Wrench className="w-4 h-4 shrink-0" />
+              <span>Find Jobs & Work</span>
             </button>
 
             <button
@@ -330,72 +351,21 @@ function LoginContent() {
                 setActiveInterface('client');
                 setErrorMsg('');
               }}
-              className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-3.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2 ${
                 activeInterface === 'client'
-                  ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-md shadow-amber-500/20 scale-[1.01]'
+                  ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-md shadow-amber-500/25 scale-[1.01]'
                   : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
               }`}
             >
-              <Building2 className="w-3.5 h-3.5" />
-              <span>Client Console</span>
+              <Building2 className="w-4 h-4 shrink-0" />
+              <span>Hire a Worker</span>
             </button>
           </div>
         </div>
 
-        {/* ══════ AUTHENTICATION METHOD TABS (Password, OTP, Ghana Card) ══════ */}
-        <div className="border-b border-[var(--bd2)] pb-2 flex items-center justify-between gap-1 text-xs">
-          <button
-            type="button"
-            onClick={() => {
-              setAuthMethod('password');
-              setErrorMsg('');
-            }}
-            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-              authMethod === 'password'
-                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-            }`}
-          >
-            <KeyRound className="w-3 h-3 text-[var(--cyan)]" />
-            <span>Password</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setAuthMethod('otp');
-              setErrorMsg('');
-            }}
-            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-              authMethod === 'otp'
-                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-            }`}
-          >
-            <Smartphone className="w-3 h-3 text-emerald-400" />
-            <span>SMS OTP</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              setAuthMethod('ghanacard');
-              setErrorMsg('');
-            }}
-            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-              authMethod === 'ghanacard'
-                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-            }`}
-          >
-            <Fingerprint className="w-3 h-3 text-[#F59E0B]" />
-            <span>Ghana Card</span>
-          </button>
-        </div>
-
         {/* Success Alert */}
         {successMsg && (
-          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-semibold flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in">
             <Check className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
@@ -403,15 +373,15 @@ function LoginContent() {
 
         {/* Error Alert */}
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium flex items-center gap-2 animate-in fade-in">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
 
-        {/* ══════ 1. STANDARD PASSWORD LOGIN FORM (PHP auth/login.php) ══════ */}
-        {authMethod === 'password' && (
-          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+        {/* ══════ STEP 1: CREDENTIALS SIGN-IN (Email/Phone + Password) ══════ */}
+        {authStep === 'credentials' && (
+          <form onSubmit={handleCredentialsSubmit} className="space-y-4">
             {/* Email Address / Phone */}
             <div className="space-y-1.5">
               <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
@@ -461,7 +431,7 @@ function LoginContent() {
               </div>
             </div>
 
-            {/* Remember Me & Forgot Password Row (PHP layout) */}
+            {/* Remember Me & Forgot Password Row */}
             <div className="flex items-center justify-between pt-1 text-xs">
               <label className="flex items-center gap-2 cursor-pointer select-none text-[var(--tx-2)] hover:text-[var(--tx)]">
                 <input
@@ -500,11 +470,13 @@ function LoginContent() {
                 {isLoading ? (
                   <>
                     <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
-                    <span>Signing in to MySQL...</span>
+                    <span>Verifying Credentials...</span>
                   </>
                 ) : (
                   <>
-                    <span>Login to My Account</span>
+                    <span>
+                      {activeInterface === 'client' ? 'Sign In to Hire Workers' : 'Sign In to Find Jobs'}
+                    </span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -513,54 +485,53 @@ function LoginContent() {
           </form>
         )}
 
-        {/* ══════ 2. OTP SIGN-IN FORM ══════ */}
-        {authMethod === 'otp' && (
-          <div>
-            {otpStep === 'request' ? (
-              <form onSubmit={handleRequestOtp} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[var(--tx)]">
-                    Ghana Mobile Money Number
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={otpPhone}
-                    onChange={(e) => setOtpPhone(e.target.value)}
-                    placeholder="024 123 4567"
-                    className="w-full h-11 px-3.5 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
-                  />
-                  <p className="text-[11px] text-[var(--tx-3)]">
-                    We will send a 6-digit verification code to this phone number.
+        {/* ══════ STEP 2: SMS VERIFICATION (AFTER CREDENTIALS VALIDATION) ══════ */}
+        {authStep === 'sms_verify' && (
+          <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            {verificationMode === 'sms' ? (
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <div className="p-4 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--cyan-border)] space-y-2 text-center">
+                  <div className="w-10 h-10 rounded-full bg-[var(--cyan-dim)] text-[var(--cyan)] mx-auto flex items-center justify-center shadow-xs">
+                    <Smartphone className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-heading font-black text-sm text-[var(--tx)]">
+                    SMS Security Verification
+                  </h3>
+                  <p className="text-xs text-[var(--tx-2)] leading-relaxed">
+                    We dispatched a 6-digit verification code to{' '}
+                    <strong className="text-[var(--tx)] font-mono">{maskPhoneNumber(pendingPhone || identifier)}</strong>.
                   </p>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={isLoading}
-                  className="w-full h-11 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
-                >
-                  {isLoading ? 'Dispatching Code...' : 'Send SMS Verification Code'}
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div className="space-y-2 text-center">
-                  <span className="text-xs text-[var(--tx-2)]">
-                    Enter the 6-digit code sent to <strong className="text-[var(--tx)]">{otpPhone}</strong>
-                  </span>
-
-                  {simulatedReceivedCode && (
-                    <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+                {/* Dev Code Banner for testing */}
+                {simulatedReceivedCode && (
+                  <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono flex items-center justify-between">
+                    <span>
                       Dev Code: <strong>{simulatedReceivedCode}</strong>
-                    </div>
-                  )}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const digits = simulatedReceivedCode.slice(0, 6).split('');
+                        setOtpCode(digits);
+                      }}
+                      className="text-[11px] font-bold text-white bg-cyan-500/30 hover:bg-cyan-500/50 px-2 py-0.5 rounded transition-all"
+                    >
+                      Auto-Fill
+                    </button>
+                  </div>
+                )}
 
-                  <div className="flex items-center justify-center gap-2 pt-2">
+                {/* 6 Digit SMS Code Inputs */}
+                <div className="space-y-2">
+                  <label className="text-xs font-bold text-[var(--tx)] block text-center">
+                    Enter 6-Digit SMS Code
+                  </label>
+                  <div className="flex items-center justify-center gap-2">
                     {otpCode.map((digit, idx) => (
                       <input
                         key={idx}
-                        id={`otp-box-${idx}`}
+                        id={`sms-box-${idx}`}
                         type="text"
                         maxLength={1}
                         value={digit}
@@ -570,96 +541,163 @@ function LoginContent() {
                           newCode[idx] = val;
                           setOtpCode(newCode);
                           if (val && idx < 5) {
-                            document.getElementById(`otp-box-${idx + 1}`)?.focus();
+                            document.getElementById(`sms-box-${idx + 1}`)?.focus();
                           }
                         }}
                         onKeyDown={(e) => {
                           if (e.key === 'Backspace' && !otpCode[idx] && idx > 0) {
-                            document.getElementById(`otp-box-${idx - 1}`)?.focus();
+                            document.getElementById(`sms-box-${idx - 1}`)?.focus();
                           }
                         }}
-                        className="w-10 h-12 text-center font-bold text-lg rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:outline-none"
+                        onPaste={(e) => {
+                          e.preventDefault();
+                          const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                          if (pasted) {
+                            const newDigits = pasted.split('');
+                            while (newDigits.length < 6) newDigits.push('');
+                            setOtpCode(newDigits);
+                            const nextIndex = Math.min(pasted.length, 5);
+                            document.getElementById(`sms-box-${nextIndex}`)?.focus();
+                          }
+                        }}
+                        className="w-11 h-12 text-center font-bold text-lg rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
                       />
                     ))}
+                  </div>
+                </div>
+
+                {/* Resend Timer & Link */}
+                <div className="flex items-center justify-between text-xs pt-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setAuthStep('credentials');
+                      setErrorMsg('');
+                    }}
+                    className="text-[var(--tx-3)] hover:text-[var(--tx)] inline-flex items-center gap-1"
+                  >
+                    <ArrowLeft className="w-3 h-3" />
+                    <span>Back to login</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={resendTimer > 0}
+                    onClick={handleResendOtp}
+                    className={`font-semibold ${resendTimer > 0 ? 'text-[var(--tx-3)] cursor-not-allowed' : 'text-[var(--cyan)] hover:underline'}`}
+                  >
+                    {resendTimer > 0 ? `Resend SMS in ${resendTimer}s` : 'Resend Code'}
+                  </button>
+                </div>
+
+                {/* Submit Verification */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className={`w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
+                    activeInterface === 'client'
+                      ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-amber-500/20'
+                      : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-cyan-500/20'
+                  }`}
+                >
+                  {isLoading ? (
+                    <>
+                      <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
+                      <span>Verifying SMS Code...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Verify & Enter Workspace</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </>
+                  )}
+                </button>
+
+                {/* Ghana Card 2FA Alternative Option */}
+                <div className="pt-2 text-center">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setVerificationMode('ghanacard');
+                      setErrorMsg('');
+                    }}
+                    className="text-xs font-bold text-[var(--tx-2)] hover:text-[#F59E0B] transition-colors inline-flex items-center gap-1.5"
+                  >
+                    <Fingerprint className="w-3.5 h-3.5 text-[#F59E0B]" />
+                    <span>Prefer Ghana Card? Verify with Ghana Card PIN instead →</span>
+                  </button>
+                </div>
+              </form>
+            ) : (
+              /* Ghana Card 2FA Alternative Form */
+              <form onSubmit={handleGhanaCardSubmit} className="space-y-4">
+                <div className="p-4 rounded-2xl bg-[var(--surface-elevated)] border border-amber-500/30 space-y-2 text-center">
+                  <div className="w-10 h-10 rounded-full bg-amber-500/10 text-[#F59E0B] mx-auto flex items-center justify-center shadow-xs">
+                    <Fingerprint className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-heading font-black text-sm text-[var(--tx)]">
+                    Ghana Card Biometric Verification
+                  </h3>
+                  <p className="text-xs text-[var(--tx-2)] leading-relaxed">
+                    Verify your identity using your verified National Identity Card (NIA) number.
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
+                    <span>National Identity PIN</span>
+                    <span className="text-[10px] text-[var(--tx-3)] font-mono">GHA-XXXXXXXXX-X</span>
+                  </label>
+                  <div className="relative flex items-center">
+                    <Fingerprint className="w-4 h-4 text-[#F59E0B] absolute left-3.5 pointer-events-none" />
+                    <input
+                      type="text"
+                      required
+                      value={ghanaCardPin}
+                      onChange={(e) => setGhanaCardPin(e.target.value.toUpperCase())}
+                      placeholder="GHA-712345678-9"
+                      className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[#F59E0B] focus:outline-none"
+                    />
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between text-xs pt-1">
                   <button
                     type="button"
-                    onClick={() => setOtpStep('request')}
-                    className="text-[var(--tx-3)] hover:text-[var(--tx)]"
+                    onClick={() => {
+                      setVerificationMode('sms');
+                      setErrorMsg('');
+                    }}
+                    className="text-[var(--tx-3)] hover:text-[var(--tx)] inline-flex items-center gap-1"
                   >
-                    Change Number
-                  </button>
-
-                  <button
-                    type="button"
-                    disabled={resendTimer > 0}
-                    onClick={handleRequestOtp}
-                    className={`font-semibold ${resendTimer > 0 ? 'text-[var(--tx-3)] cursor-not-allowed' : 'text-[var(--cyan)] hover:underline'}`}
-                  >
-                    {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}
+                    <ArrowLeft className="w-3 h-3" />
+                    <span>Use SMS code instead</span>
                   </button>
                 </div>
 
                 <button
                   type="submit"
-                  disabled={isLoading}
-                  className="w-full h-11 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
+                  disabled={isLoading || isScanningBiometric}
+                  className="w-full h-12 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-md"
                 >
-                  {isLoading ? 'Verifying...' : 'Verify & Enter Workspace'}
+                  {isScanningBiometric ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <span>Validating NIA Registry...</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShieldCheck className="w-4 h-4" />
+                      <span>Verify Ghana Card Identity</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
           </div>
         )}
 
-        {/* ══════ 3. GHANA CARD PIN LOGIN FORM ══════ */}
-        {authMethod === 'ghanacard' && (
-          <form onSubmit={handleGhanaCardSubmit} className="space-y-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
-                <span>National Identity PIN</span>
-                <span className="text-[10px] text-[var(--tx-3)] font-mono">GHA-XXXXXXXXX-X</span>
-              </label>
-              <div className="relative flex items-center">
-                <Fingerprint className="w-4 h-4 text-[#F59E0B] absolute left-3.5 pointer-events-none" />
-                <input
-                  type="text"
-                  required
-                  value={ghanaCardPin}
-                  onChange={(e) => setGhanaCardPin(e.target.value.toUpperCase())}
-                  placeholder="GHA-712345678-9"
-                  className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[#F59E0B] focus:outline-none"
-                />
-              </div>
-              <p className="text-[11px] text-[var(--tx-3)]">
-                Direct biometric instant authentication linked to your verified national profile.
-              </p>
-            </div>
-
-            <button
-              type="submit"
-              disabled={isLoading || isScanningBiometric}
-              className="w-full h-11 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
-            >
-              {isScanningBiometric ? (
-                <>
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                  <span>Validating NIA Registry...</span>
-                </>
-              ) : (
-                <>
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Verify Ghana Card Identity</span>
-                </>
-              )}
-            </button>
-          </form>
-        )}
-
-        {/* Trust Badges Strip (matching PHP auth/login.php) */}
+        {/* Trust Badges Strip (Zero emojis, clean Lucide icons) */}
         <div className="flex items-center justify-center gap-4 pt-2 text-[10.5px] text-[var(--tx-3)]">
           <div className="flex items-center gap-1">
             <Lock className="w-3 h-3 text-emerald-400" />
@@ -667,7 +705,7 @@ function LoginContent() {
           </div>
           <div className="w-px h-3 bg-[var(--bd2)]" />
           <div className="flex items-center gap-1">
-            <span>🇬🇭</span>
+            <Globe className="w-3 h-3 text-[#F59E0B]" />
             <span>Ghana only</span>
           </div>
           <div className="w-px h-3 bg-[var(--bd2)]" />
@@ -677,7 +715,7 @@ function LoginContent() {
           </div>
         </div>
 
-        {/* Switch to Register (matching PHP layout) */}
+        {/* Switch to Register */}
         <div className="pt-3 text-center border-t border-[var(--bd2)]/40 text-xs text-[var(--tx-2)]">
           Don&apos;t have an account yet?{' '}
           <Link href="/auth/register" className="font-extrabold text-[var(--cyan)] hover:underline">
