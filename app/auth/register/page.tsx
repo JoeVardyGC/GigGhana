@@ -315,9 +315,13 @@ function RegisterContent() {
           });
         } catch (_) {}
 
-        // Forward to respective dashboard after short celebratory delay
+        // Forward to verification or respective dashboard after celebratory delay
         setTimeout(() => {
-          router.push(role === 'client' ? '/dashboard/client' : '/dashboard/provider');
+          if (res.redirectTo) {
+            router.push(res.redirectTo);
+          } else {
+            router.push(role === 'client' ? '/dashboard/client' : '/dashboard/provider');
+          }
         }, 1200);
       } else {
         setErrorMsg(res.message || 'Registration could not be completed. Please try again.');

@@ -28,3 +28,6 @@ yarn-error.log*
 # OS Files
 .DS_Store
 Thumbs.db
+
+# Local database storage
+.data/

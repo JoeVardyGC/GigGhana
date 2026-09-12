@@ -1,53 +1,43 @@
 'use client';
 
 import React, { useState, useMemo, Suspense, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { SiteHeader } from '@/components/layout/SiteHeader';
-import { SiteFooter } from '@/components/layout/SiteFooter';
+import { AuthLayout } from '@/components/auth/AuthLayout';
 import { useAuth } from '@/lib/context/AuthContext';
 import { detectGhanaNetwork } from '@/components/ui/phone-input';
-import { formatGhanaCardPin, validateGhanaCardPin } from '@/components/ui/ghana-card-input';
 import confetti from 'canvas-confetti';
 import {
-  ShieldCheck,
   Lock,
   Smartphone,
   Eye,
   EyeOff,
   ArrowRight,
   Sparkles,
-  CheckCircle2,
-  Star,
-  Briefcase,
   Mail,
-  Phone,
   Building2,
   Wrench,
-  Zap,
   Check,
   AlertCircle,
-  Clock,
   KeyRound,
   Fingerprint,
   RefreshCw,
   X,
   Send,
-  HelpCircle,
+  ShieldCheck,
 } from 'lucide-react';
 
 function LoginContent() {
   const router = useRouter();
-  const { login, loginWithOtp, loginWithGhanaCard, requestPasswordReset, resetPassword, loginDemoUser } = useAuth();
+  const { login, loginWithOtp, loginWithGhanaCard, requestPasswordReset, resetPassword } = useAuth();
 
-  // Active Interface: 'provider' (Artisan Gateway) vs 'client' (Employer Console)
+  // Active Gateway: 'provider' (Artisan) vs 'client' (Employer)
   const [activeInterface, setActiveInterface] = useState<'provider' | 'client'>('provider');
 
   // Sign-in Method: 'password' | 'otp' | 'ghanacard'
   const [authMethod, setAuthMethod] = useState<'password' | 'otp' | 'ghanacard'>('password');
 
-  // Form State - Password Login
+  // Form State - Password Login (PHP structure)
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +54,7 @@ function LoginContent() {
   const [ghanaCardPin, setGhanaCardPin] = useState('');
   const [isScanningBiometric, setIsScanningBiometric] = useState(false);
 
-  // Password Reset Modal
+  // Password Reset Modal (PHP 3-step forgot-password)
   const [isForgotModalOpen, setIsForgotModalOpen] = useState(false);
   const [resetIdentifier, setResetIdentifier] = useState('');
   const [resetStep, setResetStep] = useState<'request' | 'verify'>('request');
@@ -76,6 +66,7 @@ function LoginContent() {
   // General State
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState('');
 
   // Telecom auto-detection for Ghanaian phone numbers
   const detectedNetwork = useMemo(() => {
@@ -95,35 +86,48 @@ function LoginContent() {
     return () => clearInterval(interval);
   }, [resendTimer]);
 
-  // Handle Standard Password Login
+  const triggerSuccessCelebration = () => {
+    try {
+      confetti({
+        particleCount: 75,
+        spread: 60,
+        origin: { y: 0.6 },
+        colors: ['#00D4C8', '#F59E0B', '#10B981', '#ffffff'],
+      });
+    } catch {}
+  };
+
+  // Handle Standard Password Login (PHP auth/login.php flow)
   const handlePasswordSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
+    setSuccessMsg('');
 
     if (!identifier.trim()) {
-      setErrorMsg('Please enter your registered email address or Ghanaian telephone number.');
+      setErrorMsg('Please enter your registered email address or Ghanaian phone number.');
       return;
     }
     if (!password) {
-      setErrorMsg('Please enter your secure password.');
+      setErrorMsg('Password is required.');
       return;
     }
 
     setIsLoading(true);
     try {
-      const res = await login(identifier, password);
+      const res = await login(identifier, password, rememberMe);
       if (res.success) {
+        setSuccessMsg('Login successful! Redirecting to your dashboard...');
         triggerSuccessCelebration();
         setTimeout(() => {
           const userRole = res.user?.role || activeInterface;
           router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
         }, 800);
       } else {
-        setErrorMsg(res.message || 'Invalid credentials. Please verify your details and try again.');
+        setErrorMsg(res.message || 'Invalid email/phone or password. Please try again.');
         setIsLoading(false);
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Login failed. Please try again.');
+      setErrorMsg(err?.message || 'Login failed. Please verify database connection.');
       setIsLoading(false);
     }
   };
@@ -139,24 +143,36 @@ function LoginContent() {
     }
 
     setIsLoading(true);
-    await new Promise((r) => setTimeout(r, 600));
-    setIsLoading(false);
+    try {
+      const res = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'resend', identifier: otpPhone }),
+      });
+      const data = await res.json();
+      setIsLoading(false);
 
-    // Generate random 6-digit verification code
-    const generated = Math.floor(100000 + Math.random() * 900000).toString();
-    setSimulatedReceivedCode(generated);
-    setOtpStep('verify');
-    setResendTimer(45);
+      const generated = data.otpCode || Math.floor(100000 + Math.random() * 900000).toString();
+      setSimulatedReceivedCode(generated);
+      setOtpStep('verify');
+      setResendTimer(60);
+    } catch {
+      setIsLoading(false);
+      const generated = Math.floor(100000 + Math.random() * 900000).toString();
+      setSimulatedReceivedCode(generated);
+      setOtpStep('verify');
+      setResendTimer(60);
+    }
   };
 
-  // Handle Submitting OTP
+  // Handle Verifying OTP Code
   const handleVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
     const fullCode = otpCode.join('');
-    if (fullCode.length < 6) {
-      setErrorMsg('Please enter the complete 6-digit SMS verification code.');
+    if (fullCode.length !== 6) {
+      setErrorMsg('Please enter the complete 6-digit verification code.');
       return;
     }
 
@@ -164,13 +180,14 @@ function LoginContent() {
     try {
       const res = await loginWithOtp(otpPhone, fullCode);
       if (res.success) {
+        setSuccessMsg('Phone verified! Loading dashboard...');
         triggerSuccessCelebration();
         setTimeout(() => {
           const userRole = res.user?.role || activeInterface;
           router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
         }, 800);
       } else {
-        setErrorMsg(res.message || 'Invalid SMS code. Please check and re-enter.');
+        setErrorMsg(res.message || 'Invalid code. Please check your SMS and try again.');
         setIsLoading(false);
       }
     } catch (err: any) {
@@ -179,958 +196,583 @@ function LoginContent() {
     }
   };
 
-  // Handle Ghana Card Login
+  // Handle Ghana Card PIN Login
   const handleGhanaCardSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMsg('');
 
-    if (!validateGhanaCardPin(ghanaCardPin)) {
-      setErrorMsg('Invalid Ghana Card format. PIN must strictly follow GHA-XXXXXXXXX-X.');
+    const cleanPin = ghanaCardPin.toUpperCase().trim();
+    if (!cleanPin.startsWith('GHA-') || cleanPin.length < 14) {
+      setErrorMsg('Please enter a valid Ghana Card PIN in GHA-XXXXXXXXX-X format.');
       return;
     }
 
-    setIsLoading(true);
     setIsScanningBiometric(true);
-    await new Promise((r) => setTimeout(r, 1200)); // simulated biometric sensor match
-    setIsScanningBiometric(false);
+    setIsLoading(true);
 
     try {
-      const res = await loginWithGhanaCard(ghanaCardPin);
+      const res = await loginWithGhanaCard(cleanPin);
       if (res.success) {
+        setSuccessMsg('Ghana Card verified! Welcome back.');
         triggerSuccessCelebration();
         setTimeout(() => {
           const userRole = res.user?.role || activeInterface;
           router.push(userRole === 'client' ? '/dashboard/client' : '/dashboard/provider');
-        }, 800);
+        }, 900);
       } else {
-        setErrorMsg(res.message || 'National ID verification could not be matched.');
+        setErrorMsg(res.message || 'Ghana Card not found in registry.');
+        setIsScanningBiometric(false);
         setIsLoading(false);
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Biometric authentication failed.');
+      setErrorMsg(err?.message || 'Verification failed.');
+      setIsScanningBiometric(false);
       setIsLoading(false);
     }
   };
 
-  // Handle OTP Input Change for 6 digits
-  const handleOtpBoxChange = (idx: number, val: string) => {
-    if (!/^\d*$/.test(val)) return;
-    const updated = [...otpCode];
-    updated[idx] = val.slice(-1);
-    setOtpCode(updated);
-
-    // Auto-focus next input
-    if (val && idx < 5) {
-      const nextInput = document.getElementById(`otp-input-${idx + 1}`);
-      nextInput?.focus();
-    }
-  };
-
-  // Handle 1-Click Quick Demo Login
-  const handleQuickDemo = (demo: 'kwame_provider' | 'frimpong_client') => {
-    loginDemoUser(demo);
-    triggerSuccessCelebration();
-    setTimeout(() => {
-      router.push(demo === 'frimpong_client' ? '/dashboard/client' : '/dashboard/provider');
-    }, 600);
-  };
-
-  // Forgot Password Request
-  const handleRequestPasswordReset = async (e: React.FormEvent) => {
+  // Handle Password Reset Modal Actions
+  const handleResetRequest = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!resetIdentifier.trim()) return;
+    setErrorMsg('');
+    if (!resetIdentifier.trim() || !resetIdentifier.includes('@')) {
+      setErrorMsg('Please enter your valid registered email address.');
+      return;
+    }
 
     setIsResetting(true);
-    await requestPasswordReset(resetIdentifier);
-    setIsResetting(false);
-    setResetStep('verify');
-  };
-
-  // Forgot Password Complete
-  const handleResetPasswordSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!resetCode || !newPassword) return;
-
-    setIsResetting(true);
-    const res = await resetPassword(resetIdentifier, resetCode, newPassword);
-    setIsResetting(false);
-
-    if (res.success) {
-      setResetSuccessMsg('Your password has been successfully updated! You can now sign in.');
-      setTimeout(() => {
-        setIsForgotModalOpen(false);
-        setResetStep('request');
-        setResetSuccessMsg('');
-        setPassword(newPassword);
-        setIdentifier(resetIdentifier);
-      }, 1500);
-    }
-  };
-
-  const triggerSuccessCelebration = () => {
     try {
-      confetti({
-        particleCount: 85,
-        spread: 70,
-        origin: { y: 0.6 },
-        colors: activeInterface === 'provider' ? ['#00D4C8', '#10B981', '#38BDF8'] : ['#F59E0B', '#D97706', '#10B981'],
-      });
-    } catch (_) {}
+      const res = await requestPasswordReset(resetIdentifier);
+      setIsResetting(false);
+      if (res.success) {
+        setResetStep('verify');
+        if (res.otpCode) {
+          setResetCode(res.otpCode);
+        }
+      } else {
+        setErrorMsg(res.message);
+      }
+    } catch {
+      setIsResetting(false);
+      setResetStep('verify');
+    }
+  };
+
+  const handleResetConfirm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    if (!resetCode || resetCode.length < 4) {
+      setErrorMsg('Please enter the 6-digit recovery code.');
+      return;
+    }
+    if (!newPassword || newPassword.length < 6) {
+      setErrorMsg('New password must be at least 6 characters.');
+      return;
+    }
+
+    setIsResetting(true);
+    try {
+      const res = await resetPassword(resetIdentifier, resetCode, newPassword);
+      setIsResetting(false);
+      if (res.success) {
+        setResetSuccessMsg('Password updated! You can now sign in.');
+        setTimeout(() => {
+          setIsForgotModalOpen(false);
+          setResetStep('request');
+          setResetSuccessMsg('');
+        }, 1200);
+      } else {
+        setErrorMsg(res.message);
+      }
+    } catch {
+      setIsResetting(false);
+      setErrorMsg('Password reset failed. Please try again.');
+    }
   };
 
   return (
-    <div className="min-h-screen bg-[var(--bg)] text-[var(--tx)] flex flex-col font-body transition-colors relative selection:bg-[var(--cyan)] selection:text-black">
-      <SiteHeader />
+    <AuthLayout
+      title="Welcome Back"
+      subtitle="Sign in to access your dashboard, active contracts, and secure escrow vault."
+      backHref="/"
+      backLabel="Back to Home"
+    >
+      <div className="space-y-6">
 
-      {/* ══════ HERO EDITORIAL SECTION (ASYMMETRICAL 2-COLUMN SPLIT) ══════ */}
-      <section className="hero" style={{ minHeight: 'auto', paddingTop: '115px', paddingBottom: '70px' }}>
-        <div className="hero-container" style={{ alignItems: 'flex-start' }}>
-          
-          {/* ══════ LEFT COLUMN: BOLD EDITORIAL HEADLINE & TRUST SHOWCASE ══════ */}
-          <div className="hero-left space-y-6">
-            
-            {/* Top Micro Badge */}
-            <div className="hero-badge">
-              <span>Ghana&apos;s #1 Marketplace · </span>
-              <span className="ticker-wrap">
-                <span className="ticker-text text-[var(--cyan)] font-bold">
-                  Escrow Protected Gateway 🇬🇭
-                </span>
-              </span>
-            </div>
-
-            {/* Bold Headline */}
-            <h1 className="hero-title" style={{ fontSize: 'clamp(2.5rem, 4.2vw, 3.8rem)', lineHeight: 1.15 }}>
-              Secure Access.
-              <br />
-              Protected Cedis.
-              <br />
-              <span className="gold">Your Workspace.</span>
-            </h1>
-
-            {/* Editorial Subtitle */}
-            <p className="hero-sub" style={{ marginBottom: '20px' }}>
-              Sign in to your verified GigGhana account. Manage active milestone contracts, submit deliverables with proof of work, release escrow funds, or withdraw directly to your Mobile Money wallet.
-            </p>
-
-            {/* Homepage-Style Trust Indicators */}
-            <div className="hero-trust" style={{ marginBottom: '28px' }}>
-              <div className="trust-i">
-                <div className="dot dot-g" />
-                Bank-Grade Escrow
-              </div>
-              <div className="trust-i">
-                <div className="dot dot-b" />
-                Ghana Card Verified
-              </div>
-              <div className="trust-i">
-                <div className="dot dot-gr" />
-                MoMo Sub-60s
-              </div>
-              <div className="trust-i">
-                <div className="dot dot-i" />
-                No Disputes
-              </div>
-            </div>
-
-            {/* ══════ HOMEPAGE-STYLE ARTISAN & CLIENT SHOWCASE CARDS ══════ */}
-            <div className="space-y-4 pt-2">
-              <div className="flex items-center justify-between">
-                <div className="text-xs font-bold uppercase tracking-wider text-[var(--tx-2)] flex items-center gap-1.5">
-                  <Zap className="w-3.5 h-3.5 text-amber-400" />
-                  <span>Instant 1-Click Demo Profiles</span>
-                </div>
-                <span className="text-[10px] font-mono text-[var(--cyan)] font-bold px-2 py-0.5 rounded-full bg-[var(--cyan-dim)] border border-[var(--cyan-border)]">
-                  Live Preview
-                </span>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                
-                {/* Card 1: Kwame Asante (Artisan Showcase Card) */}
-                <div className="artisan-studio-card group transition-all hover:shadow-2xl">
-                  <div className="artisan-cover-wrap" style={{ height: '140px' }}>
-                    <Image
-                      src="/images/occupations/interior_designer.jpg"
-                      alt="Kwame Asante - Master Artisan"
-                      fill
-                      className="artisan-cover-img"
-                    />
-                    <div className="artisan-cover-live-dot" title="Available for immediate work">
-                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    </div>
-                  </div>
-
-                  <div className="artisan-studio-body" style={{ padding: '14px' }}>
-                    <div className="artisan-name-row">
-                      <div className="artisan-name-title">
-                        <span>Kwame Asante</span>
-                        <ShieldCheck className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />
-                      </div>
-                      <div className="artisan-rate-capsule">
-                        <span className="artisan-rate-val">₵95</span>
-                        <span className="artisan-rate-unit">/hr</span>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] text-[var(--cyan)] font-bold font-mono">
-                      ✓ Ghana Card Biometric Verified
-                    </div>
-
-                    <p className="text-[11px] text-[var(--tx-2)] line-clamp-1">
-                      Master POP Ceilings &amp; Luxury Interior Plasterer
-                    </p>
-
-                    <div className="artisan-stats-strip">
-                      <div className="artisan-strip-pill">
-                        <div className="artisan-strip-val">
-                          <Star className="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" />
-                          <span>5.0</span>
-                        </div>
-                        <span className="artisan-strip-lbl">48 reviews</span>
-                      </div>
-                      <div className="artisan-strip-divider" />
-                      <div className="artisan-strip-pill">
-                        <div className="artisan-strip-val">
-                          <Briefcase className="w-3 h-3 text-[var(--cyan)] shrink-0" />
-                          <span>42</span>
-                        </div>
-                        <span className="artisan-strip-lbl">Jobs Done</span>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => handleQuickDemo('kwame_provider')}
-                        className="btn btn-blue w-full text-xs py-2 shadow-sm font-bold flex items-center justify-center gap-1.5"
-                      >
-                        <span>Launch Artisan Portal</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card 2: Dr. Kwabena Frimpong (Client Showcase Card) */}
-                <div className="artisan-studio-card group transition-all hover:shadow-2xl">
-                  <div className="artisan-cover-wrap" style={{ height: '140px' }}>
-                    <Image
-                      src="/images/occupations/executive.jpg"
-                      alt="Dr. Kwabena Frimpong - Employer"
-                      fill
-                      className="artisan-cover-img"
-                    />
-                    <div className="artisan-cover-live-dot" title="Active Hiring Account">
-                      <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                    </div>
-                  </div>
-
-                  <div className="artisan-studio-body" style={{ padding: '14px' }}>
-                    <div className="artisan-name-row">
-                      <div className="artisan-name-title">
-                        <span>Dr. K. Frimpong</span>
-                        <ShieldCheck className="w-3.5 h-3.5 text-amber-500 shrink-0" />
-                      </div>
-                      <div className="artisan-rate-capsule" style={{ borderColor: 'rgba(245, 158, 11, 0.3)' }}>
-                        <span className="artisan-rate-val text-amber-500">₵4.5k</span>
-                        <span className="artisan-rate-unit">Vault</span>
-                      </div>
-                    </div>
-
-                    <div className="text-[11px] text-amber-500 font-bold font-mono">
-                      ✓ Ghana Card Verified Client
-                    </div>
-
-                    <p className="text-[11px] text-[var(--tx-2)] line-clamp-1">
-                      Real Estate Developer &amp; Villa Investor
-                    </p>
-
-                    <div className="artisan-stats-strip">
-                      <div className="artisan-strip-pill">
-                        <div className="artisan-strip-val">
-                          <Star className="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" />
-                          <span>5.0</span>
-                        </div>
-                        <span className="artisan-strip-lbl">62 ratings</span>
-                      </div>
-                      <div className="artisan-strip-divider" />
-                      <div className="artisan-strip-pill">
-                        <div className="artisan-strip-val">
-                          <Lock className="w-3 h-3 text-emerald-400 shrink-0" />
-                          <span>3</span>
-                        </div>
-                        <span className="artisan-strip-lbl">Contracts</span>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <button
-                        type="button"
-                        onClick={() => handleQuickDemo('frimpong_client')}
-                        className="btn btn-gold w-full text-xs py-2 shadow-sm font-bold flex items-center justify-center gap-1.5"
-                      >
-                        <span>Launch Client Console</span>
-                        <ArrowRight className="w-3.5 h-3.5" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
+        {/* ══════ DUAL-ROLE GATEWAY SELECTOR (Artisan vs Client) ══════ */}
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between text-xs font-bold text-[var(--tx-2)]">
+            <span>Workspace Gateway:</span>
+            <span className="text-[10px] text-[var(--tx-3)] font-mono">2 Dedicated Consoles</span>
           </div>
 
-          {/* ══════ RIGHT COLUMN: AUTHENTICATION SUITE (HOMEPAGE LUXURY CARD) ══════ */}
-          <div className="hero-right-showcase w-full">
-            <div className="showcase-outer-wrap">
-              <div
-                className="showcase-card"
-                style={{
-                  height: 'auto',
-                  padding: '32px 28px',
-                  background: 'var(--surface)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '20px',
-                  boxShadow: '0 24px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px var(--bd)',
-                }}
-              >
-                {/* Top Floating Gateway Badge */}
-                <div className="showcase-top-badge" style={{ position: 'static', transform: 'none', margin: '0 auto' }}>
-                  <span className="live-pulse-dot" />
-                  <span>
-                    {activeInterface === 'provider' ? '🛠️ Master Artisan Gateway' : '🏢 Client & Employer Console'}
-                  </span>
-                </div>
-
-                {/* ══════ DUAL-ROLE INTERFACE TOGGLE ══════ */}
-                <div className="space-y-1.5">
-                  <div className="flex items-center justify-between text-xs font-bold text-[var(--tx-2)]">
-                    <span>Select Interface Mode:</span>
-                    <span className="text-[10px] text-[var(--tx-3)] font-mono">2 Dedicated Gateways</span>
-                  </div>
-
-                  <div className="p-1.5 rounded-2xl bg-[var(--surface-2)] border border-[var(--bd)] grid grid-cols-2 gap-1.5 shadow-inner">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActiveInterface('provider');
-                        setErrorMsg('');
-                      }}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
-                        activeInterface === 'provider'
-                          ? 'bg-gradient-to-r from-[#00D4C8] to-[#009E95] text-black shadow-lg shadow-cyan-500/25 scale-[1.01]'
-                          : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
-                      }`}
-                    >
-                      <Wrench className="w-3.5 h-3.5" />
-                      <span>Artisan Interface</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActiveInterface('client');
-                        setErrorMsg('');
-                      }}
-                      className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
-                        activeInterface === 'client'
-                          ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-black shadow-lg shadow-amber-500/25 scale-[1.01]'
-                          : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
-                      }`}
-                    >
-                      <Building2 className="w-3.5 h-3.5" />
-                      <span>Client Interface</span>
-                    </button>
-                  </div>
-                </div>
-
-                {/* ══════ AUTHENTICATION METHOD SELECTOR (3 TABS) ══════ */}
-                <div className="border-b border-[var(--bd)] pb-2 flex items-center justify-between gap-1 text-xs">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthMethod('password');
-                      setErrorMsg('');
-                    }}
-                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-                      authMethod === 'password'
-                        ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                        : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-                    }`}
-                  >
-                    <KeyRound className="w-3 h-3 text-[var(--cyan)]" />
-                    <span>Password</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthMethod('otp');
-                      setErrorMsg('');
-                    }}
-                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-                      authMethod === 'otp'
-                        ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                        : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-                    }`}
-                  >
-                    <Smartphone className="w-3 h-3 text-emerald-400" />
-                    <span>MoMo SMS OTP</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setAuthMethod('ghanacard');
-                      setErrorMsg('');
-                    }}
-                    className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
-                      authMethod === 'ghanacard'
-                        ? 'bg-[var(--surface-2)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
-                        : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
-                    }`}
-                  >
-                    <ShieldCheck className="w-3 h-3 text-amber-400" />
-                    <span>Ghana Card</span>
-                  </button>
-                </div>
-
-                {/* ══════ METHOD 1: STANDARD PASSWORD FORM ══════ */}
-                {authMethod === 'password' && (
-                  <form onSubmit={handlePasswordSubmit} className="space-y-4">
-                    {/* Identifier */}
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-bold text-[var(--tx)]">
-                        <label htmlFor="login-identifier">Email or Ghanaian Phone Number</label>
-                        {detectedNetwork === 'mtn' && (
-                          <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-500 font-mono text-[10px] font-bold border border-amber-500/30 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                            🟡 MTN MoMo
-                          </span>
-                        )}
-                        {detectedNetwork === 'telecel' && (
-                          <span className="px-2 py-0.5 rounded-full bg-red-500/15 text-red-500 font-mono text-[10px] font-bold border border-red-500/30 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
-                            🔴 Telecel Cash
-                          </span>
-                        )}
-                        {detectedNetwork === 'at' && (
-                          <span className="px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30 flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
-                            🔵 AT Money
-                          </span>
-                        )}
-                        {detectedNetwork === 'email' && (
-                          <span className="px-2 py-0.5 rounded-full bg-[var(--cyan-dim)] text-[var(--cyan)] font-mono text-[10px] font-bold border border-[var(--cyan-border)] flex items-center gap-1">
-                            <Mail className="w-3 h-3" />
-                            Verified Email
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="relative flex items-center">
-                        <input
-                          id="login-identifier"
-                          type="text"
-                          value={identifier}
-                          onChange={(e) => setIdentifier(e.target.value)}
-                          placeholder={
-                            activeInterface === 'provider'
-                              ? 'e.g. 024 412 3456 or kwame@gigghana.com'
-                              : 'e.g. 020 899 1234 or dr.frimpong@estate.com'
-                          }
-                          className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-2xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all shadow-inner"
-                          required
-                        />
-                        <div className="absolute right-4 text-[var(--tx-3)] pointer-events-none">
-                          {identifier.includes('@') ? (
-                            <Mail className="w-4 h-4 text-[var(--cyan)]" />
-                          ) : (
-                            <Phone className="w-4 h-4 text-[var(--cyan)]" />
-                          )}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Password */}
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        <label htmlFor="login-password" className="text-xs font-bold text-[var(--tx)]">
-                          Password
-                        </label>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setResetIdentifier(identifier);
-                            setIsForgotModalOpen(true);
-                          }}
-                          className="text-[11px] font-semibold text-[var(--cyan)] hover:underline"
-                        >
-                          Forgot Password?
-                        </button>
-                      </div>
-
-                      <div className="relative flex items-center">
-                        <input
-                          id="login-password"
-                          type={showPassword ? 'text' : 'password'}
-                          value={password}
-                          onChange={(e) => setPassword(e.target.value)}
-                          placeholder="••••••••••••"
-                          className="w-full h-12 pl-4 pr-12 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-medium rounded-2xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all shadow-inner"
-                          required
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowPassword(!showPassword)}
-                          className="absolute right-4 text-[var(--tx-3)] hover:text-[var(--tx)] transition-colors p-1"
-                          aria-label={showPassword ? 'Hide password' : 'Show password'}
-                        >
-                          {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Remember Me */}
-                    <div className="flex items-center justify-between pt-1">
-                      <label className="flex items-center gap-2 cursor-pointer select-none">
-                        <input
-                          type="checkbox"
-                          checked={rememberMe}
-                          onChange={(e) => setRememberMe(e.target.checked)}
-                          className="w-4 h-4 rounded border-[var(--bd)] text-[var(--cyan)] focus:ring-0 focus:ring-offset-0 bg-[var(--surface-2)]"
-                        />
-                        <span className="text-xs text-[var(--tx-2)] font-medium">Keep me signed in on this device</span>
-                      </label>
-                    </div>
-
-                    {errorMsg && (
-                      <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
-                        <AlertCircle className="w-4 h-4 shrink-0" />
-                        <span>{errorMsg}</span>
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className={`btn w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2 transition-all ${
-                        activeInterface === 'provider' ? 'btn-blue' : 'btn-gold'
-                      }`}
-                    >
-                      {isLoading ? (
-                        <>
-                          <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                          <span>Verifying Credentials...</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>Sign In to {activeInterface === 'provider' ? 'Artisan Portal' : 'Employer Console'}</span>
-                          <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
-
-                {/* ══════ METHOD 2: MOBILE MONEY SMS OTP FORM ══════ */}
-                {authMethod === 'otp' && (
-                  <div className="space-y-4">
-                    {otpStep === 'request' ? (
-                      <form onSubmit={handleRequestOtp} className="space-y-4">
-                        <div className="space-y-1.5">
-                          <div className="flex items-center justify-between text-xs font-bold text-[var(--tx)]">
-                            <label htmlFor="otp-phone">Mobile Money Phone Number</label>
-                            {detectedNetwork === 'mtn' && (
-                              <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-500 font-mono text-[10px] font-bold border border-amber-500/30">
-                                🟡 MTN MoMo
-                              </span>
-                            )}
-                            {detectedNetwork === 'telecel' && (
-                              <span className="px-2 py-0.5 rounded-full bg-red-500/15 text-red-500 font-mono text-[10px] font-bold border border-red-500/30">
-                                🔴 Telecel Cash
-                              </span>
-                            )}
-                            {detectedNetwork === 'at' && (
-                              <span className="px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-400 font-mono text-[10px] font-bold border border-blue-500/30">
-                                🔵 AT Money
-                              </span>
-                            )}
-                          </div>
-
-                          <div className="relative flex items-center">
-                            <input
-                              id="otp-phone"
-                              type="tel"
-                              value={otpPhone}
-                              onChange={(e) => setOtpPhone(e.target.value)}
-                              placeholder="024 XXX XXXX"
-                              className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-semibold rounded-2xl border border-[var(--bd)] focus:border-emerald-500 focus:outline-none transition-all shadow-inner"
-                              required
-                            />
-                            <Smartphone className="w-4 h-4 text-emerald-400 absolute right-4 pointer-events-none" />
-                          </div>
-                          <span className="text-[10px] text-[var(--tx-3)]">
-                            We will send a 6-digit authentication token to this registered line.
-                          </span>
-                        </div>
-
-                        {errorMsg && (
-                          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
-                            <AlertCircle className="w-4 h-4 shrink-0" />
-                            <span>{errorMsg}</span>
-                          </div>
-                        )}
-
-                        <button
-                          type="submit"
-                          disabled={isLoading}
-                          className="btn btn-blue w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
-                        >
-                          {isLoading ? (
-                            <>
-                              <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                              <span>Dispatching SMS Code...</span>
-                            </>
-                          ) : (
-                            <>
-                              <Send className="w-4 h-4" />
-                              <span>Send 6-Digit SMS Code</span>
-                            </>
-                          )}
-                        </button>
-                      </form>
-                    ) : (
-                      <form onSubmit={handleVerifyOtp} className="space-y-4 animate-in fade-in duration-200">
-                        
-                        {/* Simulated Incoming SMS Toast */}
-                        <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-500 flex items-start gap-2.5 shadow-sm">
-                          <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
-                          <div className="flex-1">
-                            <div className="font-bold font-mono">[SMS Simulation Received]</div>
-                            <div className="text-[11px] text-[var(--tx)] mt-0.5">
-                              GigGhana Security: Your one-time login code is <strong className="font-mono font-black text-emerald-400">{simulatedReceivedCode}</strong>.
-                            </div>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const digits = simulatedReceivedCode.split('');
-                                setOtpCode(digits);
-                              }}
-                              className="mt-1 text-[10px] font-bold text-[var(--cyan)] underline"
-                            >
-                              Auto-fill Code
-                            </button>
-                          </div>
-                        </div>
-
-                        <div className="space-y-2">
-                          <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
-                            <span>Enter 6-Digit SMS Code</span>
-                            <button
-                              type="button"
-                              onClick={() => setOtpStep('request')}
-                              className="text-[10px] text-[var(--cyan)] hover:underline"
-                            >
-                              Change Phone
-                            </button>
-                          </label>
-
-                          <div className="grid grid-cols-6 gap-2">
-                            {otpCode.map((digit, idx) => (
-                              <input
-                                key={idx}
-                                id={`otp-input-${idx}`}
-                                type="text"
-                                maxLength={1}
-                                value={digit}
-                                onChange={(e) => handleOtpBoxChange(idx, e.target.value)}
-                                className="h-12 text-center text-lg font-mono font-black bg-[var(--surface-2)] text-[var(--tx)] rounded-xl border border-[var(--bd)] focus:border-emerald-500 focus:outline-none shadow-inner"
-                              />
-                            ))}
-                          </div>
-
-                          <div className="flex items-center justify-between text-[11px] text-[var(--tx-3)] pt-1">
-                            <span>Didn&apos;t receive the code?</span>
-                            {resendTimer > 0 ? (
-                              <span className="font-mono text-amber-400">Resend in {resendTimer}s</span>
-                            ) : (
-                              <button
-                                type="button"
-                                onClick={() => setResendTimer(45)}
-                                className="font-bold text-[var(--cyan)] hover:underline"
-                              >
-                                Resend Code
-                              </button>
-                            )}
-                          </div>
-                        </div>
-
-                        {errorMsg && (
-                          <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
-                            <AlertCircle className="w-4 h-4 shrink-0" />
-                            <span>{errorMsg}</span>
-                          </div>
-                        )}
-
-                        <button
-                          type="submit"
-                          disabled={isLoading}
-                          className="btn btn-blue w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
-                        >
-                          {isLoading ? (
-                            <>
-                              <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                              <span>Authenticating Token...</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>Verify &amp; Enter Workspace</span>
-                              <ArrowRight className="w-4 h-4" />
-                            </>
-                          )}
-                        </button>
-                      </form>
-                    )}
-                  </div>
-                )}
-
-                {/* ══════ METHOD 3: GHANA CARD BIOMETRIC PIN FORM ══════ */}
-                {authMethod === 'ghanacard' && (
-                  <form onSubmit={handleGhanaCardSubmit} className="space-y-4 animate-in fade-in duration-200">
-                    <div className="space-y-1.5">
-                      <div className="flex items-center justify-between text-xs font-bold text-[var(--tx)]">
-                        <label htmlFor="ghana-card-pin">National Identity PIN</label>
-                        <span className="text-[10px] text-amber-500 font-mono font-bold">NIA Biometric</span>
-                      </div>
-
-                      <div className="relative flex items-center">
-                        <input
-                          id="ghana-card-pin"
-                          type="text"
-                          value={ghanaCardPin}
-                          onChange={(e) => setGhanaCardPin(formatGhanaCardPin(e.target.value))}
-                          placeholder="GHA-XXXXXXXXX-X"
-                          className="w-full h-12 pl-4 pr-11 bg-[var(--surface-2)] text-[var(--tx)] text-sm font-mono font-bold tracking-wider rounded-2xl border border-[var(--bd)] focus:border-amber-500 focus:outline-none transition-all shadow-inner uppercase"
-                          required
-                        />
-                        <ShieldCheck className="w-4 h-4 text-amber-400 absolute right-4 pointer-events-none" />
-                      </div>
-                      <span className="text-[10px] text-[var(--tx-3)]">
-                        Format: GHA-XXXXXXXXX-X (Issued by National Identification Authority)
-                      </span>
-                    </div>
-
-                    {/* Biometric Sensor Simulation Banner */}
-                    <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-500 flex items-center justify-center shrink-0">
-                        <Fingerprint className="w-6 h-6 animate-pulse" />
-                      </div>
-                      <div className="text-xs">
-                        <div className="font-bold text-[var(--tx)]">Instant Biometric Verification</div>
-                        <div className="text-[10px] text-[var(--tx-2)]">
-                          Device fingerprint &amp; facial match against NIA repository.
-                        </div>
-                      </div>
-                    </div>
-
-                    {errorMsg && (
-                      <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
-                        <AlertCircle className="w-4 h-4 shrink-0" />
-                        <span>{errorMsg}</span>
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="btn btn-gold w-full h-12 rounded-2xl font-black text-sm shadow-xl flex items-center justify-center gap-2"
-                    >
-                      {isScanningBiometric ? (
-                        <>
-                          <Fingerprint className="w-4 h-4 animate-bounce" />
-                          <span>Matching NIA Biometrics...</span>
-                        </>
-                      ) : (
-                        <>
-                          <ShieldCheck className="w-4 h-4" />
-                          <span>Verify Ghana Card &amp; Sign In</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
-
-                {/* Device & Session Security Footnote */}
-                <div className="pt-2 flex items-center justify-center gap-2 text-[10px] text-[var(--tx-3)] font-mono">
-                  <Lock className="w-3 h-3 text-emerald-400" />
-                  <span>256-Bit SSL Encrypted · Accra, Ghana Session</span>
-                </div>
-
-                {/* Register Switcher */}
-                <div className="pt-4 border-t border-[var(--bd)] text-center text-xs text-[var(--tx-2)] space-y-2">
-                  <div>New to GigGhana? Register with your national ID:</div>
-                  <div className="flex items-center justify-center gap-3">
-                    <Link
-                      href="/auth/register?role=provider"
-                      className="font-bold text-[var(--cyan)] hover:underline flex items-center gap-1"
-                    >
-                      <span>Join as Artisan</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                    <span>•</span>
-                    <Link
-                      href="/auth/register?role=client"
-                      className="font-bold text-amber-500 hover:underline flex items-center gap-1"
-                    >
-                      <span>Hire Verified Talent</span>
-                      <ArrowRight className="w-3 h-3" />
-                    </Link>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      {/* ══════ INTERACTIVE FORGOT PASSWORD MODAL ══════ */}
-      {isForgotModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="w-full max-w-md rounded-3xl bg-[var(--surface)] border border-[var(--bd2)] shadow-2xl p-6 sm:p-8 relative">
-            
+          <div className="p-1.5 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--bd2)] grid grid-cols-2 gap-1.5 shadow-inner">
             <button
-              onClick={() => setIsForgotModalOpen(false)}
-              className="absolute right-5 top-5 p-2 rounded-xl text-[var(--tx-3)] hover:text-[var(--tx)] hover:bg-[var(--surface-2)] transition-colors"
+              type="button"
+              onClick={() => {
+                setActiveInterface('provider');
+                setErrorMsg('');
+              }}
+              className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+                activeInterface === 'provider'
+                  ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-md shadow-cyan-500/20 scale-[1.01]'
+                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
+              }`}
             >
-              <X className="w-5 h-5" />
+              <Wrench className="w-3.5 h-3.5" />
+              <span>Artisan Gateway</span>
             </button>
 
-            {resetSuccessMsg ? (
-              <div className="py-6 text-center space-y-3">
-                <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 flex items-center justify-center mx-auto shadow-md">
-                  <CheckCircle2 className="w-7 h-7" />
-                </div>
-                <h3 className="text-lg font-bold text-[var(--tx)]">Password Reset Complete</h3>
-                <p className="text-xs text-[var(--tx-2)] max-w-xs mx-auto">
-                  {resetSuccessMsg}
-                </p>
+            <button
+              type="button"
+              onClick={() => {
+                setActiveInterface('client');
+                setErrorMsg('');
+              }}
+              className={`py-2.5 px-3 rounded-xl text-xs font-extrabold transition-all flex items-center justify-center gap-2 ${
+                activeInterface === 'client'
+                  ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-md shadow-amber-500/20 scale-[1.01]'
+                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
+              }`}
+            >
+              <Building2 className="w-3.5 h-3.5" />
+              <span>Client Console</span>
+            </button>
+          </div>
+        </div>
+
+        {/* ══════ AUTHENTICATION METHOD TABS (Password, OTP, Ghana Card) ══════ */}
+        <div className="border-b border-[var(--bd2)] pb-2 flex items-center justify-between gap-1 text-xs">
+          <button
+            type="button"
+            onClick={() => {
+              setAuthMethod('password');
+              setErrorMsg('');
+            }}
+            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+              authMethod === 'password'
+                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
+                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
+            }`}
+          >
+            <KeyRound className="w-3 h-3 text-[var(--cyan)]" />
+            <span>Password</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setAuthMethod('otp');
+              setErrorMsg('');
+            }}
+            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+              authMethod === 'otp'
+                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
+                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
+            }`}
+          >
+            <Smartphone className="w-3 h-3 text-emerald-400" />
+            <span>SMS OTP</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              setAuthMethod('ghanacard');
+              setErrorMsg('');
+            }}
+            className={`flex-1 py-1.5 rounded-lg font-bold text-[11px] transition-all flex items-center justify-center gap-1.5 ${
+              authMethod === 'ghanacard'
+                ? 'bg-[var(--surface-elevated)] text-[var(--tx)] border border-[var(--bd2)] shadow-xs'
+                : 'text-[var(--tx-3)] hover:text-[var(--tx-2)]'
+            }`}
+          >
+            <Fingerprint className="w-3 h-3 text-[#F59E0B]" />
+            <span>Ghana Card</span>
+          </button>
+        </div>
+
+        {/* Success Alert */}
+        {successMsg && (
+          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-semibold flex items-center gap-2">
+            <Check className="w-4 h-4 shrink-0" />
+            <span>{successMsg}</span>
+          </div>
+        )}
+
+        {/* Error Alert */}
+        {errorMsg && (
+          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{errorMsg}</span>
+          </div>
+        )}
+
+        {/* ══════ 1. STANDARD PASSWORD LOGIN FORM (PHP auth/login.php) ══════ */}
+        {authMethod === 'password' && (
+          <form onSubmit={handlePasswordSubmit} className="space-y-4">
+            {/* Email Address / Phone */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
+                <span>Email Address or Phone Number</span>
+                {detectedNetwork && detectedNetwork !== 'unknown' && detectedNetwork !== 'email' && (
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--cyan)] font-bold uppercase">
+                    {detectedNetwork} MoMo
+                  </span>
+                )}
+              </label>
+              <div className="relative flex items-center">
+                <Mail className="w-4 h-4 text-[var(--tx-3)] absolute left-3.5 pointer-events-none" />
+                <input
+                  type="text"
+                  required
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                  placeholder="you@example.com or 024 XXX XXXX"
+                  className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                />
               </div>
-            ) : resetStep === 'request' ? (
-              <form onSubmit={handleRequestPasswordReset} className="space-y-4">
-                <div>
-                  <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--cyan-dim)] text-[var(--cyan)] text-[10px] font-bold uppercase tracking-wider mb-2">
-                    <KeyRound className="w-3 h-3" />
-                    <span>Self-Service Recovery</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-[var(--tx)]">Reset Your Password</h3>
-                  <p className="text-xs text-[var(--tx-2)] mt-0.5">
-                    Enter your registered email address or Ghanaian phone number to receive a recovery token.
+            </div>
+
+            {/* Password */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
+                <span>Password</span>
+              </label>
+              <div className="relative flex items-center">
+                <Lock className="w-4 h-4 text-[var(--tx-3)] absolute left-3.5 pointer-events-none" />
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
+                  className="w-full h-11 pl-10 pr-11 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 text-[var(--tx-3)] hover:text-[var(--tx)] transition-colors p-1"
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            {/* Remember Me & Forgot Password Row (PHP layout) */}
+            <div className="flex items-center justify-between pt-1 text-xs">
+              <label className="flex items-center gap-2 cursor-pointer select-none text-[var(--tx-2)] hover:text-[var(--tx)]">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded border-[var(--bd2)] bg-[var(--surface-elevated)] text-[var(--cyan)] focus:ring-[var(--cyan)]/20"
+                />
+                <span>Keep me signed in for 30 days</span>
+              </label>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setErrorMsg('');
+                  setResetIdentifier(identifier.includes('@') ? identifier : '');
+                  setIsForgotModalOpen(true);
+                }}
+                className="font-semibold text-[var(--cyan)] hover:underline"
+              >
+                Forgot Password?
+              </button>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-2">
+              <button
+                type="submit"
+                disabled={isLoading}
+                className={`w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
+                  activeInterface === 'client'
+                    ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-slate-950 shadow-amber-500/20'
+                    : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-slate-950 shadow-cyan-500/20'
+                }`}
+              >
+                {isLoading ? (
+                  <>
+                    <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
+                    <span>Signing in to MySQL...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>Login to My Account</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {/* ══════ 2. OTP SIGN-IN FORM ══════ */}
+        {authMethod === 'otp' && (
+          <div>
+            {otpStep === 'request' ? (
+              <form onSubmit={handleRequestOtp} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-[var(--tx)]">
+                    Ghana Mobile Money Number
+                  </label>
+                  <input
+                    type="tel"
+                    required
+                    value={otpPhone}
+                    onChange={(e) => setOtpPhone(e.target.value)}
+                    placeholder="024 123 4567"
+                    className="w-full h-11 px-3.5 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                  />
+                  <p className="text-[11px] text-[var(--tx-3)]">
+                    We will send a 6-digit verification code to this phone number.
                   </p>
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[var(--tx)]">Email or Phone Number</label>
-                  <input
-                    type="text"
-                    required
-                    value={resetIdentifier}
-                    onChange={(e) => setResetIdentifier(e.target.value)}
-                    placeholder="024 XXX XXXX or your@email.com"
-                    className="w-full h-11 px-3.5 bg-[var(--surface-2)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:outline-none"
-                  />
-                </div>
-
-                <div className="pt-2 flex items-center justify-end gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsForgotModalOpen(false)}
-                    className="px-4 py-2 rounded-xl border border-[var(--bd)] text-xs text-[var(--tx)]"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isResetting}
-                    className="btn btn-blue px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5"
-                  >
-                    {isResetting ? 'Sending...' : 'Send Recovery Code'}
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-11 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
+                >
+                  {isLoading ? 'Dispatching Code...' : 'Send SMS Verification Code'}
+                </button>
               </form>
             ) : (
-              <form onSubmit={handleResetPasswordSubmit} className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-bold text-[var(--tx)]">Enter Recovery Code</h3>
-                  <p className="text-xs text-[var(--tx-2)] mt-0.5">
-                    Code dispatched to <strong>{resetIdentifier}</strong>. Enter code &amp; set a new password.
-                  </p>
+              <form onSubmit={handleVerifyOtp} className="space-y-4">
+                <div className="space-y-2 text-center">
+                  <span className="text-xs text-[var(--tx-2)]">
+                    Enter the 6-digit code sent to <strong className="text-[var(--tx)]">{otpPhone}</strong>
+                  </span>
+
+                  {simulatedReceivedCode && (
+                    <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono">
+                      Dev Code: <strong>{simulatedReceivedCode}</strong>
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-center gap-2 pt-2">
+                    {otpCode.map((digit, idx) => (
+                      <input
+                        key={idx}
+                        id={`otp-box-${idx}`}
+                        type="text"
+                        maxLength={1}
+                        value={digit}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/\D/g, '');
+                          const newCode = [...otpCode];
+                          newCode[idx] = val;
+                          setOtpCode(newCode);
+                          if (val && idx < 5) {
+                            document.getElementById(`otp-box-${idx + 1}`)?.focus();
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Backspace' && !otpCode[idx] && idx > 0) {
+                            document.getElementById(`otp-box-${idx - 1}`)?.focus();
+                          }
+                        }}
+                        className="w-10 h-12 text-center font-bold text-lg rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:outline-none"
+                      />
+                    ))}
+                  </div>
                 </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[var(--tx)]">6-Digit Recovery Token</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="123456"
-                    value={resetCode}
-                    onChange={(e) => setResetCode(e.target.value)}
-                    className="w-full h-11 px-3.5 bg-[var(--surface-2)] text-[var(--tx)] text-xs font-mono font-bold tracking-widest rounded-xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:outline-none"
-                  />
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-[var(--tx)]">New Secure Password</label>
-                  <input
-                    type="password"
-                    required
-                    placeholder="••••••••••••"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    className="w-full h-11 px-3.5 bg-[var(--surface-2)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd)] focus:border-[var(--cyan)] focus:outline-none"
-                  />
-                </div>
-
-                <div className="pt-2 flex items-center justify-end gap-2">
+                <div className="flex items-center justify-between text-xs pt-1">
                   <button
                     type="button"
-                    onClick={() => setResetStep('request')}
-                    className="px-3 py-2 text-xs text-[var(--tx-3)] hover:text-[var(--tx)]"
+                    onClick={() => setOtpStep('request')}
+                    className="text-[var(--tx-3)] hover:text-[var(--tx)]"
                   >
-                    Back
+                    Change Number
                   </button>
+
                   <button
-                    type="submit"
-                    disabled={isResetting}
-                    className="btn btn-gold px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5"
+                    type="button"
+                    disabled={resendTimer > 0}
+                    onClick={handleRequestOtp}
+                    className={`font-semibold ${resendTimer > 0 ? 'text-[var(--tx-3)] cursor-not-allowed' : 'text-[var(--cyan)] hover:underline'}`}
                   >
-                    {isResetting ? 'Updating...' : 'Set New Password'}
+                    {resendTimer > 0 ? `Resend in ${resendTimer}s` : 'Resend Code'}
                   </button>
                 </div>
+
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full h-11 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
+                >
+                  {isLoading ? 'Verifying...' : 'Verify & Enter Workspace'}
+                </button>
               </form>
             )}
+          </div>
+        )}
 
+        {/* ══════ 3. GHANA CARD PIN LOGIN FORM ══════ */}
+        {authMethod === 'ghanacard' && (
+          <form onSubmit={handleGhanaCardSubmit} className="space-y-4">
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
+                <span>National Identity PIN</span>
+                <span className="text-[10px] text-[var(--tx-3)] font-mono">GHA-XXXXXXXXX-X</span>
+              </label>
+              <div className="relative flex items-center">
+                <Fingerprint className="w-4 h-4 text-[#F59E0B] absolute left-3.5 pointer-events-none" />
+                <input
+                  type="text"
+                  required
+                  value={ghanaCardPin}
+                  onChange={(e) => setGhanaCardPin(e.target.value.toUpperCase())}
+                  placeholder="GHA-712345678-9"
+                  className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[#F59E0B] focus:outline-none"
+                />
+              </div>
+              <p className="text-[11px] text-[var(--tx-3)]">
+                Direct biometric instant authentication linked to your verified national profile.
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              disabled={isLoading || isScanningBiometric}
+              className="w-full h-11 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 font-bold text-xs flex items-center justify-center gap-2 shadow-md"
+            >
+              {isScanningBiometric ? (
+                <>
+                  <RefreshCw className="w-4 h-4 animate-spin" />
+                  <span>Validating NIA Registry...</span>
+                </>
+              ) : (
+                <>
+                  <ShieldCheck className="w-4 h-4" />
+                  <span>Verify Ghana Card Identity</span>
+                </>
+              )}
+            </button>
+          </form>
+        )}
+
+        {/* Trust Badges Strip (matching PHP auth/login.php) */}
+        <div className="flex items-center justify-center gap-4 pt-2 text-[10.5px] text-[var(--tx-3)]">
+          <div className="flex items-center gap-1">
+            <Lock className="w-3 h-3 text-emerald-400" />
+            <span>SSL secured</span>
+          </div>
+          <div className="w-px h-3 bg-[var(--bd2)]" />
+          <div className="flex items-center gap-1">
+            <span>🇬🇭</span>
+            <span>Ghana only</span>
+          </div>
+          <div className="w-px h-3 bg-[var(--bd2)]" />
+          <div className="flex items-center gap-1">
+            <ShieldCheck className="w-3 h-3 text-[var(--cyan)]" />
+            <span>Verified platform</span>
+          </div>
+        </div>
+
+        {/* Switch to Register (matching PHP layout) */}
+        <div className="pt-3 text-center border-t border-[var(--bd2)]/40 text-xs text-[var(--tx-2)]">
+          Don&apos;t have an account yet?{' '}
+          <Link href="/auth/register" className="font-extrabold text-[var(--cyan)] hover:underline">
+            Create one here →
+          </Link>
+        </div>
+      </div>
+
+      {/* ══════ PASSWORD RESET MODAL (PHP auth/forgot-password.php) ══════ */}
+      {isForgotModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
+          <div className="w-full max-w-md rounded-2xl bg-[var(--surface)] border border-[var(--bd)] p-6 shadow-2xl space-y-4">
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--bd2)]">
+              <div className="flex items-center gap-2">
+                <KeyRound className="w-4 h-4 text-[var(--cyan)]" />
+                <h3 className="font-heading font-black text-base text-[var(--tx)]">Password Recovery</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsForgotModalOpen(false)}
+                className="text-[var(--tx-3)] hover:text-[var(--tx)] p-1"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {resetSuccessMsg && (
+              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+                {resetSuccessMsg}
+              </div>
+            )}
+
+            {resetStep === 'request' ? (
+              <form onSubmit={handleResetRequest} className="space-y-3">
+                <p className="text-xs text-[var(--tx-2)]">
+                  Enter your registered email address to receive a 6-digit recovery code.
+                </p>
+                <input
+                  type="email"
+                  required
+                  value={resetIdentifier}
+                  onChange={(e) => setResetIdentifier(e.target.value)}
+                  placeholder="you@example.com"
+                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={isResetting}
+                  className="w-full h-10 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5"
+                >
+                  <Send className="w-3.5 h-3.5" />
+                  <span>{isResetting ? 'Sending Code...' : 'Send Recovery Code'}</span>
+                </button>
+              </form>
+            ) : (
+              <form onSubmit={handleResetConfirm} className="space-y-3">
+                <p className="text-xs text-[var(--tx-2)]">
+                  Enter the 6-digit recovery code and choose your new password.
+                </p>
+                <input
+                  type="text"
+                  required
+                  maxLength={6}
+                  value={resetCode}
+                  onChange={(e) => setResetCode(e.target.value)}
+                  placeholder="6-digit recovery code"
+                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                />
+                <input
+                  type="password"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="New password (min 6 characters)"
+                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                />
+                <button
+                  type="submit"
+                  disabled={isResetting}
+                  className="w-full h-10 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5"
+                >
+                  <span>{isResetting ? 'Updating...' : 'Update Password & Sign In'}</span>
+                </button>
+              </form>
+            )}
           </div>
         </div>
       )}
-
-      <SiteFooter />
-    </div>
+    </AuthLayout>
   );
 }
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-[var(--bg)] flex items-center justify-center text-xs text-[var(--tx-3)]">
-        <div className="w-8 h-8 border-2 border-[var(--cyan)] border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
+    <Suspense fallback={<div className="min-h-screen bg-[var(--bg)] flex items-center justify-center text-xs text-[var(--tx-3)]">Loading GigGhana Login...</div>}>
       <LoginContent />
     </Suspense>
   );
