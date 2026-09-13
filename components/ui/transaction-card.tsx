@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, CheckCircle2, ArrowRight, Smartphone, Lock, Sparkles, Star } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, ArrowRight, Smartphone, Lock, Sparkles, Star, Check } from 'lucide-react';
 
 export function TransactionVisualizerCard() {
   const [activeStep, setActiveStep] = useState(0);
@@ -145,7 +145,7 @@ export function TransactionVisualizerCard() {
             <div>
               <div className="text-xs font-bold text-white flex items-center gap-1">
                 <span>Kwame Asante</span>
-                <span className="text-[10px] text-[#06B6D4]">✓</span>
+                <Check className="w-3 h-3 text-[#06B6D4] stroke-[3]" />
               </div>
               <div className="text-[10px] text-white/50">Full-Stack Web Architect</div>
             </div>

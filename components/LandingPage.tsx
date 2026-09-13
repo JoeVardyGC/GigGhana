@@ -10,16 +10,15 @@ import { BentoGrid, BentoCard } from './ui/bento-grid';
 import { GhanaCard } from './ui/ghana-card';
 import { CommandSearchDialog } from './ui/command-dialog';
 import { WhatsAppIcon, FacebookIcon, LinkedInIcon, InstagramIcon, TwitterXIcon } from './ui/social-icons';
-import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers, LogOut, ChevronDown } from 'lucide-react';
+import { Search, ShieldCheck, Zap, Smartphone, Award, Sparkles, Sprout, CheckCircle2, ArrowRight, BadgeCheck, Star, Briefcase, Clock, Wrench, Palette, Code, Building2, MessageSquare, Check, Phone, Mail, Layers, LogOut, ChevronDown, Laptop, Stethoscope, Utensils, GraduationCap, Globe, Sun, Moon, MapPin, Bell, Lock, Info, AlertTriangle, AlertCircle, Hammer, Car, LineChart, Package, Camera } from 'lucide-react';
 import { useAuth } from '@/lib/context/AuthContext';
 
 const getCategoryTheme = (cat: any) => {
   const name = (cat.name || cat.slug || cat.icon || '').toLowerCase();
-  const emo = (e: string) => <span style={{ fontSize: '22px', lineHeight: 1 }}>{e}</span>;
   
   if (name.includes('tech') || name.includes('it') || name.includes('code')) {
     return {
-      icon: emo('💻'),
+      icon: <Laptop className="w-5 h-5 text-[#00D4C8]" />,
       themeColor: '#00D4C8',
       themeDim: 'rgba(0, 212, 200, 0.12)',
       themeBorder: 'rgba(0, 212, 200, 0.35)',
@@ -29,7 +28,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('trade') || name.includes('tool') || name.includes('carpenter') || name.includes('plumb') || name.includes('electric')) {
     return {
-      icon: emo('🔧'),
+      icon: <Wrench className="w-5 h-5 text-[#F59E0B]" />,
       themeColor: '#F59E0B',
       themeDim: 'rgba(245, 158, 11, 0.12)',
       themeBorder: 'rgba(245, 158, 11, 0.35)',
@@ -39,7 +38,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('construct') || name.includes('build')) {
     return {
-      icon: emo('🏗️'),
+      icon: <Building2 className="w-5 h-5 text-[#3B82F6]" />,
       themeColor: '#3B82F6',
       themeDim: 'rgba(59, 130, 246, 0.12)',
       themeBorder: 'rgba(59, 130, 246, 0.35)',
@@ -49,7 +48,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('creative') || name.includes('art') || name.includes('design') || name.includes('pen')) {
     return {
-      icon: emo('🎨'),
+      icon: <Palette className="w-5 h-5 text-[#A78BFA]" />,
       themeColor: '#A78BFA',
       themeDim: 'rgba(167, 139, 250, 0.12)',
       themeBorder: 'rgba(167, 139, 250, 0.35)',
@@ -59,7 +58,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('health') || name.includes('wellness') || name.includes('nurse')) {
     return {
-      icon: emo('🏥'),
+      icon: <Stethoscope className="w-5 h-5 text-[#10B981]" />,
       themeColor: '#10B981',
       themeDim: 'rgba(16, 185, 129, 0.12)',
       themeBorder: 'rgba(16, 185, 129, 0.35)',
@@ -69,7 +68,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('biz') || name.includes('business') || name.includes('consult')) {
     return {
-      icon: emo('💼'),
+      icon: <Briefcase className="w-5 h-5 text-[#EC4899]" />,
       themeColor: '#EC4899',
       themeDim: 'rgba(236, 72, 153, 0.12)',
       themeBorder: 'rgba(236, 72, 153, 0.35)',
@@ -79,7 +78,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('hosp') || name.includes('food') || name.includes('chef')) {
     return {
-      icon: emo('🍽️'),
+      icon: <Utensils className="w-5 h-5 text-[#FB923C]" />,
       themeColor: '#FB923C',
       themeDim: 'rgba(251, 146, 60, 0.12)',
       themeBorder: 'rgba(251, 146, 60, 0.35)',
@@ -89,7 +88,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('edu') || name.includes('teach')) {
     return {
-      icon: emo('📚'),
+      icon: <GraduationCap className="w-5 h-5 text-[#38BDF8]" />,
       themeColor: '#38BDF8',
       themeDim: 'rgba(56, 189, 248, 0.12)',
       themeBorder: 'rgba(56, 189, 248, 0.35)',
@@ -99,7 +98,7 @@ const getCategoryTheme = (cat: any) => {
   }
   if (name.includes('farm') || name.includes('agri')) {
     return {
-      icon: emo('🌾'),
+      icon: <Sprout className="w-5 h-5 text-[#84CC16]" />,
       themeColor: '#84CC16',
       themeDim: 'rgba(132, 204, 22, 0.12)',
       themeBorder: 'rgba(132, 204, 22, 0.35)',
@@ -108,7 +107,7 @@ const getCategoryTheme = (cat: any) => {
     };
   }
   return {
-    icon: emo('🛠️'),
+    icon: <Hammer className="w-5 h-5 text-[#00D4C8]" />,
     themeColor: '#00D4C8',
     themeDim: 'rgba(0, 212, 200, 0.12)',
     themeBorder: 'rgba(0, 212, 200, 0.35)',
@@ -122,22 +121,22 @@ interface Props {
 }
 
 const acSuggestions = [
-  { icon: '🎨', text: 'Painter / Decorator', cat: 'Skilled Trades' },
-  { icon: '🏗️', text: 'Building Contractor', cat: 'Construction' },
-  { icon: '🛋️', text: 'Interior Designer', cat: 'Creative Arts' },
-  { icon: '🪚', text: 'Carpenter / Joiner', cat: 'Skilled Trades' },
-  { icon: '💻', text: 'Web Developer', cat: 'IT & Tech' },
-  { icon: '🏥', text: 'Home Nurse', cat: 'Health & Wellness' },
-  { icon: '🔌', text: 'Electrician', cat: 'Skilled Trades' },
-  { icon: '🍽️', text: 'Private Chef', cat: 'Hospitality' },
-  { icon: '🔧', text: 'Plumber', cat: 'Skilled Trades' },
-  { icon: '🚗', text: 'Mechanic', cat: 'Skilled Trades' },
-  { icon: '📈', text: 'Digital Marketer', cat: 'IT & Tech' },
-  { icon: '📊', text: 'Accountant', cat: 'Business Services' },
-  { icon: '🌾', text: 'Farmer / Agri-tech', cat: 'Agriculture' },
-  { icon: '📚', text: 'Math Tutor', cat: 'Education' },
-  { icon: '📷', text: 'Photographer', cat: 'Creative Arts' },
-  { icon: '📦', text: 'Delivery Rider', cat: 'Others' },
+  { icon: Palette, text: 'Painter / Decorator', cat: 'Skilled Trades' },
+  { icon: Building2, text: 'Building Contractor', cat: 'Construction' },
+  { icon: Layers, text: 'Interior Designer', cat: 'Creative Arts' },
+  { icon: Hammer, text: 'Carpenter / Joiner', cat: 'Skilled Trades' },
+  { icon: Code, text: 'Web Developer', cat: 'IT & Tech' },
+  { icon: Stethoscope, text: 'Home Nurse', cat: 'Health & Wellness' },
+  { icon: Zap, text: 'Electrician', cat: 'Skilled Trades' },
+  { icon: Utensils, text: 'Private Chef', cat: 'Hospitality' },
+  { icon: Wrench, text: 'Plumber', cat: 'Skilled Trades' },
+  { icon: Car, text: 'Mechanic', cat: 'Skilled Trades' },
+  { icon: LineChart, text: 'Digital Marketer', cat: 'IT & Tech' },
+  { icon: Briefcase, text: 'Accountant', cat: 'Business Services' },
+  { icon: Sprout, text: 'Farmer / Agri-tech', cat: 'Agriculture' },
+  { icon: GraduationCap, text: 'Math Tutor', cat: 'Education' },
+  { icon: Camera, text: 'Photographer', cat: 'Creative Arts' },
+  { icon: Package, text: 'Delivery Rider', cat: 'Others' },
 ];
 
 const profs = [
@@ -156,16 +155,16 @@ const profs = [
 ];
 
 const trends = [
-  ['💻', 'Web Developer', '#1'],
-  ['🎨', 'Graphic Designer', '#2'],
-  ['🔧', 'Plumber', '#3'],
-  ['🏥', 'Home Nurse', '#4'],
-  ['🍽️', 'Private Chef', '#5'],
-  ['📷', 'Photographer', '#6'],
-  ['🔌', 'Electrician', '#7'],
-  ['📱', 'App Developer', '#8'],
-  ['🌿', 'Landscaper', '#9'],
-  ['🎓', 'Math Tutor', '#10'],
+  ['Web Developer', '#1'],
+  ['Graphic Designer', '#2'],
+  ['Plumber', '#3'],
+  ['Home Nurse', '#4'],
+  ['Private Chef', '#5'],
+  ['Photographer', '#6'],
+  ['Electrician', '#7'],
+  ['App Developer', '#8'],
+  ['Landscaper', '#9'],
+  ['Math Tutor', '#10'],
 ];
 
 const paymentPartners = [
@@ -214,10 +213,10 @@ const avMap: Record<string, string> = {
 };
 
 function rankLabel(jobs: number) {
-  if (jobs >= 50) return { i: '🏆', l: 'Elite Expert', c: 'rk-gold' };
-  if (jobs >= 20) return { i: '⭐', l: 'Top Rated', c: 'rk-blue' };
-  if (jobs >= 5) return { i: '📈', l: 'Rising Talent', c: 'rk-teal' };
-  return { i: '🌱', l: 'New Provider', c: 'rk-dim' };
+  if (jobs >= 50) return { l: 'Elite Expert', c: 'rk-gold' };
+  if (jobs >= 20) return { l: 'Top Rated', c: 'rk-blue' };
+  if (jobs >= 5) return { l: 'Rising Talent', c: 'rk-teal' };
+  return { l: 'New Provider', c: 'rk-dim' };
 }
 
 function renderCatIcon(catName?: string, iconKey?: string) {
@@ -495,7 +494,7 @@ const occupationSlides = [
       return;
     }
     triggerConfetti();
-    showToast('Subscribed! 🇬🇭', 'Thank you for joining GigGhana updates.', 'success');
+    showToast('Subscribed!', 'Thank you for joining GigGhana updates.', 'success');
     setNlEmail('');
   };
 
@@ -525,11 +524,12 @@ const occupationSlides = [
         </div>
         <div className="nav-acts">
           <div className="lang-pill" onClick={toggleLang} title="Switch language">
-            🌍 <span>{lang === 'en' ? 'EN' : 'TW'}</span>
+            <Globe className="w-3.5 h-3.5 inline mr-1 text-[var(--cyan)]" />
+            <span>{lang === 'en' ? 'EN' : 'TW'}</span>
             <div className="lang-inner">{lang === 'en' ? 'TW' : 'EN'}</div>
           </div>
-          <button onClick={toggleTheme} className="btn-theme" title="Toggle theme">
-            {isLight ? '☀️' : '🌙'}
+          <button onClick={toggleTheme} className="btn-theme flex items-center justify-center" title="Toggle theme">
+            {isLight ? <Sun className="w-3.5 h-3.5 text-amber-500" /> : <Moon className="w-3.5 h-3.5 text-[var(--cyan)]" />}
           </button>
           {isAuthenticated && user ? (
             <div className="relative" ref={userMenuRef}>
@@ -769,7 +769,7 @@ const occupationSlides = [
                     value={selectedRegion}
                     onChange={(e) => setSelectedRegion(e.target.value)}
                   >
-                    <option value="">🇬🇭 All Ghana</option>
+                    <option value="">All Ghana</option>
                     <option value="accra">Accra &amp; Tema</option>
                     <option value="kumasi">Kumasi &amp; Ashanti</option>
                     <option value="takoradi">Takoradi &amp; Western</option>
@@ -806,7 +806,9 @@ const occupationSlides = [
                         window.location.href = `/search/providers?q=${encodeURIComponent(m.text)}`;
                       }}
                     >
-                      <div className="auto-icon">{m.icon}</div>
+                      <div className="auto-icon">
+                        <m.icon className="w-4 h-4 text-[var(--cyan)]" />
+                      </div>
                       <div>
                         <div className="auto-text">{m.text}</div>
                         <div className="auto-cat">{m.cat}</div>
@@ -830,14 +832,26 @@ const occupationSlides = [
             {/* Social Proof Talent Cluster */}
             <div className="hero-social-proof">
               <div className="avatar-cluster">
-                <div className="cluster-avatar av-1">👨🏾‍🎨</div>
-                <div className="cluster-avatar av-2">👩🏾‍💼</div>
-                <div className="cluster-avatar av-3">👨🏾‍🔧</div>
-                <div className="cluster-avatar av-4">👩🏾‍⚕️</div>
+                <div className="cluster-avatar av-1 overflow-hidden">
+                  <img src="/images/avatars/avatar_male_1.jpg" alt="Artisan" className="w-full h-full object-cover" />
+                </div>
+                <div className="cluster-avatar av-2 overflow-hidden">
+                  <img src="/images/avatars/avatar_female_1.jpg" alt="Artisan" className="w-full h-full object-cover" />
+                </div>
+                <div className="cluster-avatar av-3 overflow-hidden">
+                  <img src="/images/avatars/avatar_male_2.jpg" alt="Artisan" className="w-full h-full object-cover" />
+                </div>
+                <div className="cluster-avatar av-4 overflow-hidden">
+                  <img src="/images/avatars/avatar_female_2.jpg" alt="Artisan" className="w-full h-full object-cover" />
+                </div>
                 <div className="cluster-avatar av-count">+14k</div>
               </div>
               <div className="social-proof-text">
-                <div className="sp-stars">★★★★★</div>
+                <div className="sp-stars flex items-center gap-0.5 text-[#F59E0B]">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-current shrink-0" />
+                  ))}
+                </div>
                 <div className="sp-desc">
                   <strong>14,250+ Verified Ghanaian Pros</strong> across all 16 regions
                 </div>
@@ -992,7 +1006,7 @@ const occupationSlides = [
 
                         {/* Location Subline */}
                         <div className="artisan-location-txt">
-                          <span>📍</span>
+                          <MapPin className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />
                           <span>{p.location || 'Accra, Ghana'}</span>
                         </div>
 
@@ -1039,11 +1053,11 @@ const occupationSlides = [
                         <div className="artisan-studio-footer">
                           {tier === 'premium' && isVerified ? (
                             <div className="artisan-footer-tier artisan-tier-premium">
-                              ⭐ Premium
+                              Premium
                             </div>
                           ) : tier === 'verified' && isVerified ? (
                             <div className="artisan-footer-tier artisan-tier-verified">
-                              ✓ Verified
+                              Verified
                             </div>
                           ) : <div />}
                           <a
@@ -1152,7 +1166,10 @@ const occupationSlides = [
                               )}
                             </div>
                             <div className="rjh-jc-client-loc">
-                              <span>📍 {j.location || 'Accra, Ghana'}</span>
+                              <span className="flex items-center gap-1">
+                                <MapPin className="w-3 h-3 text-[var(--cyan)] shrink-0" />
+                                <span>{j.location || 'Accra, Ghana'}</span>
+                              </span>
                               <span className="rjh-jc-dot-sep">·</span>
                               <span className="rjh-jc-time-inline">
                                 <span className="live-pulse-dot" />
@@ -1388,7 +1405,10 @@ const occupationSlides = [
                 </div>
                 <div className="ai-scope-result">
                   <span className="font-semibold text-[var(--tx)]">Est. ₵3,800 – ₵4,400</span>
-                  <span className="ai-scope-badge">⚡ 3 Pros Ready</span>
+                  <span className="ai-scope-badge flex items-center gap-1">
+                    <Zap className="w-3 h-3 text-amber-400" />
+                    <span>3 Pros Ready</span>
+                  </span>
                 </div>
               </div>
             }
@@ -1410,7 +1430,10 @@ const occupationSlides = [
                 </div>
                 <div className="momo-alert-box">
                   <div className="flex items-center justify-between text-[10px] text-[var(--tx-3)] mb-1">
-                    <span>🔔 Mobile Money Alert</span>
+                    <span className="flex items-center gap-1">
+                      <Bell className="w-3 h-3 text-[var(--cyan)]" />
+                      <span>Mobile Money Alert</span>
+                    </span>
                     <span className="text-[#10B981] font-bold">42s Settlement</span>
                   </div>
                   <div className="font-semibold text-[var(--tx)] text-[11px]">
@@ -1433,7 +1456,10 @@ const occupationSlides = [
               <div className="escrow-vault-sim">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
-                    <span className="text-[var(--cyan)] font-bold">🔒 Bank-Grade Regulated Escrow Vault</span>
+                    <span className="text-[var(--cyan)] font-bold flex items-center gap-1.5">
+                      <Lock className="w-3.5 h-3.5" />
+                      <span>Bank-Grade Regulated Escrow Vault</span>
+                    </span>
                   </div>
                   <span className="text-[11px] font-mono text-[var(--tx-3)]">Contract #GG-8849 · ₵6,500</span>
                 </div>
@@ -1447,13 +1473,15 @@ const occupationSlides = [
                   </div>
                   <div className="escrow-milestone-step locked">
                     <div className="font-bold text-[#D97706] flex items-center gap-1">
-                      <span>🔒 Phase 2: Wiring</span>
+                      <Lock className="w-3 h-3 text-[#D97706]" />
+                      <span>Phase 2: Wiring</span>
                     </div>
                     <div className="text-[10px] text-[var(--tx-2)] mt-0.5">₵3,000 Locked in Vault</div>
                   </div>
                   <div className="escrow-milestone-step">
                     <div className="font-bold text-[var(--tx-3)] flex items-center gap-1">
-                      <span>⏳ Phase 3: Paint</span>
+                      <Clock className="w-3 h-3 text-[var(--tx-3)]" />
+                      <span>Phase 3: Paint</span>
                     </div>
                     <div className="text-[10px] text-[var(--tx-2)] mt-0.5">₵1,500 Pending Approval</div>
                   </div>
@@ -1471,7 +1499,7 @@ const occupationSlides = [
               <div className="bt-icon-box beginner-icon">
                 <Sprout className="w-4 h-4 text-[#10B981]" />
               </div>
-              <span className="bt-tier-pill beginner-pill">🌱 Starter</span>
+              <span className="bt-tier-pill beginner-pill">Starter</span>
             </div>
             <div className="bt-name">Beginner</div>
             <div className="bt-price">
@@ -1500,7 +1528,7 @@ const occupationSlides = [
 
           {/* Verified Tier (Highlighted) */}
           <div className="badge-tier-card featured">
-            <div className="bt-pop-badge">👑 Most Popular</div>
+            <div className="bt-pop-badge">Most Popular</div>
             <div className="bt-top-row">
               <div className="bt-icon-box featured-icon">
                 <BadgeCheck className="w-4 h-4 text-[#00D4C8]" />
@@ -1516,7 +1544,7 @@ const occupationSlides = [
             <div className="bt-perks-list">
               <div className="bt-perk-item">
                 <Check className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
-                <span><strong>✓ Verified Ghana Card badge</strong></span>
+                <span><strong>Verified Ghana Card badge</strong></span>
               </div>
               <div className="bt-perk-item">
                 <Check className="w-3.5 h-3.5 text-[#00D4C8] shrink-0" />
@@ -1664,7 +1692,7 @@ const occupationSlides = [
                   <p className="rv-text">&ldquo;{rv.comment}&rdquo;</p>
                   <div className="rv-card-footer">
                     <span className="rv-tag-pill">
-                      {rv.role === 'provider' ? '🛠️ Verified Master' : '🏢 Verified Client'}
+                      {rv.role === 'provider' ? 'Verified Master' : 'Verified Client'}
                     </span>
                     <div className="rv-proof-pill">
                       <CheckCircle2 className="w-3 h-3 text-[#10B981] shrink-0" />
@@ -1751,7 +1779,10 @@ const occupationSlides = [
                   <span>+233 (0) 50 123 4567</span>
                 </a>
                 <div className="footer-contact-link text-muted">
-                  <span>📍 Accra Digital Center, Ring Road West</span>
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />
+                    <span>Accra Digital Center, Ring Road West</span>
+                  </span>
                 </div>
               </div>
             </div>
@@ -1915,8 +1946,8 @@ const occupationSlides = [
       <div id="toast-c">
         {toasts.map((t) => (
           <div key={t.id} className={`toast ${t.type}`}>
-            <div className="t-ico">
-              {t.type === 'success' ? '✅' : t.type === 'error' ? '❌' : t.type === 'warning' ? '⚠️' : 'ℹ️'}
+            <div className="t-ico flex items-center justify-center">
+              {t.type === 'success' ? <CheckCircle2 className="w-4 h-4 text-emerald-400" /> : t.type === 'error' ? <AlertCircle className="w-4 h-4 text-rose-400" /> : t.type === 'warning' ? <AlertTriangle className="w-4 h-4 text-amber-400" /> : <Info className="w-4 h-4 text-cyan-400" />}
             </div>
             <div className="t-bod">
               <div className="t-ttl">{t.title}</div>

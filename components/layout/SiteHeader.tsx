@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/context/AuthContext';
-import { ShieldCheck, User, LogOut, ArrowRight, Menu, X, Sparkles, Briefcase, ChevronDown, Check } from 'lucide-react';
+import { ShieldCheck, User, LogOut, ArrowRight, Menu, X, Sparkles, Briefcase, ChevronDown, Check, Sun, Moon } from 'lucide-react';
 
 interface SiteHeaderProps {
   activeTab?: 'jobs' | 'providers' | 'home';
@@ -132,7 +132,7 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
             title="Toggle theme"
             aria-label="Toggle theme"
           >
-            {isLight ? '☀️' : '🌙'}
+            {isLight ? <Sun className="w-4 h-4 text-amber-500" /> : <Moon className="w-4 h-4 text-[var(--cyan)]" />}
           </button>
 
           {/* Authenticated User Profile Pill & Dropdown */}

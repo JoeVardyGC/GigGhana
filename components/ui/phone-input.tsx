@@ -92,7 +92,12 @@ export function PhoneInput({
       <div className="relative flex items-center">
         {/* Country Flag & Code */}
         <div className="absolute left-3.5 flex items-center gap-1.5 text-xs font-bold text-[var(--tx-2)] pointer-events-none select-none">
-          <span className="text-base leading-none">🇬🇭</span>
+          <svg className="w-4 h-3 rounded-[2px] overflow-hidden shrink-0 shadow-xs" viewBox="0 0 640 480" aria-hidden="true">
+            <path fill="#e71921" d="M0 0h640v160H0z"/>
+            <path fill="#fcd116" d="M0 160h640v160H0z"/>
+            <path fill="#006b3f" d="M0 320h640v160H0z"/>
+            <polygon fill="#000" points="320,165 338,220 395,220 349,254 367,309 320,275 273,309 291,254 245,220 302,220"/>
+          </svg>
           <span className="font-mono text-[var(--tx)]">+233</span>
           <span className="w-[1px] h-4 bg-[var(--bd2)] ml-0.5" />
         </div>

@@ -210,8 +210,9 @@ export function GhanaCardInput({
             <ShieldCheck className="w-4 h-4" />
           </div>
           <div>
-            <div className="text-xs font-extrabold text-[var(--tx)] flex items-center gap-1">
-              <span>✓ Ghana Card Biometric Verified</span>
+            <div className="text-xs font-extrabold text-[var(--tx)] flex items-center gap-1.5">
+              <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[3]" />
+              <span>Ghana Card Biometric Verified</span>
             </div>
             <div className="text-[10.5px] text-[var(--tx-2)]">
               {isValid ? 'NIA format passed · Trust Badge active' : 'Enter PIN to unlock instant Verified Pro status'}
