@@ -71,8 +71,7 @@ export async function POST(request: NextRequest) {
       trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
     };
 
-    const targetRole = body.intentRole || user.role;
-    const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
+    const redirectTo = '/';
 
     const res = NextResponse.json({
       success: true,

@@ -203,7 +203,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return {
         success: true,
         user: demoUser,
-        redirectTo: demoUser.role === 'client' ? '/dashboard/client' : '/dashboard/provider',
+        redirectTo: '/',
       };
     }
   };
@@ -226,7 +226,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (res.ok && data.success) {
         saveUserSession(data.user);
         setIsLoading(false);
-        return { success: true, user: data.user, redirectTo: data.redirectTo };
+        return { success: true, user: data.user, redirectTo: data.redirectTo || '/' };
       }
 
       setIsLoading(false);
@@ -240,7 +240,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return {
         success: true,
         user: fallbackUser,
-        redirectTo: targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider',
+        redirectTo: '/',
       };
     }
   };
@@ -318,7 +318,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return {
         success: true,
         user: fallbackUser,
-        redirectTo: targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider',
+        redirectTo: '/',
       };
     }
   };

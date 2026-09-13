@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/context/AuthContext';
-import { ShieldCheck, User, LogOut, ArrowRight, Menu, X, Sparkles, Briefcase } from 'lucide-react';
+import { ShieldCheck, User, LogOut, ArrowRight, Menu, X, Sparkles, Briefcase, ChevronDown, Check } from 'lucide-react';
 
 interface SiteHeaderProps {
   activeTab?: 'jobs' | 'providers' | 'home';
@@ -16,6 +16,18 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
   const [isLight, setIsLight] = useState(false);
   const [isMobOpen, setIsMobOpen] = useState(false);
   const [scrolledNav, setScrolledNav] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Initialize theme from storage
   useEffect(() => {
@@ -63,8 +75,6 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
       localStorage.setItem('gg_theme', 'dark');
     }
   };
-
-  const workspaceLink = user?.role === 'client' ? '/dashboard/client' : '/dashboard/provider';
 
   return (
     <>
@@ -125,29 +135,97 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
             {isLight ? '☀️' : '🌙'}
           </button>
 
-          {/* Authenticated Workspace or Guest Login */}
+          {/* Authenticated User Profile Pill & Dropdown */}
           {isAuthenticated && user ? (
-            <div className="flex items-center gap-2">
-              <Link
-                href={workspaceLink}
-                className="flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[var(--cyan-border)] bg-[var(--cyan-dim)] text-[var(--cyan)] hover:bg-[var(--cyan)] hover:text-black font-semibold text-xs transition-all shadow-sm group"
-              >
-                <div className="w-6 h-6 rounded-full bg-[var(--cyan)] text-black font-bold flex items-center justify-center text-[11px]">
-                  {user.first_name[0]}
-                </div>
-                <span className="hidden sm:inline">{user.first_name}</span>
-                <span className="text-[10px] opacity-80 uppercase tracking-wider hidden lg:inline">
-                  ({user.role === 'client' ? 'Client' : 'Artisan'})
-                </span>
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </Link>
+            <div className="relative" ref={userMenuRef}>
               <button
-                onClick={logout}
-                title="Log Out"
-                className="p-2 rounded-xl text-[var(--tx-3)] hover:text-red-500 hover:bg-red-500/10 transition-colors"
+                type="button"
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-2.5 pl-1.5 pr-3 py-1.5 rounded-full border border-[var(--bd2)] hover:border-[var(--cyan-border)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)] transition-all shadow-xs backdrop-blur-md cursor-pointer select-none group"
+                aria-expanded={isUserMenuOpen}
+                aria-label="User account menu"
               >
-                <LogOut className="w-4 h-4" />
+                <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-[var(--cyan)] to-[#00A89D] text-white font-black flex items-center justify-center text-xs shadow-xs relative ring-2 ring-[var(--cyan)]/25 shrink-0">
+                  {user.first_name?.[0]?.toUpperCase() || 'U'}
+                  <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-[var(--surface)]" />
+                </div>
+                <span className="text-xs font-bold text-[var(--tx)] group-hover:text-[var(--cyan)] transition-colors hidden sm:inline">
+                  {user.first_name}
+                </span>
+                <span
+                  className={`text-[9.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider ${
+                    user.role === 'client'
+                      ? 'bg-amber-500/15 text-amber-500 border border-amber-500/30'
+                      : 'bg-cyan-500/15 text-[var(--cyan)] border border-cyan-500/30'
+                  }`}
+                >
+                  {user.role === 'client' ? 'Client' : 'Artisan'}
+                </span>
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-[var(--tx-3)] group-hover:text-[var(--tx)] transition-transform duration-200 ${
+                    isUserMenuOpen ? 'rotate-180 text-[var(--cyan)]' : ''
+                  }`}
+                />
               </button>
+
+              {/* Profile Dropdown Card */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-72 rounded-[24px] bg-[var(--surface)]/95 backdrop-blur-xl border border-[var(--bd2)] shadow-2xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-200 text-left">
+                  <div className="flex items-center gap-3 pb-3.5 border-b border-[var(--bd2)]">
+                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-[var(--cyan)] to-[#00A89D] text-white font-black flex items-center justify-center text-sm shadow-sm ring-2 ring-[var(--cyan)]/30 shrink-0">
+                      {user.first_name?.[0]?.toUpperCase() || 'U'}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="text-xs font-bold text-[var(--tx)] truncate flex items-center gap-1.5">
+                        <span>{user.first_name} {user.last_name || ''}</span>
+                        <ShieldCheck className="w-3.5 h-3.5 text-[var(--cyan)] shrink-0" />
+                      </div>
+                      <div className="text-[10.5px] text-[var(--tx-3)] truncate font-mono">
+                        {user.phone || user.email || 'Registered Member'}
+                      </div>
+                      <div className="mt-1 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 text-[9.5px] font-semibold border border-emerald-500/20">
+                        <Check className="w-2.5 h-2.5 stroke-[3]" />
+                        <span>Ghana Card Verified</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="py-3 space-y-2 text-xs">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-[var(--tx-3)] font-medium">Workspace Role:</span>
+                      <span className="font-bold text-[var(--tx)] capitalize">
+                        {user.role === 'client' ? 'Project Client' : 'Master Artisan'}
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className="text-[var(--tx-3)] font-medium">Escrow Vault:</span>
+                      <span className="font-bold text-[var(--cyan)]">₵ Protected</span>
+                    </div>
+                    {user.location && (
+                      <div className="flex items-center justify-between text-[11px]">
+                        <span className="text-[var(--tx-3)] font-medium">Location:</span>
+                        <span className="font-semibold text-[var(--tx-2)] truncate max-w-[130px]">
+                          {user.location}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-2 border-t border-[var(--bd2)]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsUserMenuOpen(false);
+                        logout();
+                      }}
+                      className="w-full h-10 rounded-[14px] bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 font-bold text-xs flex items-center justify-center gap-1.5 border border-rose-500/20 transition-all cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out of GigGhana</span>
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="hidden sm:flex items-center gap-2">
@@ -181,53 +259,56 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
         }`}
       >
         <Link
-          href="/jobs"
-          onClick={() => setIsMobOpen(false)}
-          className="text-base font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
-        >
-          💼 Browse Jobs & Gigs
-        </Link>
-        <Link
-          href="/search/providers"
-          onClick={() => setIsMobOpen(false)}
-          className="text-base font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
-        >
-          🔍 Find Verified Artisans
-        </Link>
-        <Link
           href="/#how"
           onClick={() => setIsMobOpen(false)}
-          className="text-base font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
+          className="text-sm font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
         >
-          🛡️ Escrow Protection System
+          How It Works
         </Link>
         <Link
           href="/#categories"
           onClick={() => setIsMobOpen(false)}
-          className="text-base font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
+          className="text-sm font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
         >
-          🏷️ Browse Categories
+          Categories
+        </Link>
+        <Link
+          href="/#trending"
+          onClick={() => setIsMobOpen(false)}
+          className="text-sm font-semibold text-[var(--tx)] py-2 border-b border-[var(--bd)]"
+        >
+          Trending Artisans
         </Link>
 
         {isAuthenticated && user ? (
           <div className="pt-2 flex flex-col gap-2">
-            <Link
-              href={workspaceLink}
-              onClick={() => setIsMobOpen(false)}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-[var(--cyan)] to-emerald-500 text-black font-bold text-sm text-center flex items-center justify-center gap-2 shadow-lg"
-            >
-              <span>Go to {user.role === 'client' ? 'Client' : 'Provider'} Workspace</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div className="p-3 rounded-[16px] bg-[var(--surface)] border border-[var(--bd2)] flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[var(--cyan)] to-[#00A89D] text-white font-black flex items-center justify-center text-sm shadow-xs shrink-0">
+                {user.first_name?.[0]?.toUpperCase() || 'U'}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="text-xs font-bold text-[var(--tx)] truncate flex items-center gap-1.5">
+                  <span>{user.first_name} {user.last_name || ''}</span>
+                  <span className={`text-[9px] font-black px-1.5 py-0.2 rounded-full uppercase ${
+                    user.role === 'client' ? 'bg-amber-500/15 text-amber-500' : 'bg-cyan-500/15 text-[var(--cyan)]'
+                  }`}>
+                    {user.role === 'client' ? 'Client' : 'Artisan'}
+                  </span>
+                </div>
+                <div className="text-[10px] text-[var(--tx-3)] font-mono truncate">
+                  {user.phone || user.email}
+                </div>
+              </div>
+            </div>
             <button
               onClick={() => {
                 logout();
                 setIsMobOpen(false);
               }}
-              className="w-full py-2.5 rounded-xl border border-red-500/20 text-red-500 font-semibold text-xs flex items-center justify-center gap-2 hover:bg-red-500/10"
+              className="w-full py-2.5 rounded-[14px] border border-rose-500/20 bg-rose-500/10 text-rose-500 font-bold text-xs flex items-center justify-center gap-1.5 hover:bg-rose-500/20 transition-colors"
             >
-              <LogOut className="w-4 h-4" />
-              <span>Log Out</span>
+              <LogOut className="w-3.5 h-3.5" />
+              <span>Sign Out</span>
             </button>
           </div>
         ) : (
@@ -242,7 +323,7 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
             <Link
               href="/auth/register"
               onClick={() => setIsMobOpen(false)}
-              className="w-full py-2.5 rounded-xl bg-[var(--gold)] text-black font-bold text-sm text-center shadow-lg"
+              className="w-full py-2.5 rounded-xl bg-[var(--gold)] text-white font-bold text-sm text-center shadow-lg"
             >
               Get Started Free
             </Link>

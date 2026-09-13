@@ -97,8 +97,7 @@ export async function POST(request: NextRequest) {
         trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
       };
 
-      const targetRole = body.intentRole || user.role;
-      const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
+      const redirectTo = '/';
 
       const res = NextResponse.json({
         success: true,
@@ -146,7 +145,7 @@ export async function POST(request: NextRequest) {
       const res = NextResponse.json({
         success: true,
         user: authUser,
-        redirectTo: user.role === 'provider' ? '/dashboard/provider' : '/dashboard/client',
+        redirectTo: '/',
       });
 
       res.cookies.set('gg_user_session', JSON.stringify(authUser), {
@@ -204,8 +203,7 @@ export async function POST(request: NextRequest) {
         trade: user.trade || (user.role === 'provider' ? 'Verified Master Artisan' : undefined),
       };
 
-      const targetRole = body.intentRole || user.role;
-      const redirectTo = targetRole === 'client' ? '/dashboard/client' : '/dashboard/provider';
+      const redirectTo = '/';
 
       const res = NextResponse.json({
         success: true,

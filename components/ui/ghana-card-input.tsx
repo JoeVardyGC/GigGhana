@@ -48,7 +48,8 @@ export function GhanaCardInput({
   className = '',
 }: GhanaCardInputProps) {
   const isValid = validateGhanaCardPin(pin);
-  const [activeUpload, setActiveUpload] = useState<'front' | 'back' | null>(null);
+  const frontInputRef = React.useRef<HTMLInputElement>(null);
+  const backInputRef = React.useRef<HTMLInputElement>(null);
 
   const handlePinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
@@ -57,19 +58,19 @@ export function GhanaCardInput({
     onPinChange(formatted, valid);
   };
 
-  const handleSimulateUpload = (type: 'front' | 'back') => {
-    // Generate a clean placeholder or trigger file input
-    const sampleImage =
-      type === 'front'
-        ? '/images/verification/ghana_card_front_sample.jpg'
-        : '/images/verification/ghana_card_back_sample.jpg';
-
-    if (type === 'front' && onFrontImageChange) {
-      onFrontImageChange(sampleImage);
-    }
-    if (type === 'back' && onBackImageChange) {
-      onBackImageChange(sampleImage);
-    }
+  const handleFileSelect = (type: 'front' | 'back', e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const result = event.target?.result as string;
+      if (type === 'front' && onFrontImageChange) {
+        onFrontImageChange(result);
+      } else if (type === 'back' && onBackImageChange) {
+        onBackImageChange(result);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   return (
@@ -126,9 +127,25 @@ export function GhanaCardInput({
         </label>
 
         <div className="grid grid-cols-2 gap-3">
+          {/* Hidden File Inputs */}
+          <input
+            ref={frontInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFileSelect('front', e)}
+          />
+          <input
+            ref={backInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={(e) => handleFileSelect('back', e)}
+          />
+
           {/* Front Photo */}
           <div
-            onClick={() => handleSimulateUpload('front')}
+            onClick={() => frontInputRef.current?.click()}
             className={`border border-dashed rounded-[18px] p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
               frontImage
                 ? 'border-emerald-500/60 bg-emerald-500/[0.04]'
@@ -136,9 +153,12 @@ export function GhanaCardInput({
             }`}
           >
             {frontImage ? (
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center">
-                  <Check className="w-4 h-4 stroke-[3]" />
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="relative w-12 h-9 rounded-lg overflow-hidden border border-emerald-500/40 shadow-xs">
+                  <img src={frontImage} alt="Card Front" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-emerald-950/20 flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+                  </div>
                 </div>
                 <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">Front Attached</span>
                 <span className="text-[9.5px] text-[var(--tx-3)]">Click to replace</span>
@@ -147,14 +167,14 @@ export function GhanaCardInput({
               <div className="flex flex-col items-center gap-1">
                 <Camera className="w-5 h-5 text-[var(--cyan)] mb-0.5" />
                 <span className="text-[11px] font-bold text-[var(--tx)]">Card Front</span>
-                <span className="text-[9.5px] text-[var(--tx-3)]">Upload / Snap Photo</span>
+                <span className="text-[9.5px] text-[var(--tx-3)]">Click to open files / camera</span>
               </div>
             )}
           </div>
 
           {/* Back Photo */}
           <div
-            onClick={() => handleSimulateUpload('back')}
+            onClick={() => backInputRef.current?.click()}
             className={`border border-dashed rounded-[18px] p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
               backImage
                 ? 'border-emerald-500/60 bg-emerald-500/[0.04]'
@@ -162,9 +182,12 @@ export function GhanaCardInput({
             }`}
           >
             {backImage ? (
-              <div className="flex flex-col items-center gap-1">
-                <div className="w-7 h-7 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center">
-                  <Check className="w-4 h-4 stroke-[3]" />
+              <div className="flex flex-col items-center gap-1.5">
+                <div className="relative w-12 h-9 rounded-lg overflow-hidden border border-emerald-500/40 shadow-xs">
+                  <img src={backImage} alt="Card Back" className="w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-emerald-950/20 flex items-center justify-center">
+                    <Check className="w-3.5 h-3.5 text-white stroke-[3]" />
+                  </div>
                 </div>
                 <span className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">Back Attached</span>
                 <span className="text-[9.5px] text-[var(--tx-3)]">Click to replace</span>
@@ -173,7 +196,7 @@ export function GhanaCardInput({
               <div className="flex flex-col items-center gap-1">
                 <Upload className="w-5 h-5 text-[var(--cyan)] mb-0.5" />
                 <span className="text-[11px] font-bold text-[var(--tx)]">Card Back</span>
-                <span className="text-[9.5px] text-[var(--tx-3)]">Upload / Snap Photo</span>
+                <span className="text-[9.5px] text-[var(--tx-3)]">Click to open files / camera</span>
               </div>
             )}
           </div>

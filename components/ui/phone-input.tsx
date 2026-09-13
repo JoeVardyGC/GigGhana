@@ -73,28 +73,28 @@ export function PhoneInput({
             {required && <span className="text-rose-500">*</span>}
           </label>
           {network !== 'unknown' && (
-            <span
-              className={`text-[10.5px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 transition-all ${
+            <div
+              className={`text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide flex items-center gap-1.5 transition-all shadow-xs ${
                 network === 'mtn'
-                  ? 'bg-amber-400/15 text-amber-600 border border-amber-400/40 dark:text-amber-400'
+                  ? 'bg-gradient-to-r from-amber-500/15 to-yellow-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30'
                   : network === 'telecel'
-                  ? 'bg-red-500/15 text-red-600 border border-red-500/40 dark:text-red-400'
-                  : 'bg-blue-500/15 text-blue-600 border border-blue-500/40 dark:text-blue-400'
+                  ? 'bg-gradient-to-r from-red-500/15 to-rose-500/15 text-red-600 dark:text-red-400 border border-red-500/30'
+                  : 'bg-gradient-to-r from-blue-500/15 to-sky-500/15 text-blue-600 dark:text-blue-400 border border-blue-500/30'
               }`}
             >
               <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
-              {network === 'mtn' ? 'MTN MoMo' : network === 'telecel' ? 'Telecel Cash' : 'AT Money'}
-            </span>
+              <span>{network === 'mtn' ? 'MTN MoMo' : network === 'telecel' ? 'Telecel Cash' : 'AT Money'}</span>
+            </div>
           )}
         </div>
       )}
 
       <div className="relative flex items-center">
         {/* Country Flag & Code */}
-        <div className="absolute left-3 flex items-center gap-1.5 text-xs font-semibold text-[var(--tx-2)] pointer-events-none select-none">
+        <div className="absolute left-3.5 flex items-center gap-1.5 text-xs font-bold text-[var(--tx-2)] pointer-events-none select-none">
           <span className="text-base leading-none">🇬🇭</span>
-          <span>+233</span>
-          <span className="w-[1px] h-3.5 bg-[var(--bd2)] ml-0.5" />
+          <span className="font-mono text-[var(--tx)]">+233</span>
+          <span className="w-[1px] h-4 bg-[var(--bd2)] ml-0.5" />
         </div>
 
         <input
@@ -104,33 +104,12 @@ export function PhoneInput({
           onChange={handleChange}
           maxLength={12}
           placeholder={placeholder}
-          className={`w-full h-12 pl-20 pr-10 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border transition-all placeholder:text-[var(--tx-3)] focus:outline-none focus:ring-2 ${
+          className={`w-full h-12 pl-20 pr-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-mono font-medium rounded-[18px] border transition-all placeholder:text-[var(--tx-3)] placeholder:font-sans focus:outline-none focus:ring-2 ${
             error
               ? 'border-rose-500 focus:ring-rose-500/20'
               : 'border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-[var(--cyan)]/20'
           }`}
         />
-
-        {/* Network Icon / Indicator at right */}
-        {network !== 'unknown' && (
-          <div className="absolute right-3 pointer-events-none">
-            {network === 'mtn' && (
-              <span className="text-[11px] font-black text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/30">
-                MTN
-              </span>
-            )}
-            {network === 'telecel' && (
-              <span className="text-[11px] font-black text-red-500 bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/30">
-                TELECEL
-              </span>
-            )}
-            {network === 'at' && (
-              <span className="text-[11px] font-black text-blue-500 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/30">
-                AT
-              </span>
-            )}
-          </div>
-        )}
       </div>
 
       {error && <p className="text-[11px] font-medium text-rose-500 mt-1">{error}</p>}
