@@ -107,6 +107,16 @@ const GHANA_TRADES: GhanaTradeOption[] = [
   { id: 'logistics', name: 'Cargo Haulage & Inter-City Moving Services', category: 'Logistics', defaultRate: 100, iconName: 'Truck' },
   { id: 'cleaning', name: 'Industrial Cleaning & Fumigation Services', category: 'Services', defaultRate: 70, iconName: 'Sparkles' },
   { id: 'gardening', name: 'Landscaping, Turf & Garden Architecture', category: 'Outdoors', defaultRate: 65, iconName: 'Paintbrush' },
+  { id: 'barbering', name: 'Barbering & Male Grooming Services', category: 'Beauty', defaultRate: 60, iconName: 'Scissors' },
+  { id: 'upholstery', name: 'Auto Upholstery & Furniture Re-covering', category: 'Woodwork', defaultRate: 75, iconName: 'Scissors' },
+  { id: 'roofing-sheets', name: 'Aluminium Roofing Sheets & Gutter Installation', category: 'Construction', defaultRate: 85, iconName: 'HardHat' },
+  { id: 'wallpaper', name: 'Wallpaper & 3D Wall Panel Installation', category: 'Finishing', defaultRate: 70, iconName: 'Layers' },
+  { id: 'events-decor', name: 'Event Decoration, Canopy & Stage Lighting', category: 'Events', defaultRate: 85, iconName: 'Sparkles' },
+  { id: 'laundry', name: 'Professional Laundry & Dry Cleaning Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
+  { id: 'motorcycle-mechanic', name: 'Motorcycle & Tricycle (Pragya / Aboboyaa) Mechanic', category: 'Automotive', defaultRate: 65, iconName: 'Wrench' },
+  { id: 'shoemaking', name: 'Shoe Making, Cobbling & Leather Craft', category: 'Fashion', defaultRate: 70, iconName: 'Scissors' },
+  { id: 'beadmaking', name: 'Bead Making, Traditional Regalia & Adornments', category: 'Fashion', defaultRate: 65, iconName: 'Palette' },
+  { id: 'housekeeping', name: 'Domestic Housekeeping, Maid & Nanny Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
 ];
 
 function getTradeIcon(iconName: string) {
@@ -207,10 +217,10 @@ function RegisterContent() {
   const [showPassword, setShowPassword] = useState(false);
 
   // Provider specific
-  const [selectedTrade, setSelectedTrade] = useState(GHANA_TRADES[0].name);
+  const [selectedTrade, setSelectedTrade] = useState('');
   const [tradeSearchQuery, setTradeSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState(GHANA_CITIES[0]);
-  const [hourlyRate, setHourlyRate] = useState<number | string>(GHANA_TRADES[0].defaultRate);
+  const [hourlyRate, setHourlyRate] = useState<string>('');
   const [ghanaCardPin, setGhanaCardPin] = useState('');
   const [isGhanaCardValid, setIsGhanaCardValid] = useState(false);
   const [cardFrontImg, setCardFrontImg] = useState<string | null>(null);
@@ -499,7 +509,7 @@ function RegisterContent() {
               <div>
                 <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between mb-1.5">
                   <span>Type or Select Your Occupation / Trade</span>
-                  <span className="text-[10.5px] font-normal text-[var(--tx-3)]">Primary Trade</span>
+                  <span className="text-[10.5px] text-[var(--cyan)] font-bold">Type anything or select below</span>
                 </label>
                 <div className="relative flex items-center">
                   <Search className="w-4 h-4 text-[var(--tx-3)] absolute left-3.5 pointer-events-none" />
@@ -510,13 +520,9 @@ function RegisterContent() {
                       const val = e.target.value;
                       setTradeSearchQuery(val);
                       setSelectedTrade(val);
-                      const matched = GHANA_TRADES.find((t) => t.name.toLowerCase() === val.trim().toLowerCase());
-                      if (matched) {
-                        setHourlyRate(matched.defaultRate);
-                      }
                     }}
-                    placeholder="Type your occupation (e.g. Mason, Tiler, Electrician, Tailor, POP)..."
-                    className="w-full h-12 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs font-medium rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                    placeholder="Type your occupation (e.g. Mason, Plumber, Tailor, AC Repairer)..."
+                    className="w-full h-12 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs sm:text-sm font-medium rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
                   />
                   {tradeSearchQuery && (
                     <button
@@ -532,13 +538,19 @@ function RegisterContent() {
                     </button>
                   )}
                 </div>
+                <p className="text-[11px] text-[var(--tx-3)] mt-1.5 flex items-center gap-1">
+                  <span>💡</span>
+                  <span>Type your custom occupation above if not in the directory, or select any popular trade below.</span>
+                </p>
               </div>
 
               {/* Active Selection Badge */}
               <div className="flex items-center justify-between px-3.5 py-2.5 rounded-[18px] bg-[var(--surface-elevated)] border border-[var(--bd2)] text-xs">
                 <div className="flex items-center gap-2 min-w-0">
-                  <span className="text-[var(--tx-3)] text-[11px] shrink-0">Selected Trade:</span>
-                  <span className="font-bold text-[var(--tx)] truncate">{selectedTrade || tradeSearchQuery || 'None selected'}</span>
+                  <span className="text-[var(--tx-3)] text-[11px] shrink-0 font-medium">Selected Trade:</span>
+                  <span className="font-bold text-[var(--tx)] truncate">
+                    {selectedTrade || tradeSearchQuery || 'None selected (type or choose below)'}
+                  </span>
                   {selectedTrade && !GHANA_TRADES.some((t) => t.name.toLowerCase() === selectedTrade.trim().toLowerCase()) && (
                     <span className="text-[9.5px] font-bold px-2 py-0.5 rounded-full bg-[var(--cyan)]/15 text-[var(--cyan)] border border-[var(--cyan)]/30 shrink-0">
                       Custom Trade
@@ -546,25 +558,23 @@ function RegisterContent() {
                   )}
                 </div>
                 <span className="text-[11px] font-mono text-[var(--cyan)] font-semibold shrink-0 ml-2">
-                  {hourlyRate ? `₵${hourlyRate}/hr base` : 'Negotiable rate'}
+                  {hourlyRate ? `₵${hourlyRate}/hr base` : 'Rate: Optional'}
                 </span>
               </div>
 
               {/* Scrollable list of matched trades */}
               <div className="space-y-1.5">
                 <div className="text-[10.5px] font-semibold uppercase tracking-wider text-[var(--tx-3)] flex items-center justify-between px-0.5">
-                  <span>Available Occupations {tradeSearchQuery && `(${filteredTrades.length} matches)`}</span>
+                  <span>Popular Occupations Directory {tradeSearchQuery && `(${filteredTrades.length} matches)`}</span>
                   {tradeSearchQuery && (
                     <button
                       type="button"
                       onClick={() => {
                         setTradeSearchQuery('');
-                        setSelectedTrade(GHANA_TRADES[0].name);
-                        setHourlyRate(GHANA_TRADES[0].defaultRate);
                       }}
                       className="text-[10px] text-[var(--cyan)] hover:underline normal-case font-medium"
                     >
-                      Reset to all
+                      View all popular trades
                     </button>
                   )}
                 </div>
@@ -580,7 +590,6 @@ function RegisterContent() {
                           onClick={() => {
                             setSelectedTrade(trade.name);
                             setTradeSearchQuery(trade.name);
-                            setHourlyRate(trade.defaultRate);
                           }}
                           className={`p-3 rounded-[18px] border text-left flex items-center gap-2.5 transition-all ${
                             isSelected
@@ -607,10 +616,10 @@ function RegisterContent() {
                     <div className="col-span-full py-4 px-3 text-center text-xs text-[var(--tx-3)] bg-[var(--surface)] rounded-[18px] border border-dashed border-[var(--cyan)]/40">
                       <p className="font-bold text-[var(--tx)] flex items-center justify-center gap-1.5">
                         <Check className="w-3.5 h-3.5 text-[var(--cyan)]" />
-                        <span>Custom Trade Selected: "{tradeSearchQuery.trim()}"</span>
+                        <span>Custom Occupation: "{tradeSearchQuery.trim()}"</span>
                       </p>
                       <p className="text-[11px] mt-1 text-[var(--tx-2)]">
-                        Your custom occupation will be saved directly to your verified profile.
+                        Not in standard directory — this will be recorded directly as your registered profession.
                       </p>
                     </div>
                   )}
@@ -641,7 +650,12 @@ function RegisterContent() {
               {/* Hourly / Estimate Rate (Optional) */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
-                  <span>Base Rate (Cedis) <span className="font-normal text-[var(--tx-3)] text-[11px]">(Optional)</span></span>
+                  <span className="flex items-center gap-1.5">
+                    <span>Base Rate (Cedis)</span>
+                    <span className="text-[10px] font-bold text-[var(--cyan)] bg-[var(--cyan)]/10 px-2 py-0.5 rounded-full uppercase tracking-wider border border-[var(--cyan)]/25">
+                      Optional
+                    </span>
+                  </span>
                   <span className="text-[10px] font-mono text-[var(--tx-3)]">₵ GHS</span>
                 </label>
                 <div className="relative flex items-center">
@@ -650,8 +664,8 @@ function RegisterContent() {
                     type="number"
                     value={hourlyRate}
                     onChange={(e) => setHourlyRate(e.target.value)}
-                    placeholder="e.g. 85"
-                    className="w-full h-12 pl-8 pr-12 bg-[var(--surface)] text-[var(--tx)] text-sm font-bold rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                    placeholder="Optional (leave blank or e.g. 75)"
+                    className="w-full h-12 pl-8 pr-12 bg-[var(--surface)] text-[var(--tx)] text-sm font-bold rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none placeholder:font-normal placeholder:text-xs placeholder:text-[var(--tx-3)]"
                   />
                   <span className="absolute right-3.5 text-xs text-[var(--tx-3)] font-medium">/ hr</span>
                 </div>
