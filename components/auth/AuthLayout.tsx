@@ -80,22 +80,22 @@ export function AuthLayout({
       </main>
 
       {/* Security & Escrow Trust Footer */}
-      <footer className="relative z-10 w-full max-w-5xl mx-auto px-4 py-6 border-t border-[var(--bd2)]/40 mt-auto">
-        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 text-[11px] font-semibold text-[var(--tx-3)]">
+      <footer className="relative z-10 w-full max-w-5xl mx-auto px-4 py-5 border-t border-[var(--bd2)]/40 mt-auto">
+        <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-7 text-[9.5px] sm:text-[10px] font-medium text-[var(--tx-3)] tracking-wide">
           <div className="flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-[var(--cyan)]" />
+            <ShieldCheck className="w-3 h-3 text-[var(--cyan)] shrink-0" />
             <span>National Identity (NIA) Verification</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Lock className="w-3.5 h-3.5 text-[#F59E0B]" />
+            <Lock className="w-3 h-3 text-[#F59E0B] shrink-0" />
             <span>Bank-Grade Escrow Vault</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Smartphone className="w-3.5 h-3.5 text-[#10B981]" />
+            <Smartphone className="w-3 h-3 text-[#10B981] shrink-0" />
             <span>Sub-60s MoMo Settlements</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Award className="w-3.5 h-3.5 text-[var(--cyan)]" />
+            <Award className="w-3 h-3 text-[var(--cyan)] shrink-0" />
             <span>Data Protection Act (Act 843)</span>
           </div>
         </div>
