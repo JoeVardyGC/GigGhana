@@ -15,8 +15,6 @@ import {
   ArrowRight,
   ArrowLeft,
   Mail,
-  Building2,
-  Wrench,
   Check,
   AlertCircle,
   KeyRound,
@@ -328,20 +326,19 @@ function LoginContent() {
             <span>I want to:</span>
           </div>
 
-          <div className="p-1.5 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--bd2)] grid grid-cols-2 gap-2 shadow-inner">
+          <div className="p-1.5 rounded-[22px] bg-[var(--surface-elevated)] border border-[var(--bd2)] grid grid-cols-2 gap-2 shadow-inner">
             <button
               type="button"
               onClick={() => {
                 setActiveInterface('provider');
                 setErrorMsg('');
               }}
-              className={`py-3 px-3.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-3.5 rounded-[16px] text-xs sm:text-sm font-black transition-all flex items-center justify-center ${
                 activeInterface === 'provider'
-                  ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-md shadow-cyan-500/25 scale-[1.01]'
-                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
+                  ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-white shadow-md shadow-cyan-500/25 scale-[1.01]'
+                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)] font-bold'
               }`}
             >
-              <Wrench className="w-4 h-4 shrink-0" />
               <span>Find Jobs & Work</span>
             </button>
 
@@ -351,13 +348,12 @@ function LoginContent() {
                 setActiveInterface('client');
                 setErrorMsg('');
               }}
-              className={`py-3 px-3.5 rounded-xl text-xs sm:text-sm font-extrabold transition-all flex items-center justify-center gap-2 ${
+              className={`py-3 px-3.5 rounded-[16px] text-xs sm:text-sm font-black transition-all flex items-center justify-center ${
                 activeInterface === 'client'
-                  ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-md shadow-amber-500/25 scale-[1.01]'
-                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)]'
+                  ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white shadow-md shadow-amber-500/25 scale-[1.01]'
+                  : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)] font-bold'
               }`}
             >
-              <Building2 className="w-4 h-4 shrink-0" />
               <span>Hire a Worker</span>
             </button>
           </div>
@@ -365,7 +361,7 @@ function LoginContent() {
 
         {/* Success Alert */}
         {successMsg && (
-          <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in">
+          <div className="p-3 rounded-[16px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold flex items-center gap-2 animate-in fade-in">
             <Check className="w-4 h-4 shrink-0" />
             <span>{successMsg}</span>
           </div>
@@ -373,7 +369,7 @@ function LoginContent() {
 
         {/* Error Alert */}
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium flex items-center gap-2 animate-in fade-in">
+          <div className="p-3 rounded-[16px] bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium flex items-center gap-2 animate-in fade-in">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -387,7 +383,7 @@ function LoginContent() {
               <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
                 <span>Email Address or Phone Number</span>
                 {detectedNetwork && detectedNetwork !== 'unknown' && detectedNetwork !== 'email' && (
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--cyan)] font-bold uppercase">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--cyan)] font-bold uppercase">
                     {detectedNetwork} MoMo
                   </span>
                 )}
@@ -400,7 +396,7 @@ function LoginContent() {
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
                   placeholder="you@example.com or 024 XXX XXXX"
-                  className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                  className="w-full h-12 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
                 />
               </div>
             </div>
@@ -418,7 +414,7 @@ function LoginContent() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className="w-full h-11 pl-10 pr-11 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                  className="w-full h-12 pl-10 pr-11 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
                 />
                 <button
                   type="button"
@@ -461,15 +457,15 @@ function LoginContent() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className={`w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
+                className={`w-full h-12 rounded-[18px] font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
                   activeInterface === 'client'
-                    ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-slate-950 shadow-amber-500/20'
-                    : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-slate-950 shadow-cyan-500/20'
+                    ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-white shadow-amber-500/20'
+                    : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-white shadow-cyan-500/20'
                 }`}
               >
                 {isLoading ? (
                   <>
-                    <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
+                    <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                     <span>Verifying Credentials...</span>
                   </>
                 ) : (
@@ -490,7 +486,7 @@ function LoginContent() {
           <div className="space-y-5 animate-in fade-in slide-in-from-bottom-2 duration-300">
             {verificationMode === 'sms' ? (
               <form onSubmit={handleVerifyOtp} className="space-y-4">
-                <div className="p-4 rounded-2xl bg-[var(--surface-elevated)] border border-[var(--cyan-border)] space-y-2 text-center">
+                <div className="p-5 rounded-[24px] bg-[var(--surface-elevated)] border border-[var(--cyan-border)] space-y-2 text-center">
                   <div className="w-10 h-10 rounded-full bg-[var(--cyan-dim)] text-[var(--cyan)] mx-auto flex items-center justify-center shadow-xs">
                     <Smartphone className="w-5 h-5" />
                   </div>
@@ -505,7 +501,7 @@ function LoginContent() {
 
                 {/* Dev Code Banner for testing */}
                 {simulatedReceivedCode && (
-                  <div className="p-2.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono flex items-center justify-between">
+                  <div className="p-2.5 rounded-[14px] bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-mono flex items-center justify-between">
                     <span>
                       Dev Code: <strong>{simulatedReceivedCode}</strong>
                     </span>
@@ -560,7 +556,7 @@ function LoginContent() {
                             document.getElementById(`sms-box-${nextIndex}`)?.focus();
                           }
                         }}
-                        className="w-11 h-12 text-center font-bold text-lg rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                        className="w-11 h-12 text-center font-bold text-lg rounded-[16px] bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
                       />
                     ))}
                   </div>
@@ -594,15 +590,15 @@ function LoginContent() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className={`w-full h-12 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
+                  className={`w-full h-12 rounded-[18px] font-black text-sm flex items-center justify-center gap-2 shadow-lg transition-all ${
                     activeInterface === 'client'
-                      ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 shadow-amber-500/20'
-                      : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-slate-950 shadow-cyan-500/20'
+                      ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white shadow-amber-500/20'
+                      : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-white shadow-cyan-500/20'
                   }`}
                 >
                   {isLoading ? (
                     <>
-                      <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
+                      <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                       <span>Verifying SMS Code...</span>
                     </>
                   ) : (
@@ -631,7 +627,7 @@ function LoginContent() {
             ) : (
               /* Ghana Card 2FA Alternative Form */
               <form onSubmit={handleGhanaCardSubmit} className="space-y-4">
-                <div className="p-4 rounded-2xl bg-[var(--surface-elevated)] border border-amber-500/30 space-y-2 text-center">
+                <div className="p-5 rounded-[24px] bg-[var(--surface-elevated)] border border-amber-500/30 space-y-2 text-center">
                   <div className="w-10 h-10 rounded-full bg-amber-500/10 text-[#F59E0B] mx-auto flex items-center justify-center shadow-xs">
                     <Fingerprint className="w-5 h-5" />
                   </div>
@@ -656,7 +652,7 @@ function LoginContent() {
                       value={ghanaCardPin}
                       onChange={(e) => setGhanaCardPin(e.target.value.toUpperCase())}
                       placeholder="GHA-712345678-9"
-                      className="w-full h-11 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[#F59E0B] focus:outline-none"
+                      className="w-full h-12 pl-10 pr-4 bg-[var(--surface-elevated)] text-[var(--tx)] text-sm font-mono font-bold rounded-[16px] border border-[var(--bd2)] focus:border-[#F59E0B] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -678,11 +674,11 @@ function LoginContent() {
                 <button
                   type="submit"
                   disabled={isLoading || isScanningBiometric}
-                  className="w-full h-12 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-slate-950 font-bold text-sm flex items-center justify-center gap-2 shadow-md"
+                  className="w-full h-12 rounded-[18px] bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white font-black text-sm flex items-center justify-center gap-2 shadow-md"
                 >
                   {isScanningBiometric ? (
                     <>
-                      <RefreshCw className="w-4 h-4 animate-spin" />
+                      <RefreshCw className="w-4 h-4 animate-spin text-white" />
                       <span>Validating NIA Registry...</span>
                     </>
                   ) : (
@@ -727,7 +723,7 @@ function LoginContent() {
       {/* ══════ PASSWORD RESET MODAL (PHP auth/forgot-password.php) ══════ */}
       {isForgotModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md rounded-2xl bg-[var(--surface)] border border-[var(--bd)] p-6 shadow-2xl space-y-4">
+          <div className="w-full max-w-md rounded-[28px] bg-[var(--surface)] border border-[var(--bd)] p-6 sm:p-7 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-2 border-b border-[var(--bd2)]">
               <div className="flex items-center gap-2">
                 <KeyRound className="w-4 h-4 text-[var(--cyan)]" />
@@ -736,14 +732,14 @@ function LoginContent() {
               <button
                 type="button"
                 onClick={() => setIsForgotModalOpen(false)}
-                className="text-[var(--tx-3)] hover:text-[var(--tx)] p-1"
+                className="text-[var(--tx-3)] hover:text-[var(--tx)] p-1 rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {resetSuccessMsg && (
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
+              <div className="p-3 rounded-[14px] bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
                 {resetSuccessMsg}
               </div>
             )}
@@ -759,12 +755,12 @@ function LoginContent() {
                   value={resetIdentifier}
                   onChange={(e) => setResetIdentifier(e.target.value)}
                   placeholder="you@example.com"
-                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                  className="w-full h-11 px-3.5 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-[14px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={isResetting}
-                  className="w-full h-10 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5"
+                  className="w-full h-11 rounded-[14px] bg-[var(--cyan)] text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/20"
                 >
                   <Send className="w-3.5 h-3.5" />
                   <span>{isResetting ? 'Sending Code...' : 'Send Recovery Code'}</span>
@@ -782,7 +778,7 @@ function LoginContent() {
                   value={resetCode}
                   onChange={(e) => setResetCode(e.target.value)}
                   placeholder="6-digit recovery code"
-                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                  className="w-full h-11 px-3.5 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs font-mono font-bold rounded-[14px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
                 />
                 <input
                   type="password"
@@ -790,12 +786,12 @@ function LoginContent() {
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="New password (min 6 characters)"
-                  className="w-full h-10 px-3 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                  className="w-full h-11 px-3.5 bg-[var(--surface-elevated)] text-[var(--tx)] text-xs rounded-[14px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
                 />
                 <button
                   type="submit"
                   disabled={isResetting}
-                  className="w-full h-10 rounded-xl bg-[var(--cyan)] text-slate-950 font-bold text-xs flex items-center justify-center gap-1.5"
+                  className="w-full h-11 rounded-[14px] bg-[var(--cyan)] text-white font-black text-xs flex items-center justify-center gap-1.5 shadow-md shadow-cyan-500/20"
                 >
                   <span>{isResetting ? 'Updating...' : 'Update Password & Sign In'}</span>
                 </button>

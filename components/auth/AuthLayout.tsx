@@ -69,10 +69,10 @@ export function AuthLayout({
             </p>
           </div>
 
-          {/* Form Card with Homepage Card Styling */}
-          <div className="relative rounded-3xl bg-[var(--surface)] border border-[var(--cyan-border)] p-6 sm:p-10 shadow-2xl shadow-cyan-500/5 overflow-hidden">
+          {/* Form Card with Homepage Card Styling & Generous Curves */}
+          <div className="relative rounded-[2.5rem] sm:rounded-[3rem] bg-[var(--surface)] border border-[var(--cyan-border)] p-6 sm:p-10 shadow-2xl shadow-cyan-500/5 overflow-hidden">
             {/* Top Accent Line */}
-            <div className="absolute -top-[1px] left-8 right-8 h-[2.5px] bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-90" />
+            <div className="absolute -top-[1px] left-12 right-12 h-[2.5px] bg-gradient-to-r from-transparent via-[var(--cyan)] to-transparent opacity-90" />
             
             {children}
           </div>

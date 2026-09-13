@@ -93,7 +93,7 @@ export function GhanaCardInput({
             onChange={handlePinChange}
             maxLength={15}
             placeholder="GHA-712894012-4"
-            className={`w-full h-11 px-3.5 pr-11 bg-[var(--surface)] text-[var(--tx)] font-mono text-sm tracking-wider font-semibold rounded-xl border transition-all placeholder:text-[var(--tx-3)] placeholder:font-sans focus:outline-none focus:ring-2 ${
+            className={`w-full h-12 px-4 pr-11 bg-[var(--surface)] text-[var(--tx)] font-mono text-sm tracking-wider font-semibold rounded-[16px] border transition-all placeholder:text-[var(--tx-3)] placeholder:font-sans focus:outline-none focus:ring-2 ${
               isValid
                 ? 'border-emerald-500/80 focus:border-emerald-500 focus:ring-emerald-500/20 bg-emerald-500/[0.03]'
                 : error
@@ -102,7 +102,7 @@ export function GhanaCardInput({
             }`}
           />
 
-          <div className="absolute right-3 flex items-center">
+          <div className="absolute right-3.5 flex items-center">
             {isValid ? (
               <div className="flex items-center gap-1 text-emerald-500 font-bold text-xs" title="Valid NIA Format">
                 <CheckCircle2 className="w-4 h-4 fill-emerald-500 text-white dark:text-slate-900" />
@@ -129,7 +129,7 @@ export function GhanaCardInput({
           {/* Front Photo */}
           <div
             onClick={() => handleSimulateUpload('front')}
-            className={`border border-dashed rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+            className={`border border-dashed rounded-[18px] p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
               frontImage
                 ? 'border-emerald-500/60 bg-emerald-500/[0.04]'
                 : 'border-[var(--bd2)] hover:border-[var(--cyan)] bg-[var(--s2)]/40 hover:bg-[var(--surface)]'
@@ -155,7 +155,7 @@ export function GhanaCardInput({
           {/* Back Photo */}
           <div
             onClick={() => handleSimulateUpload('back')}
-            className={`border border-dashed rounded-xl p-3 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
+            className={`border border-dashed rounded-[18px] p-4 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
               backImage
                 ? 'border-emerald-500/60 bg-emerald-500/[0.04]'
                 : 'border-[var(--bd2)] hover:border-[var(--cyan)] bg-[var(--s2)]/40 hover:bg-[var(--surface)]'

@@ -104,7 +104,7 @@ export function PhoneInput({
           onChange={handleChange}
           maxLength={12}
           placeholder={placeholder}
-          className={`w-full h-11 pl-20 pr-10 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border transition-all placeholder:text-[var(--tx-3)] focus:outline-none focus:ring-2 ${
+          className={`w-full h-12 pl-20 pr-10 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border transition-all placeholder:text-[var(--tx-3)] focus:outline-none focus:ring-2 ${
             error
               ? 'border-rose-500 focus:ring-rose-500/20'
               : 'border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-[var(--cyan)]/20'

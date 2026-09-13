@@ -343,21 +343,20 @@ function RegisterContent() {
       }
     >
       {/* ══════ DUAL-ROLE TOGGLE SWITCHER ══════ */}
-      <div className="grid grid-cols-2 gap-2 p-1.5 bg-[var(--s2)] rounded-xl mb-6 border border-[var(--bd2)]">
+      <div className="grid grid-cols-2 gap-2 p-1.5 bg-[var(--surface-elevated)] rounded-[22px] mb-6 border border-[var(--bd2)] shadow-inner">
         <button
           type="button"
           onClick={() => {
             setRole('provider');
             setStep(1);
           }}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center justify-center py-3 px-3.5 rounded-[16px] text-xs sm:text-sm font-black transition-all ${
             role === 'provider'
-              ? 'bg-[var(--surface)] text-[var(--tx)] shadow-xs border border-[var(--cyan-border)]'
-              : 'text-[var(--tx-2)] hover:text-[var(--tx)]'
+              ? 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] text-white shadow-md shadow-cyan-500/25 scale-[1.01]'
+              : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)] font-bold'
           }`}
         >
-          <Wrench className={`w-3.5 h-3.5 ${role === 'provider' ? 'text-[var(--cyan)]' : ''}`} />
-          <span>I Want to Work (Artisan)</span>
+          <span>Find Jobs & Work</span>
         </button>
 
         <button
@@ -366,14 +365,13 @@ function RegisterContent() {
             setRole('client');
             setStep(1);
           }}
-          className={`flex items-center justify-center gap-2 py-2.5 px-3 rounded-lg text-xs font-bold transition-all ${
+          className={`flex items-center justify-center py-3 px-3.5 rounded-[16px] text-xs sm:text-sm font-black transition-all ${
             role === 'client'
-              ? 'bg-[var(--surface)] text-[var(--tx)] shadow-xs border border-[#F59E0B]/50'
-              : 'text-[var(--tx-2)] hover:text-[var(--tx)]'
+              ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] text-white shadow-md shadow-amber-500/25 scale-[1.01]'
+              : 'text-[var(--tx-2)] hover:text-[var(--tx)] hover:bg-[var(--surface)] font-bold'
           }`}
         >
-          <Building2 className={`w-3.5 h-3.5 ${role === 'client' ? 'text-[#F59E0B]' : ''}`} />
-          <span>I Want to Hire (Client)</span>
+          <span>Hire a Worker</span>
         </button>
       </div>
 
@@ -441,7 +439,7 @@ function RegisterContent() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="e.g. Kwame"
-                  className="w-full h-11 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                  className="w-full h-12 px-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
                 />
               </div>
 
@@ -455,7 +453,7 @@ function RegisterContent() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="e.g. Asante"
-                  className="w-full h-11 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                  className="w-full h-12 px-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
                 />
               </div>
             </div>
@@ -481,7 +479,7 @@ function RegisterContent() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@domain.com"
-                className="w-full h-11 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                className="w-full h-12 px-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
               />
             </div>
 
@@ -497,12 +495,12 @@ function RegisterContent() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="At least 6 characters"
-                  className="w-full h-11 pl-3.5 pr-10 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                  className="w-full h-12 pl-4 pr-11 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 text-[var(--tx-3)] hover:text-[var(--tx)] transition-colors p-1"
+                  className="absolute right-3.5 text-[var(--tx-3)] hover:text-[var(--tx)] transition-colors p-1"
                   aria-label={showPassword ? 'Hide password' : 'Show password'}
                 >
                   {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
@@ -530,7 +528,7 @@ function RegisterContent() {
                       setTradeSearchQuery(e.target.value);
                     }}
                     placeholder="Type your occupation (e.g. Electrician, POP, Tiler, Fashion)..."
-                    className="w-full h-11 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                    className="w-full h-12 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
                   />
                   {tradeSearchQuery && (
                     <button
@@ -552,7 +550,7 @@ function RegisterContent() {
                   onClick={() => {
                     setSelectedTrade(tradeSearchQuery.trim());
                   }}
-                  className={`w-full p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
+                  className={`w-full p-3 rounded-[16px] border text-left flex items-center gap-2.5 transition-all ${
                     selectedTrade.toLowerCase() === tradeSearchQuery.trim().toLowerCase()
                       ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.1] text-[var(--cyan)] ring-1 ring-[var(--cyan)]/30'
                       : 'border-dashed border-[var(--cyan)]/50 hover:border-[var(--cyan)] bg-[var(--surface)] hover:bg-[var(--cyan)]/[0.04]'
@@ -577,7 +575,7 @@ function RegisterContent() {
               )}
 
               {/* Active Selection Badge */}
-              <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-[var(--surface-elevated)] border border-[var(--bd2)] text-xs">
+              <div className="flex items-center justify-between px-3.5 py-2.5 rounded-[16px] bg-[var(--surface-elevated)] border border-[var(--bd2)] text-xs">
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="text-[var(--tx-3)] text-[11px] shrink-0">Selected Trade:</span>
                   <span className="font-bold text-[var(--tx)] truncate">{selectedTrade || 'None selected'}</span>
@@ -614,7 +612,7 @@ function RegisterContent() {
                             setSelectedTrade(trade.name);
                             setHourlyRate(trade.defaultRate);
                           }}
-                          className={`p-2.5 rounded-xl border text-left flex items-center gap-2.5 transition-all ${
+                          className={`p-3 rounded-[16px] border text-left flex items-center gap-2.5 transition-all ${
                             isSelected
                               ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.1] ring-1 ring-[var(--cyan)]/30'
                               : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)]'
@@ -636,7 +634,7 @@ function RegisterContent() {
                       );
                     })
                   ) : (
-                    <div className="col-span-full py-4 px-3 text-center text-xs text-[var(--tx-3)] bg-[var(--surface)] rounded-xl border border-dashed border-[var(--bd2)]">
+                    <div className="col-span-full py-4 px-3 text-center text-xs text-[var(--tx-3)] bg-[var(--surface)] rounded-[16px] border border-dashed border-[var(--bd2)]">
                       <p className="font-semibold text-[var(--tx)]">No preset trades matching "{tradeSearchQuery}"</p>
                       <p className="text-[11px] mt-1 text-[var(--tx-2)]">
                         Click the <span className="text-[var(--cyan)] font-bold">"Use Typed Occupation"</span> button above to register with this custom profession.
@@ -657,7 +655,7 @@ function RegisterContent() {
                 <select
                   value={selectedCity}
                   onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full h-11 px-3 bg-[var(--surface)] text-[var(--tx)] text-xs font-semibold rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                  className="w-full h-12 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-xs font-semibold rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
                 >
                   {GHANA_CITIES.map((city) => (
                     <option key={city} value={city}>
@@ -681,7 +679,7 @@ function RegisterContent() {
                     onChange={(e) => setHourlyRate(Number(e.target.value))}
                     min={30}
                     max={2000}
-                    className="w-full h-11 pl-8 pr-12 bg-[var(--surface)] text-[var(--tx)] text-sm font-bold rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                    className="w-full h-12 pl-8 pr-12 bg-[var(--surface)] text-[var(--tx)] text-sm font-bold rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
                   />
                   <span className="absolute right-3.5 text-xs text-[var(--tx-3)] font-medium">/ hr</span>
                 </div>
@@ -722,7 +720,7 @@ function RegisterContent() {
                     key={w.id}
                     type="button"
                     onClick={() => setPayoutWallet(w.id as any)}
-                    className={`p-3 rounded-xl border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                    className={`p-3.5 rounded-[18px] border flex flex-col items-center justify-center gap-1.5 transition-all ${
                       payoutWallet === w.id
                         ? `${w.color} bg-[var(--cyan)]/[0.06] shadow-xs ring-1 ring-current`
                         : 'border-[var(--bd2)] bg-[var(--surface)] hover:border-[var(--bd)]'
@@ -745,12 +743,12 @@ function RegisterContent() {
                 value={walletPhone}
                 onChange={(e) => setWalletPhone(e.target.value)}
                 placeholder="024 000 0000"
-                className="w-full h-11 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-sm font-mono font-bold rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                className="w-full h-12 px-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-mono font-bold rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
               />
             </div>
 
             {/* Instant verification assurance banner */}
-            <div className="rounded-xl p-3.5 bg-gradient-to-r from-[#10B981]/10 to-[var(--cyan)]/10 border border-[#10B981]/25 flex items-start gap-2.5">
+            <div className="rounded-[18px] p-4 bg-gradient-to-r from-[#10B981]/10 to-[var(--cyan)]/10 border border-[#10B981]/25 flex items-start gap-2.5">
               <CheckCircle2 className="w-4 h-4 text-[#10B981] shrink-0 mt-0.5" />
               <div className="text-xs text-[var(--tx-2)] leading-relaxed">
                 <strong className="text-[var(--tx)]">Escrow Guarantee:</strong> When clients approve milestone deliverables, your earnings are automatically transferred directly to this Mobile Money account with zero withdrawal delays.
@@ -772,7 +770,7 @@ function RegisterContent() {
                 value={companyName}
                 onChange={(e) => setCompanyName(e.target.value)}
                 placeholder="e.g. Ridge Commercial Ltd or Private Residence"
-                className="w-full h-11 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-xl border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
+                className="w-full h-12 px-4 bg-[var(--surface)] text-[var(--tx)] text-sm font-medium rounded-[16px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
               />
             </div>
 
@@ -780,11 +778,11 @@ function RegisterContent() {
               <label className="text-xs font-bold text-[var(--tx)]">
                 What is your immediate hiring objective?
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <button
                   type="button"
                   onClick={() => setProjectIntent('hire_artisan')}
-                  className={`p-3 rounded-xl border text-left transition-all ${
+                  className={`p-3.5 rounded-[18px] border text-left transition-all ${
                     projectIntent === 'hire_artisan'
                       ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.08] shadow-xs'
                       : 'border-[var(--bd2)] bg-[var(--surface)] hover:border-[var(--bd)]'
@@ -800,7 +798,7 @@ function RegisterContent() {
                 <button
                   type="button"
                   onClick={() => setProjectIntent('post_job')}
-                  className={`p-3 rounded-xl border text-left transition-all ${
+                  className={`p-3.5 rounded-[18px] border text-left transition-all ${
                     projectIntent === 'post_job'
                       ? 'border-[#F59E0B] bg-[#F59E0B]/[0.08] shadow-xs'
                       : 'border-[var(--bd2)] bg-[var(--surface)] hover:border-[var(--bd)]'
@@ -816,7 +814,7 @@ function RegisterContent() {
             </div>
 
             {/* Escrow assurance note */}
-            <div className="rounded-xl p-3.5 bg-gradient-to-r from-[var(--cyan)]/10 to-[#3B82F6]/10 border border-[var(--cyan)]/25 flex items-start gap-2.5">
+            <div className="rounded-[18px] p-4 bg-gradient-to-r from-[var(--cyan)]/10 to-[#3B82F6]/10 border border-[var(--cyan)]/25 flex items-start gap-2.5">
               <ShieldCheck className="w-4 h-4 text-[var(--cyan)] shrink-0 mt-0.5" />
               <div className="text-xs text-[var(--tx-2)] leading-relaxed">
                 <strong className="text-[var(--tx)]">Zero Upfront Risk:</strong> Your milestone deposits are safely locked in the Bank-Grade Escrow Vault until you inspect and approve the completed work.
@@ -827,7 +825,7 @@ function RegisterContent() {
 
         {/* Error message alert */}
         {errorMsg && (
-          <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
+          <div className="p-3.5 rounded-[16px] bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -839,7 +837,7 @@ function RegisterContent() {
             <button
               type="button"
               onClick={handlePrevStep}
-              className="h-11 px-4 rounded-xl border border-[var(--bd2)] hover:border-[var(--bd)] text-[var(--tx-2)] hover:text-[var(--tx)] font-bold text-xs flex items-center gap-1.5 transition-all"
+              className="h-12 px-5 rounded-[18px] border border-[var(--bd2)] hover:border-[var(--bd)] text-[var(--tx-2)] hover:text-[var(--tx)] font-bold text-xs flex items-center gap-1.5 transition-all"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
@@ -852,15 +850,15 @@ function RegisterContent() {
             type="button"
             onClick={handleNextStep}
             disabled={isSubmitting}
-            className={`h-11 px-6 rounded-xl font-bold text-xs flex items-center gap-2 shadow-lg transition-all ml-auto ${
+            className={`h-12 px-7 rounded-[18px] font-black text-sm flex items-center gap-2 shadow-lg transition-all ml-auto ${
               role === 'client'
-                ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-slate-950 font-black shadow-amber-500/20'
-                : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-slate-950 font-black shadow-cyan-500/20'
+                ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-white shadow-amber-500/20'
+                : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-white shadow-cyan-500/20'
             }`}
           >
             {isSubmitting ? (
               <>
-                <span className="w-4 h-4 rounded-full border-2 border-slate-950 border-t-transparent animate-spin" />
+                <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
                 <span>Creating Account...</span>
               </>
             ) : step === totalSteps ? (
