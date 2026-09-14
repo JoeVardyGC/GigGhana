@@ -1090,11 +1090,6 @@ function RegisterContent() {
                       </button>
                     )}
 
-                    {/* Category Header */}
-                    <div className="px-3.5 py-1.5 bg-[var(--surface)]/60 text-[10px] font-bold uppercase tracking-wider text-[var(--tx-3)] flex items-center justify-between">
-                      <span>{locationQuery.trim() ? 'Matching Locations' : 'Popular Operating Locations'}</span>
-                      <span className="text-[9px] text-[var(--cyan)] font-mono font-bold">GH 🇬🇭</span>
-                    </div>
 
                     {/* Filtered Location List */}
                     {filteredLocations.length > 0 ? (
