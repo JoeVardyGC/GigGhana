@@ -108,88 +108,355 @@ export interface GhanaLocation {
 }
 
 export const POPULAR_GHANA_LOCATIONS: GhanaLocation[] = [
-  // Greater Accra Hubs
+  // ══════════════════════════════════════════════════════════════
+  // AHAFO REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Duayaw Nkwanta', region: 'Tano North, Ahafo Region', full: 'Duayaw Nkwanta, Ahafo', popular: true },
+  { city: 'Bechem', region: 'Tano South, Ahafo Region', full: 'Bechem, Ahafo', popular: true },
+  { city: 'Goaso', region: 'Asunafo North, Ahafo Region', full: 'Goaso, Ahafo', popular: true },
+  { city: 'Mim', region: 'Asunafo North, Ahafo Region', full: 'Mim, Ahafo', popular: true },
+  { city: 'Kenyasi', region: 'Asutifi North, Ahafo Region', full: 'Kenyasi, Ahafo', popular: true },
+  { city: 'Hwidiem', region: 'Asutifi South, Ahafo Region', full: 'Hwidiem, Ahafo' },
+  { city: 'Kukuom', region: 'Asunafo South, Ahafo Region', full: 'Kukuom, Ahafo' },
+  { city: 'Yamfo', region: 'Tano North, Ahafo Region', full: 'Yamfo, Ahafo' },
+  { city: 'Tanoso (Ahafo)', region: 'Tano North, Ahafo Region', full: 'Tanoso, Ahafo' },
+  { city: 'Akrodie', region: 'Asunafo North, Ahafo Region', full: 'Akrodie, Ahafo' },
+  { city: 'Acherensua', region: 'Asutifi South, Ahafo Region', full: 'Acherensua, Ahafo' },
+  { city: 'Bomaa', region: 'Tano North, Ahafo Region', full: 'Bomaa, Ahafo' },
+  { city: 'Techimantia', region: 'Tano South, Ahafo Region', full: 'Techimantia, Ahafo' },
+
+  // ══════════════════════════════════════════════════════════════
+  // GREATER ACCRA REGION
+  // ══════════════════════════════════════════════════════════════
   { city: 'East Legon', region: 'Accra, Greater Accra', full: 'East Legon, Accra', popular: true },
   { city: 'Spintex Road', region: 'Accra, Greater Accra', full: 'Spintex Road, Accra', popular: true },
   { city: 'Airport Hills & Residential', region: 'Accra, Greater Accra', full: 'Airport Hills, Accra', popular: true },
   { city: 'Osu (Oxford Street / RE)', region: 'Accra, Greater Accra', full: 'Osu, Accra', popular: true },
   { city: 'Cantonments & Labone', region: 'Accra, Greater Accra', full: 'Cantonments, Accra', popular: true },
   { city: 'Dzorwulu & Roman Ridge', region: 'Accra, Greater Accra', full: 'Dzorwulu, Accra', popular: true },
-  { city: 'Tema (Communities 1 - 25)', region: 'Greater Accra', full: 'Tema Industrial, Greater Accra', popular: true },
-  { city: 'Madina & Ashaley Botwe', region: 'Greater Accra', full: 'Madina, Greater Accra', popular: true },
-  { city: 'Adenta & Frafraha', region: 'Greater Accra', full: 'Adenta, Greater Accra', popular: true },
-  { city: 'Dansoman & Exhibition', region: 'Accra, Greater Accra', full: 'Dansoman, Accra', popular: true },
-  { city: 'Lapaz & Abeka', region: 'Accra, Greater Accra', full: 'Lapaz, Accra', popular: true },
-  { city: 'Achimota & Mile 7', region: 'Accra, Greater Accra', full: 'Achimota, Accra', popular: true },
-  { city: 'Dome & Kwabenya', region: 'Greater Accra', full: 'Dome, Greater Accra', popular: true },
-  { city: 'Haatso & Agbogba', region: 'Greater Accra', full: 'Haatso, Greater Accra' },
-  { city: 'Kwashieman & Santa Maria', region: 'Accra, Greater Accra', full: 'Kwashieman, Accra' },
-  { city: 'Kwame Nkrumah Circle & Adabraka', region: 'Accra, Greater Accra', full: 'Circle, Accra' },
-  { city: 'Kaneshie & Odorkor', region: 'Accra, Greater Accra', full: 'Kaneshie, Accra' },
-  { city: 'Weija & SCC', region: 'Greater Accra', full: 'Weija, Greater Accra' },
-  { city: 'Teshie & Nungua Estates', region: 'Greater Accra', full: 'Teshie, Greater Accra' },
-  { city: 'Prampram & Dawhenya', region: 'Greater Accra', full: 'Prampram, Greater Accra' },
-  { city: 'Amasaman & Pokuase', region: 'Greater Accra', full: 'Pokuase, Greater Accra' },
-  { city: 'Kasoa & Amanfro', region: 'Central / Greater Accra Border', full: 'Kasoa, Central/Accra', popular: true },
+  { city: 'Tema (Communities 1 - 25)', region: 'Tema, Greater Accra', full: 'Tema, Greater Accra', popular: true },
+  { city: 'Madina & Ashaley Botwe', region: 'La-Nkwantanang, Greater Accra', full: 'Madina, Greater Accra', popular: true },
+  { city: 'Adenta & Frafraha', region: 'Adentan, Greater Accra', full: 'Adenta, Greater Accra', popular: true },
+  { city: 'Lapaz & Abeka', region: 'Okaikwei North, Greater Accra', full: 'Lapaz, Accra', popular: true },
+  { city: 'Dansoman & Exhibition', region: 'Ablekuma West, Greater Accra', full: 'Dansoman, Accra', popular: true },
+  { city: 'Achimota & Mile 7', region: 'Okaikwei North, Greater Accra', full: 'Achimota, Accra', popular: true },
+  { city: 'Dome & Kwabenya', region: 'Ga East, Greater Accra', full: 'Dome, Greater Accra', popular: true },
+  { city: 'Haatso & Agbogba', region: 'Ga East, Greater Accra', full: 'Haatso, Greater Accra' },
+  { city: 'Kwashieman & Santa Maria', region: 'Ablekuma Central, Greater Accra', full: 'Kwashieman, Accra' },
+  { city: 'Kwame Nkrumah Circle & Adabraka', region: 'Klottey-Korle, Greater Accra', full: 'Circle, Accra' },
+  { city: 'Kaneshie & Odorkor', region: 'Okaikwei South, Greater Accra', full: 'Kaneshie, Accra' },
+  { city: 'Weija & SCC', region: 'Ga South, Greater Accra', full: 'Weija, Greater Accra' },
+  { city: 'Gbawe & Mallam', region: 'Ga South, Greater Accra', full: 'Gbawe, Greater Accra' },
+  { city: 'Bortianor & Kokrobite', region: 'Ga South, Greater Accra', full: 'Kokrobite, Greater Accra' },
+  { city: 'Teshie & Nungua Estates', region: 'Ledzokuku-Krowor, Greater Accra', full: 'Teshie, Greater Accra' },
+  { city: 'Sakumono & Lashibi', region: 'Tema West, Greater Accra', full: 'Sakumono, Greater Accra' },
+  { city: 'Prampram & Dawhenya', region: 'Ningo-Prampram, Greater Accra', full: 'Prampram, Greater Accra' },
+  { city: 'Afienya & Shai Hills', region: 'Shai-Osudoku, Greater Accra', full: 'Afienya, Greater Accra' },
+  { city: 'Dodowa', region: 'Shai-Osudoku, Greater Accra', full: 'Dodowa, Greater Accra' },
+  { city: 'Amasaman & Pokuase', region: 'Ga West, Greater Accra', full: 'Pokuase, Greater Accra' },
+  { city: 'Medie & Kotoku', region: 'Ga West, Greater Accra', full: 'Medie, Greater Accra' },
+  { city: 'Oyarifa & Danfa', region: 'La-Nkwantanang, Greater Accra', full: 'Oyarifa, Greater Accra' },
+  { city: 'Abokobi & Pantang', region: 'Ga East, Greater Accra', full: 'Abokobi, Greater Accra' },
+  { city: 'Abelemkpe', region: 'Ayawaso West, Greater Accra', full: 'Abelemkpe, Accra' },
+  { city: 'West Legon & North Legon', region: 'Ayawaso West, Greater Accra', full: 'West Legon, Accra' },
+  { city: 'Legon Campus (UG)', region: 'Ayawaso West, Greater Accra', full: 'Legon, Accra' },
+  { city: 'Tesano & Alajo', region: 'Ayawaso Central, Greater Accra', full: 'Tesano, Accra' },
+  { city: 'Accra New Town & Kotobabi', region: 'Ayawaso Central, Greater Accra', full: 'Newtown, Accra' },
+  { city: 'Nima & Maamobi', region: 'Ayawaso East, Greater Accra', full: 'Nima, Accra' },
+  { city: 'Kanda & Ridge', region: 'Ayawaso East, Greater Accra', full: 'Kanda, Accra' },
+  { city: 'Asylum Down', region: 'Klottey-Korle, Greater Accra', full: 'Asylum Down, Accra' },
+  { city: 'Jamestown & Chorkor', region: 'Ashiedu Keteke, Greater Accra', full: 'Jamestown, Accra' },
+  { city: 'Korle Bu & Korle Gonno', region: 'Ablekuma South, Greater Accra', full: 'Korle Bu, Accra' },
+  { city: 'Mamprobi', region: 'Ablekuma South, Greater Accra', full: 'Mamprobi, Accra' },
+  { city: 'Darkuman & Awoshie', region: 'Ablekuma North, Greater Accra', full: 'Darkuman, Accra' },
+  { city: 'Anyaa & Ablekuma', region: 'Anyaa-Sowutuom, Greater Accra', full: 'Anyaa, Greater Accra' },
+  { city: 'Sowutuom & Tabora', region: 'Anyaa-Sowutuom, Greater Accra', full: 'Sowutuom, Greater Accra' },
+  { city: 'McCarthy Hill & Tetegu', region: 'Ga South, Greater Accra', full: 'McCarthy Hill, Greater Accra' },
+  { city: 'Kpone & Tema Manhean', region: 'Kpone-Katamanso, Greater Accra', full: 'Kpone, Greater Accra' },
+  { city: 'Old Ningo & New Ningo', region: 'Ningo-Prampram, Greater Accra', full: 'Ningo, Greater Accra' },
+  { city: 'Ada Foah & Big Ada', region: 'Ada East, Greater Accra', full: 'Ada Foah, Greater Accra' },
+  { city: 'Sege', region: 'Ada West, Greater Accra', full: 'Sege, Greater Accra' },
+  { city: 'Kasoa Amanfro', region: 'Ga South / Central Border', full: 'Amanfro, Greater Accra' },
 
-  // Ashanti Hubs
+  // ══════════════════════════════════════════════════════════════
+  // ASHANTI REGION
+  // ══════════════════════════════════════════════════════════════
   { city: 'Kumasi Central (Adum)', region: 'Kumasi, Ashanti', full: 'Kumasi Central, Ashanti', popular: true },
+  { city: 'Kejetia', region: 'Kumasi, Ashanti', full: 'Kejetia, Kumasi', popular: true },
   { city: 'Bantama & Abrepo', region: 'Kumasi, Ashanti', full: 'Bantama, Kumasi', popular: true },
   { city: 'Ahodwo & Nhyiaeso', region: 'Kumasi, Ashanti', full: 'Ahodwo, Kumasi', popular: true },
-  { city: 'KNUST Campus & Ayigya', region: 'Kumasi, Ashanti', full: 'KNUST, Kumasi', popular: true },
-  { city: 'Suame (Magazine) & Tafo', region: 'Kumasi, Ashanti', full: 'Suame, Kumasi', popular: true },
-  { city: 'Asokwa & Atonsu', region: 'Kumasi, Ashanti', full: 'Asokwa, Kumasi' },
-  { city: 'Kwadaso & Sofoline', region: 'Kumasi, Ashanti', full: 'Kwadaso, Kumasi' },
-  { city: 'Oforikrom & Anloga', region: 'Kumasi, Ashanti', full: 'Oforikrom, Kumasi' },
-  { city: 'Tanoso & Abuakwa', region: 'Kumasi, Ashanti', full: 'Tanoso, Kumasi' },
-  { city: 'Obuasi (Gold City)', region: 'Ashanti Region', full: 'Obuasi, Ashanti', popular: true },
-  { city: 'Ejisu & Fumesua', region: 'Ashanti Region', full: 'Ejisu, Ashanti' },
+  { city: 'KNUST Campus & Ayigya', region: 'Oforikrom, Ashanti', full: 'KNUST, Kumasi', popular: true },
+  { city: 'Suame (Magazine) & Tafo', region: 'Suame, Ashanti', full: 'Suame, Kumasi', popular: true },
+  { city: 'Asokwa & Atonsu', region: 'Asokwa, Ashanti', full: 'Asokwa, Kumasi' },
+  { city: 'Kwadaso & Sofoline', region: 'Kwadaso, Ashanti', full: 'Kwadaso, Kumasi' },
+  { city: 'Oforikrom & Anloga', region: 'Oforikrom, Ashanti', full: 'Oforikrom, Kumasi' },
+  { city: 'Tanoso & Abuakwa', region: 'Atwima Nwabiagya, Ashanti', full: 'Tanoso, Kumasi' },
+  { city: 'Obuasi (Gold City)', region: 'Obuasi Municipal, Ashanti', full: 'Obuasi, Ashanti', popular: true },
+  { city: 'Ejisu & Fumesua', region: 'Ejisu Municipal, Ashanti', full: 'Ejisu, Ashanti', popular: true },
+  { city: 'Asante Bekwai', region: 'Bekwai Municipal, Ashanti', full: 'Bekwai, Ashanti', popular: true },
+  { city: 'Mampong', region: 'Mampong Municipal, Ashanti', full: 'Mampong, Ashanti', popular: true },
+  { city: 'Konongo & Odumase', region: 'Asante Akim Central, Ashanti', full: 'Konongo, Ashanti', popular: true },
+  { city: 'Agogo', region: 'Asante Akim North, Ashanti', full: 'Agogo, Ashanti' },
+  { city: 'Juaso', region: 'Asante Akim South, Ashanti', full: 'Juaso, Ashanti' },
+  { city: 'Effiduase & Asokore', region: 'Sekyere East, Ashanti', full: 'Effiduase, Ashanti' },
+  { city: 'Kumawu', region: 'Sekyere Kumawu, Ashanti', full: 'Kumawu, Ashanti' },
+  { city: 'Juaben', region: 'Juaben Municipal, Ashanti', full: 'Juaben, Ashanti' },
+  { city: 'Offinso', region: 'Offinso Municipal, Ashanti', full: 'Offinso, Ashanti' },
+  { city: 'Akomadan & Abofour', region: 'Offinso North, Ashanti', full: 'Akomadan, Ashanti' },
+  { city: 'Tepa', region: 'Ahafo Ano North, Ashanti', full: 'Tepa, Ashanti' },
+  { city: 'Mankranso', region: 'Ahafo Ano South, Ashanti', full: 'Mankranso, Ashanti' },
+  { city: 'Nkawie & Nyinahin', region: 'Atwima Mponua, Ashanti', full: 'Nkawie, Ashanti' },
+  { city: 'Jacobu', region: 'Amansie Central, Ashanti', full: 'Jacobu, Ashanti' },
+  { city: 'Manso Nkwanta', region: 'Amansie West, Ashanti', full: 'Manso Nkwanta, Ashanti' },
+  { city: 'New Edubiase', region: 'Adansi South, Ashanti', full: 'New Edubiase, Ashanti' },
+  { city: 'Fomena', region: 'Adansi North, Ashanti', full: 'Fomena, Ashanti' },
+  { city: 'Akrokerri', region: 'Adansi North, Ashanti', full: 'Akrokerri, Ashanti' },
+  { city: 'Kodie', region: 'Afigya Kwabre, Ashanti', full: 'Kodie, Ashanti' },
+  { city: 'Agona (Ashanti)', region: 'Sekyere South, Ashanti', full: 'Agona, Ashanti' },
+  { city: 'Nsuta & Jamasi', region: 'Sekyere Central, Ashanti', full: 'Nsuta, Ashanti' },
+  { city: 'Drobonso', region: 'Sekyere Afram Plains, Ashanti', full: 'Drobonso, Ashanti' },
+  { city: 'Kuntenase', region: 'Bosomtwe, Ashanti', full: 'Kuntenase, Ashanti' },
+  { city: 'Kokofu', region: 'Bekwai Municipal, Ashanti', full: 'Kokofu, Ashanti' },
+  { city: 'Barekese', region: 'Atwima Nwabiagya, Ashanti', full: 'Barekese, Ashanti' },
+  { city: 'Pankrono & Kronum', region: 'Old Tafo, Ashanti', full: 'Pankrono, Kumasi' },
+  { city: 'Breman & Ashtown', region: 'Manhyia, Ashanti', full: 'Breman, Kumasi' },
+  { city: 'Dichemso & Manhyia', region: 'Manhyia, Ashanti', full: 'Manhyia, Kumasi' },
+  { city: 'Bomso & Kentinkrono', region: 'Oforikrom, Ashanti', full: 'Bomso, Kumasi' },
+  { city: 'Emena & Boadi', region: 'Oforikrom, Ashanti', full: 'Emena, Kumasi' },
+  { city: 'Appiadu & Kotei', region: 'Oforikrom, Ashanti', full: 'Kotei, Kumasi' },
+  { city: 'Kaase & Ahinsan', region: 'Asokwa, Ashanti', full: 'Kaase, Kumasi' },
+  { city: 'Chirapatre & Gyinyase', region: 'Asokwa, Ashanti', full: 'Chirapatre, Kumasi' },
+  { city: 'Santasi', region: 'Kwadaso, Ashanti', full: 'Santasi, Kumasi' },
 
-  // Western & Western North Hubs
-  { city: 'Takoradi (Market Circle)', region: 'Sekondi-Takoradi, Western', full: 'Takoradi, Western', popular: true },
-  { city: 'Sekondi & Essikado', region: 'Sekondi-Takoradi, Western', full: 'Sekondi, Western' },
-  { city: 'Anaji & Effia Kuma', region: 'Sekondi-Takoradi, Western', full: 'Anaji, Takoradi' },
-  { city: 'Tarkwa (Mining Hub)', region: 'Western Region', full: 'Tarkwa, Western', popular: true },
-  { city: 'Sefwi Wiawso & Bibiani', region: 'Western North Region', full: 'Sefwi Wiawso, Western North' },
+  // ══════════════════════════════════════════════════════════════
+  // BONO REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Sunyani Central', region: 'Sunyani Municipal, Bono Region', full: 'Sunyani, Bono', popular: true },
+  { city: 'Fiapre & Abesim', region: 'Sunyani Municipal, Bono Region', full: 'Fiapre, Bono', popular: true },
+  { city: 'Odumase (Sunyani West)', region: 'Sunyani West, Bono Region', full: 'Odumase, Bono' },
+  { city: 'Berekum', region: 'Berekum East, Bono Region', full: 'Berekum, Bono', popular: true },
+  { city: 'Jinijini', region: 'Berekum West, Bono Region', full: 'Jinijini, Bono' },
+  { city: 'Dormaa Ahenkro', region: 'Dormaa Central, Bono Region', full: 'Dormaa Ahenkro, Bono', popular: true },
+  { city: 'Wamfie', region: 'Dormaa East, Bono Region', full: 'Wamfie, Bono' },
+  { city: 'Drobo & Babianiha', region: 'Jaman South, Bono Region', full: 'Drobo, Bono' },
+  { city: 'Sampa', region: 'Jaman North, Bono Region', full: 'Sampa, Bono', popular: true },
+  { city: 'Seikwa & Nsawkaw', region: 'Tain, Bono Region', full: 'Nsawkaw, Bono' },
+  { city: 'Banda Ahenkro', region: 'Banda, Bono Region', full: 'Banda Ahenkro, Bono' },
+  { city: 'Chiraa & Nsuatre', region: 'Sunyani West, Bono Region', full: 'Chiraa, Bono' },
 
-  // Central Region Hubs
-  { city: 'Cape Coast (Kotokuraba / UCC)', region: 'Central Region', full: 'Cape Coast, Central', popular: true },
-  { city: 'Winneba (University Town)', region: 'Central Region', full: 'Winneba, Central', popular: true },
-  { city: 'Elmina & Komenda', region: 'Central Region', full: 'Elmina, Central' },
-  { city: 'Agona Swedru', region: 'Central Region', full: 'Swedru, Central' },
-  { city: 'Mankessim (Trade Hub)', region: 'Central Region', full: 'Mankessim, Central' },
+  // ══════════════════════════════════════════════════════════════
+  // BONO EAST REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Techiman (Commercial Hub)', region: 'Techiman Municipal, Bono East', full: 'Techiman, Bono East', popular: true },
+  { city: 'Tuobodom', region: 'Techiman North, Bono East', full: 'Tuobodom, Bono East' },
+  { city: 'Kintampo (Waterfalls City)', region: 'Kintampo North, Bono East', full: 'Kintampo, Bono East', popular: true },
+  { city: 'Jema', region: 'Kintampo South, Bono East', full: 'Jema, Bono East' },
+  { city: 'Nkoranza', region: 'Nkoranza South, Bono East', full: 'Nkoranza, Bono East', popular: true },
+  { city: 'Busunya', region: 'Nkoranza North, Bono East', full: 'Busunya, Bono East' },
+  { city: 'Atebubu', region: 'Atebubu-Amantin, Bono East', full: 'Atebubu, Bono East', popular: true },
+  { city: 'Amantin', region: 'Atebubu-Amantin, Bono East', full: 'Amantin, Bono East' },
+  { city: 'Yeji (Volta Lake Port)', region: 'Pru East, Bono East', full: 'Yeji, Bono East', popular: true },
+  { city: 'Prang', region: 'Pru West, Bono East', full: 'Prang, Bono East' },
+  { city: 'Kwame Danso', region: 'Sene West, Bono East', full: 'Kwame Danso, Bono East' },
+  { city: 'Kajaji', region: 'Sene East, Bono East', full: 'Kajaji, Bono East' },
 
-  // Eastern Region Hubs
-  { city: 'Koforidua (New Juaben)', region: 'Eastern Region', full: 'Koforidua, Eastern', popular: true },
-  { city: 'Nsawam & Adoagyiri', region: 'Eastern Region', full: 'Nsawam, Eastern' },
-  { city: 'Nkawkaw & Kwahu Plateau', region: 'Eastern Region', full: 'Nkawkaw, Eastern' },
-  { city: 'Akosombo & Atimpoku', region: 'Eastern Region', full: 'Akosombo, Eastern' },
-  { city: 'Aburi & Mampong Ridge', region: 'Eastern Region', full: 'Aburi, Eastern' },
+  // ══════════════════════════════════════════════════════════════
+  // CENTRAL REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Cape Coast Central', region: 'Cape Coast Metropolitan, Central', full: 'Cape Coast, Central', popular: true },
+  { city: 'University of Cape Coast (UCC)', region: 'Cape Coast, Central', full: 'UCC, Cape Coast', popular: true },
+  { city: 'Kotokuraba & Pedu', region: 'Cape Coast, Central', full: 'Kotokuraba, Cape Coast' },
+  { city: 'Elmina & Komenda', region: 'Komenda-Edina-Eguafo-Abirem, Central', full: 'Elmina, Central', popular: true },
+  { city: 'Kasoa (Galilea / CP)', region: 'Awutu Senya East, Central', full: 'Kasoa, Central', popular: true },
+  { city: 'Budumburam & Nyanyano', region: 'Gomoa East, Central', full: 'Budumburam, Central' },
+  { city: 'Winneba (University Town)', region: 'Effutu Municipal, Central', full: 'Winneba, Central', popular: true },
+  { city: 'Apam', region: 'Gomoa West, Central', full: 'Apam, Central' },
+  { city: 'Mankessim (Trade Hub)', region: 'Mfantseman, Central', full: 'Mankessim, Central', popular: true },
+  { city: 'Saltpond & Anomabo', region: 'Mfantseman, Central', full: 'Saltpond, Central' },
+  { city: 'Agona Swedru', region: 'Agona West, Central', full: 'Swedru, Central', popular: true },
+  { city: 'Agona Nsaba', region: 'Agona East, Central', full: 'Agona Nsaba, Central' },
+  { city: 'Breman Asikuma', region: 'Asikuma-Odoben-Brakwa, Central', full: 'Breman Asikuma, Central' },
+  { city: 'Ajumako', region: 'Ajumako-Enyan-Essiam, Central', full: 'Ajumako, Central' },
+  { city: 'Assin Foso', region: 'Assin Central, Central', full: 'Assin Foso, Central', popular: true },
+  { city: 'Assin Manso & Bereku', region: 'Assin North, Central', full: 'Assin Manso, Central' },
+  { city: 'Twifo Praso & Heman', region: 'Twifo Atti-Morkwa, Central', full: 'Twifo Praso, Central' },
+  { city: 'Dunkwa-on-Offin', region: 'Upper Denkyira East, Central', full: 'Dunkwa-on-Offin, Central', popular: true },
+  { city: 'Diaso', region: 'Upper Denkyira West, Central', full: 'Diaso, Central' },
+  { city: 'Bawjiase', region: 'Awutu Senya West, Central', full: 'Bawjiase, Central' },
+  { city: 'Senya Beraku & Gomoa Fetteh', region: 'Awutu Senya, Central', full: 'Senya Beraku, Central' },
 
-  // Northern, Savannah & North East Hubs
-  { city: 'Tamale Central & Lamashegu', region: 'Northern Region', full: 'Tamale, Northern', popular: true },
-  { city: 'Nyankpala & Sagnarigu', region: 'Northern Region', full: 'Sagnarigu, Tamale' },
-  { city: 'Yendi & Bimbilla', region: 'Northern Region', full: 'Yendi, Northern' },
-  { city: 'Damongo (Mole Gateway)', region: 'Savannah Region', full: 'Damongo, Savannah' },
-  { city: 'Nalerigu & Walewale', region: 'North East Region', full: 'Nalerigu, North East' },
+  // ══════════════════════════════════════════════════════════════
+  // EASTERN REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Koforidua (New Juaben)', region: 'New Juaben, Eastern Region', full: 'Koforidua, Eastern', popular: true },
+  { city: 'Effiduase & Asokore (Koforidua)', region: 'New Juaben North, Eastern Region', full: 'Effiduase, Koforidua' },
+  { city: 'Nsawam & Adoagyiri', region: 'Nsawam Adoagyiri, Eastern Region', full: 'Nsawam, Eastern', popular: true },
+  { city: 'Suhum', region: 'Suhum Municipal, Eastern Region', full: 'Suhum, Eastern', popular: true },
+  { city: 'Asamankese', region: 'West Akim, Eastern Region', full: 'Asamankese, Eastern', popular: true },
+  { city: 'Akwatia (Diamond Town)', region: 'Denkyembour, Eastern Region', full: 'Akwatia, Eastern', popular: true },
+  { city: 'Kade', region: 'Kwaebibirem, Eastern Region', full: 'Kade, Eastern' },
+  { city: 'Akim Oda (Akyem Oda)', region: 'Birim Central, Eastern Region', full: 'Akim Oda, Eastern', popular: true },
+  { city: 'Akim Swedru & Achiase', region: 'Birim South, Eastern Region', full: 'Akim Swedru, Eastern' },
+  { city: 'Nkawkaw', region: 'Kwahu West, Eastern Region', full: 'Nkawkaw, Eastern', popular: true },
+  { city: 'Mpraeso & Abetifi', region: 'Kwahu East / South, Eastern Region', full: 'Mpraeso, Eastern' },
+  { city: 'Kwahu Tafo & Nkwatia', region: 'Kwahu East, Eastern Region', full: 'Kwahu Tafo, Eastern' },
+  { city: 'Donkorkrom & Tease', region: 'Kwahu Afram Plains, Eastern Region', full: 'Donkorkrom, Eastern' },
+  { city: 'Kyebi (Kibi)', region: 'Abuakwa South, Eastern Region', full: 'Kyebi, Eastern', popular: true },
+  { city: 'Akyem Tafo (New Tafo)', region: 'Abuakwa North, Eastern Region', full: 'New Tafo, Eastern' },
+  { city: 'Anyinam & Bunso', region: 'Atiwa East, Eastern Region', full: 'Anyinam, Eastern' },
+  { city: 'Begoro', region: 'Fanteakwa North, Eastern Region', full: 'Begoro, Eastern' },
+  { city: 'Osino', region: 'Fanteakwa South, Eastern Region', full: 'Osino, Eastern' },
+  { city: 'Somanya', region: 'Yilo Krobo, Eastern Region', full: 'Somanya, Eastern', popular: true },
+  { city: 'Odumase Krobo', region: 'Lower Manya Krobo, Eastern Region', full: 'Odumase Krobo, Eastern', popular: true },
+  { city: 'Kpong & Akuse', region: 'Lower Manya Krobo, Eastern Region', full: 'Kpong, Eastern' },
+  { city: 'Akosombo & Atimpoku', region: 'Asuogyaman, Eastern Region', full: 'Akosombo, Eastern', popular: true },
+  { city: 'Anum & Boso', region: 'Asuogyaman, Eastern Region', full: 'Anum, Eastern' },
+  { city: 'Asesewa', region: 'Upper Manya Krobo, Eastern Region', full: 'Asesewa, Eastern' },
+  { city: 'Aburi & Peduase', region: 'Akuapem South, Eastern Region', full: 'Aburi, Eastern', popular: true },
+  { city: 'Mampong & Tutu (Akuapem)', region: 'Akuapem North, Eastern Region', full: 'Mampong, Eastern' },
+  { city: 'Adukrom & Larteh', region: 'Okere, Eastern Region', full: 'Adukrom, Eastern' },
+  { city: 'Adeiso & Coaltar', region: 'Upper West Akim, Eastern Region', full: 'Adeiso, Eastern' },
 
-  // Volta & Oti Hubs
-  { city: 'Ho (Civic Centre & Barracks)', region: 'Volta Region', full: 'Ho, Volta', popular: true },
-  { city: 'Hohoe & Kpando', region: 'Volta Region', full: 'Hohoe, Volta' },
-  { city: 'Aflao & Denu (Border Hub)', region: 'Volta Region', full: 'Aflao, Volta', popular: true },
-  { city: 'Keta & Anloga', region: 'Volta Region', full: 'Keta, Volta' },
-  { city: 'Dambai & Nkwanta', region: 'Oti Region', full: 'Dambai, Oti' },
+  // ══════════════════════════════════════════════════════════════
+  // WESTERN REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Takoradi (Market Circle)', region: 'Sekondi-Takoradi Metropolitan, Western', full: 'Takoradi, Western', popular: true },
+  { city: 'Sekondi & Essikado', region: 'Sekondi-Takoradi, Western', full: 'Sekondi, Western', popular: true },
+  { city: 'Anaji & Effia Kuma', region: 'Sekondi-Takoradi, Western', full: 'Anaji, Takoradi', popular: true },
+  { city: 'Kwesimintsim & Fijai', region: 'Effia-Kwesimintsim, Western', full: 'Kwesimintsim, Takoradi' },
+  { city: 'Kojokrom', region: 'Sekondi-Takoradi, Western', full: 'Kojokrom, Western' },
+  { city: 'Tarkwa (Gold City)', region: 'Tarkwa-Nsuaem, Western', full: 'Tarkwa, Western', popular: true },
+  { city: 'Aboso & Nsuaem', region: 'Tarkwa-Nsuaem, Western', full: 'Aboso, Western' },
+  { city: 'Bogoso & Prestea', region: 'Prestea-Huni Valley, Western', full: 'Bogoso, Western', popular: true },
+  { city: 'Asankrangwa', region: 'Amenfi West, Western', full: 'Asankrangwa, Western', popular: true },
+  { city: 'Manso Amenfi', region: 'Amenfi Central, Western', full: 'Manso Amenfi, Western' },
+  { city: 'Wassa Akropong', region: 'Amenfi East, Western', full: 'Wassa Akropong, Western' },
+  { city: 'Shama', region: 'Shama District, Western', full: 'Shama, Western' },
+  { city: 'Agona Nkwanta', region: 'Ahanta West, Western', full: 'Agona Nkwanta, Western' },
+  { city: 'Dixcove & Busua', region: 'Ahanta West, Western', full: 'Dixcove, Western' },
+  { city: 'Axim', region: 'Nzema East, Western', full: 'Axim, Western', popular: true },
+  { city: 'Half Assini & Elubo', region: 'Jomoro, Western', full: 'Elubo, Western', popular: true },
+  { city: 'Nkroful', region: 'Ellembelle, Western', full: 'Nkroful, Western' },
+  { city: 'Daboase & Mpohor', region: 'Wassa East, Western', full: 'Daboase, Western' },
 
-  // Upper East & Upper West Hubs
-  { city: 'Bolgatanga Central', region: 'Upper East Region', full: 'Bolgatanga, Upper East', popular: true },
-  { city: 'Navrongo & Paga', region: 'Upper East Region', full: 'Navrongo, Upper East' },
-  { city: 'Wa Central & Campus', region: 'Upper West Region', full: 'Wa, Upper West', popular: true },
+  // ══════════════════════════════════════════════════════════════
+  // WESTERN NORTH REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Sefwi Wiawso', region: 'Sefwi Wiawso Municipal, Western North', full: 'Sefwi Wiawso, Western North', popular: true },
+  { city: 'Bibiani', region: 'Bibiani-Anhwiaso-Bekwai, Western North', full: 'Bibiani, Western North', popular: true },
+  { city: 'Sefwi Bekwai', region: 'Bibiani-Anhwiaso-Bekwai, Western North', full: 'Sefwi Bekwai, Western North' },
+  { city: 'Juaboso', region: 'Juaboso, Western North', full: 'Juaboso, Western North' },
+  { city: 'Bodi', region: 'Bodi, Western North', full: 'Bodi, Western North' },
+  { city: 'Enchi', region: 'Aowin Municipal, Western North', full: 'Enchi, Western North', popular: true },
+  { city: 'Dadieso', region: 'Suaman, Western North', full: 'Dadieso, Western North' },
+  { city: 'Essam & Debiso', region: 'Bia West / East, Western North', full: 'Essam, Western North' },
+  { city: 'Akontombra', region: 'Sefwi Akontombra, Western North', full: 'Akontombra, Western North' },
 
-  // Bono, Bono East & Ahafo Hubs
-  { city: 'Sunyani Central & Fiapre', region: 'Bono Region', full: 'Sunyani, Bono', popular: true },
-  { city: 'Techiman (Commercial Market)', region: 'Bono East Region', full: 'Techiman, Bono East', popular: true },
-  { city: 'Berekum & Dormaa', region: 'Bono Region', full: 'Berekum, Bono' },
-  { city: 'Goaso & Kenyasi', region: 'Ahafo Region', full: 'Goaso, Ahafo' },
+  // ══════════════════════════════════════════════════════════════
+  // VOLTA REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Ho (Civic Centre & Barracks)', region: 'Ho Municipal, Volta Region', full: 'Ho, Volta', popular: true },
+  { city: 'Hohoe', region: 'Hohoe Municipal, Volta Region', full: 'Hohoe, Volta', popular: true },
+  { city: 'Kpando', region: 'Kpando Municipal, Volta Region', full: 'Kpando, Volta', popular: true },
+  { city: 'Aflao (Border City)', region: 'Ketu South, Volta Region', full: 'Aflao, Volta', popular: true },
+  { city: 'Denu & Tokor', region: 'Ketu South, Volta Region', full: 'Denu, Volta' },
+  { city: 'Dzodze & Penyi', region: 'Ketu North, Volta Region', full: 'Dzodze, Volta' },
+  { city: 'Keta', region: 'Keta Municipal, Volta Region', full: 'Keta, Volta', popular: true },
+  { city: 'Anloga & Tegbi', region: 'Anloga District, Volta Region', full: 'Anloga, Volta' },
+  { city: 'Akatsi', region: 'Akatsi South, Volta Region', full: 'Akatsi, Volta', popular: true },
+  { city: 'Sogakope', region: 'South Tongu, Volta Region', full: 'Sogakope, Volta', popular: true },
+  { city: 'Adidome', region: 'Central Tongu, Volta Region', full: 'Adidome, Volta' },
+  { city: 'Battor & Mepe', region: 'North Tongu, Volta Region', full: 'Battor, Volta' },
+  { city: 'Juapong', region: 'North Tongu, Volta Region', full: 'Juapong, Volta' },
+  { city: 'Peki & Tsito', region: 'South Dayi, Volta Region', full: 'Peki, Volta' },
+  { city: 'Kpeve', region: 'South Dayi, Volta Region', full: 'Kpeve, Volta' },
+  { city: 'Anfoega & Vakpo', region: 'North Dayi, Volta Region', full: 'Anfoega, Volta' },
+  { city: 'Golokwati & Have', region: 'Afadzato South, Volta Region', full: 'Golokwati, Volta' },
+  { city: 'Amedzofe', region: 'Ho Municipal, Volta Region', full: 'Amedzofe, Volta' },
+  { city: 'Agbozume & Wheta', region: 'Ketu South, Volta Region', full: 'Agbozume, Volta' },
+
+  // ══════════════════════════════════════════════════════════════
+  // OTI REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Dambai (Regional Capital)', region: 'Krachi East, Oti Region', full: 'Dambai, Oti', popular: true },
+  { city: 'Nkwanta', region: 'Nkwanta South, Oti Region', full: 'Nkwanta, Oti', popular: true },
+  { city: 'Kpassa', region: 'Nkwanta North, Oti Region', full: 'Kpassa, Oti' },
+  { city: 'Jasikan', region: 'Jasikan District, Oti Region', full: 'Jasikan, Oti', popular: true },
+  { city: 'Kadjebi', region: 'Kadjebi District, Oti Region', full: 'Kadjebi, Oti' },
+  { city: 'Worawora', region: 'Biakoye, Oti Region', full: 'Worawora, Oti' },
+  { city: 'Kete Krachi', region: 'Krachi West, Oti Region', full: 'Kete Krachi, Oti' },
+  { city: 'Chinderi', region: 'Krachi Nchumuru, Oti Region', full: 'Chinderi, Oti' },
+
+  // ══════════════════════════════════════════════════════════════
+  // NORTHERN REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Tamale Central', region: 'Tamale Metropolitan, Northern', full: 'Tamale Central, Northern', popular: true },
+  { city: 'Lamashegu & Aboabo', region: 'Tamale, Northern', full: 'Lamashegu, Tamale', popular: true },
+  { city: 'Sagnarigu', region: 'Sagnarigu Municipal, Northern', full: 'Sagnarigu, Tamale', popular: true },
+  { city: 'Nyankpala', region: 'Tolon District, Northern', full: 'Nyankpala, Northern' },
+  { city: 'Yendi (Kingdom Capital)', region: 'Yendi Municipal, Northern', full: 'Yendi, Northern', popular: true },
+  { city: 'Savelugu', region: 'Savelugu Municipal, Northern', full: 'Savelugu, Northern', popular: true },
+  { city: 'Bimbilla', region: 'Nanumba North, Northern', full: 'Bimbilla, Northern', popular: true },
+  { city: 'Gushegu', region: 'Gushegu Municipal, Northern', full: 'Gushegu, Northern' },
+  { city: 'Karaga', region: 'Karaga District, Northern', full: 'Karaga, Northern' },
+  { city: 'Saboba', region: 'Saboba District, Northern', full: 'Saboba, Northern' },
+  { city: 'Tolon & Kumbungu', region: 'Tolon / Kumbungu, Northern', full: 'Kumbungu, Northern' },
+  { city: 'Nanton', region: 'Nanton District, Northern', full: 'Nanton, Northern' },
+  { city: 'Zabzugu & Tatale', region: 'Zabzugu, Northern', full: 'Zabzugu, Northern' },
+  { city: 'Wulensi', region: 'Nanumba South, Northern', full: 'Wulensi, Northern' },
+
+  // ══════════════════════════════════════════════════════════════
+  // SAVANNAH REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Damongo', region: 'West Gonja, Savannah Region', full: 'Damongo, Savannah', popular: true },
+  { city: 'Larabanga (Historic Mosque)', region: 'West Gonja, Savannah Region', full: 'Larabanga, Savannah' },
+  { city: 'Bole', region: 'Bole District, Savannah Region', full: 'Bole, Savannah', popular: true },
+  { city: 'Sawla & Tuna', region: 'Sawla-Tuna-Kalba, Savannah Region', full: 'Sawla, Savannah' },
+  { city: 'Salaga (Historic Town)', region: 'East Gonja, Savannah Region', full: 'Salaga, Savannah', popular: true },
+  { city: 'Buipe (Inland Port)', region: 'Central Gonja, Savannah Region', full: 'Buipe, Savannah', popular: true },
+  { city: 'Daboya', region: 'North Gonja, Savannah Region', full: 'Daboya, Savannah' },
+  { city: 'Kpembe', region: 'East Gonja, Savannah Region', full: 'Kpembe, Savannah' },
+
+  // ══════════════════════════════════════════════════════════════
+  // NORTH EAST REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Nalerigu', region: 'East Mamprusi, North East', full: 'Nalerigu, North East', popular: true },
+  { city: 'Gambaga', region: 'East Mamprusi, North East', full: 'Gambaga, North East', popular: true },
+  { city: 'Walewale', region: 'West Mamprusi, North East', full: 'Walewale, North East', popular: true },
+  { city: 'Chereponi', region: 'Chereponi District, North East', full: 'Chereponi, North East' },
+  { city: 'Bunkpurugu & Nakpanduri', region: 'Bunkpurugu-Nakpanduri, North East', full: 'Bunkpurugu, North East' },
+  { city: 'Yunyoo', region: 'Yunyoo-Nasuan, North East', full: 'Yunyoo, North East' },
+
+  // ══════════════════════════════════════════════════════════════
+  // UPPER EAST REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Bolgatanga Central', region: 'Bolgatanga Municipal, Upper East', full: 'Bolgatanga, Upper East', popular: true },
+  { city: 'Zuarungu', region: 'Bolgatanga East, Upper East', full: 'Zuarungu, Upper East' },
+  { city: 'Navrongo', region: 'Kassena-Nankana Municipal, Upper East', full: 'Navrongo, Upper East', popular: true },
+  { city: 'Paga (Crocodile Pond)', region: 'Kassena-Nankana West, Upper East', full: 'Paga, Upper East', popular: true },
+  { city: 'Bawku Central', region: 'Bawku Municipal, Upper East', full: 'Bawku, Upper East', popular: true },
+  { city: 'Zebilla', region: 'Bawku West, Upper East', full: 'Zebilla, Upper East', popular: true },
+  { city: 'Sandema', region: 'Builsa North, Upper East', full: 'Sandema, Upper East' },
+  { city: 'Fumbisi', region: 'Builsa South, Upper East', full: 'Fumbisi, Upper East' },
+  { city: 'Bongo', region: 'Bongo District, Upper East', full: 'Bongo, Upper East' },
+  { city: 'Tongo (Whispering Rocks)', region: 'Talensi, Upper East', full: 'Tongo, Upper East' },
+  { city: 'Garu & Tempane', region: 'Garu / Tempane, Upper East', full: 'Garu, Upper East' },
+  { city: 'Pusiga', region: 'Pusiga District, Upper East', full: 'Pusiga, Upper East' },
+
+  // ══════════════════════════════════════════════════════════════
+  // UPPER WEST REGION
+  // ══════════════════════════════════════════════════════════════
+  { city: 'Wa Central', region: 'Wa Municipal, Upper West', full: 'Wa, Upper West', popular: true },
+  { city: 'Bamahu (UDS Campus)', region: 'Wa Municipal, Upper West', full: 'Bamahu, Wa' },
+  { city: 'Nandom', region: 'Nandom Municipal, Upper West', full: 'Nandom, Upper West', popular: true },
+  { city: 'Lawra', region: 'Lawra Municipal, Upper West', full: 'Lawra, Upper West', popular: true },
+  { city: 'Jirapa', region: 'Jirapa Municipal, Upper West', full: 'Jirapa, Upper West', popular: true },
+  { city: 'Tumu', region: 'Sissala East, Upper West', full: 'Tumu, Upper West', popular: true },
+  { city: 'Gwollu', region: 'Sissala West, Upper West', full: 'Gwollu, Upper West' },
+  { city: 'Nadowli & Kaleo', region: 'Nadowli-Kaleo, Upper West', full: 'Nadowli, Upper West' },
+  { city: 'Lambussie', region: 'Lambussie Karni, Upper West', full: 'Lambussie, Upper West' },
+  { city: 'Wechiau', region: 'Wa West, Upper West', full: 'Wechiau, Upper West' },
+  { city: 'Funsi', region: 'Wa East, Upper West', full: 'Funsi, Upper West' },
 ];
 
 export const GHANA_CITIES = POPULAR_GHANA_LOCATIONS.map((loc) => loc.full);
@@ -741,16 +1008,9 @@ function RegisterContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               {/* City / Hub Autocomplete (Facebook Location style) */}
               <div className="space-y-1.5 relative" ref={locationRef}>
-                <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <MapPin className="w-3.5 h-3.5 text-[var(--cyan)]" />
-                    <span>Primary Operating Location</span>
-                  </span>
-                  {selectedCity && (
-                    <span className="text-[10px] font-semibold text-[var(--cyan)] bg-[var(--cyan)]/10 px-2 py-0.5 rounded-full border border-[var(--cyan)]/25 truncate max-w-[130px]">
-                      {selectedCity}
-                    </span>
-                  )}
+                <label className="text-xs font-bold text-[var(--tx)] flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[var(--cyan)]" />
+                  <span>Location</span>
                 </label>
 
                 <div className="relative flex items-center">
