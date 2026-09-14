@@ -873,7 +873,7 @@ function RegisterContent() {
                 </div>
 
                 <div className="text-[11px] text-[var(--tx-3)] flex items-center justify-between px-0.5">
-                  <span>Search across 1,900+ standalone Ghanaian trades, or choose below.</span>
+                  <span>Search across 3,500+ standalone Ghanaian trades, or choose below.</span>
                   {tradeSearchQuery && (
                     <button
                       type="button"
