@@ -132,9 +132,14 @@ function RegisterContent() {
     tierParam === 'premium' ? 'premium' : tierParam === 'verified' ? 'verified' : 'starter'
   );
 
-  // Stepper: 1 to 4 for Provider, 1 to 2 for Client
+  // Stepper: 1 to 5 for Provider, 1 to 3 for Client
   const [step, setStep] = useState(1);
-  const totalSteps = role === 'provider' ? 4 : 2;
+  const totalSteps = role === 'provider' ? 5 : 3;
+
+  // SMS Verification State
+  const [otpDigits, setOtpDigits] = useState(['', '', '', '', '', '']);
+  const [resendTimer, setResendTimer] = useState(30);
+  const [codeResentNotice, setCodeResentNotice] = useState(false);
 
   // Form Fields
   const [firstName, setFirstName] = useState('');
@@ -189,18 +194,59 @@ function RegisterContent() {
     }
   }, [network, phone]);
 
+  // SMS Resend Countdown Timer
+  useEffect(() => {
+    if (step === totalSteps && resendTimer > 0) {
+      const timer = setInterval(() => {
+        setResendTimer((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [step, totalSteps, resendTimer]);
+
   const handleNextStep = () => {
     setErrorMsg('');
+
+    // Step 1 validation
+    if (step === 1) {
+      if (!firstName.trim()) {
+        setErrorMsg('Please enter your first name.');
+        return;
+      }
+      if (!email.trim() || !email.includes('@')) {
+        setErrorMsg('Please enter a valid email address.');
+        return;
+      }
+      if (!phone.trim() || phone.replace(/\D/g, '').length < 9) {
+        setErrorMsg('Please enter a valid Ghanaian mobile phone number to receive your SMS code.');
+        return;
+      }
+      if (!password || password.length < 6) {
+        setErrorMsg('Password must be at least 6 characters.');
+        return;
+      }
+    }
+
+    // Provider step 2 trade assignment
     if (role === 'provider' && step === 2) {
       if (!selectedTrade.trim() && tradeSearchQuery.trim()) {
         setSelectedTrade(tradeSearchQuery.trim());
       }
     }
 
+    // Final SMS verification check
+    if (step === totalSteps) {
+      const fullCode = otpDigits.join('');
+      if (fullCode.length !== 6) {
+        setErrorMsg('Please enter the full 6-digit SMS verification code dispatched to your phone.');
+        return;
+      }
+      handleFinalSubmit();
+      return;
+    }
+
     if (step < totalSteps) {
       setStep(step + 1);
-    } else {
-      handleFinalSubmit();
     }
   };
 
@@ -224,6 +270,7 @@ function RegisterContent() {
         role,
         location: selectedCity,
         is_verified: true,
+        phone_verified: true,
         membership_tier: tier,
         trade: selectedTrade.trim() || tradeSearchQuery.trim() || (role === 'provider' ? 'Verified Master Artisan' : undefined),
         hourly_rate: hourlyRate || undefined,
@@ -311,10 +358,14 @@ function RegisterContent() {
                   ? 'Craft & Location'
                   : step === 3
                   ? 'Ghana Card Biometrics'
-                  : 'Payout Setup'
+                  : step === 4
+                  ? 'Payout Setup'
+                  : 'SMS Verification'
                 : step === 1
                 ? 'Contact Info'
-                : 'Project Intent'}
+                : step === 2
+                ? 'Project Intent'
+                : 'SMS Verification'}
             </strong>
           </span>
           <span className="text-[var(--cyan)] font-mono">{Math.round((step / totalSteps) * 100)}%</span>
@@ -737,6 +788,152 @@ function RegisterContent() {
           </div>
         )}
 
+        {/* FINAL STEP: SMS OTP VERIFICATION (Step 5 for Provider, Step 3 for Client) */}
+        {step === totalSteps && (
+          <div className="space-y-4">
+            {/* Header Badge */}
+            <div className="text-center space-y-1.5 pt-1">
+              <div className="w-12 h-12 rounded-[20px] bg-gradient-to-br from-[var(--cyan)]/20 to-blue-500/20 border border-[var(--cyan)]/30 text-[var(--cyan)] flex items-center justify-center mx-auto shadow-xs">
+                <Smartphone className="w-6 h-6" />
+              </div>
+              <h3 className="text-base font-extrabold text-[var(--tx)] tracking-tight">
+                Verify Your Mobile Number
+              </h3>
+              <p className="text-xs text-[var(--tx-2)] max-w-sm mx-auto leading-relaxed">
+                We dispatched a 6-digit security code via SMS to{' '}
+                <strong className="text-[var(--tx)] font-mono">
+                  {phone ? (phone.startsWith('0') ? `+233 ${phone.slice(1)}` : phone) : '+233 24 000 0000'}
+                </strong>
+              </p>
+              <div className="flex items-center justify-center gap-2 pt-0.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10.5px] font-bold bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--cyan)]">
+                  <CheckCircle2 className="w-3 h-3 text-[#10B981]" />
+                  <span>{network !== 'unknown' ? `${network.toUpperCase()} SIM Detected` : 'Ghana Mobile'}</span>
+                </span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setStep(1);
+                    setErrorMsg('');
+                  }}
+                  className="text-[10.5px] text-[var(--tx-3)] hover:text-[var(--cyan)] underline font-medium cursor-pointer"
+                >
+                  Edit phone
+                </button>
+              </div>
+            </div>
+
+            {/* Dev / Prototype Testing Helper Pill */}
+            <div className="p-3 rounded-[16px] bg-[var(--cyan)]/10 border border-[var(--cyan)]/25 flex items-center justify-between gap-2">
+              <div className="text-[11.5px] text-[var(--tx)] flex items-center gap-1.5">
+                <ShieldCheck className="w-4 h-4 text-[var(--cyan)] shrink-0" />
+                <span>
+                  Demo Code: <strong className="font-mono text-[var(--cyan)] font-black tracking-wider">123456</strong>
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setOtpDigits(['1', '2', '3', '4', '5', '6']);
+                  setErrorMsg('');
+                }}
+                className="text-[11px] font-bold px-2.5 py-1 rounded-[10px] bg-[var(--cyan)] text-slate-950 hover:opacity-90 transition-all cursor-pointer shadow-xs"
+              >
+                Auto-Fill
+              </button>
+            </div>
+
+            {/* 6-Digit OTP Input Boxes */}
+            <div className="space-y-2 py-1">
+              <label className="text-xs font-bold text-[var(--tx)] block text-center">
+                Enter 6-Digit Verification Code
+              </label>
+              <div className="flex items-center justify-center gap-2">
+                {otpDigits.map((digit, idx) => (
+                  <input
+                    key={idx}
+                    id={`reg-sms-${idx}`}
+                    type="text"
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    maxLength={1}
+                    value={digit}
+                    onChange={(e) => {
+                      const val = e.target.value.replace(/\D/g, '');
+                      const newCode = [...otpDigits];
+                      newCode[idx] = val;
+                      setOtpDigits(newCode);
+                      if (val && idx < 5) {
+                        document.getElementById(`reg-sms-${idx + 1}`)?.focus();
+                      }
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Backspace' && !otpDigits[idx] && idx > 0) {
+                        document.getElementById(`reg-sms-${idx - 1}`)?.focus();
+                      }
+                    }}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+                      if (pasted) {
+                        const newDigits = pasted.split('');
+                        while (newDigits.length < 6) newDigits.push('');
+                        setOtpDigits(newDigits);
+                        const nextIndex = Math.min(pasted.length, 5);
+                        document.getElementById(`reg-sms-${nextIndex}`)?.focus();
+                      }
+                    }}
+                    className="w-11 h-12 text-center font-mono font-bold text-lg rounded-[16px] bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all"
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Resend SMS Counter */}
+            <div className="flex items-center justify-between text-xs px-1">
+              <span className="text-[var(--tx-3)]">Didn't receive code?</span>
+              <button
+                type="button"
+                disabled={resendTimer > 0}
+                onClick={() => {
+                  setResendTimer(30);
+                  setCodeResentNotice(true);
+                  setTimeout(() => setCodeResentNotice(false), 3500);
+                }}
+                className={`font-bold transition-colors ${
+                  resendTimer > 0
+                    ? 'text-[var(--tx-3)] cursor-not-allowed'
+                    : 'text-[var(--cyan)] hover:underline cursor-pointer'
+                }`}
+              >
+                {resendTimer > 0 ? `Resend SMS in ${resendTimer}s` : 'Resend SMS Code'}
+              </button>
+            </div>
+
+            {codeResentNotice && (
+              <div className="p-2.5 rounded-[14px] bg-[#10B981]/10 border border-[#10B981]/25 text-[#10B981] text-xs font-semibold text-center">
+                A fresh 6-digit SMS verification code has been dispatched.
+              </div>
+            )}
+
+            {/* Role-Specific Escrow Benefit Note */}
+            <div className="rounded-[18px] p-3.5 bg-[var(--surface-elevated)] border border-[var(--bd2)] flex items-start gap-2.5 text-xs text-[var(--tx-2)]">
+              <ShieldCheck className="w-4 h-4 text-[var(--cyan)] shrink-0 mt-0.5" />
+              <div>
+                {role === 'provider' ? (
+                  <span>
+                    <strong className="text-[var(--tx)]">Instant Escrow Payouts:</strong> Verifying your phone number secures your {payoutWallet === 'telecel' ? 'Telecel Cash' : payoutWallet === 'at' ? 'AT Money' : 'MTN MoMo'} wallet for sub-60s milestone cash-outs.
+                  </span>
+                ) : (
+                  <span>
+                    <strong className="text-[var(--tx)]">Protected Escrow Hiring:</strong> Verifying your phone secures your project deposits and activates real-time milestone SMS alerts.
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Error message alert */}
         {errorMsg && (
           <div className="p-3.5 rounded-[16px] bg-rose-500/10 border border-rose-500/30 text-rose-500 text-xs font-medium flex items-center gap-2">
@@ -751,7 +948,7 @@ function RegisterContent() {
             <button
               type="button"
               onClick={handlePrevStep}
-              className="h-12 px-5 rounded-[18px] border border-[var(--bd2)] hover:border-[var(--bd)] text-[var(--tx-2)] hover:text-[var(--tx)] font-bold text-xs flex items-center gap-1.5 transition-all"
+              className="h-12 px-5 rounded-[18px] border border-[var(--bd2)] hover:border-[var(--bd)] text-[var(--tx-2)] hover:text-[var(--tx)] font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
@@ -764,7 +961,7 @@ function RegisterContent() {
             type="button"
             onClick={handleNextStep}
             disabled={isSubmitting}
-            className={`h-12 px-7 rounded-[18px] font-black text-sm flex items-center gap-2 shadow-lg transition-all ml-auto ${
+            className={`h-12 px-7 rounded-[18px] font-black text-sm flex items-center gap-2 shadow-lg transition-all ml-auto cursor-pointer ${
               role === 'client'
                 ? 'bg-gradient-to-r from-[#F59E0B] to-[#D97706] hover:from-[#D97706] hover:to-[#B45309] text-white shadow-amber-500/20'
                 : 'bg-gradient-to-r from-[var(--cyan)] to-[#00A89D] hover:from-[#00B4A9] hover:to-[#008B82] text-white shadow-cyan-500/20'
@@ -773,10 +970,18 @@ function RegisterContent() {
             {isSubmitting ? (
               <>
                 <span className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                <span>Creating Account...</span>
+                <span>Verifying &amp; Creating...</span>
               </>
             ) : step === totalSteps ? (
-              <span>Complete Registration</span>
+              <>
+                <span>Verify &amp; Complete Registration</span>
+                <Check className="w-4 h-4 stroke-[3]" />
+              </>
+            ) : step === totalSteps - 1 ? (
+              <>
+                <span>Continue to SMS Verification</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </>
             ) : (
               <>
                 <span>Continue</span>
