@@ -450,9 +450,7 @@ function RegisterContent() {
       results = GHANA_TRADES.slice(0, 40);
     } else {
       results = GHANA_TRADES.filter(
-        (t) =>
-          t.name.toLowerCase().includes(q) ||
-          t.category.toLowerCase().includes(q)
+        (t) => t.name.toLowerCase().includes(q)
       ).slice(0, 50);
     }
 
