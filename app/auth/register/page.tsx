@@ -25,78 +25,8 @@ import {
   FileText,
   AlertCircle,
 } from 'lucide-react';
-
-export interface GhanaTradeOption {
-  id: string;
-  name: string;
-  category: string;
-  defaultRate: number;
-  iconName: string;
-}
-
-const GHANA_TRADES: GhanaTradeOption[] = [
-  // Construction & Finishing
-  { id: 'masonry', name: 'Masonry, Bricklaying & Concrete Works', category: 'Construction', defaultRate: 85, iconName: 'Building2' },
-  { id: 'pop', name: 'POP Ceilings & Decorative Plastering', category: 'Finishing', defaultRate: 85, iconName: 'Paintbrush' },
-  { id: 'tiling', name: 'Ceramic, Porcelain & Marble Tiling', category: 'Finishing', defaultRate: 80, iconName: 'HardHat' },
-  { id: 'painting', name: 'Interior & Exterior Painting & Stucco', category: 'Finishing', defaultRate: 70, iconName: 'Paintbrush' },
-  { id: 'carpentry', name: 'Bespoke Joinery & Cabinetry (Carpentry)', category: 'Woodwork', defaultRate: 80, iconName: 'Hammer' },
-  { id: 'roofing', name: 'Roofing Truss, Slate & Sheet Installation', category: 'Construction', defaultRate: 90, iconName: 'HardHat' },
-  { id: 'welding', name: 'Metal Fabrication, Gates & Burglar Proofing', category: 'Metalwork', defaultRate: 85, iconName: 'Flame' },
-  { id: 'aluminum', name: 'Aluminum Glazing & Sliding Windows/Doors', category: 'Finishing', defaultRate: 75, iconName: 'Wrench' },
-  { id: 'biodigester', name: 'Bio-Digester & Septic Tank Construction', category: 'Construction', defaultRate: 95, iconName: 'Building2' },
-  { id: 'flooring', name: 'T&G & Hardwood Parquet Flooring', category: 'Woodwork', defaultRate: 75, iconName: 'Layers' },
-  { id: 'scaffolding', name: 'Scaffolding & Rigging Works', category: 'Construction', defaultRate: 85, iconName: 'HardHat' },
-
-  // Electrical & Security
-  { id: 'electrical', name: 'Commercial & 3-Phase Domestic Electrical Wiring', category: 'Electrical', defaultRate: 90, iconName: 'Zap' },
-  { id: 'solar', name: 'Solar PV & Inverter Systems Installation', category: 'Electrical', defaultRate: 95, iconName: 'Zap' },
-  { id: 'cctv', name: 'CCTV, Electric Fence & Smart Home Security', category: 'Security', defaultRate: 85, iconName: 'ShieldCheck' },
-  { id: 'dstv', name: 'DSTV, Satellite Dish & TV Antenna Installation', category: 'Electronics', defaultRate: 65, iconName: 'Tv' },
-  { id: 'generator', name: 'Generator Maintenance & Plant Mechanics', category: 'Electrical', defaultRate: 95, iconName: 'Zap' },
-  { id: 'hvac', name: 'Air Conditioning (HVAC) & Commercial Refrigeration', category: 'Mechanical', defaultRate: 80, iconName: 'Wind' },
-
-  // Plumbing
-  { id: 'plumbing', name: 'Domestic & Industrial Piping & Plumbing', category: 'Plumbing', defaultRate: 75, iconName: 'Wrench' },
-  { id: 'borehole', name: 'Borehole Drilling & Submersible Pump Mechanics', category: 'Plumbing', defaultRate: 110, iconName: 'Wrench' },
-  { id: 'water-tank', name: 'Water Tank & Overhead Booster Pump Systems', category: 'Plumbing', defaultRate: 70, iconName: 'Wrench' },
-
-  // Automotive
-  { id: 'auto-mechanic', name: 'Automotive Engine & Mechanical Diagnostics', category: 'Automotive', defaultRate: 85, iconName: 'Car' },
-  { id: 'auto-electrical', name: 'Automotive Electrical & ECU Programming', category: 'Automotive', defaultRate: 90, iconName: 'Car' },
-  { id: 'auto-spray', name: 'Auto Spraying, Body Works & Panel Beating', category: 'Automotive', defaultRate: 80, iconName: 'Car' },
-  { id: 'vulcanizing', name: 'Vulcanizing & Precision Wheel Alignment', category: 'Automotive', defaultRate: 50, iconName: 'Car' },
-
-  // Digital & Technology
-  { id: 'software', name: 'Full-Stack Web & Mobile App Development', category: 'Tech', defaultRate: 115, iconName: 'Laptop' },
-  { id: 'uiux', name: 'UI/UX Product Design & Brand Identity', category: 'Tech', defaultRate: 95, iconName: 'Palette' },
-  { id: 'graphic-design', name: 'Graphic Design, Signage & Banner Printing', category: 'Creative', defaultRate: 75, iconName: 'Palette' },
-  { id: 'it-support', name: 'Network Engineering & Computer Hardware Repair', category: 'Tech', defaultRate: 80, iconName: 'Cpu' },
-
-  // Creative, Fashion & Lifestyle
-  { id: 'couture', name: 'Haute Couture, Kente & Bespoke Fashion', category: 'Fashion', defaultRate: 95, iconName: 'Scissors' },
-  { id: 'tailoring', name: 'Tailoring, Dressmaking & Suit Styling', category: 'Fashion', defaultRate: 75, iconName: 'Scissors' },
-  { id: 'hair-beauty', name: 'Bridal Hair Styling, Braiding & Barbering', category: 'Beauty', defaultRate: 70, iconName: 'Scissors' },
-  { id: 'makeup', name: 'Bridal Makeup & Professional Gele Artistry', category: 'Beauty', defaultRate: 80, iconName: 'Sparkles' },
-  { id: 'photography', name: 'Event Photography, Drone & Video Production', category: 'Media', defaultRate: 100, iconName: 'Camera' },
-  { id: 'sound-dj', name: 'Sound Engineering & Professional Event DJ', category: 'Events', defaultRate: 90, iconName: 'Music' },
-
-  // Services, Catering & Logistics
-  { id: 'catering', name: 'Commercial Catering & Event Culinary Services', category: 'Events', defaultRate: 85, iconName: 'Utensils' },
-  { id: 'logistics', name: 'Cargo Haulage & Inter-City Moving Services', category: 'Logistics', defaultRate: 100, iconName: 'Truck' },
-  { id: 'cleaning', name: 'Industrial Cleaning & Fumigation Services', category: 'Services', defaultRate: 70, iconName: 'Sparkles' },
-  { id: 'gardening', name: 'Landscaping, Turf & Garden Architecture', category: 'Outdoors', defaultRate: 65, iconName: 'Paintbrush' },
-  { id: 'barbering', name: 'Barbering & Male Grooming Services', category: 'Beauty', defaultRate: 60, iconName: 'Scissors' },
-  { id: 'upholstery', name: 'Auto Upholstery & Furniture Re-covering', category: 'Woodwork', defaultRate: 75, iconName: 'Scissors' },
-  { id: 'roofing-sheets', name: 'Aluminium Roofing Sheets & Gutter Installation', category: 'Construction', defaultRate: 85, iconName: 'HardHat' },
-  { id: 'wallpaper', name: 'Wallpaper & 3D Wall Panel Installation', category: 'Finishing', defaultRate: 70, iconName: 'Layers' },
-  { id: 'events-decor', name: 'Event Decoration, Canopy & Stage Lighting', category: 'Events', defaultRate: 85, iconName: 'Sparkles' },
-  { id: 'laundry', name: 'Professional Laundry & Dry Cleaning Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
-  { id: 'motorcycle-mechanic', name: 'Motorcycle & Tricycle (Pragya / Aboboyaa) Mechanic', category: 'Automotive', defaultRate: 65, iconName: 'Wrench' },
-  { id: 'shoemaking', name: 'Shoe Making, Cobbling & Leather Craft', category: 'Fashion', defaultRate: 70, iconName: 'Scissors' },
-  { id: 'beadmaking', name: 'Bead Making, Traditional Regalia & Adornments', category: 'Fashion', defaultRate: 65, iconName: 'Palette' },
-  { id: 'housekeeping', name: 'Domestic Housekeeping, Maid & Nanny Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
-];
+import { GHANA_TRADES, GhanaTradeOption } from '@/lib/ghanaTrades';
+export type { GhanaTradeOption };
 
 
 
@@ -514,16 +444,27 @@ function RegisterContent() {
 
   // Real-time filtered trades based on user typing in search bar
   const filteredTrades = useMemo(() => {
-    if (!tradeSearchQuery.trim()) {
-      return GHANA_TRADES;
-    }
     const q = tradeSearchQuery.toLowerCase().trim();
-    return GHANA_TRADES.filter(
-      (t) =>
-        t.name.toLowerCase().includes(q) ||
-        t.category.toLowerCase().includes(q)
-    );
-  }, [tradeSearchQuery]);
+    let results: GhanaTradeOption[];
+    if (!q) {
+      results = GHANA_TRADES.slice(0, 40);
+    } else {
+      results = GHANA_TRADES.filter(
+        (t) =>
+          t.name.toLowerCase().includes(q) ||
+          t.category.toLowerCase().includes(q)
+      ).slice(0, 50);
+    }
+
+    // Keep selected trade visible if not already in results
+    if (selectedTrade && !results.some((t) => t.name.toLowerCase() === selectedTrade.toLowerCase())) {
+      const found = GHANA_TRADES.find((t) => t.name.toLowerCase() === selectedTrade.toLowerCase());
+      if (found) {
+        return [found, ...results];
+      }
+    }
+    return results;
+  }, [tradeSearchQuery, selectedTrade]);
 
   // Real-time filtered locations (Facebook Location Autocomplete style)
   const filteredLocations = useMemo(() => {
@@ -934,7 +875,7 @@ function RegisterContent() {
                 </div>
 
                 <div className="text-[11px] text-[var(--tx-3)] flex items-center justify-between px-0.5">
-                  <span>Type any trade above, or choose from our verified Ghanaian directory below.</span>
+                  <span>Search across 1,900+ standalone Ghanaian trades, or choose below.</span>
                   {tradeSearchQuery && (
                     <button
                       type="button"
