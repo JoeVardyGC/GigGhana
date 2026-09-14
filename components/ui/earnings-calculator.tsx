@@ -2,18 +2,18 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calculator, ArrowRight, Sparkles, TrendingUp, Laptop, Palette, Wrench, Utensils, Stethoscope, GraduationCap, Camera } from 'lucide-react';
+import { Calculator, ArrowRight, Sparkles, TrendingUp } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const professions = [
-  { name: 'Full-Stack Developer', icon: Laptop, hourly: 95, category: 'Tech' },
-  { name: 'Graphic / UI Designer', icon: Palette, hourly: 65, category: 'Creative' },
-  { name: 'Electrician / Plumber', icon: Wrench, hourly: 55, category: 'Trades' },
-  { name: 'Private Chef / Caterer', icon: Utensils, hourly: 70, category: 'Hospitality' },
-  { name: 'Home Care Nurse', icon: Stethoscope, hourly: 60, category: 'Health' },
-  { name: 'Math & Science Tutor', icon: GraduationCap, hourly: 45, category: 'Education' },
-  { name: 'Photographer / Videographer', icon: Camera, hourly: 80, category: 'Creative' },
-  { name: 'Digital Marketer', icon: TrendingUp, hourly: 60, category: 'Tech' },
+  { name: 'Full-Stack Developer', icon: '💻', hourly: 95, category: 'Tech' },
+  { name: 'Graphic / UI Designer', icon: '🎨', hourly: 65, category: 'Creative' },
+  { name: 'Electrician / Plumber', icon: '🔧', hourly: 55, category: 'Trades' },
+  { name: 'Private Chef / Caterer', icon: '🍽️', hourly: 70, category: 'Hospitality' },
+  { name: 'Home Care Nurse', icon: '🏥', hourly: 60, category: 'Health' },
+  { name: 'Math & Science Tutor', icon: '📚', hourly: 45, category: 'Education' },
+  { name: 'Photographer / Videographer', icon: '📷', hourly: 80, category: 'Creative' },
+  { name: 'Digital Marketer', icon: '📈', hourly: 60, category: 'Tech' },
 ];
 
 export function EarningsCalculator() {
@@ -78,9 +78,7 @@ export function EarningsCalculator() {
                         : 'bg-white/[0.03] border-white/5 text-white/60 hover:bg-white/[0.06] hover:text-white'
                     }`}
                   >
-                    <span className="w-8 h-8 rounded-xl bg-white/10 flex items-center justify-center mb-1.5 text-[var(--cyan)]">
-                      <p.icon className="w-4 h-4" />
-                    </span>
+                    <span className="text-xl mb-1">{p.icon}</span>
                     <span className="text-xs font-bold leading-tight line-clamp-1">{p.name}</span>
                     <span className="text-[10px] text-white/40 mt-1">₵{p.hourly}/hr avg</span>
                   </button>

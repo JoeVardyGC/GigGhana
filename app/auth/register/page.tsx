@@ -119,18 +119,6 @@ const GHANA_TRADES: GhanaTradeOption[] = [
   { id: 'housekeeping', name: 'Domestic Housekeeping, Maid & Nanny Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
 ];
 
-const TRADE_CATEGORIES = [
-  'All',
-  'Construction',
-  'Finishing & Woodwork',
-  'Electrical & Solar',
-  'Plumbing',
-  'Automotive',
-  'Tech & Media',
-  'Fashion & Beauty',
-  'Services & Events',
-];
-
 function getTradeIcon(iconName: string) {
   const iconProps = { className: 'w-4 h-4 text-[var(--cyan)] shrink-0' };
   switch (iconName) {
@@ -232,7 +220,6 @@ function RegisterContent() {
   const [selectedTrade, setSelectedTrade] = useState('');
   const [tradeSearchQuery, setTradeSearchQuery] = useState('');
   const [selectedCity, setSelectedCity] = useState(GHANA_CITIES[0]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
   const [hourlyRate, setHourlyRate] = useState<string>('');
   const [ghanaCardPin, setGhanaCardPin] = useState('');
   const [isGhanaCardValid, setIsGhanaCardValid] = useState(false);
@@ -241,27 +228,28 @@ function RegisterContent() {
   const [payoutWallet, setPayoutWallet] = useState<'mtn' | 'telecel' | 'at'>('mtn');
   const [walletPhone, setWalletPhone] = useState('');
 
-  // Real-time filtered trades based on category and search query
+  const [selectedTradeCategory, setSelectedTradeCategory] = useState('All');
+
+  const TRADE_CATEGORIES = [
+    'All',
+    'Construction',
+    'Finishing',
+    'Woodwork',
+    'Metalwork',
+    'Electrical',
+    'Plumbing',
+    'Automotive',
+    'Tech',
+    'Fashion',
+    'Beauty',
+    'Services',
+  ];
+
+  // Real-time filtered trades based on user typing in search bar and category filter
   const filteredTrades = useMemo(() => {
     let list = GHANA_TRADES;
-    if (selectedCategory !== 'All') {
-      if (selectedCategory === 'Construction') {
-        list = list.filter((t) => t.category === 'Construction');
-      } else if (selectedCategory === 'Finishing & Woodwork') {
-        list = list.filter((t) => t.category === 'Finishing' || t.category === 'Woodwork' || t.category === 'Metalwork');
-      } else if (selectedCategory === 'Electrical & Solar') {
-        list = list.filter((t) => t.category === 'Electrical' || t.category === 'Security' || t.category === 'Electronics' || t.category === 'Mechanical');
-      } else if (selectedCategory === 'Plumbing') {
-        list = list.filter((t) => t.category === 'Plumbing');
-      } else if (selectedCategory === 'Automotive') {
-        list = list.filter((t) => t.category === 'Automotive');
-      } else if (selectedCategory === 'Tech & Media') {
-        list = list.filter((t) => t.category === 'Tech' || t.category === 'Creative' || t.category === 'Media');
-      } else if (selectedCategory === 'Fashion & Beauty') {
-        list = list.filter((t) => t.category === 'Fashion' || t.category === 'Beauty');
-      } else if (selectedCategory === 'Services & Events') {
-        list = list.filter((t) => t.category === 'Events' || t.category === 'Services' || t.category === 'Logistics' || t.category === 'Outdoors');
-      }
+    if (selectedTradeCategory !== 'All') {
+      list = list.filter((t) => t.category === selectedTradeCategory);
     }
     if (tradeSearchQuery.trim()) {
       const q = tradeSearchQuery.toLowerCase().trim();
@@ -272,7 +260,7 @@ function RegisterContent() {
       );
     }
     return list;
-  }, [tradeSearchQuery, selectedCategory]);
+  }, [tradeSearchQuery, selectedTradeCategory]);
 
   // Client specific
   const [companyName, setCompanyName] = useState('');
@@ -540,21 +528,22 @@ function RegisterContent() {
         {/* PROVIDER STEP 2: Trade & Location */}
         {role === 'provider' && step === 2 && (
           <>
-            <div className="space-y-4">
-              {/* Search / Custom Type Input */}
+            <div className="space-y-3.5">
+              {/* Header & Search Bar */}
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between">
-                  <label className="text-xs font-bold text-[var(--tx)] flex items-center gap-1.5">
-                    <span>Your Primary Trade / Occupation</span>
-                    <span className="text-rose-500">*</span>
+                  <label className="text-xs font-bold text-[var(--tx)]">
+                    Your Trade or Occupation
                   </label>
                   {selectedTrade ? (
-                    <span className="text-[11px] font-bold text-emerald-500 flex items-center gap-1">
-                      <Check className="w-3.5 h-3.5" />
-                      <span>Trade Selected</span>
+                    <span className="text-[11px] font-bold text-[var(--cyan)] bg-[var(--cyan)]/10 px-2.5 py-0.5 rounded-full border border-[var(--cyan)]/25 flex items-center gap-1">
+                      <Check className="w-3 h-3 stroke-[3]" />
+                      <span className="truncate max-w-[150px]">{selectedTrade}</span>
                     </span>
                   ) : (
-                    <span className="text-[10.5px] text-[var(--tx-3)] font-medium">Type custom or pick below</span>
+                    <span className="text-[11px] text-[var(--tx-3)] font-medium">
+                      Type or select below
+                    </span>
                   )}
                 </div>
 
@@ -568,8 +557,8 @@ function RegisterContent() {
                       setTradeSearchQuery(val);
                       setSelectedTrade(val);
                     }}
-                    placeholder="Search 45+ trades or type custom occupation (e.g. Mason, Tailor, AC Specialist)..."
-                    className="w-full h-12 pl-10 pr-10 bg-[var(--surface)] text-[var(--tx)] text-xs sm:text-sm font-medium rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
+                    placeholder="Search or type custom occupation (e.g. Mason, Plumber, Tailor, AC Repairer)..."
+                    className="w-full h-12 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs sm:text-sm font-medium rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)]"
                   />
                   {tradeSearchQuery && (
                     <button
@@ -578,123 +567,124 @@ function RegisterContent() {
                         setTradeSearchQuery('');
                         setSelectedTrade('');
                       }}
-                      className="absolute right-3 text-[var(--tx-3)] hover:text-[var(--tx)] p-1.5 rounded-lg transition-colors"
-                      aria-label="Clear occupation"
+                      className="absolute right-3 text-[var(--tx-3)] hover:text-[var(--tx)] p-1 rounded-md transition-colors"
+                      aria-label="Clear search"
                     >
                       <X className="w-3.5 h-3.5" />
                     </button>
                   )}
                 </div>
 
-                {/* Inline confirmation badge when user types a custom trade */}
-                {tradeSearchQuery.trim() && !GHANA_TRADES.some((t) => t.name.toLowerCase() === tradeSearchQuery.trim().toLowerCase()) && (
-                  <div className="flex items-center gap-2 px-3 py-2 rounded-[14px] bg-[var(--cyan)]/[0.08] border border-[var(--cyan)]/30 text-xs">
-                    <span className="w-2 h-2 rounded-full bg-[var(--cyan)] animate-pulse" />
-                    <span className="text-[var(--tx-2)] text-[11.5px]">Custom Trade:</span>
-                    <span className="font-bold text-[var(--tx)] truncate">"{tradeSearchQuery.trim()}"</span>
-                    <span className="text-[10px] text-[var(--cyan)] font-semibold ml-auto shrink-0">Will be registered</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Category Quick-Filter Chips */}
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-[11px] font-semibold text-[var(--tx-3)] px-0.5">
-                  <span>Browse by Category</span>
-                  <span>{filteredTrades.length} trades</span>
-                </div>
-                <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none no-scrollbar">
-                  {TRADE_CATEGORIES.map((cat) => {
-                    const isCatActive = selectedCategory === cat;
-                    return (
-                      <button
-                        key={cat}
-                        type="button"
-                        onClick={() => setSelectedCategory(cat)}
-                        className={`px-3 py-1.5 rounded-full text-[11px] font-bold whitespace-nowrap transition-all shrink-0 ${
-                          isCatActive
-                            ? 'bg-[var(--cyan)] text-slate-950 shadow-xs scale-[1.02]'
-                            : 'bg-[var(--surface-elevated)] border border-[var(--bd2)] text-[var(--tx-2)] hover:text-[var(--tx)] hover:border-[var(--bd)]'
-                        }`}
-                      >
-                        {cat}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Clean, Full-Width Trade List (No awkward ellipses or clipped text) */}
-              <div className="space-y-1.5">
-                <div className="space-y-2 max-h-[250px] overflow-y-auto pr-1">
-                  {filteredTrades.length > 0 ? (
-                    filteredTrades.map((trade) => {
-                      const isSelected = selectedTrade.toLowerCase() === trade.name.toLowerCase();
-                      return (
-                        <div
-                          key={trade.id}
-                          onClick={() => {
-                            if (isSelected) {
-                              setSelectedTrade('');
-                              setTradeSearchQuery('');
-                            } else {
-                              setSelectedTrade(trade.name);
-                              setTradeSearchQuery(trade.name);
-                            }
-                          }}
-                          className={`p-3 rounded-[18px] border text-left flex items-center gap-3 transition-all cursor-pointer ${
-                            isSelected
-                              ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.08] ring-1 ring-[var(--cyan)]/40 shadow-xs'
-                              : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)]'
-                          }`}
-                        >
-                          <div className={`w-9 h-9 rounded-[12px] flex items-center justify-center shrink-0 transition-colors ${
-                            isSelected ? 'bg-[var(--cyan)] text-slate-950 font-bold' : 'bg-[var(--cyan)]/10 text-[var(--cyan)]'
-                          }`}>
-                            {getTradeIcon(trade.iconName)}
-                          </div>
-                          <div className="min-w-0 flex-1">
-                            <div className="text-xs sm:text-[13px] font-bold text-[var(--tx)] leading-snug">
-                              {trade.name}
-                            </div>
-                            <div className="text-[10.5px] text-[var(--tx-3)] flex items-center gap-2 mt-0.5">
-                              <span className="px-2 py-0.2 rounded-md bg-[var(--surface-elevated)] text-[var(--tx-2)] font-semibold text-[10px]">
-                                {trade.category}
-                              </span>
-                              <span>&bull;</span>
-                              <span>Market rate avg: ₵{trade.defaultRate}/hr</span>
-                            </div>
-                          </div>
-                          <div className="shrink-0 ml-2">
-                            {isSelected ? (
-                              <div className="w-6 h-6 rounded-full bg-[var(--cyan)] text-slate-950 flex items-center justify-center shadow-xs">
-                                <Check className="w-3.5 h-3.5 stroke-[3]" />
-                              </div>
-                            ) : (
-                              <div className="w-6 h-6 rounded-full border border-[var(--bd2)] hover:border-[var(--cyan)] flex items-center justify-center text-[var(--tx-3)]" />
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className="py-6 px-4 text-center text-xs bg-[var(--surface)] rounded-[18px] border border-dashed border-[var(--cyan)]/40">
-                      <div className="w-10 h-10 rounded-full bg-[var(--cyan)]/10 text-[var(--cyan)] flex items-center justify-center mx-auto mb-2">
-                        <Check className="w-5 h-5" />
-                      </div>
-                      <p className="font-bold text-[var(--tx)] text-sm">
-                        Custom Trade: "{tradeSearchQuery.trim()}"
-                      </p>
-                      <p className="text-[11px] mt-1 text-[var(--tx-2)] max-w-sm mx-auto">
-                        This profession isn't in our standard directory, but it is ready and will be registered directly to your verified profile.
-                      </p>
-                    </div>
+                <div className="text-[11px] text-[var(--tx-3)] flex items-center justify-between px-0.5">
+                  <span>Type any trade above, or choose from our verified Ghanaian directory below.</span>
+                  {tradeSearchQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTradeSearchQuery('');
+                        setSelectedTradeCategory('All');
+                      }}
+                      className="text-[10.5px] text-[var(--cyan)] font-bold hover:underline shrink-0 ml-2"
+                    >
+                      Clear
+                    </button>
                   )}
                 </div>
               </div>
+
+              {/* Category Filter Tabs */}
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[11px]">
+                {TRADE_CATEGORIES.map((cat) => {
+                  const isActive = selectedTradeCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setSelectedTradeCategory(cat);
+                        if (cat !== 'All' && tradeSearchQuery) {
+                          setTradeSearchQuery('');
+                        }
+                      }}
+                      className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
+                        isActive
+                          ? 'bg-[var(--cyan)] text-slate-950 shadow-xs'
+                          : 'bg-[var(--surface)] text-[var(--tx-2)] hover:text-[var(--tx)] border border-[var(--bd2)] hover:border-[var(--bd)]'
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Occupations Directory List (Full-Width, No Truncation) */}
+              <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1">
+                {filteredTrades.length > 0 ? (
+                  filteredTrades.map((trade) => {
+                    const isSelected = selectedTrade.toLowerCase() === trade.name.toLowerCase();
+                    return (
+                      <button
+                        key={trade.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTrade(trade.name);
+                          setTradeSearchQuery(trade.name);
+                        }}
+                        className={`w-full p-3.5 rounded-[18px] border text-left flex items-center gap-3 transition-all cursor-pointer ${
+                          isSelected
+                            ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.08] ring-1 ring-[var(--cyan)]/40 shadow-xs'
+                            : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)]'
+                        }`}
+                      >
+                        <div
+                          className={`w-9 h-9 rounded-[14px] flex items-center justify-center shrink-0 transition-colors ${
+                            isSelected
+                              ? 'bg-[var(--cyan)] text-slate-950'
+                              : 'bg-[var(--cyan)]/10 text-[var(--cyan)]'
+                          }`}
+                        >
+                          {getTradeIcon(trade.iconName)}
+                        </div>
+
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs sm:text-sm font-bold text-[var(--tx)] leading-snug">
+                            {trade.name}
+                          </div>
+                          <div className="text-[11px] text-[var(--tx-3)] flex items-center gap-2 mt-0.5">
+                            <span className="font-semibold text-[var(--cyan)]">{trade.category}</span>
+                            <span>•</span>
+                            <span>Market avg. ₵{trade.defaultRate}/hr</span>
+                          </div>
+                        </div>
+
+                        <div className="shrink-0 ml-1">
+                          {isSelected ? (
+                            <div className="w-5 h-5 rounded-full bg-[var(--cyan)] text-slate-950 flex items-center justify-center">
+                              <Check className="w-3.5 h-3.5 stroke-[3]" />
+                            </div>
+                          ) : (
+                            <div className="w-5 h-5 rounded-full border border-[var(--bd2)]" />
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })
+                ) : (
+                  <div className="p-4 text-center text-xs bg-[var(--surface)] rounded-[18px] border border-dashed border-[var(--cyan)]/40">
+                    <div className="font-bold text-[var(--tx)] text-sm mb-1 flex items-center justify-center gap-1.5">
+                      <Check className="w-4 h-4 text-[var(--cyan)]" />
+                      <span>Custom Trade: "{tradeSearchQuery.trim()}"</span>
+                    </div>
+                    <p className="text-[11px] text-[var(--tx-3)]">
+                      Not in preset directory — this will be registered directly as your official trade on GigGhana.
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-[var(--bd2)]/40 mt-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               {/* City / Hub */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold text-[var(--tx)] flex items-center gap-1">

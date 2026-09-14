@@ -1,16 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, TrendingUp, Gem, Laptop, Hammer, Utensils, Palette, Stethoscope, LineChart } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, TrendingUp, Gem } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 const disciplines = [
-  { name: 'Lead Software Architect', icon: Laptop, rate: 120, guild: 'Technology' },
-  { name: 'Master Carpenter & Joiner', icon: Hammer, rate: 75, guild: 'Craftsmen' },
-  { name: 'Private Executive Chef', icon: Utensils, rate: 90, guild: 'Culinary' },
-  { name: 'Senior Creative Director', icon: Palette, rate: 85, guild: 'Creative' },
-  { name: 'Certified Physiotherapist', icon: Stethoscope, rate: 80, guild: 'Health' },
-  { name: 'Chartered Financial Advisor', icon: LineChart, rate: 100, guild: 'Advisory' },
+  { name: 'Lead Software Architect', icon: '💻', rate: 120, guild: 'Technology' },
+  { name: 'Master Carpenter & Joiner', icon: '🪚', rate: 75, guild: 'Craftsmen' },
+  { name: 'Private Executive Chef', icon: '🍽️', rate: 90, guild: 'Culinary' },
+  { name: 'Senior Creative Director', icon: '🎨', rate: 85, guild: 'Creative' },
+  { name: 'Certified Physiotherapist', icon: '🏥', rate: 80, guild: 'Health' },
+  { name: 'Chartered Financial Advisor', icon: '📊', rate: 100, guild: 'Advisory' },
 ];
 
 export function LuxuryEstimator() {
@@ -79,9 +79,7 @@ export function LuxuryEstimator() {
                       : 'bg-[var(--surface-2)] border-[var(--border)] text-[var(--tx-2)] hover:border-[var(--border-hi)] hover:text-[var(--tx)]'
                   }`}
                 >
-                  <div className="w-8 h-8 rounded-xl bg-amber-500/10 flex items-center justify-center mb-1.5 text-[var(--gold)]">
-                    <d.icon className="w-4 h-4" />
-                  </div>
+                  <div className="text-xl mb-1">{d.icon}</div>
                   <div className="text-xs font-bold leading-tight line-clamp-1">{d.name}</div>
                   <div className="text-[10px] text-[var(--gold)] mt-1 font-mono">₵{d.rate}/hr benchmark</div>
                 </button>

@@ -58,7 +58,7 @@ export function AuthLayout({
             {showBadge && (
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--cyan-dim)] border border-[var(--cyan-border)] text-[var(--cyan)] font-bold text-xs uppercase tracking-wider mb-3.5 shadow-xs">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                <span>National Identity Secured Marketplace</span>
+                <span>National Identity Secured Marketplace 🇬🇭</span>
               </div>
             )}
             <h1 className={titleClassName || "text-4xl sm:text-5xl lg:text-6xl font-black text-[var(--tx)] tracking-tight mb-3 font-heading leading-tight"}>

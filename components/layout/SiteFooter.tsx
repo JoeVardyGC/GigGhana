@@ -134,27 +134,23 @@ export function SiteFooter() {
             <span className="font-semibold uppercase tracking-wider text-[11px] text-[var(--tx-2)]">
               Settlement Partners:
             </span>
-            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)] flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
-              MTN Mobile Money
+            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)]">
+              🟡 MTN Mobile Money
             </span>
-            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)] flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-red-500 shrink-0" />
-              Telecel Cash
+            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)]">
+              🔴 Telecel Cash
             </span>
-            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)] flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-blue-500 shrink-0" />
-              AT Money
+            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)]">
+              🔵 AT Money
             </span>
-            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)] flex items-center gap-1.5">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0" />
-              Paystack Escrow API
+            <span className="px-2.5 py-1 rounded-md bg-[var(--surface-2)] font-mono text-[11px] font-bold text-[var(--tx)] border border-[var(--bd)]">
+              🟢 Paystack Escrow API
             </span>
           </div>
 
           <div className="flex items-center gap-6">
             <span>© {new Date().getFullYear()} GigGhana Ltd. All rights reserved.</span>
-            <span>Accra, Ghana</span>
+            <span>Accra, Ghana 🇬🇭</span>
           </div>
         </div>
 
