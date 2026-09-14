@@ -1008,9 +1008,8 @@ function RegisterContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               {/* City / Hub Autocomplete (Facebook Location style) */}
               <div className="space-y-1.5 relative" ref={locationRef}>
-                <label className="text-xs font-bold text-[var(--tx)] flex items-center gap-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[var(--cyan)]" />
-                  <span>Location</span>
+                <label className="text-xs font-bold text-[var(--tx)]">
+                  Location
                 </label>
 
                 <div className="relative flex items-center">
