@@ -972,11 +972,6 @@ function RegisterContent() {
                           <div className="text-xs sm:text-sm font-bold text-[var(--tx)] leading-snug">
                             {trade.name}
                           </div>
-                          <div className="text-[11px] text-[var(--tx-3)] flex items-center gap-2 mt-0.5">
-                            <span className="font-semibold text-[var(--cyan)]">{trade.category}</span>
-                            <span>•</span>
-                            <span>Market avg. ₵{trade.defaultRate}/hr</span>
-                          </div>
                         </div>
 
                         <div className="shrink-0 ml-1">
