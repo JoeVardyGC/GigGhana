@@ -8,8 +8,6 @@ import { GhanaCardInput } from '@/components/ui/ghana-card-input';
 import { useAuth } from '@/lib/context/AuthContext';
 import confetti from 'canvas-confetti';
 import {
-  Wrench,
-  Building2,
   Check,
   ArrowRight,
   ArrowLeft,
@@ -17,7 +15,6 @@ import {
   Eye,
   EyeOff,
   ShieldCheck,
-  Sparkles,
   Smartphone,
   CheckCircle2,
   BadgeCheck,
@@ -25,26 +22,8 @@ import {
   MapPin,
   Search,
   X,
-  Paintbrush,
-  Zap,
-  Hammer,
-  HardHat,
-  Flame,
-  Wind,
-  Car,
-  Laptop,
-  Palette,
-  Cpu,
-  Scissors,
-  Camera,
-  Stethoscope,
-  Utensils,
-  Truck,
   FileText,
   AlertCircle,
-  Tv,
-  Music,
-  Layers,
 } from 'lucide-react';
 
 export interface GhanaTradeOption {
@@ -119,57 +98,7 @@ const GHANA_TRADES: GhanaTradeOption[] = [
   { id: 'housekeeping', name: 'Domestic Housekeeping, Maid & Nanny Services', category: 'Services', defaultRate: 50, iconName: 'Sparkles' },
 ];
 
-function getTradeIcon(iconName: string) {
-  const iconProps = { className: 'w-4 h-4 text-[var(--cyan)] shrink-0' };
-  switch (iconName) {
-    case 'Paintbrush':
-      return <Paintbrush {...iconProps} />;
-    case 'HardHat':
-      return <HardHat {...iconProps} />;
-    case 'Building2':
-      return <Building2 {...iconProps} />;
-    case 'Hammer':
-      return <Hammer {...iconProps} />;
-    case 'Flame':
-      return <Flame {...iconProps} />;
-    case 'Zap':
-      return <Zap {...iconProps} />;
-    case 'ShieldCheck':
-      return <ShieldCheck {...iconProps} />;
-    case 'Wind':
-      return <Wind {...iconProps} />;
-    case 'Wrench':
-      return <Wrench {...iconProps} />;
-    case 'Car':
-      return <Car {...iconProps} />;
-    case 'Laptop':
-      return <Laptop {...iconProps} />;
-    case 'Palette':
-      return <Palette {...iconProps} />;
-    case 'Cpu':
-      return <Cpu {...iconProps} />;
-    case 'Scissors':
-      return <Scissors {...iconProps} />;
-    case 'Camera':
-      return <Camera {...iconProps} />;
-    case 'Sparkles':
-      return <Sparkles {...iconProps} />;
-    case 'Stethoscope':
-      return <Stethoscope {...iconProps} />;
-    case 'Utensils':
-      return <Utensils {...iconProps} />;
-    case 'Truck':
-      return <Truck {...iconProps} />;
-    case 'Tv':
-      return <Tv {...iconProps} />;
-    case 'Music':
-      return <Music {...iconProps} />;
-    case 'Layers':
-      return <Layers {...iconProps} />;
-    default:
-      return <Wrench {...iconProps} />;
-  }
-}
+
 
 const GHANA_CITIES = [
   'Airport Hills, Accra',
@@ -228,39 +157,18 @@ function RegisterContent() {
   const [payoutWallet, setPayoutWallet] = useState<'mtn' | 'telecel' | 'at'>('mtn');
   const [walletPhone, setWalletPhone] = useState('');
 
-  const [selectedTradeCategory, setSelectedTradeCategory] = useState('All');
-
-  const TRADE_CATEGORIES = [
-    'All',
-    'Construction',
-    'Finishing',
-    'Woodwork',
-    'Metalwork',
-    'Electrical',
-    'Plumbing',
-    'Automotive',
-    'Tech',
-    'Fashion',
-    'Beauty',
-    'Services',
-  ];
-
-  // Real-time filtered trades based on user typing in search bar and category filter
+  // Real-time filtered trades based on user typing in search bar
   const filteredTrades = useMemo(() => {
-    let list = GHANA_TRADES;
-    if (selectedTradeCategory !== 'All') {
-      list = list.filter((t) => t.category === selectedTradeCategory);
+    if (!tradeSearchQuery.trim()) {
+      return GHANA_TRADES;
     }
-    if (tradeSearchQuery.trim()) {
-      const q = tradeSearchQuery.toLowerCase().trim();
-      list = list.filter(
-        (t) =>
-          t.name.toLowerCase().includes(q) ||
-          t.category.toLowerCase().includes(q)
-      );
-    }
-    return list;
-  }, [tradeSearchQuery, selectedTradeCategory]);
+    const q = tradeSearchQuery.toLowerCase().trim();
+    return GHANA_TRADES.filter(
+      (t) =>
+        t.name.toLowerCase().includes(q) ||
+        t.category.toLowerCase().includes(q)
+    );
+  }, [tradeSearchQuery]);
 
   // Client specific
   const [companyName, setCompanyName] = useState('');
@@ -582,7 +490,6 @@ function RegisterContent() {
                       type="button"
                       onClick={() => {
                         setTradeSearchQuery('');
-                        setSelectedTradeCategory('All');
                       }}
                       className="text-[10.5px] text-[var(--cyan)] font-bold hover:underline shrink-0 ml-2"
                     >
@@ -592,34 +499,8 @@ function RegisterContent() {
                 </div>
               </div>
 
-              {/* Category Filter Tabs */}
-              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-[11px]">
-                {TRADE_CATEGORIES.map((cat) => {
-                  const isActive = selectedTradeCategory === cat;
-                  return (
-                    <button
-                      key={cat}
-                      type="button"
-                      onClick={() => {
-                        setSelectedTradeCategory(cat);
-                        if (cat !== 'All' && tradeSearchQuery) {
-                          setTradeSearchQuery('');
-                        }
-                      }}
-                      className={`px-3 py-1.5 rounded-full font-bold whitespace-nowrap transition-all cursor-pointer ${
-                        isActive
-                          ? 'bg-[var(--cyan)] text-slate-950 shadow-xs'
-                          : 'bg-[var(--surface)] text-[var(--tx-2)] hover:text-[var(--tx)] border border-[var(--bd2)] hover:border-[var(--bd)]'
-                      }`}
-                    >
-                      {cat}
-                    </button>
-                  );
-                })}
-              </div>
-
-              {/* Occupations Directory List (Full-Width, No Truncation) */}
-              <div className="space-y-2 max-h-[260px] overflow-y-auto pr-1">
+              {/* Occupations Directory List */}
+              <div className="space-y-2 max-h-[290px] overflow-y-auto pr-1">
                 {filteredTrades.length > 0 ? (
                   filteredTrades.map((trade) => {
                     const isSelected = selectedTrade.toLowerCase() === trade.name.toLowerCase();
@@ -631,22 +512,12 @@ function RegisterContent() {
                           setSelectedTrade(trade.name);
                           setTradeSearchQuery(trade.name);
                         }}
-                        className={`w-full p-3.5 rounded-[18px] border text-left flex items-center gap-3 transition-all cursor-pointer ${
+                        className={`w-full p-3.5 rounded-[18px] border text-left flex items-center justify-between gap-3 transition-all cursor-pointer ${
                           isSelected
                             ? 'border-[var(--cyan)] bg-[var(--cyan)]/[0.08] ring-1 ring-[var(--cyan)]/40 shadow-xs'
                             : 'border-[var(--bd2)] hover:border-[var(--bd)] bg-[var(--surface)] hover:bg-[var(--surface-elevated)]'
                         }`}
                       >
-                        <div
-                          className={`w-9 h-9 rounded-[14px] flex items-center justify-center shrink-0 transition-colors ${
-                            isSelected
-                              ? 'bg-[var(--cyan)] text-slate-950'
-                              : 'bg-[var(--cyan)]/10 text-[var(--cyan)]'
-                          }`}
-                        >
-                          {getTradeIcon(trade.iconName)}
-                        </div>
-
                         <div className="min-w-0 flex-1">
                           <div className="text-xs sm:text-sm font-bold text-[var(--tx)] leading-snug">
                             {trade.name}
