@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, Suspense, useMemo } from 'react';
+import React, { useState, useEffect, Suspense, useMemo, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { AuthLayout } from '@/components/auth/AuthLayout';
 import { PhoneInput, TelecomNetwork } from '@/components/ui/phone-input';
@@ -100,19 +100,99 @@ const GHANA_TRADES: GhanaTradeOption[] = [
 
 
 
-const GHANA_CITIES = [
-  'Airport Hills, Accra',
-  'East Legon, Accra',
-  'Spintex Road, Accra',
-  'Tema Industrial, Greater Accra',
-  'Kumasi Central, Ashanti',
-  'Bantama, Kumasi',
-  'Takoradi, Western',
-  'Cape Coast, Central',
-  'Tamale, Northern',
-  'Ho, Volta',
-  'Sunyani, Bono',
+export interface GhanaLocation {
+  city: string;
+  region: string;
+  full: string;
+  popular?: boolean;
+}
+
+export const POPULAR_GHANA_LOCATIONS: GhanaLocation[] = [
+  // Greater Accra Hubs
+  { city: 'East Legon', region: 'Accra, Greater Accra', full: 'East Legon, Accra', popular: true },
+  { city: 'Spintex Road', region: 'Accra, Greater Accra', full: 'Spintex Road, Accra', popular: true },
+  { city: 'Airport Hills & Residential', region: 'Accra, Greater Accra', full: 'Airport Hills, Accra', popular: true },
+  { city: 'Osu (Oxford Street / RE)', region: 'Accra, Greater Accra', full: 'Osu, Accra', popular: true },
+  { city: 'Cantonments & Labone', region: 'Accra, Greater Accra', full: 'Cantonments, Accra', popular: true },
+  { city: 'Dzorwulu & Roman Ridge', region: 'Accra, Greater Accra', full: 'Dzorwulu, Accra', popular: true },
+  { city: 'Tema (Communities 1 - 25)', region: 'Greater Accra', full: 'Tema Industrial, Greater Accra', popular: true },
+  { city: 'Madina & Ashaley Botwe', region: 'Greater Accra', full: 'Madina, Greater Accra', popular: true },
+  { city: 'Adenta & Frafraha', region: 'Greater Accra', full: 'Adenta, Greater Accra', popular: true },
+  { city: 'Dansoman & Exhibition', region: 'Accra, Greater Accra', full: 'Dansoman, Accra', popular: true },
+  { city: 'Lapaz & Abeka', region: 'Accra, Greater Accra', full: 'Lapaz, Accra', popular: true },
+  { city: 'Achimota & Mile 7', region: 'Accra, Greater Accra', full: 'Achimota, Accra', popular: true },
+  { city: 'Dome & Kwabenya', region: 'Greater Accra', full: 'Dome, Greater Accra', popular: true },
+  { city: 'Haatso & Agbogba', region: 'Greater Accra', full: 'Haatso, Greater Accra' },
+  { city: 'Kwashieman & Santa Maria', region: 'Accra, Greater Accra', full: 'Kwashieman, Accra' },
+  { city: 'Kwame Nkrumah Circle & Adabraka', region: 'Accra, Greater Accra', full: 'Circle, Accra' },
+  { city: 'Kaneshie & Odorkor', region: 'Accra, Greater Accra', full: 'Kaneshie, Accra' },
+  { city: 'Weija & SCC', region: 'Greater Accra', full: 'Weija, Greater Accra' },
+  { city: 'Teshie & Nungua Estates', region: 'Greater Accra', full: 'Teshie, Greater Accra' },
+  { city: 'Prampram & Dawhenya', region: 'Greater Accra', full: 'Prampram, Greater Accra' },
+  { city: 'Amasaman & Pokuase', region: 'Greater Accra', full: 'Pokuase, Greater Accra' },
+  { city: 'Kasoa & Amanfro', region: 'Central / Greater Accra Border', full: 'Kasoa, Central/Accra', popular: true },
+
+  // Ashanti Hubs
+  { city: 'Kumasi Central (Adum)', region: 'Kumasi, Ashanti', full: 'Kumasi Central, Ashanti', popular: true },
+  { city: 'Bantama & Abrepo', region: 'Kumasi, Ashanti', full: 'Bantama, Kumasi', popular: true },
+  { city: 'Ahodwo & Nhyiaeso', region: 'Kumasi, Ashanti', full: 'Ahodwo, Kumasi', popular: true },
+  { city: 'KNUST Campus & Ayigya', region: 'Kumasi, Ashanti', full: 'KNUST, Kumasi', popular: true },
+  { city: 'Suame (Magazine) & Tafo', region: 'Kumasi, Ashanti', full: 'Suame, Kumasi', popular: true },
+  { city: 'Asokwa & Atonsu', region: 'Kumasi, Ashanti', full: 'Asokwa, Kumasi' },
+  { city: 'Kwadaso & Sofoline', region: 'Kumasi, Ashanti', full: 'Kwadaso, Kumasi' },
+  { city: 'Oforikrom & Anloga', region: 'Kumasi, Ashanti', full: 'Oforikrom, Kumasi' },
+  { city: 'Tanoso & Abuakwa', region: 'Kumasi, Ashanti', full: 'Tanoso, Kumasi' },
+  { city: 'Obuasi (Gold City)', region: 'Ashanti Region', full: 'Obuasi, Ashanti', popular: true },
+  { city: 'Ejisu & Fumesua', region: 'Ashanti Region', full: 'Ejisu, Ashanti' },
+
+  // Western & Western North Hubs
+  { city: 'Takoradi (Market Circle)', region: 'Sekondi-Takoradi, Western', full: 'Takoradi, Western', popular: true },
+  { city: 'Sekondi & Essikado', region: 'Sekondi-Takoradi, Western', full: 'Sekondi, Western' },
+  { city: 'Anaji & Effia Kuma', region: 'Sekondi-Takoradi, Western', full: 'Anaji, Takoradi' },
+  { city: 'Tarkwa (Mining Hub)', region: 'Western Region', full: 'Tarkwa, Western', popular: true },
+  { city: 'Sefwi Wiawso & Bibiani', region: 'Western North Region', full: 'Sefwi Wiawso, Western North' },
+
+  // Central Region Hubs
+  { city: 'Cape Coast (Kotokuraba / UCC)', region: 'Central Region', full: 'Cape Coast, Central', popular: true },
+  { city: 'Winneba (University Town)', region: 'Central Region', full: 'Winneba, Central', popular: true },
+  { city: 'Elmina & Komenda', region: 'Central Region', full: 'Elmina, Central' },
+  { city: 'Agona Swedru', region: 'Central Region', full: 'Swedru, Central' },
+  { city: 'Mankessim (Trade Hub)', region: 'Central Region', full: 'Mankessim, Central' },
+
+  // Eastern Region Hubs
+  { city: 'Koforidua (New Juaben)', region: 'Eastern Region', full: 'Koforidua, Eastern', popular: true },
+  { city: 'Nsawam & Adoagyiri', region: 'Eastern Region', full: 'Nsawam, Eastern' },
+  { city: 'Nkawkaw & Kwahu Plateau', region: 'Eastern Region', full: 'Nkawkaw, Eastern' },
+  { city: 'Akosombo & Atimpoku', region: 'Eastern Region', full: 'Akosombo, Eastern' },
+  { city: 'Aburi & Mampong Ridge', region: 'Eastern Region', full: 'Aburi, Eastern' },
+
+  // Northern, Savannah & North East Hubs
+  { city: 'Tamale Central & Lamashegu', region: 'Northern Region', full: 'Tamale, Northern', popular: true },
+  { city: 'Nyankpala & Sagnarigu', region: 'Northern Region', full: 'Sagnarigu, Tamale' },
+  { city: 'Yendi & Bimbilla', region: 'Northern Region', full: 'Yendi, Northern' },
+  { city: 'Damongo (Mole Gateway)', region: 'Savannah Region', full: 'Damongo, Savannah' },
+  { city: 'Nalerigu & Walewale', region: 'North East Region', full: 'Nalerigu, North East' },
+
+  // Volta & Oti Hubs
+  { city: 'Ho (Civic Centre & Barracks)', region: 'Volta Region', full: 'Ho, Volta', popular: true },
+  { city: 'Hohoe & Kpando', region: 'Volta Region', full: 'Hohoe, Volta' },
+  { city: 'Aflao & Denu (Border Hub)', region: 'Volta Region', full: 'Aflao, Volta', popular: true },
+  { city: 'Keta & Anloga', region: 'Volta Region', full: 'Keta, Volta' },
+  { city: 'Dambai & Nkwanta', region: 'Oti Region', full: 'Dambai, Oti' },
+
+  // Upper East & Upper West Hubs
+  { city: 'Bolgatanga Central', region: 'Upper East Region', full: 'Bolgatanga, Upper East', popular: true },
+  { city: 'Navrongo & Paga', region: 'Upper East Region', full: 'Navrongo, Upper East' },
+  { city: 'Wa Central & Campus', region: 'Upper West Region', full: 'Wa, Upper West', popular: true },
+
+  // Bono, Bono East & Ahafo Hubs
+  { city: 'Sunyani Central & Fiapre', region: 'Bono Region', full: 'Sunyani, Bono', popular: true },
+  { city: 'Techiman (Commercial Market)', region: 'Bono East Region', full: 'Techiman, Bono East', popular: true },
+  { city: 'Berekum & Dormaa', region: 'Bono Region', full: 'Berekum, Bono' },
+  { city: 'Goaso & Kenyasi', region: 'Ahafo Region', full: 'Goaso, Ahafo' },
 ];
+
+export const GHANA_CITIES = POPULAR_GHANA_LOCATIONS.map((loc) => loc.full);
 
 function RegisterContent() {
   const searchParams = useSearchParams();
@@ -153,7 +233,10 @@ function RegisterContent() {
   // Provider specific
   const [selectedTrade, setSelectedTrade] = useState('');
   const [tradeSearchQuery, setTradeSearchQuery] = useState('');
-  const [selectedCity, setSelectedCity] = useState(GHANA_CITIES[0]);
+  const [selectedCity, setSelectedCity] = useState(POPULAR_GHANA_LOCATIONS[0].full);
+  const [locationQuery, setLocationQuery] = useState(POPULAR_GHANA_LOCATIONS[0].full);
+  const [isLocationDropdownOpen, setIsLocationDropdownOpen] = useState(false);
+  const locationRef = useRef<HTMLDivElement>(null);
   const [hourlyRate, setHourlyRate] = useState<string>('');
   const [ghanaCardPin, setGhanaCardPin] = useState('');
   const [isGhanaCardValid, setIsGhanaCardValid] = useState(false);
@@ -174,6 +257,41 @@ function RegisterContent() {
         t.category.toLowerCase().includes(q)
     );
   }, [tradeSearchQuery]);
+
+  // Real-time filtered locations (Facebook Location Autocomplete style)
+  const filteredLocations = useMemo(() => {
+    const q = locationQuery.toLowerCase().trim();
+    if (!q) {
+      return POPULAR_GHANA_LOCATIONS.filter((l) => l.popular);
+    }
+    return POPULAR_GHANA_LOCATIONS.filter(
+      (l) =>
+        l.city.toLowerCase().includes(q) ||
+        l.region.toLowerCase().includes(q) ||
+        l.full.toLowerCase().includes(q)
+    );
+  }, [locationQuery]);
+
+  const hasExactLocationMatch = useMemo(() => {
+    const q = locationQuery.toLowerCase().trim();
+    if (!q) return true;
+    return POPULAR_GHANA_LOCATIONS.some(
+      (l) => l.city.toLowerCase() === q || l.full.toLowerCase() === q
+    );
+  }, [locationQuery]);
+
+  // Dismiss location autocomplete when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (locationRef.current && !locationRef.current.contains(event.target as Node)) {
+        setIsLocationDropdownOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Client specific
   const [companyName, setCompanyName] = useState('');
@@ -227,10 +345,16 @@ function RegisterContent() {
       }
     }
 
-    // Provider step 2 trade assignment
+    // Provider step 2 trade and location assignment
     if (role === 'provider' && step === 2) {
       if (!selectedTrade.trim() && tradeSearchQuery.trim()) {
         setSelectedTrade(tradeSearchQuery.trim());
+      }
+      if (locationQuery.trim()) {
+        setSelectedCity(locationQuery.trim());
+      } else if (!selectedCity.trim()) {
+        setSelectedCity('East Legon, Accra');
+        setLocationQuery('East Legon, Accra');
       }
     }
 
@@ -615,23 +739,159 @@ function RegisterContent() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              {/* City / Hub */}
-              <div className="space-y-1.5">
-                <label className="text-xs font-bold text-[var(--tx)] flex items-center gap-1">
-                  <MapPin className="w-3.5 h-3.5 text-[var(--cyan)]" />
-                  <span>Primary Operating Location</span>
+              {/* City / Hub Autocomplete (Facebook Location style) */}
+              <div className="space-y-1.5 relative" ref={locationRef}>
+                <label className="text-xs font-bold text-[var(--tx)] flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <MapPin className="w-3.5 h-3.5 text-[var(--cyan)]" />
+                    <span>Primary Operating Location</span>
+                  </span>
+                  {selectedCity && (
+                    <span className="text-[10px] font-semibold text-[var(--cyan)] bg-[var(--cyan)]/10 px-2 py-0.5 rounded-full border border-[var(--cyan)]/25 truncate max-w-[130px]">
+                      {selectedCity}
+                    </span>
+                  )}
                 </label>
-                <select
-                  value={selectedCity}
-                  onChange={(e) => setSelectedCity(e.target.value)}
-                  className="w-full h-12 px-3.5 bg-[var(--surface)] text-[var(--tx)] text-xs font-semibold rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:outline-none"
-                >
-                  {GHANA_CITIES.map((city) => (
-                    <option key={city} value={city}>
-                      {city}
-                    </option>
-                  ))}
-                </select>
+
+                <div className="relative flex items-center">
+                  <MapPin className="w-4 h-4 text-[var(--tx-3)] absolute left-3.5 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={locationQuery}
+                    onFocus={() => setIsLocationDropdownOpen(true)}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setLocationQuery(val);
+                      setSelectedCity(val);
+                      setIsLocationDropdownOpen(true);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Escape') {
+                        setIsLocationDropdownOpen(false);
+                      } else if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (filteredLocations.length > 0) {
+                          const topLoc = filteredLocations[0];
+                          setSelectedCity(topLoc.full);
+                          setLocationQuery(topLoc.full);
+                          setIsLocationDropdownOpen(false);
+                        } else if (locationQuery.trim()) {
+                          setSelectedCity(locationQuery.trim());
+                          setIsLocationDropdownOpen(false);
+                        }
+                      }
+                    }}
+                    placeholder="Type city, suburb or area (e.g. East Legon)..."
+                    className="w-full h-12 pl-10 pr-9 bg-[var(--surface)] text-[var(--tx)] text-xs sm:text-sm font-semibold rounded-[18px] border border-[var(--bd2)] focus:border-[var(--cyan)] focus:ring-2 focus:ring-[var(--cyan)]/20 focus:outline-none transition-all placeholder:text-[var(--tx-3)] placeholder:font-normal"
+                  />
+                  {locationQuery && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setLocationQuery('');
+                        setSelectedCity('');
+                        setIsLocationDropdownOpen(true);
+                      }}
+                      className="absolute right-3 p-1 text-[var(--tx-3)] hover:text-[var(--tx)] transition-colors cursor-pointer"
+                      aria-label="Clear location input"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                {/* Facebook-style Suggestions Popover Dropdown */}
+                {isLocationDropdownOpen && (
+                  <div className="absolute z-50 left-0 right-0 top-[calc(100%+6px)] bg-[var(--surface-elevated)] border border-[var(--bd2)] rounded-[20px] shadow-2xl overflow-hidden backdrop-blur-xl max-h-64 overflow-y-auto divide-y divide-[var(--bd2)]/40 animate-in fade-in-50 zoom-in-95 duration-150">
+                    {/* Custom Location Option (Facebook style) when user typed something that is not an exact preset match */}
+                    {locationQuery.trim() && !hasExactLocationMatch && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedCity(locationQuery.trim());
+                          setIsLocationDropdownOpen(false);
+                        }}
+                        className="w-full px-3.5 py-2.5 text-left flex items-center gap-3 hover:bg-[var(--cyan)]/[0.08] bg-[var(--surface)] transition-colors cursor-pointer group"
+                      >
+                        <div className="w-8 h-8 rounded-full bg-[var(--cyan)]/15 text-[var(--cyan)] flex items-center justify-center shrink-0">
+                          <MapPin className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-bold text-[var(--tx)] group-hover:text-[var(--cyan)] truncate">
+                            Use &quot;{locationQuery.trim()}&quot;
+                          </div>
+                          <div className="text-[10px] text-[var(--tx-3)]">
+                            Register as custom Ghanaian location
+                          </div>
+                        </div>
+                        <span className="text-[9px] font-bold text-[var(--cyan)] bg-[var(--cyan)]/10 px-2 py-0.5 rounded-full border border-[var(--cyan)]/25 shrink-0">
+                          Custom
+                        </span>
+                      </button>
+                    )}
+
+                    {/* Category Header */}
+                    <div className="px-3.5 py-1.5 bg-[var(--surface)]/60 text-[10px] font-bold uppercase tracking-wider text-[var(--tx-3)] flex items-center justify-between">
+                      <span>{locationQuery.trim() ? 'Matching Locations' : 'Popular Operating Locations'}</span>
+                      <span className="text-[9px] text-[var(--cyan)] font-mono font-bold">GH 🇬🇭</span>
+                    </div>
+
+                    {/* Filtered Location List */}
+                    {filteredLocations.length > 0 ? (
+                      filteredLocations.map((loc) => {
+                        const isSelected = selectedCity === loc.full;
+                        return (
+                          <button
+                            key={loc.full}
+                            type="button"
+                            onClick={() => {
+                              setSelectedCity(loc.full);
+                              setLocationQuery(loc.full);
+                              setIsLocationDropdownOpen(false);
+                            }}
+                            className={`w-full px-3.5 py-2.5 text-left flex items-center gap-3 transition-colors cursor-pointer group ${
+                              isSelected
+                                ? 'bg-[var(--cyan)]/[0.12] text-[var(--cyan)]'
+                                : 'hover:bg-[var(--cyan)]/[0.06] text-[var(--tx)]'
+                            }`}
+                          >
+                            <div
+                              className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                                isSelected
+                                  ? 'bg-[var(--cyan)] text-slate-950 font-bold'
+                                  : 'bg-[var(--surface)] border border-[var(--bd2)] text-[var(--cyan)] group-hover:border-[var(--cyan)]/50'
+                              }`}
+                            >
+                              <MapPin className="w-4 h-4" />
+                            </div>
+                            <div className="min-w-0 flex-1">
+                              <div className="text-xs font-bold truncate flex items-center gap-1.5">
+                                <span>{loc.city}</span>
+                                {loc.popular && !locationQuery.trim() && (
+                                  <span className="text-[8.5px] px-1.5 py-0.2 rounded bg-[var(--cyan)]/10 text-[var(--cyan)] font-mono font-bold">
+                                    HUB
+                                  </span>
+                                )}
+                              </div>
+                              <div className="text-[10px] text-[var(--tx-3)] truncate">
+                                {loc.region}
+                              </div>
+                            </div>
+                            {isSelected && (
+                              <div className="w-5 h-5 rounded-full bg-[var(--cyan)] text-slate-950 flex items-center justify-center shrink-0">
+                                <Check className="w-3.5 h-3.5 stroke-[3]" />
+                              </div>
+                            )}
+                          </button>
+                        );
+                      })
+                    ) : (
+                      <div className="p-3 text-center text-xs text-[var(--tx-3)]">
+                        No matching presets found. Click &quot;Use {locationQuery.trim()}&quot; above to register this area.
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Hourly / Estimate Rate (Optional) */}
