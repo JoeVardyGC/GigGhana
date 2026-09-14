@@ -12679,10 +12679,6 @@ export const GHANA_TRADES: GhanaTradeOption[] = [
     "name": "Traditional Engagement Kente Gown Designer"
   },
   {
-    "id": "traditional-engagement-okyeame",
-    "name": "Traditional Engagement Okyeame"
-  },
-  {
     "id": "traditional-engagement-photographer",
     "name": "Traditional Engagement Photographer"
   },
