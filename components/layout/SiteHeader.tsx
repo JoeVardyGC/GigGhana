@@ -211,7 +211,16 @@ export function SiteHeader({ activeTab }: SiteHeaderProps) {
                     )}
                   </div>
 
-                  <div className="pt-2 border-t border-[var(--bd2)]">
+                  <div className="pt-2 border-t border-[var(--bd2)] space-y-2">
+                    <Link
+                      href={user.role === 'provider' ? '/provider/dashboard' : '/#how-it-works'}
+                      onClick={() => setIsUserMenuOpen(false)}
+                      className="w-full h-10 rounded-[14px] bg-[var(--cyan)] hover:opacity-90 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
+                    >
+                      <Briefcase className="w-3.5 h-3.5" />
+                      <span>{user.role === 'provider' ? 'Go to Artisan Dashboard' : 'Explore Escrow Vault'}</span>
+                    </Link>
+
                     <button
                       type="button"
                       onClick={() => {

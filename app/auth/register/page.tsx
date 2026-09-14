@@ -294,10 +294,18 @@ function RegisterContent() {
       } catch (_) {}
 
       setTimeout(() => {
-        router.push('/');
+        if (role === 'provider') {
+          router.push('/provider/dashboard');
+        } else {
+          router.push('/');
+        }
       }, 900);
     } catch (err: any) {
-      router.push('/');
+      if (role === 'provider') {
+        router.push('/provider/dashboard');
+      } else {
+        router.push('/');
+      }
     } finally {
       setIsSubmitting(false);
     }
